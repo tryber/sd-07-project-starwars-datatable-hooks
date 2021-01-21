@@ -9,13 +9,11 @@ export default function StarWarsContext({ children }) {
   const [doesDataExists, setDoesDataExists] = useState(false);
 
   const handleFetch = async () => {
-    if (data === []) {
+    if (doesDataExists) {
       return null;
     }
     setIsFetching(true);
-    console.log('antes');
     const planets = await fetchPlanets();
-    console.log('dps');
     setData(planets.results);
     setIsFetching(false);
     setDoesDataExists(true);
