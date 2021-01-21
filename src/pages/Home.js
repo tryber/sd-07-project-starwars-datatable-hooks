@@ -7,7 +7,7 @@ export default function Home() {
 
   useEffect(() => {
     handleFetch();
-  }, []);
+  }, [handleFetch]);
 
   return (
     <div>
