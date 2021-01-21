@@ -5,13 +5,24 @@ import planetsApi from './services/planetsApi';
 
 const { Provider } = StarWarsContext;
 export default function StarWarsProvider({ children }) {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState({});
+  const [filter, setFilter] = useState({
+    filterByName: {
+      name: '',
+    },
+  });
 
   const fetchPlanets = async () => {
     const planets = await planetsApi();
-    setData({
-      ...data,
-      planets,
+    setData(planets);
+  };
+
+  const handleChange = (name) => {
+    setFilter({
+      ...filter,
+      filterByName: {
+        name,
+      },
     });
   };
 
@@ -19,13 +30,29 @@ export default function StarWarsProvider({ children }) {
     fetchPlanets();
   }, []);
 
+  useEffect(() => {
+    const { filterByName: { name } } = filter;
+
+    if (name !== '') {
+      const filteredData = data.filter((planet) => planet.name.includes(name));
+      setData(filteredData);
+    } else {
+      fetchPlanets();
+    }
+  }, [filter]);
+
+  const context = {
+    data,
+    handleChange,
+  };
+
   return (
-    <Provider value={ data }>
+    <Provider value={ context }>
       { children }
     </Provider>
   );
 }
 
 StarWarsProvider.propTypes = {
-  children: PropTypes.shape().isRequired,
+  children: PropTypes.arrayOf(PropTypes.shape()).isRequired,
 };

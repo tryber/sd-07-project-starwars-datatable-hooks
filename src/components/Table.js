@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 export default function Table() {
-  const data = useContext(StarWarsContext);
+  const { data } = useContext(StarWarsContext);
 
   return (
     <table>
@@ -26,7 +26,7 @@ export default function Table() {
       <tbody>
 
         {
-          data.planets ? data.planets.results.map((planet) => {
+          data.length ? data.map((planet) => {
             const {
               name,
               rotation_period: rotationPeriod,
@@ -60,7 +60,7 @@ export default function Table() {
                 <td>{edited}</td>
               </tr>
             );
-          }) : <tr><td>vazio</td></tr>
+          }) : <tr><td>Nenhum planeta encontrado</td></tr>
         }
       </tbody>
     </table>
