@@ -2,21 +2,19 @@ import React, { useContext } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 function Table() {
-  const { data, isFetching } = useContext(StarWarsContext);
+  const { filteredData, isFetching } = useContext(StarWarsContext);
   if (isFetching) return <div>Loading...</div>;
-
-  const { results } = data;
   return (
     <table>
       <thead>
         <tr>
-          {results && Object.keys(results[0])
+          {Object.keys(filteredData[0])
             .filter((key) => key !== 'residents')
             .map((key) => <th key={ key }>{key}</th>)}
         </tr>
       </thead>
       <tbody>
-        {results && results.map((planet) => {
+        {filteredData.map((planet) => {
           const {
             name,
             rotation_period: rotationPeriod,

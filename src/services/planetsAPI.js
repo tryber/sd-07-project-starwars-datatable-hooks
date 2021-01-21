@@ -3,7 +3,7 @@ const planetsAPI = async () => {
 
   const fetchResponse = await fetch(URL);
   const JSONResponse = await fetchResponse.json();
-  return JSONResponse;
+  return JSONResponse.results;
 };
 
 export default planetsAPI;
