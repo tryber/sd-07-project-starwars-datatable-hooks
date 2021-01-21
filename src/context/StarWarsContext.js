@@ -5,9 +5,21 @@ const StarWarsContext = createContext();
 
 function StarWarsProvider({ children }) {
   const [data, setData] = useState({});
+  const [filters, setFilters] = useState({
+    filtersByName: {
+      name: '',
+    },
+  });
+
+  const context = {
+    data,
+    setData,
+    filters,
+    setFilters,
+  };
 
   return (
-    <StarWarsContext.Provider value={ { data, setData } }>
+    <StarWarsContext.Provider value={ context }>
       { children }
     </StarWarsContext.Provider>
   );
