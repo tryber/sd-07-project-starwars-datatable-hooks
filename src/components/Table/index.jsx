@@ -4,6 +4,7 @@ import StarWarsContext from '../../context/StarWarsContext';
 const Table = () => {
   const { dispatch } = useContext(StarWarsContext);
   const { state: { data: arrayPlanets } } = useContext(StarWarsContext);
+  const { state: { filters: { filterByName: { name } } } } = useContext(StarWarsContext);
 
   useEffect(() => {
     fetch('https://swapi-trybe.herokuapp.com/api/planets')
@@ -15,6 +16,8 @@ const Table = () => {
     return (<h1>Loading...</h1>);
   }
 
+  const filteredPlanets = arrayPlanets.filter((elem) => elem.name.includes(name));
+
   const categories = Object.keys(arrayPlanets[0]).filter((elem) => elem !== 'residents');
 
   return (
@@ -25,7 +28,7 @@ const Table = () => {
         </tr>
       </thead>
       <tbody>
-        { arrayPlanets.map((elem) => (
+        { filteredPlanets.map((elem) => (
           <tr key={ elem.name }>
             <td>{elem.name}</td>
             <td>{elem.rotation_period}</td>

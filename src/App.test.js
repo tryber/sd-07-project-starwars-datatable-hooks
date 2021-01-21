@@ -88,14 +88,14 @@ describe('Filtre a tabela através de um texto, inserido num *campo de texto*, e
   beforeAll(mockFetch);
   beforeEach(cleanup);
 
-  it.skip('Renderiza campo de texto para filtro de nomes', async () => {
+  it('Renderiza campo de texto para filtro de nomes', async () => {
     await act(async () => {
       render(<App />);
     });
     expect(await screen.findByTestId(INPUT_FILTER_NAME_SELECTOR)).toBeInTheDocument();
   });
 
-  it.skip('Filtra planetas que possuem a letra "o" no nome', async () => {
+  it('Filtra planetas que possuem a letra "o" no nome', async () => {
     await act(async () => {
       render(<App />);
     });
@@ -109,7 +109,7 @@ describe('Filtre a tabela através de um texto, inserido num *campo de texto*, e
     }
   });
 
-  it.skip('Filtra planetas que possuem a letra "oo" no nome', async () => {
+  it('Filtra planetas que possuem a letra "oo" no nome', async () => {
     await act(async () => {
       render(<App />);
     });
@@ -123,7 +123,7 @@ describe('Filtre a tabela através de um texto, inserido num *campo de texto*, e
     }
   });
 
-  it.skip('Realiza vários filtros em sequência', async () => {
+  it('Realiza vários filtros em sequência', async () => {
     await act(async () => {
       render(<App />);
     });
