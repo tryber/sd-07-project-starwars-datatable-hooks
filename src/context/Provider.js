@@ -4,7 +4,7 @@ import StarWarsContext from './StarWarsContext';
 import fetchPlanets from '../services/fetchPlanetsAPI';
 
 function Provider(props) {
-  const [data, setData] = useState({});
+  const [data, setData] = useState({ results: [{ teste: 'só testando' }] });
   useEffect(() => {
     fetchPlanets().then((response) => setData(response));
   }, []);
