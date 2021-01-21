@@ -3,7 +3,6 @@ import StarWarsContext from './context/StarWarsContext';
 import planetsAPI from './services';
 import Table from './component/Table';
 import './App.css';
-import InputFilter from './component/InputFilter';
 
 function App() {
   const [planets, setPlanets] = useState([]);
