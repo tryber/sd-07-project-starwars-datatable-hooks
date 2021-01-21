@@ -22,7 +22,6 @@ function App() {
     }
   });
   useEffect(() => {
-    console.log(nameFilter);
     setFilters({ filterByName: { name: nameFilter } });
   }, [nameFilter]);
   return (

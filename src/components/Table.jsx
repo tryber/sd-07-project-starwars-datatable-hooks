@@ -25,11 +25,10 @@ function Table() {
         <tbody>
           <SWContext.Consumer>
             {(value) => {
-              console.log(value);
               if (value.apiResponse) {
                 let shown = value.apiResponse;
                 if (value.filters.filterByName.name !== undefined) {
-                  shown = value.apiResponse
+                  shown = shown
                     .filter((planet) => planet.name
                       .includes(value.filters.filterByName.name));
                 }
