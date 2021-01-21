@@ -27,19 +27,16 @@ function Provider({ children }) {
   return (
     <StarWarsContext.Provider
       value={
-        {
-          data: { planets },
+        { data: { planets },
           setSearch,
           filteredPlanets,
           filters: {
             filterByName: {
               name,
             },
-          },
-        }
+          } }
       }
     >
-
       {children}
     </StarWarsContext.Provider>
   );
