@@ -1,14 +1,20 @@
 import React, { useContext } from 'react';
-import StarWarsContext from '../context/StarWarsContext';
+import StarWarsContext from '../../context/StarWarsContext';
 
 function Table() {
-  const { data: { planets } } = useContext(StarWarsContext);
+  const { data: { planets }, filteredPlanets } = useContext(StarWarsContext);
+  const noNull = 0;
 
+  function getToRender() {
+    if (filteredPlanets.length > noNull) {
+      return filteredPlanets;
+    }
+    return planets;
+  }
   const getHeaders = () => {
     const keys = Object.keys(planets[0]);
     return keys.filter((key) => key !== 'residents');
   };
-  const noNull = 0;
 
   return (
     <div>
@@ -24,7 +30,8 @@ function Table() {
           </tr>
         </thead>
         <tbody>
-          {planets.map((planet) => (
+          {getToRender().length > noNull
+          && getToRender().map((planet) => (
             <tr key={ planet.name }>
               <td>{planet.name}</td>
               <td>{planet.rotation_period}</td>

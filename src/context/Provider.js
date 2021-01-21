@@ -5,6 +5,8 @@ import getStarWarsDataAPI from '../services/contextAPI';
 
 function Provider({ children }) {
   const [planets, setPlanets] = useState([]);
+  const [name, setSearch] = useState('');
+  const [filteredPlanets, setFilteredByName] = useState([]);
 
   const fetchPlanets = async () => {
     const response = await getStarWarsDataAPI();
@@ -16,10 +18,28 @@ function Provider({ children }) {
     fetchPlanets();
   }, []);
 
+  useEffect(() => {
+    setFilteredByName(
+      planets.filter((planet) => planet.name.toLowerCase().includes(name.toLowerCase())),
+    );
+  }, [name, planets]);
+
   return (
     <StarWarsContext.Provider
-      value={ { data: { planets } } }
+      value={
+        {
+          data: { planets },
+          setSearch,
+          filteredPlanets,
+          filters: {
+            filterByName: {
+              name,
+            },
+          },
+        }
+      }
     >
+
       {children}
     </StarWarsContext.Provider>
   );
