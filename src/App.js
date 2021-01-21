@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Table from './components/table';
-import Searcher from './components/searcher'
+import Searcher from './components/searcher';
 import StarWarsContext from './context/StarWarsContext';
 import starWarsAPI from './services/starWarsAPI';
 
@@ -8,8 +8,8 @@ function App() {
   const [data, setData] = useState([]);
   const [filters, setFilters] = useState({
     filterByName: {
-      name: ''
-    }
+      name: '',
+    },
   });
 
   useEffect(() => {
@@ -21,9 +21,9 @@ function App() {
 
   const handleFilter = (field, value) => {
     setFilters({
-      ...filters, [field]: {name: value}
-    })
-  }
+      ...filters, [field]: { name: value },
+    });
+  };
 
   const context = {
     data,
