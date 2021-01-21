@@ -3,34 +3,37 @@ import { StarWarsContext } from '../context/StarWarsContext';
 
 function Table() {
   const { data, fetchPlanets } = useContext(StarWarsContext);
+  const EMPTY = 0;
 
   useEffect(() => {
     fetchPlanets();
-  }, []);
+  }, [fetchPlanets]);
 
-  // const header = Object.keys(data[0]);
+  if (data.length === EMPTY) {
+    return (
+      <p>Loading...</p>
+    );
+  }
+  const header = Object.keys(data[0]);
+  const filteredHeader = header.filter((key) => key !== 'residents');
   return (
     <div>
       <table>
-          {/* <thead>
-            <tr>
-              {header.map((item) => <th>{item}</th>)}
+        <thead>
+          <tr>
+            {filteredHeader.map((item) => <th key={ item }>{item}</th>)}
+          </tr>
+        </thead>
+        <tbody>
+          {data.map((planet) => (
+            <tr key={ planet }>
+              {filteredHeader.map((key) => (
+                <td key={ key.value }>{planet[key]}</td>
+              ))}
             </tr>
-          </thead> */}
-          <tbody>
-            {data.map((planet) => (
-              <tr key={ planet }>
-              <td>{planet.name}</td>
-              <td>{planet.rotation_period}</td>
-              <td>{planet.orbital_period}</td>
-              <td>{planet.diameter}</td>
-              <td>{planet.climate}</td>
-              <td>{planet.gravity}</td>
-              <td>{planet.terrain}</td>
-            </tr>
-            ))}
-          </tbody>
-        </table>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 }

@@ -1,4 +1,5 @@
-import React, { createContext, useState, useEffect } from 'react';
+import React, { createContext, useState } from 'react';
+import PropTypes from 'prop-types';
 import getPlanets from '../services/planetsAPI';
 
 const StarWarsContext = createContext();
@@ -8,13 +9,6 @@ const StarWarsProvider = ({ children }) => {
   const [data, setData] = useState([]);
   const [error, setError] = useState('');
 
-  async function fetchPlanets() {
-    setIsFetching(true);
-    getPlanets()
-      .then(handleSuccess, handleFailure);
-    setIsFetching(false);
-  };
-
   const handleSuccess = (response) => {
     setData(response.results);
   };
@@ -22,6 +16,13 @@ const StarWarsProvider = ({ children }) => {
   const handleFailure = (response) => {
     setError(response);
   };
+
+  async function fetchPlanets() {
+    setIsFetching(true);
+    getPlanets()
+      .then(handleSuccess, handleFailure);
+    setIsFetching(false);
+  }
 
   const context = {
     isFetching,
@@ -38,3 +39,7 @@ const StarWarsProvider = ({ children }) => {
 };
 
 export { StarWarsContext, StarWarsProvider as Provider };
+
+StarWarsProvider.propTypes = {
+  children: PropTypes.string.isRequired,
+};
