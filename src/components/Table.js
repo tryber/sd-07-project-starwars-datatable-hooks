@@ -1,12 +1,13 @@
 import React, { useContext } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
+import Filter from './Filter';
 
 const Table = () => {
   const { planets } = useContext(StarWarsContext);
-  console.log(planets);
   return (
     <div>
       <h1>Planets of Star Wars</h1>
+      <Filter />
       <table border="1">
         <thead>
           <tr>

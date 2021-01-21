@@ -5,6 +5,7 @@ import * as api from '../services/api';
 
 const Provider = ({ children }) => {
   const [planets, setPlanets] = useState([]);
+  const [filterPlanetName, setFilterPlanetName] = useState();
 
   const populateState = async () => {
     const planetList = await api.fetchPlanetList();
@@ -18,6 +19,12 @@ const Provider = ({ children }) => {
   const data = {
     planets,
     setPlanets,
+    setFilterPlanetName,
+    filters: {
+      filterByName: {
+        name: filterPlanetName,
+      },
+    },
   };
 
   return (
