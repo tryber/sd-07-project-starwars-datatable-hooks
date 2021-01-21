@@ -8,12 +8,14 @@ const TextFilter = () => (
       <div>
         Buscar:
         <input
+          className="ui input"
           type="text"
           onChange={ ({ target: { value } }) => setAllFilters({ filters:
             { filterByName: { name: value },
               order: allFilters.filters.order,
               filterByNumericValues: allFilters.filters.filterByNumericValues } }) }
           data-testid="name-filter"
+          placeholder="Search..."
           value={ allFilters.filters.filterByName.name }
         />
       </div>

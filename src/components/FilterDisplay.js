@@ -14,6 +14,7 @@ const FiltersDisplay = () => (
           <div data-testid="filter" key={ item }>
             { `${column}, ${value}, ${comparison}` }
             <button
+              className="ui button"
               type="button"
               onClick={ () => {
                 setAllFilters({ filters: { filterByName,

@@ -34,6 +34,7 @@ const NumericFilters = () => {
               )) }
             </select>
             <select
+              className="ui select"
               data-testid="comparison-filter"
               onChange={ ({ target }) => {
                 setFilterCompiler({ ...filterCompiler, comparison: target.value });
@@ -41,6 +42,7 @@ const NumericFilters = () => {
             >
               { comparisons.map((arrayComparison) => (
                 <option
+                  className="ui option"
                   selected={ arrayComparison === comparison }
                   key={ arrayComparison }
                 >
@@ -49,6 +51,7 @@ const NumericFilters = () => {
               )) }
             </select>
             <input
+              className="ui input"
               type="number"
               data-testid="value-filter"
               value={ value }
@@ -57,6 +60,7 @@ const NumericFilters = () => {
               } }
             />
             <button
+              className="ui button"
               type="button"
               data-testid="button-filter"
               onClick={ () => setAllFilters({ filters: { filterByName,

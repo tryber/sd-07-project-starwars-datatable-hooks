@@ -121,6 +121,7 @@ const OrderFilter = ({ allPlanets, nameProp, filterByNumericValuesProp, orderPro
         return (
           <div>
             <select
+              className="ui select"
               data-testid="column-sort"
               onChange={ ({ target: { value } }) => {
                 setAllFilters({ filters: { filterByName,
@@ -130,7 +131,11 @@ const OrderFilter = ({ allPlanets, nameProp, filterByNumericValuesProp, orderPro
             >
               {
                 columnsToOrder.map((optionColumn) => (
-                  <option selected={ optionColumn === column } key={ optionColumn }>
+                  <option
+                    className="ui option"
+                    selected={ optionColumn === column }
+                    key={ optionColumn }
+                  >
                     {optionColumn}
                   </option>
                 ))
@@ -139,10 +144,12 @@ const OrderFilter = ({ allPlanets, nameProp, filterByNumericValuesProp, orderPro
             {
               options.map((option) => (
                 <label
+                  className="ui label"
                   key={ option }
                   htmlFor={ option }
                 >
                   <input
+                    className="ui input"
                     data-testid={ `column-sort-input-${option.toLowerCase()}` }
                     type="radio"
                     value={ option }
@@ -159,6 +166,7 @@ const OrderFilter = ({ allPlanets, nameProp, filterByNumericValuesProp, orderPro
               ))
             }
             <button
+              className="ui button"
               type="button"
               onClick={ () => {
                 setCurrentPlanets(orderSorter(filterAll(allPlanets, name,
