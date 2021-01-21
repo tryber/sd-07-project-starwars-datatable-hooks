@@ -16,7 +16,6 @@ export default function StarWarsContext({ children }) {
     }
     setIsFetching(true);
     const planets = await fetchPlanets();
-    console.log(planets);
     setData(planets.results);
     setDataFiltered(data);
     setIsFetching(false);
@@ -25,7 +24,6 @@ export default function StarWarsContext({ children }) {
 
   useEffect(() => {
     setDataFiltered(data.filter((planet) => planet.name.includes(name)));
-    console.log('entrou');
   }, [data, name]);
 
   //   const handleFilterBy = (FilterType)=>{
