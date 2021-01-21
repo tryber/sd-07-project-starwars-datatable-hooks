@@ -10,6 +10,13 @@ export default function StarWarsProvider({ children }) {
     filterByName: {
       name: '',
     },
+    filterByNumericValues: [
+      {
+        column: 'population',
+        comparison: 'maior que',
+        value: '',
+      }
+    ]
   });
 
   const fetchPlanets = async () => {
@@ -25,6 +32,18 @@ export default function StarWarsProvider({ children }) {
       },
     });
   };
+
+  const handleNumericValues = (name, value) => {
+    setFilter({
+      ...filter,
+      filterByNumericValues: [
+        {
+          ...filter.filterByNumericValues[0],
+          [name]: value,
+        }
+      ]
+    })
+  }
 
   useEffect(() => {
     fetchPlanets();
@@ -44,6 +63,7 @@ export default function StarWarsProvider({ children }) {
   const context = {
     data,
     handleChange,
+    handleNumericValues,
   };
 
   return (
