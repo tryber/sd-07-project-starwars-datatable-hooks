@@ -3,9 +3,9 @@ import StarWarsContext from '../context/StarWarsContext';
 
 function Table() {
   const globalState = useContext(StarWarsContext);
-  const { data } = globalState;
+  const { filterdPlanets } = globalState;
 
-  if (data) {
+  if (filterdPlanets) {
     return (
       <div>
         <table>
@@ -27,7 +27,7 @@ function Table() {
             </tr>
           </thead>
           <tbody>
-            {data.map(
+            {filterdPlanets.map(
               ({
                 name,
                 rotation_period: rotationPeriod,
