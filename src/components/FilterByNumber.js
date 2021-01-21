@@ -19,7 +19,6 @@ const FilterByNumber = ({ removeOption, columnFilter }) => {
         data-testid="column-filter"
         onChange={ ({ target }) => setColumn(target.value) }
       >
-        <option value="default" defaultValue>Selecione</option>
         {columnFilter.map((nameColumn, i) => (
           <option key={ i } value={ nameColumn }>{ nameColumn }</option>
         ))}

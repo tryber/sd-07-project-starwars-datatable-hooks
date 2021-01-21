@@ -19,8 +19,6 @@ const FilterSearch = () => {
     setColumnFilter(columnFilter.filter((option) => option !== column));
   };
 
-  console.log(filterByNumericValues);
-
   return (
     <div>
       <label htmlFor="filterByName">
