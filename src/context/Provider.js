@@ -5,6 +5,8 @@ import fetchPlanets from '../services/fetchPlanetsAPI';
 
 function Provider(props) {
   const [data, setData] = useState([{ teste: 'só testando' }]);
+  const [textInputValue, setTextInputValue] = useState('');
+  const [filteredData, setFilteredData] = useState([]);
   const [filters, setFilters] = useState({
     filters: {
       filterByName: {
@@ -12,14 +14,42 @@ function Provider(props) {
       },
     },
   });
+
   useEffect(() => {
     fetchPlanets().then((response) => setData(response.results));
   }, []);
 
+  useEffect(() => {
+    setFilteredData(data);
+  }, [data]);
+
+  const filterByName = (value) => {
+    const arrayToFilter = [...data];
+    const filteredArray = arrayToFilter.filter((item) => (
+      item.name.toLowerCase().includes(value)
+    ));
+    setFilteredData(filteredArray);
+  };
+
+  const handleTextChange = (event) => {
+    const { target } = event;
+    const { value } = target;
+    setTextInputValue(value);
+    setFilters({
+      ...filters,
+      filterByName: {
+        name: value,
+      },
+    });
+    filterByName(value.toLowerCase());
+  };
+
   const context = {
     data,
     filters,
-    setFilters,
+    textInputValue,
+    filteredData,
+    handleTextChange,
   };
   const { children } = props;
   return (

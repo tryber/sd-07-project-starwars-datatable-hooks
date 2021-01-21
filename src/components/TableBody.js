@@ -2,11 +2,10 @@ import React, { useContext } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 function TableBody() {
-  const { data } = useContext(StarWarsContext);
-  const initialArray = [...data];
+  const { filteredData } = useContext(StarWarsContext);
   return (
     <tbody>
-      {initialArray.map((line, index) => (
+      {filteredData.map((line, index) => (
         <tr key={ index }>
           <td>{line.name}</td>
           <td>{line.rotation_period}</td>
