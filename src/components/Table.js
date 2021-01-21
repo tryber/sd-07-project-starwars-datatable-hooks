@@ -18,9 +18,7 @@ const Table = () => {
       <table>
         <thead>
           <tr>
-            <th>
-              {headers.map((header) => <td key={ header.id }>{header.toUpperCase()}</td>)}
-            </th>
+            {headers.map((header) => <th key={ header.id }>{header.toUpperCase()}</th>)}
           </tr>
         </thead>
         <tbody>
@@ -31,10 +29,10 @@ const Table = () => {
             films,
             gravity,
             name,
-            orbitalPeriod,
+            orbital_period: orbitalPeriod,
             population,
-            rotationPeriod,
-            surfaceWater,
+            rotation_period: rotationPeriod,
+            surface_water: surfaceWater,
             terrain,
             url,
           }) => (
