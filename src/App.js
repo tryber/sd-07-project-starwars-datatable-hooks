@@ -1,27 +1,28 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState, useEffect } from 'react';
+import StarWarsContext from './context/StarWarsContext';
+import planetsAPI from './services';
+import Table from './component/Table';
 import './App.css';
 
 function App() {
+  const [planets, setPlanets] = useState([]);
+
+  useEffect(() => {
+    async function fetchData() {
+      const planetsSet = await planetsAPI();
+      setPlanets(planetsSet);
+    }
+    fetchData();
+  }, []);
+
+  const context = {
+    planets,
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={ logo } className="App-logo" alt="logo" />
-        <p>
-          Edit
-          <code>src/App.js</code>
-          and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <StarWarsContext.Provider value={ context }>
+      <Table />
+    </StarWarsContext.Provider>
   );
 }
 
