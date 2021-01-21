@@ -23,11 +23,33 @@ function Table() {
         </tr>
       </thead>
       <tbody>
-        {data.map((planet, index) => {
-          const { filterByName } = filters;
-          if (!planet.name.includes(filterByName)) return null;
+        {data.map((planet, position) => {
+          const { filterByName, filterByNumericValues } = filters;
+
+          let controlVar = 0;
+          const filterNumericLength = filterByNumericValues.length;
+          filterByNumericValues.forEach((filter) => {
+            const { column, comparison, value } = filter;
+            if (
+              comparison === 'maior que' && Number(planet[column]) > Number(value)
+            ) {
+              controlVar += 1;
+            } else if (
+              comparison === 'menor que' && Number(planet[column]) < Number(value)
+            ) {
+              controlVar += 1;
+            } else if (
+              comparison === 'igual a' && Number(planet[column]) === Number(value)
+            ) {
+              controlVar += 1;
+            }
+          });
+          if (
+            !planet.name.includes(filterByName) || !(controlVar === filterNumericLength)
+          ) return null;
+          // render line
           return (
-            <tr key={ index }>
+            <tr key={ position }>
               {Object.entries(planet).map(([key, value]) => {
                 if (key === 'residents') {
                   return null;

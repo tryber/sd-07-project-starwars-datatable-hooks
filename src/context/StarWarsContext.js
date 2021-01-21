@@ -7,6 +7,7 @@ const StarWarsProvider = ({ children }) => {
   const [data, setData] = useState([]);
   const [filters, setFilter] = useState({
     filterByName: '',
+    filterByNumericValues: [],
   });
 
   useEffect(() => {
@@ -19,10 +20,19 @@ const StarWarsProvider = ({ children }) => {
     setFilter({ ...filters, filterByName: name });
   };
 
+  const filterByNumericValues = (newNumericFilter) => {
+    const { filterByNumericValues: filterNumeric } = filters;
+    setFilter({
+      ...filters,
+      filterByNumericValues: [...filterNumeric, newNumericFilter],
+    });
+  };
+
   const context = {
     data,
     filters,
     filterByName,
+    filterByNumericValues,
   };
 
   return (
