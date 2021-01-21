@@ -4,7 +4,7 @@ import StarWarsContext from './StarWarsContext';
 import fetchStarWarsPlanets from '../services/apiStarWars';
 
 function Provider({ children }) {
-  const [data, setPlanets] = useState(fetchStarWarsPlanets);
+  const [data, setPlanets] = useState([]);
   // const [dataKeys, setDataKeys] = useState([]);
   const [filters, setFilters] = useState({ filterByName: { name: '' } });
 
