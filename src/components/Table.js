@@ -17,7 +17,6 @@ function Table() {
 
   const filterPlanetsBynumbers = () => {
     let planetFilter = data;
-    console.log(planetFilter);
     filterByNumericValues.forEach((filter) => {
       const { column, comparison, value } = filter;
       switch (comparison) {
@@ -36,7 +35,6 @@ function Table() {
       default: return planetFilter;
       }
     });
-    console.log(planetFilter);
     return planetFilter;
   };
 
