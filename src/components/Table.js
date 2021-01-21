@@ -11,6 +11,7 @@ function Table() {
       <thead>
         <tr>
           {results && Object.keys(results[0])
+            .filter((key) => key !== 'residents')
             .map((key) => <th key={ key }>{key}</th>)}
         </tr>
       </thead>
@@ -26,7 +27,6 @@ function Table() {
             terrain,
             surface_water: surfaceWater,
             population,
-            residents,
             films,
             created,
             edited,
@@ -43,7 +43,6 @@ function Table() {
               <td>{terrain}</td>
               <td>{surfaceWater}</td>
               <td>{population}</td>
-              <td>{residents}</td>
               <td>{films}</td>
               <td>{created}</td>
               <td>{edited}</td>
