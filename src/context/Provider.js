@@ -17,7 +17,7 @@ function Provider({ children }) {
   }, []);
 
   const contextValue = {
-    resultsApi,
+    data: resultsApi,
   };
 
   return (
