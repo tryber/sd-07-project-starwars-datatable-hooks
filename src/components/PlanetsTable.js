@@ -6,11 +6,14 @@ function PlanetsTable() {
     isFetching,
     data,
     fetchApiData,
+    filters,
   } = useContext(StarWarsContext);
 
   useEffect(() => {
     if (!data.length) fetchApiData();
   }, [data, fetchApiData]);
+
+  const { filterByName: { name } } = filters;
 
   return (
     <div>
@@ -34,7 +37,7 @@ function PlanetsTable() {
           </tr>
         </thead>
         <tbody>
-          { data.map((planet) => (
+          { data.filter((planet) => planet.name.includes(name)).map((planet) => (
             <tr key={ planet.name }>
               { Object.entries(planet).filter((entry) => entry[0] !== 'residents')
                 .map((entry) => <td key={ entry[0] }>{entry[1]}</td>) }
