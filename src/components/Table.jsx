@@ -16,8 +16,6 @@ function Table() {
             <th>terrain</th>
             <th>surface_water</th>
             <th>population</th>
-            <th>residents</th>
-            <th>residents</th>
             <th>films</th>
             <th>created</th>
             <th>edited</th>
@@ -28,10 +26,9 @@ function Table() {
           <SWContext.Consumer>
             {(value) => {
               if (value) {
-                console.log(value);
                 return value.map((planet) => (
                   <tr key={ planet.name }>
-                    {Object.keys(planet).map((key) => <td key={ key }>{planet[key]}</td>)}
+                    {Object.keys(planet).filter((key) => key !== 'residents').map((key) => <td key={ key }>{planet[key]}</td>)}
                   </tr>
                 ));
               }
