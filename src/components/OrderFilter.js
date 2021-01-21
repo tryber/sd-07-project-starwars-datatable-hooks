@@ -110,7 +110,7 @@ const OrderFilter = ({ allPlanets, nameProp, filterByNumericValuesProp, orderPro
   useEffect(() => {
     setCurrentPlanets(orderSorter(filterAll(allPlanets, nameProp,
       filterByNumericValuesProp), orderProp));
-  }, [nameProp, filterByNumericValuesProp]);
+  }, [nameProp, filterByNumericValuesProp, allPlanets, orderProp]);
 
   return (
     <FilterContext.Consumer>

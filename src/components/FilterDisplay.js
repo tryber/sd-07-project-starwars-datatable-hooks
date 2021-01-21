@@ -1,5 +1,5 @@
 import React from 'react';
-import { FilterContext } from '../contexts/FilterContextProvider';
+import { FilterContext } from '../context/FilterContextProvider';
 
 const filterRemover = (itemToRemove, filterByNumericValues) => (
   filterByNumericValues.filter((filter) => (filter !== itemToRemove)));
