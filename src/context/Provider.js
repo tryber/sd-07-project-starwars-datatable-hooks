@@ -11,11 +11,14 @@ class Provider extends Component {
       error: null,
       isFetching: false,
       data: [],
+      filters: { filterByName: { name: '' } },
     };
 
     this.getStarWarsAPI = this.getStarWarsAPI.bind(this);
     this.handleStartWarsSuccess = this.handleStartWarsSuccess.bind(this);
     this.handleStartWarsFailure = this.handleStartWarsFailure.bind(this);
+    this.changeInputsByName = this.changeInputsByName.bind(this);
+    this.filterByName = this.filterByName.bind(this);
   }
 
   componentDidMount() {
@@ -49,9 +52,33 @@ class Provider extends Component {
     });
   }
 
+  changeInputsByName({ target }) {
+    const { name, value } = target;
+    this.setState((state) => ({
+      ...state,
+      filters: {
+        ...state.filters,
+        filterByName: {
+          [name]: value,
+        },
+      },
+    }));
+    this.filterByName(value);
+  }
+
+  filterByName(name) {
+    const { data } = this.state;
+    const filteredData = data.filter((curr) => curr.name.includes(name));
+    this.setState({ data: filteredData });
+    if (name === '') {
+      this.getStarWarsAPI();
+    }
+  }
+
   render() {
     const contextValue = {
       getStarWarsAPI: this.getStarWarsAPI,
+      changeInputsByName: this.changeInputsByName,
       ...this.state,
     };
     const { children } = this.props;
