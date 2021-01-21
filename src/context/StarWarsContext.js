@@ -1,27 +1,27 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext, useState, useEffect } from 'react';
 import getPlanets from '../services/planetsAPI';
 
 const StarWarsContext = createContext();
 
-const StarWarsProvider = ({children}) => {
-
+const StarWarsProvider = ({ children }) => {
   const [isFetching, setIsFetching] = useState(false);
   const [data, setData] = useState([]);
   const [error, setError] = useState('');
 
-  const fetchPlanets = () => {
+  async function fetchPlanets() {
     setIsFetching(true);
     getPlanets()
-      .then(handleGetPlanetsSuccess, handleGetPlanetsFailure);
-  }
+      .then(handleSuccess, handleFailure);
+    setIsFetching(false);
+  };
 
-  const handleGetPlanetsSuccess = (response) => {
-    setData(response);
-  }
+  const handleSuccess = (response) => {
+    setData(response.results);
+  };
 
-  const handleGetPlanetsFailure = (response) => {
+  const handleFailure = (response) => {
     setError(response);
-  }
+  };
 
   const context = {
     isFetching,
@@ -31,10 +31,10 @@ const StarWarsProvider = ({children}) => {
   };
 
   return (
-    <StarWarsContext.Provider value={context}>
+    <StarWarsContext.Provider value={ context }>
       {children}
     </StarWarsContext.Provider>
   );
-}
+};
 
 export { StarWarsContext, StarWarsProvider as Provider };
