@@ -11,6 +11,18 @@ const reducer = (state, action) => {
       },
     };
 
+  case 'ADD_FILTER':
+    return {
+      ...state,
+      filters: {
+        ...state.filters,
+        filterByNumericValues: [
+          ...state.filters.filterByNumericValues,
+          action.newFilter,
+        ],
+      },
+    };
+
   case 'SET_DATA':
     return {
       ...state,

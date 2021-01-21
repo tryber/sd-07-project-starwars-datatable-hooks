@@ -1,13 +1,10 @@
 const initState = {
-  filters:
-    {
-      filterByName: {
-        name: '',
-      },
-      filterByNumericValues: [
-
-      ],
+  filters: {
+    filterByName: {
+      name: '',
     },
+    filterByNumericValues: [],
+  },
   data: [],
 };
 
