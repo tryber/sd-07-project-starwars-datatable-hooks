@@ -5,7 +5,8 @@ import Table from './components/Table';
 
 function App() {
   const [apiResponse, setResponse] = useState();
-
+  const [nameFilter, setNameFilter] = useState();
+  const [filters, setFilters] = useState({ filterByName: { name: '' } });
   useEffect(() => {
     if (apiResponse === undefined) {
       const fetchFromApi = async () => {
@@ -19,10 +20,19 @@ function App() {
       };
       fetchFromApi();
     }
-  }, [apiResponse]);
+  });
+  useEffect(() => {
+    console.log(nameFilter);
+    setFilters({ filterByName: { name: nameFilter } });
+  }, [nameFilter]);
   return (
     <div className="App">
-      <SWContext.Provider value={ apiResponse }>
+      <SWContext.Provider value={ { apiResponse, filters } }>
+        <input
+          value={ nameFilter }
+          onChange={ ({ target }) => setNameFilter(target.value) }
+          data-testid="name-filter"
+        />
         <Table />
       </SWContext.Provider>
     </div>

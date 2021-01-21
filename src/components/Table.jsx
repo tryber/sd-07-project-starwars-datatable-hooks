@@ -25,10 +25,19 @@ function Table() {
         <tbody>
           <SWContext.Consumer>
             {(value) => {
-              if (value) {
-                return value.map((planet) => (
+              console.log(value);
+              if (value.apiResponse) {
+                let shown = value.apiResponse;
+                if (value.filters.filterByName.name !== undefined) {
+                  shown = value.apiResponse
+                    .filter((planet) => planet.name
+                      .includes(value.filters.filterByName.name));
+                }
+                return shown.map((planet) => (
                   <tr key={ planet.name }>
-                    {Object.keys(planet).filter((key) => key !== 'residents').map((key) => <td key={ key }>{planet[key]}</td>)}
+                    {Object.keys(planet)
+                      .filter((key) => key !== 'residents')
+                      .map((key) => <td key={ key }>{planet[key]}</td>)}
                   </tr>
                 ));
               }
