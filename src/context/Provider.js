@@ -1,12 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import StarWarsContext from './StarWarsContext';
+import fetchAPI from '../API';
 
 function Provider({ children }) {
-  const [placeholder, setplaceholder] = useState();
+  const [planets, setPlanets] = useState([]);
+
+  useEffect(() => {
+    fetchAPI().then((data) => (setPlanets(data.results)));
+  }, []);
+
   const context = {
-    placeholder,
-    setplaceholder,
+    planets,
   };
 
   return (
