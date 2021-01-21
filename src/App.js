@@ -2,10 +2,12 @@ import React from 'react';
 import './App.css';
 import Provider from './context/Provider';
 import Table from './components/Table';
+import FiltersForm from './components/FiltersForm';
 
 function App() {
   return (
     <Provider>
+      <FiltersForm />
       <Table />
     </Provider>
   );

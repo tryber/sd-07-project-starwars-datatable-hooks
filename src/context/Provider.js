@@ -5,12 +5,21 @@ import fetchPlanets from '../services/fetchPlanetsAPI';
 
 function Provider(props) {
   const [data, setData] = useState([{ teste: 'só testando' }]);
+  const [filters, setFilters] = useState({
+    filters: {
+      filterByName: {
+        name: '',
+      },
+    },
+  });
   useEffect(() => {
     fetchPlanets().then((response) => setData(response.results));
   }, []);
 
   const context = {
     data,
+    filters,
+    setFilters,
   };
   const { children } = props;
   return (
