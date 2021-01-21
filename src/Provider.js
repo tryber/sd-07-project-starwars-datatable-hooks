@@ -15,8 +15,8 @@ export default function StarWarsProvider({ children }) {
         column: 'population',
         comparison: 'maior que',
         value: '',
-      }
-    ]
+      },
+    ],
   });
 
   const fetchPlanets = async () => {
@@ -40,10 +40,25 @@ export default function StarWarsProvider({ children }) {
         {
           ...filter.filterByNumericValues[0],
           [name]: value,
-        }
-      ]
-    })
-  }
+        },
+      ],
+    });
+  };
+
+  const filterValuesOnClick = () => {
+    const { column, comparison, value } = filter.filterByNumericValues[0];
+
+    if (comparison === 'maior que') {
+      const filteredPlanets = data.filter((planet) => +value < +planet[column]);
+      setData(filteredPlanets);
+    } else if (comparison === 'menor que') {
+      const filteredPlanets = data.filter((planet) => +value > +planet[column]);
+      setData(filteredPlanets);
+    } else {
+      const filteredPlanets = data.filter((planet) => +value === +planet[column]);
+      setData(filteredPlanets);
+    }
+  };
 
   useEffect(() => {
     fetchPlanets();
@@ -64,6 +79,7 @@ export default function StarWarsProvider({ children }) {
     data,
     handleChange,
     handleNumericValues,
+    filterValuesOnClick,
   };
 
   return (

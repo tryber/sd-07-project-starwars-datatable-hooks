@@ -2,7 +2,11 @@ import React, { useContext } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 export default function Filter() {
-  const { handleChange, handleNumericValues } = useContext(StarWarsContext);
+  const {
+    handleChange,
+    handleNumericValues,
+    filterValuesOnClick,
+  } = useContext(StarWarsContext);
 
   return (
     <section>
@@ -18,8 +22,8 @@ export default function Filter() {
       <label htmlFor="column">
         Filtrar por nome
         <select
-          data-testid='column-filter'
-          onChange={({ target }) => handleNumericValues(target.name, target.value)}
+          data-testid="column-filter"
+          onChange={ ({ target }) => handleNumericValues(target.name, target.value) }
           name="column"
           id="column"
         >
@@ -33,8 +37,8 @@ export default function Filter() {
       <label htmlFor="comparison">
         Filtrar por nome
         <select
-          data-testid='comparison-filter'
-          onChange={({ target }) => handleNumericValues(target.name, target.value)}
+          data-testid="comparison-filter"
+          onChange={ ({ target }) => handleNumericValues(target.name, target.value) }
           name="comparison"
           id="comparison"
         >
@@ -54,8 +58,9 @@ export default function Filter() {
         />
       </label>
       <button
-        data-testid='button-filter'
+        data-testid="button-filter"
         type="button"
+        onClick={ filterValuesOnClick }
       >
         Adicionar filtro
       </button>
