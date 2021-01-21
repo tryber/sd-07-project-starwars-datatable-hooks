@@ -25,9 +25,10 @@ function Table() {
       <tbody>
         {data.map((planet, position) => {
           const { filterByName, filterByNumericValues } = filters;
-
-          let controlVar = 0;
+          const zero = 0;
+          let controlVar = zero;
           const filterNumericLength = filterByNumericValues.length;
+
           filterByNumericValues.forEach((filter) => {
             const { column, comparison, value } = filter;
             if (
