@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import StarWarsContext from './StarWarsContext';
 import RequestAPI from '../services/RequestApi';
 
 const StarWarsProvider = ({ children }) => {
   const [data, setData] = useState();
-
   useEffect(() => {
     async function callApi() {
       const { results } = await RequestAPI();
@@ -22,4 +22,7 @@ const StarWarsProvider = ({ children }) => {
   );
 };
 
+StarWarsProvider.propTypes = {
+  children: PropTypes.element.isRequired,
+};
 export default StarWarsProvider;
