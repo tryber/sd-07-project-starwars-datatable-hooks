@@ -3,9 +3,11 @@ import StarWarsContext from './context/StarWarsContext';
 import planetsAPI from './services';
 import Table from './component/Table';
 import './App.css';
+import InputFilter from './component/InputFilter';
 
 function App() {
   const [planets, setPlanets] = useState([]);
+  const [text, setText] = useState([]);
 
   useEffect(() => {
     async function fetchData() {
@@ -17,10 +19,16 @@ function App() {
 
   const context = {
     planets,
+    text,
   };
 
   return (
     <StarWarsContext.Provider value={ context }>
+      <input
+        type="text"
+        data-testid="name-filter"
+        onChange={ (e) => setText(e.target.value) }
+      />
       <Table />
     </StarWarsContext.Provider>
   );
