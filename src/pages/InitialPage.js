@@ -1,10 +1,10 @@
 import React from 'react';
 import TextFilter from '../components/TextFilter';
 import NumericFilters from '../components/NumericFilters';
-import FiltersDisplay from '../components/FiltersDisplay';
+import FiltersDisplay from '../components/FilterDisplay';
 import OrderFilter from '../components/OrderFilter';
-import { PlanetsContext } from '../contexts/PlanetsContextProvider';
-import { FilterContext } from '../contexts/FilterContextProvider';
+import { PlanetsContext } from '../context/PlanetContextProvider';
+import { FilterContext } from '../context/FilterContextProvider';
 
 const InitialPage = () => (
   <FilterContext.Consumer>

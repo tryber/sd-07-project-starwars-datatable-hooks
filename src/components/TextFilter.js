@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FilterContext } from '../contexts/FilterContextProvider';
+import { FilterContext } from '../context/FilterContextProvider';
 
 const TextFilter = () => (
   <FilterContext.Consumer>

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FilterContext } from '../contexts/FilterContextProvider';
+import { FilterContext } from '../context/FilterContextProvider';
 
 export const numericColumns = ['population', 'orbital_period', 'diameter',
   'rotation_period', 'surface_water'];

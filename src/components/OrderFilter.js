@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import Table from './Table';
-import { FilterContext } from '../contexts/FilterContextProvider';
+import { FilterContext } from '../context/FilterContextProvider';
 import { numericColumns } from './NumericFilters';
 
 const zero = 0;
