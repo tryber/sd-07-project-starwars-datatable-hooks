@@ -10,7 +10,7 @@ function PlanetsTable() {
 
   useEffect(() => {
     if (!data.length) fetchApiData();
-  });
+  }, [data, fetchApiData]);
 
   return (
     <div>
