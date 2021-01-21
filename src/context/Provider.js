@@ -11,11 +11,18 @@ class Provider extends Component {
       error: null,
       isFetching: false,
       data: undefined,
+      filteredData: undefined,
+      filters: {
+        filterByName: {
+          name: '',
+        },
+      },
     };
 
     this.fetchStarWarsPlanets = this.fetchStarWarsPlanets.bind(this);
     this.handleStarWarsPlanetsSuccess = this.handleStarWarsPlanetsSuccess.bind(this);
     this.handleStarWarsPlanetsFailure = this.handleStarWarsPlanetsFailure.bind(this);
+    this.handleChangeFilterByName = this.handleChangeFilterByName.bind(this);
   }
 
   fetchStarWarsPlanets() {
@@ -35,6 +42,7 @@ class Provider extends Component {
     this.setState({
       isFetching: false,
       data: results,
+      filteredData: results,
     });
   }
 
@@ -45,10 +53,23 @@ class Provider extends Component {
     });
   }
 
+  handleChangeFilterByName(name) {
+    this.setState((prevState) => ({
+      filteredData: [...prevState.data.filter((planet) => planet.name.includes(name))],
+      filters: {
+        ...prevState.filters,
+        filterByName: {
+          name,
+        },
+      },
+    }));
+  }
+
   render() {
     const contextValue = {
       ...this.state,
       getStarWarsPlanets: this.fetchStarWarsPlanets,
+      changeFilterName: this.handleChangeFilterByName,
     };
 
     const { children } = this.props;

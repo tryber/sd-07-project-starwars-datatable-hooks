@@ -1,3 +1,7 @@
 import PlanetsTable from './PlanetsTable';
+import FilterName from './FilterName';
 
-export default PlanetsTable;
+export default {
+  PlanetsTable,
+  FilterName,
+};

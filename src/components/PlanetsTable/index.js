@@ -2,12 +2,14 @@ import React, { useContext, useEffect } from 'react';
 import StarWarsContext from '../../context/StarWarsContext';
 
 const PlanetsTable = () => {
-  const { data, getStarWarsPlanets } = useContext(StarWarsContext);
+  const { filteredData, getStarWarsPlanets, isFetching } = useContext(StarWarsContext);
   useEffect(() => {
     getStarWarsPlanets();
   }, [getStarWarsPlanets]);
 
-  if (!data) return null;
+  if (!filteredData) return null;
+
+  if (isFetching) return (<h1>Loading...</h1>);
 
   return (
     <table border="1">
@@ -29,7 +31,7 @@ const PlanetsTable = () => {
         </tr>
       </thead>
       <tbody>
-        {data.map(({
+        {filteredData.map(({
           name,
           rotation_period: rotationPeriod,
           orbital_period: orbitalPeriod,
