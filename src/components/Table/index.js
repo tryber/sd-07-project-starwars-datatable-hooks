@@ -10,7 +10,7 @@ function Table() {
     'rotationPeriod', 'surfaceWater', 'terrain', 'url',
   ];
 
-  if (isFetching) return <div>Carregando</div>
+  if (isFetching) return <div>Carregando</div>;
 
   return (
     <div>
@@ -38,14 +38,14 @@ function Table() {
             terrain,
             url,
           }) => (
-            <tr>
+            <tr key={ name }>
               <td>{ climate }</td>
               <td>{ created }</td>
               <td>{ diameter }</td>
               <td>{ edited }</td>
               <td>
                 {films.map((filme) => (
-                  <p>{ filme }</p>
+                  <p key={ filme }>{ filme }</p>
                 ))}
               </td>
               <td>{ gravity }</td>
