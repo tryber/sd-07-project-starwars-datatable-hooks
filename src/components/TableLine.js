@@ -5,7 +5,7 @@ const TableLine = ({ planet }) => {
   const { climate, diameter, gravity, name, population,
     terrain, created, edited, films, url } = planet;
   return (
-    <tr>
+    <tr className="ui ceeled row">
       <td
         data-testid="planet-name"
       >
