@@ -11,7 +11,16 @@ class Provider extends Component {
       error: null,
       isFetching: false,
       data: [],
-      filters: { filterByName: { name: '' } },
+      filters: {
+        filterByName: { name: '' },
+        filterByNumericValues: [
+          {
+            column: 'population',
+            comparison: 'maior que',
+            value: '0',
+          },
+        ],
+      },
     };
 
     this.getStarWarsAPI = this.getStarWarsAPI.bind(this);
@@ -19,6 +28,10 @@ class Provider extends Component {
     this.handleStartWarsFailure = this.handleStartWarsFailure.bind(this);
     this.changeInputsByName = this.changeInputsByName.bind(this);
     this.filterByName = this.filterByName.bind(this);
+    this.changeSelectColumn = this.changeSelectColumn.bind(this);
+    this.changeSelectComparison = this.changeSelectComparison.bind(this);
+    this.changeSelectValue = this.changeSelectValue.bind(this);
+    this.filterByNumericValues = this.filterByNumericValues.bind(this);
   }
 
   componentDidMount() {
@@ -27,11 +40,8 @@ class Provider extends Component {
 
   getStarWarsAPI() {
     const { isFetching } = this.state;
-
     if (isFetching) return;
-
     this.setState({ isFetching: true });
-
     fetchStarWars()
       .then(this.handleStartWarsSuccess, this.handleStartWarsFailure);
   }
@@ -66,6 +76,45 @@ class Provider extends Component {
     this.filterByName(value);
   }
 
+  changeSelectColumn({ target }) {
+    const { value } = target;
+    this.setState((state) => ({
+      filters: {
+        ...state.filters,
+        filterByNumericValues: {
+          ...state.filters.filterByNumericValues,
+          column: value,
+        },
+      },
+    }));
+  }
+
+  changeSelectComparison({ target }) {
+    const { value } = target;
+    this.setState((state) => ({
+      filters: {
+        ...state.filters,
+        filterByNumericValues: {
+          ...state.filters.filterByNumericValues,
+          comparison: value,
+        },
+      },
+    }));
+  }
+
+  changeSelectValue({ target }) {
+    const { value } = target;
+    this.setState((state) => ({
+      filters: {
+        ...state.filters,
+        filterByNumericValues: {
+          ...state.filters.filterByNumericValues,
+          value,
+        },
+      },
+    }));
+  }
+
   filterByName(name) {
     const { data } = this.state;
     const filteredData = data.filter((curr) => curr.name.includes(name));
@@ -75,10 +124,37 @@ class Provider extends Component {
     }
   }
 
+  filterByNumericValues() {
+    const { filters: { filterByNumericValues }, data } = this.state;
+    const {
+      column,
+      comparison,
+      value,
+    } = filterByNumericValues;
+
+    const filteredData = data.filter((curr) => {
+      if (comparison === 'maior que') {
+        // eslint-disable-next-line radix
+        return parseInt(curr[column]) > parseInt(value);
+      }
+      if (comparison === 'menor que') {
+        // eslint-disable-next-line radix
+        return parseInt(curr[column]) < parseInt(value);
+      }
+      if (comparison === 'igual a') return curr[column] === value;
+      return true;
+    });
+    this.setState({ data: filteredData });
+  }
+
   render() {
     const contextValue = {
       getStarWarsAPI: this.getStarWarsAPI,
       changeInputsByName: this.changeInputsByName,
+      changeSelectColumn: this.changeSelectColumn,
+      changeSelectComparison: this.changeSelectComparison,
+      changeSelectValue: this.changeSelectValue,
+      filterByNumericValues: this.filterByNumericValues,
       ...this.state,
     };
     const { children } = this.props;
