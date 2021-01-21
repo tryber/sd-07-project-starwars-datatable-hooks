@@ -1,11 +1,11 @@
 import React from 'react';
 import Provider from './context/Provider';
-import Table from './components/Table';
+import InitialPage from './pages/InitialPage';
 
 function App() {
   return (
     <Provider>
-      <Table />
+      <InitialPage />
     </Provider>
   );
 }

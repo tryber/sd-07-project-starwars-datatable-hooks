@@ -1,38 +1,26 @@
 import React, { useContext } from 'react';
-import StarWarsContext from '../context/StarWarsContext';
-// import './table.css';
+import StarWarsContext from '../../context/StarWarsContext';
+import './table.css';
 
 function Table() {
   const { data } = useContext(StarWarsContext);
-  console.log(data);
-  const test = data.filter((planet) => planet.name === 'Naboo');
-  const test2 = test.map((planet) => [...Object.keys(planet)]);
+  const ZERO = 0;
+
+  if (data.length === ZERO) {
+    return <p>Loading...</p>;
+  }
+
   return (
     <div>
       <table>
         <thead>
-          {test2.map((info, index) => (
-            <tr key={ index }>
-              <th>{info[0]}</th>
-              <th>{info[1]}</th>
-              <th>{info[2]}</th>
-              <th>{info[3]}</th>
-              <th>{info[4]}</th>
-              <th>{info[5]}</th>
-              <th>{info[6]}</th>
-              <th>{info[7]}</th>
-              <th>{info[8]}</th>
-              <th>{info[10]}</th>
-              <th>{info[11]}</th>
-              <th>{info[12]}</th>
-              <th>{info[13]}</th>
-            </tr>
-          ))}
+          <tr>
+            {Object.keys(data[0]).filter((key) => key !== 'residents').map((info) => (
+              <th key={ info }>{info}</th>
+            ))}
+          </tr>
         </thead>
         <tbody>
-
-          {/* { data.map((planet) =>
-            Object.keys(planet).map(info => <tr>{info}</tr>)) } */}
           { data.map((planet, index) => (
             <tr key={ index }>
               <td>{planet.name}</td>
