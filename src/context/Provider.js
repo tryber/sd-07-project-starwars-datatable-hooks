@@ -4,12 +4,20 @@ import StarWarsContext from './StarWarsContext';
 
 function Provider({ children }) {
   const dataInitialState = [];
+  const filterInitialState = {
+    filterByName: {
+      name: '',
+    },
+  };
 
   const [data, setData] = useState(dataInitialState);
+  const [filters, setFilter] = useState(filterInitialState);
 
   const contextValue = {
     data,
     setData,
+    filters,
+    setFilter,
   };
 
   return (
