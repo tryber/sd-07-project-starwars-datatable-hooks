@@ -8,7 +8,13 @@ const SearchNumeric = () => {
     value: '',
   });
 
-  const optionsColumn = ['population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water'];
+  const optionsColumn = [
+    'population',
+    'orbital_period',
+    'diameter',
+    'rotation_period',
+    'surface_water',
+  ];
 
   const { dispatch } = useContext(StarWarsContext);
   const {
@@ -36,7 +42,11 @@ const SearchNumeric = () => {
       >
         {optionsColumn.map((opt) => {
           if (!numericFilter.some((filter) => filter.column === opt)) {
-            return (<option key={ opt } value={ opt }>{opt}</option>);
+            return (
+              <option key={ opt } value={ opt }>
+                {opt}
+              </option>
+            );
           }
           return null;
         })}
