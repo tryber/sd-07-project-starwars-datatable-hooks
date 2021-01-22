@@ -44,6 +44,9 @@ function Searcher() {
             type="number"
             data-testid="value-filter"
           />
+          <button type="button" data-testid="button-filter">
+            Filtrar
+          </button>
         </div>
       )}
     </StarWarsContext.Consumer>
