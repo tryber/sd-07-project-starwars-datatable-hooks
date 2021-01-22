@@ -6,11 +6,17 @@ import getPlanets from '../services/planetsAPI';
 const { Provider } = StarWarsContext;
 
 function StarWarsProvider({ children }) {
+  const initialFilter = {
+    filterByName: '',
+  };
+
   const [isFetching, setIsFetching] = useState(false);
 
   const [header, setHeader] = useState();
 
-  const [data, setData] = useState();
+  const [data, setData] = useState([]);
+
+  const [filter, setFilter] = useState(initialFilter);
 
   useEffect(() => {
     async function fetchData() {
@@ -23,6 +29,24 @@ function StarWarsProvider({ children }) {
     fetchData();
   }, []);
 
+  useEffect(() => {
+    async function fetchData() {
+      const { filterByName } = filter;
+      setIsFetching(true);
+      const planets = await getPlanets();
+      const newData = planets.filter((planet) => planet.name.includes(filterByName));
+      setIsFetching(false);
+      setData(newData);
+    }
+    fetchData();
+  }, [filter]);
+
+  const handleChangeInputName = (e) => {
+    setFilter({
+      filterByName: e.target.value,
+    });
+  };
+
   const context = {
     isFetching,
     setIsFetching,
@@ -31,6 +55,7 @@ function StarWarsProvider({ children }) {
     data,
     setData,
     getPlanets,
+    handleChangeInputName,
   };
   return <Provider value={ context }>{children}</Provider>;
 }
