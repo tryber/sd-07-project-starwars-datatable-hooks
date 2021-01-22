@@ -10,6 +10,9 @@ const StarWarsProvider = ({ children }) => {
     comparison: 'maior que',
     value: 0,
     applyFilter: false,
+    sort: 'asc',
+    sortParameter: 'name',
+    applySort: true,
   };
 
   const filterReducer = (state, action) => {
@@ -34,6 +37,26 @@ const StarWarsProvider = ({ children }) => {
       return {
         ...state,
         value,
+      };
+    case 'sort':
+      return {
+        ...state,
+        sort: value,
+      };
+    case 'ordenation':
+      return {
+        ...state,
+        sortParameter: value,
+      };
+    case 'apply-sort':
+      return {
+        ...state,
+        applySort: true,
+      };
+    case 'ordered':
+      return {
+        ...state,
+        applySort: false,
       };
     case 'apply-filter':
       if (state.applyFilter) {

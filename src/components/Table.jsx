@@ -4,7 +4,16 @@ import { StarWarsContext } from '../context/StarWarsContext';
 
 function Table({ planets }) {
   const { filter } = useContext(StarWarsContext);
-  const { name, column, comparison, value, applyFilter } = filter;
+  const {
+    name,
+    column,
+    comparison,
+    value,
+    applyFilter,
+    applySort,
+    sort,
+    sortParameter,
+  } = filter;
   const arrayLength = 0;
   const filterByName = planets.filter((planet) => planet
     .name.includes(name) === true);
@@ -21,10 +30,36 @@ function Table({ planets }) {
     return parameterToNumber === valueToNumber;
   });
 
-  const renderPlanets = (array) => (
-    array.map((planet) => (
+  const sortPlanets = (array) => {
+    const positive = 1;
+    const negative = -1;
+    const neutral = 0;
+    if (sort === 'asc') {
+      return array.sort((planet1, planet2) => {
+        if (planet1[`${sortParameter}`] > planet2[`${sortParameter}`]) return positive;
+        if (planet2[`${sortParameter}`] > planet1[`${sortParameter}`]) return negative;
+        return neutral;
+      });
+    }
+    if (sort === 'desc' && sortParameter === 'orbital_period') {
+      return array.sort((planet1, planet2) => (
+        parseInt(planet2.orbital_period, 10) - parseInt(planet1.orbital_period, 10)));
+    }
+    return array.sort((planet1, planet2) => {
+      if (planet1[`${sortParameter}`] < planet2[`${sortParameter}`]) return positive;
+      if (planet2[`${sortParameter}`] < planet1[`${sortParameter}`]) return negative;
+      return neutral;
+    });
+  };
+
+  const renderPlanets = (array) => {
+    let newArray = array;
+    if (applySort) {
+      newArray = sortPlanets(array);
+    }
+    return newArray.map((planet) => (
       <tr key={ planet.name }>
-        <td>{ planet.name }</td>
+        <td data-testid="planet-name">{ planet.name }</td>
         <td>{ planet.rotation_period }</td>
         <td>{ planet.orbital_period }</td>
         <td>{ planet.diameter }</td>
@@ -38,8 +73,8 @@ function Table({ planets }) {
         <td>{ planet.edited }</td>
         <td>{ planet.url }</td>
       </tr>
-    ))
-  );
+    ));
+  };
 
   return (
     <div className="table-container">
