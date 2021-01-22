@@ -3,27 +3,87 @@ import StarWarsContext from '../context/StarWarsContext';
 
 function Table() {
   const { apiResults } = useContext(StarWarsContext);
-  const [filterWord, setFilterWord] = useState({
+  const [filters, setFilters] = useState({
     filters: {
       filterByName: { name: '' },
     },
+    filterByNumericValues: [
+      {
+        column: '',
+        comparison: '',
+        value: '',
+      },
+    ],
   });
 
-  const handleInputChange = ({ target }) => {
+  const handleNameInputChange = ({ target }) => {
     const word = target.value;
-    setFilterWord({
-      filters: {
-        filterByName: { name: word },
-      },
+    setFilters({
+      ...filters,
+      filterByName: { name: word },
     });
   };
+
+  const handleFilter = ({ target: { value, name } }) => {
+    setFilters({
+      ...filters,
+      filterByNumericValues: { [name]: [value] },
+    });
+  };
+
+  const columns = [
+    'population',
+    'orbital_period',
+    'diameter',
+    'rotation_period',
+    'surface_water',
+  ];
+
+  const comparisons = ['maior que', 'menor que', 'igual a'];
 
   return (
     <div>
       <input
         data-testid="name-filter"
-        onChange={ (target) => handleInputChange(target) }
+        onChange={ (target) => handleNameInputChange(target) }
       />
+      <select
+        data-testid="column-filter"
+        name="column"
+        onChange={ (target) => handleFilter(target) }
+      >
+        { columns.map((column) => (
+          <option key={ column } value={ column }>
+            {column}
+          </option>
+        ))}
+      </select>
+      <select
+        data-testid="comparison-filter"
+        name="comparison"
+        onChange={ (target) => handleFilter(target) }
+      >
+        {
+          comparisons.map((opt) => (
+            <option key={ opt } value={ opt }>
+              { opt }
+            </option>
+          ))
+        }
+      </select>
+      <input
+        data-testid="value-filter"
+        name="value"
+        type="number"
+        value={ filters.filterByNumericValues.value }
+        onChange={ (target) => handleFilter(target) }
+      />
+      <button
+        type="button"
+        data-testid='button-filter'
+      >
+        Filtrar
+      </button>
       <table>
         <thead>
           <tr>
@@ -42,7 +102,7 @@ function Table() {
             <th>Url</th>
           </tr>
           {apiResults
-            .filter((item) => item.name.includes(filterWord.filters.filterByName.name))
+            .filter((item) => item.name.includes(filters.filters.filterByName.name))
             .map((item) => (
               <tr key={ item.name }>
                 <td>{item.name}</td>
