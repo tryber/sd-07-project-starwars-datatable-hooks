@@ -29,7 +29,7 @@ function StarWarsPlanets() {
       >
         <option
           value="population"
-          onClick={ (event) => event.target.remove() }
+          onChange={ (event) => event.target.remove() }
         >
           population
         </option>
