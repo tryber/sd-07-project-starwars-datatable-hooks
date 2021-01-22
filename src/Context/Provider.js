@@ -15,7 +15,6 @@ const Provider = ({ children }) => {
     getData();
   }, []);
 
-  console.log(children);
   return (
     <Context.Provider
       value={ {
@@ -24,6 +23,8 @@ const Provider = ({ children }) => {
           filterByName: {
             name: '',
           },
+          filterByNumericValues: [
+            { column: 'population', comparison: 'maior que', value: 10000 }],
         },
       } }
     >
