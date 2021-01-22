@@ -29,20 +29,19 @@ function Provider({ children }) {
     );
   }, [name, planets]);
   const filterBySetValues = () => {
+    console.log('chamou filterBySetValues');
+
     if (comparison === 'maior que') {
       setFilteredByValue(
-        planets.filter((planet) => planet[column]
-          .includes(Object.values(planet[column]) > value)),
+        planets.filter((planet) => (Number(planet[column]) > Number(value))),
       );
     } else if (comparison === 'menor que') {
       setFilteredByValue(
-        planets.filter((planet) => planet[column]
-          .includes(Object.values(planet[column]) < value)),
+        planets.filter((planet) => (Number(planet[column]) < Number(value))),
       );
     } else {
       setFilteredByValue(
-        planets.filter((planet) => planet[column]
-          .includes(Object.values(planet[column]) === value)),
+        planets.filter((planet) => (Number(planet[column]) === Number(value))),
       );
     }
   };

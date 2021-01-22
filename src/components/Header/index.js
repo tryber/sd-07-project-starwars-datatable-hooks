@@ -59,7 +59,7 @@ function Header() {
           <button
             type="button"
             data-testid="button-filter"
-            onClick={ () => filterBySetValues }
+            onClick={ filterBySetValues }
           >
             Filter
           </button>
