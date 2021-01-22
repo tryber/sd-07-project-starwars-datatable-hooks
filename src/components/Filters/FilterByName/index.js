@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
-import StarWarsContext from '../../context/StarWarsContext';
+import StarWarsContext from '../../../context/StarWarsContext';
 
-function Filters() {
+function FilterByName() {
   const { handleChangeInputName } = useContext(StarWarsContext);
   return (
     <div>
@@ -18,4 +18,4 @@ function Filters() {
   );
 }
 
-export default Filters;
+export default FilterByName;

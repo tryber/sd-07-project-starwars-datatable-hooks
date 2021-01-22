@@ -1,15 +1,15 @@
 import React from 'react';
+
 import './App.css';
 import StarWarsṔrovider from './context/StarWarsProvider';
-
-import Filters from './components/Filters/index';
 import Table from './components/Table/index';
+import FilterAll from './components/Filters/FilterAll';
 
 function App() {
   return (
     <main>
       <StarWarsṔrovider>
-        <Filters />
+        <FilterAll />
         <Table />
       </StarWarsṔrovider>
     </main>
