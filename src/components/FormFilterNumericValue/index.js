@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import StarWarsContext from '../../context/StarWarsContext';
+import StarWarsContext from './StarWarsContext';
 
 const FormFilterNumericValue = () => {
   const {
