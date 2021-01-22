@@ -8,6 +8,12 @@ function Pagina() {
   const [comparison, setcomparison] = useState('');
   const [value, setvalue] = useState((1 - 1));
   const { filterByName, filterByNumericValues } = filters;
+  const lista = ['population',
+    'orbital_period',
+    'diameter',
+    'rotation_period',
+    'surface_water',
+  ];
 
   function click() {
     const obj = {
@@ -44,11 +50,22 @@ function Pagina() {
           onChange={ (event) => setcolumn(event.target.value) }
         >
           <option value="">escolha</option>
-          <option value="population">population</option>
-          <option value="orbital_period">orbital_period</option>
-          <option value="diameter">diameter</option>
-          <option value="rotation_period">rotation_period</option>
-          <option value="surface_water">surface_water</option>
+          {lista.map((nome) => {
+            let render = true;
+            filterByNumericValues.forEach((element) => {
+              if (nome === element.column) {
+                render = false;
+              }
+            });
+            if (!render) {
+              return null;
+            }
+            return (
+              <option value={ nome } key={ nome }>
+                {nome}
+              </option>
+            );
+          })}
         </select>
         <select
           value={ comparison }
