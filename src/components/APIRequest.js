@@ -7,16 +7,19 @@ function apiRequest({ children }) {
   const fetchApi = async () => {
     const response = await fetch('https://swapi-trybe.herokuapp.com/api/planets/');
     const data = await response.json();
-    return data;
+    setApiResults(data.results);
   }
 
   useEffect(() => {
-    const data = fetchApi();
-    setApiResults(data);
+    fetchApi();
   }, []);
 
+  const data = {
+    apiResults,
+  }
+
   return (
-    <StarWarsContext.Provider value={}>
+    <StarWarsContext.Provider value={data}>
       {children}
     </StarWarsContext.Provider>
   )
