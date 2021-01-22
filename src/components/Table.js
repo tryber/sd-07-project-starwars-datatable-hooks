@@ -26,15 +26,18 @@ export default function Table() {
       </thead>
       <tbody>
         {data.map((planet, index) => {
-          let filterChecks = 0;
+          const zero = 0;
+          let filterChecks = zero;
           if (planet.name.includes(filters.filterByName)) {
             filters.filterByNumericValues.forEach((filter) => {
               const { comparison, column, value } = filter;
               if (comparison === 'maior que' && Number(planet[column]) > Number(value)) {
                 filterChecks += 1;
-              } else if (comparison === 'menor que' && Number(planet[column]) < Number(value)) {
+              } else if (comparison === 'menor que'
+                && Number(planet[column]) < Number(value)) {
                 filterChecks += 1;
-              } else if (comparison === 'igual a' && Number(planet[column]) === Number(value)) {
+              } else if (comparison === 'igual a'
+                && Number(planet[column]) === Number(value)) {
                 filterChecks += 1;
               }
             });
