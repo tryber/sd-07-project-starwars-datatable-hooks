@@ -1,19 +1,12 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 const PlanetsList = () => {
-	const { data, inputText, handleIncludesArray, newArray } = useContext(StarWarsContext);
+	const { data, inputText  } = useContext(StarWarsContext);
     
     const filterIncludes = (data, inputText) => {
         return data.filter((item) => {return item.name.includes(inputText)})
 	 };
-     
-     useEffect(() => { 
-		handleIncludesArray(filterIncludes(data, inputText));
-		let planets = filterIncludes(data, inputText);
-		console.log('planets',planets)
-		console.log('newArray',newArray)
-     },[data,inputText])
 
 	const splitElements = ( element ) => {
 		const arrayElement = element.split(",");
@@ -27,6 +20,7 @@ const PlanetsList = () => {
 		const dayItemZ = dayItem[1].split('Z')
 		return(<p>Dia: {dayItem[0]} <br/> Hora {dayItemZ[0]}</p>)
 	}
+	const updatedData = filterIncludes(data, inputText);
   return (
     <table>
 			<tr>
@@ -44,7 +38,7 @@ const PlanetsList = () => {
 				<th>Data de Edição</th>
 				<th>URL</th>
 			</tr>
-      { data.map((item) => (
+      { updatedData.map((item) => (
         <tr key={ item.name }>
 					<td>{item.name}</td>
 					<td>{item.rotation_period}</td>

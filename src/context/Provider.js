@@ -7,7 +7,12 @@ const { Provider } = StarWarsContext;
 const ProviderStarWars = ({ children }) => {
   const [data, setData] = useState([]);
   const [inputText, setInputText] = useState('');
-  const [newArray, setNewArray] = useState([]);
+  const[filters, setFilters] = useState({ 
+    filterByName: { name: '' }, 
+    filterByNumericValues: [{ 
+      column: 'population',
+      comparison: 'maior que',
+      value: '100000' }] })
 
   const fetchdata = async () => {
     const results = await getPlanet();
@@ -18,19 +23,16 @@ const ProviderStarWars = ({ children }) => {
     fetchdata();
   }, []);
 
-  const handleIncludesArray = (array) => {
-    setNewArray(array)
-  }
+//filters { filterByName: { name }, filterByNumericValues: [{ column, comparison, value }] }
 
  const handleInput = ({target}) => {
   setInputText(target.value);
+  setFilters({...filters, filterByName: {...filters.filterByName, name:inputText }})
  }
   const context = {
     data,
     inputText,
     handleInput,
-    handleIncludesArray,
-    newArray,
   };
 
   return (
