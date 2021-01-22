@@ -26,17 +26,30 @@ export default function Table() {
       </thead>
       <tbody>
         {data.map((planet, index) => {
+          let filterChecks = 0;
           if (planet.name.includes(filters.filterByName)) {
-            return (
-              <tr key={ index }>
-                {Object.keys(planet).map((key) => {
-                  if (key === 'residents') return null;
-                  return (
-                    <td key={ key }>{planet[key]}</td>
-                  );
-                })}
-              </tr>
-            );
+            filters.filterByNumericValues.forEach((filter) => {
+              const { comparison, column, value } = filter;
+              if (comparison === 'maior que' && Number(planet[column]) > Number(value)) {
+                filterChecks += 1;
+              } else if (comparison === 'menor que' && Number(planet[column]) < Number(value)) {
+                filterChecks += 1;
+              } else if (comparison === 'igual a' && Number(planet[column]) === Number(value)) {
+                filterChecks += 1;
+              }
+            });
+            if (filterChecks === filters.filterByNumericValues.length) {
+              return (
+                <tr key={ index }>
+                  {Object.keys(planet).map((key) => {
+                    if (key === 'residents') return null;
+                    return (
+                      <td key={ key }>{planet[key]}</td>
+                    );
+                  })}
+                </tr>
+              );
+            }
           }
           return null;
         })}

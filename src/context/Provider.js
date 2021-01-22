@@ -22,10 +22,17 @@ const StarWarsProvider = ({ children }) => {
     setFilters({ ...filters, filterByName: name });
   };
 
+  const filterByValues = (chosenFilters) => {
+    const newFilter = filters.filterByNumericValues;
+    newFilter.push(chosenFilters);
+    setFilters({ ...filters, filterByNumericValues: newFilter });
+  };
+
   const context = {
     data,
     filters,
     filterByName,
+    filterByValues,
   };
 
   return (
