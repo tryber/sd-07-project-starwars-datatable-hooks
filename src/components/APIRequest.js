@@ -1,13 +1,25 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
-import Table from './Table'
 
-const apiRequest = () => {
-    return (
-        <StarWarsContext.Provider value={}>
-            <div>
-                <Table />
-            </div>
-        </StarWarsContext.Provider>
-    )
+function apiRequest({ children }) {
+  const [apiResults, setApiResults] = useState([]);
+
+  const fetchApi = async () => {
+    const response = await fetch('https://swapi-trybe.herokuapp.com/api/planets/');
+    const data = await response.json();
+    return data;
+  }
+
+  useEffect(() => {
+    const data = fetchApi();
+    setApiResults(data);
+  }, []);
+
+  return (
+    <StarWarsContext.Provider value={}>
+      {children}
+    </StarWarsContext.Provider>
+  )
 }
+
+export { apiRequest as Provider };

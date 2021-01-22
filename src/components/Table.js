@@ -1,16 +1,17 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
-const Table = () => {
-    return (
-        <StarWarsContext.Consumer>
-            {
-                value => (
-                    <div>
-                        
-                    </div>
-                )
-            }
-        </StarWarsContext.Consumer>
-    )
+function Table() {
+	const { data } = useContext(StarWarsContext);
+	return (
+		<div>
+			<table>
+				<thead>
+					
+				</thead>
+			</table>
+		</div>
+	)
 }
+
+export default Table;

@@ -1,12 +1,15 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
-import Table from './components/APIRequest'
+import { Provider } from './components/APIRequest'
+import Table from './components/Table'
 
 function App() {
   return (
     <div>
-      <APIRequest />
+      <Provider>
+        <Table />
+      </Provider>
     </div>
   );
 }
