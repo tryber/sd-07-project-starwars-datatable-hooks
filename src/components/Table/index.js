@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import StarWarsContext from '../../context/StarWarsContext';
 
 export default function Table() {
-  const data = useContext(StarWarsContext);
+  const { data } = useContext(StarWarsContext); // Defining wich resources from the Provider I`m using in this component
 
   return (
     <table>
@@ -26,7 +26,7 @@ export default function Table() {
       <tbody>
 
         {
-          data.planets ? data.planets.results.map((planet) => {
+          data.length ? data.map((planet) => {
             const {
               name,
               rotation_period: rotationPeriod,
@@ -60,7 +60,7 @@ export default function Table() {
                 <td>{url}</td>
               </tr>
             );
-          }) : <tr><td>Empty</td></tr>
+          }) : <tr><td>Ops! Looks like we couldn`t find a planet :/</td></tr>
         }
       </tbody>
     </table>
