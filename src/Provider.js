@@ -6,27 +6,36 @@ import getCurrencePlanets from './services/planetsApi';
 function Provider({ children }) {
   const [filterName, setFilterByName] = useState('');
   const [data, setData] = useState([]);
-  const [tagCompare, setTagCompare] = useState('igual');
-  const [tag, setTag] = useState('rotation_period');
+  const [tagCompare, setTagCompare] = useState('');
+  const [tag, setTag] = useState('');
   const [valueCompare, setValueCompare] = useState('');
   const [filter, setFilter] = useState(false);
+  const [tagCompareSecond, setTagCompareSecond] = useState('');
+  const [tagSecond, setTagSecond] = useState('');
+  const [valueCompareSecond, setValueCompareSecond] = useState('');
+  const [primaryFilter, setPrimaryFilter] = useState([]);
   const dataTags = data[0] || [];
   useEffect(() => {
-    getCurrencePlanets()
+    getCurrencePlanets('https://swapi-trybe.herokuapp.com/api/planets/')
       .then((response) => setData(response.results));
   }, []);
 
   const myContext = {
     data,
     filter,
+    primaryFilter,
     dataHeader: Object.keys(dataTags).filter(
       (item) => item !== 'residents',
     ),
+    setPrimaryFilter,
     setFilterByName,
     setTagCompare,
     setTag,
     setValueCompare,
     setFilter,
+    setTagCompareSecond,
+    setTagSecond,
+    setValueCompareSecond,
     filters: {
       filterByName: {
         name: filterName,
@@ -36,6 +45,11 @@ function Provider({ children }) {
           column: tag,
           comparison: tagCompare,
           value: valueCompare,
+        },
+        {
+          column: tagSecond,
+          comparison: tagCompareSecond,
+          value: valueCompareSecond,
         },
       ],
     },

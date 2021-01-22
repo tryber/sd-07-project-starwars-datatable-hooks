@@ -1,6 +1,4 @@
-const Url = 'https://swapi-trybe.herokuapp.com/api/planets/';
-
-const getCurrencePlanets = () => (
+const getCurrencePlanets = (Url) => (
   fetch(Url)
     .then((response) => (
       response.json()

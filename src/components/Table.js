@@ -1,28 +1,30 @@
 import React, { useContext } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
+import filterCompare from '../hooks/hookFIlter';
 
 function Table() {
   const { data, filters, dataHeader, filter } = useContext(StarWarsContext);
 
   const { filterByName, filterByNumericValues } = filters;
-  const { comparison } = filterByNumericValues[0];
-  const { column } = filterByNumericValues[0];
-  const { value } = filterByNumericValues[0];
+  const { comparison, column, value } = filterByNumericValues[0];
+
   const dataFilterResultName = data.filter(
     (planet) => planet.name.toLowerCase().includes(filterByName.name.toLowerCase()),
   ) || [];
 
-  const filterCompare = () => {
-    if (comparison === 'igual a') {
-      return dataFilterResultName.filter((item) => item[column] === value);
-    } if (comparison === 'maior que') {
-      return dataFilterResultName.filter((item) => Number(item[column]) > value);
-    } if (comparison === 'menor que') {
-      return dataFilterResultName.filter((item) => item[column] <= value);
+  const tableRender = filter
+    ? filterCompare(comparison, dataFilterResultName, column, value)
+    : dataFilterResultName;
+  const check = () => {
+    const checkPrimaryFilter = column !== '' && value !== '' && comparison !== '';
+    if (checkPrimaryFilter && filter) {
+      return filterCompare(filterByNumericValues[1].comparison,
+        tableRender,
+        filterByNumericValues[1].column,
+        filterByNumericValues[1].value);
     }
+    return tableRender;
   };
-
-  const tableRender = filter ? filterCompare() : dataFilterResultName;
 
   return (
     <div>
@@ -34,7 +36,7 @@ function Table() {
             ))}
           </tr>
         </thead>
-        {tableRender.map((planet, index) => (
+        {check().map((planet, index) => (
           <tbody key={ index }>
             <tr>
               <td>{planet.name}</td>

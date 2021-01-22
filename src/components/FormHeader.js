@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
+import SecondFilter from './SecondFilter';
 
 function FormHeader() {
   const { setFilterByName,
@@ -8,7 +9,11 @@ function FormHeader() {
     setTag,
     setValueCompare,
     setFilter,
+    filters,
   } = useContext(StarWarsContext);
+
+  const { filterByNumericValues } = filters;
+  const { column, comparison, value } = filterByNumericValues[0];
   const dataFilter = dataHeader.filter((item) => item === 'population'
     || item === 'orbital_period'
     || item === 'diameter'
@@ -34,6 +39,8 @@ function FormHeader() {
     setFilter(true);
   };
 
+  const checkPrimaryFilter = column !== '' && value !== '' && comparison !== '';
+
   return (
     <div>
       <form>
@@ -46,6 +53,8 @@ function FormHeader() {
             onChange={ handlerChangeName }
           />
         </label>
+      </form>
+      <form>
         <label htmlFor="select">
           Selecione:
           <select onChange={ handlerChangeTag } id="select" data-testid="column-filter">
@@ -79,6 +88,7 @@ function FormHeader() {
             type="number"
           />
         </label>
+        {checkPrimaryFilter ? <SecondFilter /> : ''}
 
       </form>
       <button
