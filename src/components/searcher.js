@@ -73,7 +73,7 @@ function Searcher() {
                 ? () => handleFilter('filterByNumericValues') : undefined
             }
           >
-            Filtrar
+            Adicionar Filtro
           </button>
         </div>
       )}
