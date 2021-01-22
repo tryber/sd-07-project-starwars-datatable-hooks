@@ -1,73 +1,35 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
+import AddFilterForm from './AddFilterForm';
 
 function Filter() {
   const {
-    setName,
     filters,
-    addNumericFilter,
-    columnNames,
+    removeNumericFilter,
   } = useContext(StarWarsContext);
-  const comparison = ['maior que', 'igual a', 'menor que'];
-
-  const zero = 0;
-  const [columnFilter, setColumn] = useState('population');
-  const [comparisonFilter, setComparison] = useState('maior que');
-  const [valueFilter, setValue] = useState(zero);
 
   return (
-    <form>
-      <input
-        type="text"
-        data-testid="name-filter"
-        value={ filters.filterByName.name }
-        placeholder="Name"
-        onChange={ ({ target: { value } }) => setName(value) }
-      />
-      <select
-        data-testid="column-filter"
-        value={ columnFilter }
-        onChange={ ({ target: { value } }) => setColumn(value) }
-      >
-        {columnNames.map((column) => (
-          <option
-            key={ column }
-            value={ column }
-          >
-            {column}
-          </option>))}
-      </select>
-      <select
-        data-testid="comparison-filter"
-        value={ comparisonFilter }
-        onChange={ ({ target: { value } }) => setComparison(value) }
-      >
-        {comparison.map((operator) => (
-          <option
-            key={ operator }
-            value={ operator }
-          >
-            {operator}
-          </option>))}
-      </select>
-      <input
-        type="number"
-        data-testid="value-filter"
-        value={ valueFilter }
-        onChange={ ({ target: { value } }) => setValue(value) }
-      />
-      <button
-        type="button"
-        data-testid="button-filter"
-        onClick={ () => addNumericFilter({
-          column: columnFilter,
-          comparison: comparisonFilter,
-          value: valueFilter,
-        }) }
-      >
-        Filtrar
-      </button>
-    </form>
+    <header>
+      <AddFilterForm />
+      {filters.filterByNumericValues
+        .map(({
+          column,
+          comparison,
+          value,
+        }) => (
+          <div key={ column } data-testid="filter">
+            {`${column} `}
+            {`${comparison} `}
+            {value}
+            <button
+              type="button"
+              onClick={ () => removeNumericFilter(column) }
+            >
+              x
+            </button>
+          </div>
+        ))}
+    </header>
   );
 }
 

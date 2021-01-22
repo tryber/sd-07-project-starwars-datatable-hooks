@@ -32,6 +32,14 @@ const Provider = ({ children }) => {
     setColumnNames(newColumnNames.filter((name) => name !== column));
   };
 
+  const removeNumericFilter = (columnToRemove) => {
+    let newNumericFilter = [...filters.filterByNumericValues];
+    newNumericFilter = newNumericFilter.filter(({ column }) => column !== columnToRemove);
+    setFilters({ ...filters, filterByNumericValues: newNumericFilter });
+    const newColumnNames = [...columnNames, columnToRemove];
+    setColumnNames(newColumnNames);
+  };
+
   const handleStarWarsSuccess = (response) => {
     const { results } = response;
     setPlanets(results);
@@ -58,6 +66,7 @@ const Provider = ({ children }) => {
     filters,
     setName,
     addNumericFilter,
+    removeNumericFilter,
     columnNames,
   };
 
