@@ -40,6 +40,27 @@ function Planets() {
             {planets
               .filter(({ name }) => name
                 .match(filters.filterByName.name))
+              .filter((planet) => {
+                let match = true;
+                const { filterByNumericValues = [] } = filters;
+                if (filterByNumericValues === []) return true;
+                filterByNumericValues.forEach(({ column, comparison, value }) => {
+                  switch (comparison) {
+                  case 'maior que':
+                    match = match && parseFloat(planet[column]) > value;
+                    break;
+                  case 'menor que':
+                    match = match && parseFloat(planet[column]) < value;
+                    break;
+                  case 'igual a':
+                    match = match && planet[column] === value;
+                    break;
+                  default:
+                    match = true;
+                  }
+                });
+                return match;
+              })
               .map((planet) => <RowPlanet key={ planet.name } planet={ planet } />)}
           </tbody>
         </table>
