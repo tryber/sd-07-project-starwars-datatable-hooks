@@ -48,6 +48,14 @@ function Provider({ children }) {
     setOptionsOfColumn(optionsOfColumn.filter((item) => item !== column));
   };
 
+  const resetFilter = () => {
+    setOptionsOfColumn([
+      'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water']);
+    setValue('');
+    setComparison('');
+    setNumberFiltered(data);
+  };
+
   return (
     <StarWarsContext.Provider
       value={
@@ -74,7 +82,8 @@ function Provider({ children }) {
           setComparison,
           setValue,
           numberFiltered,
-          filterByValue }
+          filterByValue,
+          resetFilter }
       }
     >
       { children }

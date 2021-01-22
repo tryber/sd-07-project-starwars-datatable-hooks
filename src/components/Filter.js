@@ -9,6 +9,7 @@ function Filter() {
     setComparison,
     setValue,
     filterByValue,
+    resetFilter,
   } = useContext(StarWarsContext);
 
   return (
@@ -21,40 +22,66 @@ function Filter() {
         onChange={ (e) => setName(e.target.value) }
       />
 
-      <select
-        data-testid="column-filter"
-        name="column"
-        onChange={ (e) => setColumn(e.target.value) }
-      >
-        {
-          optionsOfColumn.map((column, index) => (
-            <option
-              key={ index }
-              value={ `${column}` }
-            >
-              {column}
-            </option>
-          ))
-        }
-      </select>
+      <div data-testid="filter">
+        <select
+          data-testid="column-filter"
+          name="column"
+          onChange={ (e) => setColumn(e.target.value) }
+        >
+          {
+            optionsOfColumn.map((column, index) => (
+              <option
+                key={ index }
+                value={ `${column}` }
+              >
+                {column}
+              </option>
+            ))
+          }
+        </select>
+        <button
+          type="button"
+          onClick={ resetFilter }
+        >
+          X
+        </button>
+      </div>
 
-      <select
-        data-testid="comparison-filter"
-        name="comparison"
-        onChange={ (e) => setComparison(e.target.value) }
-      >
-        <option value="maior que">maior que</option>
-        <option value="menor que">menor que</option>
-        <option value="igual a">igual a</option>
-      </select>
+      <div>
+        <select
+          data-testid="comparison-filter"
+          name="comparison"
+          onChange={ (e) => setComparison(e.target.value) }
+        >
+          <option value="maior que">maior que</option>
+          <option value="menor que">menor que</option>
+          <option value="igual a">igual a</option>
+        </select>
+        <button
+          type="button"
+          data-testid="filter"
+          onClick={ resetFilter }
+        >
+          X
+        </button>
+      </div>
 
-      <input
-        type="number"
-        data-testid="value-filter"
-        placeholder="value"
-        name="value"
-        onChange={ (e) => setValue(e.target.value) }
-      />
+      <div>
+        <input
+          type="number"
+          data-testid="value-filter"
+          placeholder="value"
+          name="value"
+          onChange={ (e) => setValue(e.target.value) }
+        />
+        <button
+          type="button"
+          data-testid="filter"
+          onClick={ resetFilter }
+        >
+          X
+        </button>
+      </div>
 
       <button
         type="button"
