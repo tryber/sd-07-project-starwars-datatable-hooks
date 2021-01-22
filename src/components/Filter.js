@@ -9,6 +9,8 @@ export default function Filter() {
     filterByNumericValues,
   } = useContext(StarWarsContext);
 
+  const [newFilter, setNewFilter] = useState([]);
+
   const [columnOptions, setColumnsOptions] = useState([
     'population',
     'diameter',
@@ -17,14 +19,35 @@ export default function Filter() {
     'surface_water',
   ]);
 
+  const createNewfilter = (column, comparison, value) => {
+    return (
+      <div
+        className="filter-column"
+        data-testid="filter"
+      >
+        <p>Coluna {column}</p>
+        <p>Comparção {comparison}</p>
+        <p>Valor {value}</p>
+        <button>
+          X
+        </button>
+      </div>
+    )
+  }
+
   const handleClick = () => {
     if (!columnOptions.length) return;
     const lastIndex = filterByNumericValues.length - 1;
-    const { column } = filterByNumericValues[lastIndex];
+    const { column, comparison, value } = filterByNumericValues[lastIndex];
+    const newFilter = createNewfilter(column, comparison, value);
 
     setColumnsOptions(
       (prevOptions) => prevOptions.filter((option) => option !== column),
     );
+
+    setNewFilter(
+      (prevFilters) => ([...prevFilters, newFilter])
+    )
   };
 
   useEffect(() => {
@@ -39,7 +62,7 @@ export default function Filter() {
           data-testid="name-filter"
           type="text"
           id="name"
-          onChange={ ({ target }) => handleChange(target.value) }
+          onChange={({ target }) => handleChange(target.value)}
         />
       </label>
       <label htmlFor="column">
@@ -47,13 +70,13 @@ export default function Filter() {
 
         <select
           data-testid="column-filter"
-          onChange={ ({ target }) => handleNumericValues(target.name, target.value) }
+          onChange={({ target }) => handleNumericValues(target.name, target.value)}
           name="column"
           id="column"
         >
           {
             columnOptions.map((column, index) => (
-              <option key={ index }>{column}</option>
+              <option key={index}>{column}</option>
             ))
           }
         </select>
@@ -62,7 +85,7 @@ export default function Filter() {
         comparacao
         <select
           data-testid="comparison-filter"
-          onChange={ ({ target }) => handleNumericValues(target.name, target.value) }
+          onChange={({ target }) => handleNumericValues(target.name, target.value)}
           name="comparison"
           id="comparison"
         >
@@ -77,14 +100,20 @@ export default function Filter() {
           data-testid="value-filter"
           type="number"
           id="value"
-          onChange={ ({ target }) => handleNumericValues(target.name, target.value) }
+          onChange={({ target }) => handleNumericValues(target.name, target.value)}
           name="value"
         />
       </label>
+      <div>
+        <p>Filtros</p>
+        {
+          newFilter && newFilter.map(filter => filter)
+        }
+      </div>
       <button
         data-testid="button-filter"
         type="button"
-        onClick={ handleClick }
+        onClick={handleClick}
       >
         Aplicar filtro
       </button>
