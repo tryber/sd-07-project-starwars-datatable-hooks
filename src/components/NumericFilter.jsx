@@ -22,7 +22,8 @@ function NumericFilter() {
         <SWContext.Consumer>
           {({ filters }) => {
             let options = columnOptions;
-            if (filters.filterByNumericValues.length > 0) {
+            const zero = 0;
+            if (filters.filterByNumericValues.length > zero) {
               const picked = filters.filterByNumericValues.map((filter) => filter.column);
               picked.forEach((pick) => {
                 options = options.filter((opt) => opt !== pick);
