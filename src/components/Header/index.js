@@ -51,7 +51,6 @@ function Header() {
           data-testid="column-filter"
           onChange={ changeSelectColumn }
         >
-          <option>selecione</option>
           {columns.map((column) => (
             <option key={ column } value={ column }>
               { column }
