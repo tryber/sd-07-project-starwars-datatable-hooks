@@ -1,19 +1,46 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 const SearchBar = () => {
-  const { filterByNames, filterByNumeric } = useContext(StarWarsContext);
-  const column = [
-    'population',
-    'orbital_period',
-    'diameter',
-    'rotation_period',
-    'surface_water'];
-  const comparison = [
-    'maior que',
-    'menor que',
-    'igual a',
-  ];
+  const { setFilter, filterByNames } = useContext(StarWarsContext);
+  const [state, setState] = useState({
+    column: [
+      'population',
+      'orbital_period',
+      'diameter',
+      'rotation_period',
+      'surface_water'],
+    comparison: [
+      'maior que',
+      'menor que',
+      'igual a',
+    ],
+    filters: {
+      filterByName: { name: undefined },
+      filterByNumericValues: {
+        column: 'population',
+        comparison: 'maior que',
+        value: undefined,
+      },
+    },
+  });
+
+  function saveFilters() {
+    setFilter({ ...state, filters: state.filters });
+  }
+  function filterByNumeric({ target: { value, name } }) {
+    setState({
+      ...state,
+      filters: {
+        ...state.filters,
+        filterByNumericValues: {
+          ...state.filters.filterByNumericValues,
+          [name]: value,
+        },
+      },
+    });
+  }
+
   return (
     <div>
       <label htmlFor="searchByName">
@@ -31,14 +58,14 @@ const SearchBar = () => {
         name="column"
         onChange={ (e) => filterByNumeric(e) }
       >
-        {column.map((option) => <option key={ option }>{option}</option>)}
+        {state.column.map((option) => <option key={ option }>{option}</option>)}
       </select>
       <select
         data-testid="comparison-filter"
         name="comparison"
         onChange={ (e) => filterByNumeric(e) }
       >
-        {comparison.map((option) => <option key={ option }>{option}</option>)}
+        {state.comparison.map((option) => <option key={ option }>{option}</option>)}
       </select>
       <input
         type="number"
@@ -50,6 +77,7 @@ const SearchBar = () => {
       <button
         type="button"
         data-testid="button-filter"
+        onClick={ saveFilters }
       >
         Filtrar
       </button>

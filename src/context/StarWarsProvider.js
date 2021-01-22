@@ -27,19 +27,6 @@ const StarWarsProvider = ({ children }) => {
     });
   }
 
-  function filterByNumeric({ target: { value, name } }) {
-    setFilter({
-      ...filter,
-      filters: {
-        ...filter.filters,
-        filterByNumericValues: {
-          ...filter.filters.filterByNumericValues,
-          [name]: value,
-        },
-      },
-    });
-  }
-
   useEffect(() => {
     async function callApi() {
       const { results } = await RequestApi();
@@ -54,7 +41,6 @@ const StarWarsProvider = ({ children }) => {
     setData,
     setFilter,
     filterByNames,
-    filterByNumeric,
   };
   return (
     <StarWarsContext.Provider value={ context }>
