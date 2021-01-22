@@ -27,7 +27,12 @@ function StarWarsPlanets() {
         data-testid="column-filter"
         onChange={ handleChange }
       >
-        <option value="population">population</option>
+        <option
+          value="population"
+          onClick={ (event) => event.target.remove() }
+        >
+          population
+        </option>
         <option value="orbital_period">orbital_period</option>
         <option value="diameter">diameter</option>
         <option value="rotation_period">rotation_period</option>
