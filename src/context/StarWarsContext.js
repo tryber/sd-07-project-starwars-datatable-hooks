@@ -28,8 +28,7 @@ export default function StarWarsContext({ children }) {
     doesDataExists,
     setByName,
     setByNum,
-    filters: { filterByName: { byName } },
-    byNum,
+    filters: { filterByName: { byName }, filterByNumericValues: { ...byNum } },
   };
   return (
     <SWContext.Provider value={ contextParser }>{children}</SWContext.Provider>

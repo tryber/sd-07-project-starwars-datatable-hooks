@@ -5,10 +5,18 @@ export default function Form() {
   const {
     filters: {
       filterByName: { name },
+      filterByNumericValues: { populationType },
     },
     setByName,
     setByNum,
   } = useContext(SWContext);
+  const TYPES = [
+    'population',
+    'orbital_period',
+    'diameter',
+    'rotation_period',
+    'surface_water',
+  ];
   const [type, setType] = useState('');
   const [comparison, setComparison] = useState('maior que');
   const INITIAL_VALUE = 0;
@@ -18,7 +26,11 @@ export default function Form() {
   const handleClick = (e) => {
     e.preventDefault();
     console.log(type, comparison, value);
-    setByNum({ populationType: type, logic: comparison, number: parseInt(value, 10) });
+    setByNum({
+      populationType: type,
+      logic: comparison,
+      number: parseInt(value, 10),
+    });
   };
   return (
     <div>
@@ -34,11 +46,11 @@ export default function Form() {
           onChange={ (e) => setType(e.target.value) }
           value={ type }
         >
-          <option value="population">population</option>
-          <option value="orbital_period">orbital_period</option>
-          <option value="diameter">diameter</option>
-          <option value="rotation_period">rotation_period</option>
-          <option value="surface_water">surface_water</option>
+          {(TYPES.filter((typ) => typ !== populationType)).map((typ) => (
+            <option key={ typ } value={ typ }>
+              {typ}
+            </option>
+          ))}
         </select>
         <select
           data-testid="comparison-filter"
