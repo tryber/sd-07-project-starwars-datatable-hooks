@@ -1,9 +1,7 @@
-body {
-  background-color: black;
-}
-
 .main-container {
-  margin: auto;
+  background-color: black;
+  height: 90vh;
+  margin: 20px auto;
+  overflow: scroll;
   width: 90%;
-  background-color: whitesmoke;
 }

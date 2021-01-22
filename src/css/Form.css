@@ -1,0 +1,23 @@
+.form-container {
+  align-items: center;
+  background-color: burlywood;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  margin: 20px 0;
+  padding: 20px;
+  width: 100%;
+}
+
+.input-container {
+  align-items: center;
+  display: flex;
+  flex-flow: column nowrap;
+  font-weight: 700;
+  justify-content: center;
+}
+
+.input-container input {
+  margin: 10px;
+  padding: 5px;
+}

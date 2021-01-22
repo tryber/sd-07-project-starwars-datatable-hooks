@@ -3,7 +3,15 @@ import StarWarsContext from '../context/StarWarsContext';
 import '../css/Table.css';
 
 function Table() {
-  const { planets, isFetching, keysPlanets, setkeysPlanets } = useContext(StarWarsContext);
+  const {
+    planets,
+    filterPlanets,
+    setfilterPlanets,
+    isFetching,
+    keysPlanets,
+    setkeysPlanets,
+    filters: { filterByName: { name } },
+  } = useContext(StarWarsContext);
   
   const keysTable = () => {
     if (!isFetching) {
@@ -16,6 +24,11 @@ function Table() {
 
   useEffect(keysTable, []);
 
+  useEffect(() => {
+    const newPlanets = planets.filter((planet) => planet.name.includes(name));
+    setfilterPlanets(newPlanets);
+  }, [name]);
+
   return (
     <table>
       <thead>
@@ -27,7 +40,7 @@ function Table() {
       </thead>
       <tbody>
           {
-            planets.map((rowTable) => 
+            filterPlanets.map((rowTable) =>
               <tr key={ rowTable.name } >
                 { keysPlanets.map((infoRow) =>
                   <td key={ infoRow } >
