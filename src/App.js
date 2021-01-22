@@ -7,7 +7,14 @@ import RenderTable from './components/RenderTable';
 function App() {
   const [state, setState] = useState(data);
   return (
-    <StarWarsContext.Provider value={ { state, setState } }>
+    <StarWarsContext.Provider
+      value={ {
+        filtersByName: state.filters.filterByName.name,
+        filtersByNumericValue: state.filters.filterByNumericValues,
+        state,
+        setState,
+      } }
+    >
       <div>
         <RenderForm />
         <RenderTable />
