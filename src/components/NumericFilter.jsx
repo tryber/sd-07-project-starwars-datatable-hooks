@@ -9,6 +9,9 @@ function NumericFilter() {
   const btnClick = () => {
     context.setNumericFilter({ column, comparison, value });
   };
+  const columnOptions = [
+    'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water',
+  ];
   return (
     <div>
       <select
@@ -16,11 +19,18 @@ function NumericFilter() {
         onChange={ ({ target }) => setColumn(target.value) }
         value={ column }
       >
-        <option>population</option>
-        <option>orbital_period</option>
-        <option>diameter</option>
-        <option>rotation_period</option>
-        <option>surface_water</option>
+        <SWContext.Consumer>
+          {({ filters }) => {
+            let options = columnOptions;
+            if (filters.filterByNumericValues.length > 0) {
+              const picked = filters.filterByNumericValues.map((filter) => filter.column);
+              picked.forEach((pick) => {
+                options = options.filter((opt) => opt !== pick);
+              });
+            }
+            return options.map((option) => <option key={ option }>{option}</option>);
+          }}
+        </SWContext.Consumer>
       </select>
       <select
         data-testid="comparison-filter"

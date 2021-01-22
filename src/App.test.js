@@ -249,7 +249,7 @@ describe('Crie um filtro para valores numéricos', () => {
   });
 });
 
-describe.skip('Não utilize filtros repetidos', () => {
+describe('Não utilize filtros repetidos', () => {
   beforeAll(mockFetch);
   beforeEach(cleanup);
 
@@ -285,7 +285,7 @@ describe.skip('Não utilize filtros repetidos', () => {
   });
 });
 
-describe.skip('Apague o filtro de valores numéricos e desfaça as filtragens dos dados da tabela ao clicar no ícone de `X` de um dos filtro', () => {
+describe('Apague o filtro de valores numéricos e desfaça as filtragens dos dados da tabela ao clicar no ícone de `X` de um dos filtro', () => {
   beforeAll(mockFetch);
   beforeEach(cleanup);
 
