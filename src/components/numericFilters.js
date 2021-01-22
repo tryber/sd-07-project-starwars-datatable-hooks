@@ -8,6 +8,12 @@ function NumericFilter() {
     handleButton,
   } = useContext(StarWarsContext);
   const { column, comparison, value } = filters.filterByNumericValues[0];
+  const mapColumn = () => {
+    const array = ['population', 'orbital_period',
+      'diameter', 'rotation_period', 'surface_water',
+    ];
+    return array;
+  };
 
   return (
     <div>
@@ -20,11 +26,14 @@ function NumericFilter() {
             value={ column }
             onChange={ (e) => handleFilterByNumericValues('column', e.target.value) }
           >
-            <option value="population">population</option>
+            {/* <option value="population">population</option>
             <option value="orbital_period">orbital_period</option>
             <option value="diameter">diameter</option>
             <option value="rotation_period">rotation_period</option>
-            <option value="surface_water">surface_water</option>
+            <option value="surface_water">surface_water</option> */}
+            {mapColumn().map((item) => (
+              <option key={ item } value={ item }>{ item }</option>
+            ))}
           </select>
         </label>
       </div>
