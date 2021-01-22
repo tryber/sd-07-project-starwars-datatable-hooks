@@ -17,33 +17,37 @@ function useFilter(planetsArray) {
   }, [byName, planetsArray]);
 
   useEffect(() => {
-    switch (byNum.logic) {
-    case 'igual a':
-      setFilteredPlanets(
-        planetsArray.filter(
-          (planet) => planet[byNum.populationType] === byNum.number.toString(),
-        ),
-      );
-      break;
-    case 'maior que':
-      setFilteredPlanets(
-        planetsArray.filter(
-          (planet) => planet[byNum.populationType] > byNum.number,
-        ),
-      );
-      break;
+    if (byNum.populationType !== '') {
+      switch (byNum.logic) {
+      case 'igual a':
+        setFilteredPlanets(
+          planetsArray.filter(
+            (planet) => planet[byNum.populationType] === byNum.number.toString(),
+          ),
+        );
+        break;
+      case 'maior que':
+        setFilteredPlanets(
+          planetsArray.filter(
+            (planet) => planet[byNum.populationType] > byNum.number,
+          ),
+        );
+        break;
 
-    case 'menor que':
-      setFilteredPlanets(
-        planetsArray.filter(
-          (planet) => planet[byNum.populationType] < byNum.number,
-        ),
-      );
-      break;
+      case 'menor que':
+        setFilteredPlanets(
+          planetsArray.filter(
+            (planet) => planet[byNum.populationType] < byNum.number,
+          ),
+        );
+        break;
 
-    default:
-      console.log('segunda variavel da funcao não foi passada');
-      break;
+      default:
+        console.log('segunda variavel da funcao não foi passada');
+        break;
+      }
+    } else {
+      setFilteredPlanets(planetsArray);
     }
   }, [byNum, planetsArray]);
 
