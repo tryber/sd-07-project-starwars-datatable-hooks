@@ -5,6 +5,7 @@ function FiltersInput() {
   const {
     handleFilterByName,
     handleFilterByValues,
+    handleDeleteFilter,
     filters: { filterByNumericValues },
   } = useContext(StarWarsContext);
 
@@ -89,6 +90,26 @@ function FiltersInput() {
         >
           Adicionar
         </button>
+      </fieldset>
+      <fieldset>
+        <legend>Applied filters:</legend>
+        <ul>
+          { filterByNumericValues
+            .map(({ column, comparison, value }) => (
+              <li data-testid="filter" key={ column }>
+                <span>{ column }</span>
+                <span>{ comparison }</span>
+                <span>{ value }</span>
+                <button
+                  name={ column }
+                  type="button"
+                  onClick={ (event) => handleDeleteFilter(event) }
+                >
+                  X
+                </button>
+              </li>
+            )) }
+        </ul>
       </fieldset>
     </div>
   );

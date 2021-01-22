@@ -37,6 +37,14 @@ function Provider({ children }) {
     });
   };
 
+  const handleDeleteFilter = ({ target: { name } }) => {
+    setFilters({
+      ...filters,
+      filterByNumericValues: filters.filterByNumericValues
+        .filter(({ column }) => column !== name),
+    });
+  };
+
   const handleIsFetching = (value) => {
     setIsFetching(value);
   };
@@ -54,6 +62,7 @@ function Provider({ children }) {
     handleData,
     handleFilterByName,
     handleFilterByValues,
+    handleDeleteFilter,
   };
 
   return (
