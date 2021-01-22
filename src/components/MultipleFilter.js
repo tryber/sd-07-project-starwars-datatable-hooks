@@ -3,7 +3,10 @@ import { Context } from '../context/StarWarsContext';
 
 function MultipleFilter() {
   const {
-    availableColumn, availableComparison, handleFiltersChange } = useContext(Context);
+    availableColumn,
+    availableComparison,
+    handleFiltersChange,
+  } = useContext(Context);
   const columnFilter = [...availableColumn];
   const comparisonFilter = [...availableComparison];
   const minimumValue = 0;

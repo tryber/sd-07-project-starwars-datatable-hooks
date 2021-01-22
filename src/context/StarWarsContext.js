@@ -24,10 +24,10 @@ function StarWarsContext({ children }) {
   // const [chosenColumn, setChosenColumn] = useState([]);
   // const [chosenComparison, setChosenComparison] = useState([]);
 
-  // const [availableColumn, setAvailableColumn] = useState([...columnOptions]);
-  // const [availableComparison, setAvailableComparison] = useState([...comparisonOptions]);
-  const availableColumn = [...columnOptions];
-  const availableComparison = [...comparisonOptions];
+  const [availableColumn, setAvailableColumn] = useState([...columnOptions]);
+  const [availableComparison, setAvailableComparison] = useState([...comparisonOptions]);
+  // const availableColumn = [...columnOptions];
+  // const availableComparison = [...comparisonOptions];
   // const [filteredData, setNameFilter] = useNameFilter();
   // const [isScanning, setScanning] = useState(true);
   // const [planets, setPlanets] = useState([]);
@@ -77,6 +77,11 @@ function StarWarsContext({ children }) {
         filtersByName: allFilters.filters.filtersByName,
         filterByNumericValues: [...auxArray] },
     });
+
+    const newColumns = availableColumn.filter((item) => item !== column);
+    setAvailableColumn([...newColumns]);
+    const newComparison = availableComparison.filter((item) => item !== comparison);
+    setAvailableComparison([...newComparison]);
   };
 
   const updateData = (newData) => {
