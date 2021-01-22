@@ -1,7 +1,6 @@
 import React from 'react';
 import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 import { act } from 'react-dom/test-utils';
-
 import App from './App';
 import testData from './testData';
 
@@ -84,7 +83,7 @@ describe('Faça uma requisição para o endpoint `/planets` da API de Star Wars 
   });
 });
 
-describe('Filtre a tabela através de um texto, inserido num *campo de texto*, exibindo somente os planetas cujos nomes incluam o texto digitado', () => {
+describe.only('Filtre a tabela através de um texto, inserido num *campo de texto*, exibindo somente os planetas cujos nomes incluam o texto digitado', () => {
   beforeAll(mockFetch);
   beforeEach(cleanup);
 
