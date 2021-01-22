@@ -29,17 +29,16 @@ function Table() {
     filterByNumericValues.map(({ comparison, column, value }) => {
       switch (comparison) {
         case 'maior que':
-          console.log('entrou');
-          return newPlanets = newPlanets.filter((planet) => planet[column] > value );
+          return newPlanets = newPlanets.filter((planet) => parseInt(planet[column]) > parseInt(value) );
         case 'menor que':
-          return newPlanets = newPlanets.filter((planet) => planet[column] < value );
+          return newPlanets = newPlanets.filter((planet) => parseInt(planet[column]) < parseInt(value) );
         case 'igual a':
-          return newPlanets = newPlanets.filter((planet) => planet[column] === value );
+          return newPlanets = newPlanets.filter((planet) => parseInt(planet[column]) === parseInt(value) );
         default:
           return newPlanets;
       }
     })
-    console.log(newPlanets);
+    // console.log(newPlanets);
     setfilterPlanets(newPlanets);
   }, [filters]);
 

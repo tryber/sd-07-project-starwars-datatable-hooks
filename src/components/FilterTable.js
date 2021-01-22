@@ -78,6 +78,21 @@ function FilterTable() {
     };
     setFilters(newFilter);
   }
+
+  const removeFilter = (filterToRemove) => {
+    // const { column, comparison, value } = filterToRemove;
+    const removeFilter = filterByNumericValues.filter(({ column }) => {
+      return filterToRemove.column !== column;
+    });
+    console.log(removeFilter);
+
+    const newFilter = {
+      ...filters,
+      filterByNumericValues: removeFilter,
+    };
+    
+    setFilters(newFilter);
+  }
   
   return (
     <form className="form-container">
@@ -142,10 +157,10 @@ function FilterTable() {
         <legend>Filters</legend>
         <div>
           {
-            filterByNumericValues.map(({ column, comparison, value }) => 
+            filterByNumericValues.map((filter) => 
             <div className="filter-container-div" data-testid='filter'>
-              <p>{`${column} | ${comparison} | ${value}`}</p>
-              <button type="button">X</button>
+              <p>{`${filter.column} | ${filter.comparison} | ${filter.value}`}</p>
+              <button type="button" onClick={ () => removeFilter(filter) } >X</button>
             </div>)
           }
         </div>
