@@ -5,19 +5,17 @@ import planetsApi from './services/planetsApi';
 
 const { Provider } = StarWarsContext;
 export default function StarWarsProvider({ children }) {
-  const [data, setData] = useState({});
-  const [filter, setFilter] = useState({
-    filterByName: {
-      name: '',
-    },
-    filterByNumericValues: [
-      {
-        column: 'population',
-        comparison: 'maior que',
-        value: '',
-      },
-    ],
+  const [data, setData] = useState();
+  const [filterByName, setFilterByName] = useState({
+    name: '',
   });
+  const [filterByNumericValues, setFilterByNumericValues] = useState([
+    {
+      column: 'population',
+      comparison: 'maior que',
+      value: '',
+    },
+  ]);
 
   const fetchPlanets = async () => {
     const planets = await planetsApi();
@@ -25,28 +23,27 @@ export default function StarWarsProvider({ children }) {
   };
 
   const handleChange = (name) => {
-    setFilter({
-      ...filter,
-      filterByName: {
-        name,
-      },
+    setFilterByName({
+      ...filterByName,
+      name,
     });
   };
 
   const handleNumericValues = (name, value) => {
-    setFilter({
-      ...filter,
-      filterByNumericValues: [
+    setFilterByNumericValues((prevState) => (
+      [
         {
-          ...filter.filterByNumericValues[0],
+          ...prevState[0],
           [name]: value,
         },
-      ],
-    });
+      ]
+    ));
   };
 
   const filterValuesOnClick = () => {
-    const { column, comparison, value } = filter.filterByNumericValues[0];
+    if (!data) return;
+    const lastIndex = filterByNumericValues.length - 1;
+    const { column, comparison, value } = filterByNumericValues[lastIndex];
 
     if (comparison === 'maior que') {
       const filteredPlanets = data.filter((planet) => +value < +planet[column]);
@@ -61,30 +58,28 @@ export default function StarWarsProvider({ children }) {
   };
 
   useEffect(() => {
-    fetchPlanets();
-  }, []);
+    const { name } = filterByName;
 
-  useEffect(() => {
-    const { filterByName: { name } } = filter;
-
-    if (name !== '') {
+    if (data && name !== '') {
       const filteredData = data.filter((planet) => planet.name.includes(name));
       setData(filteredData);
     } else {
       fetchPlanets();
     }
-  }, [filter]);
+  }, [filterByName]);
 
   const context = {
     data,
     handleChange,
     handleNumericValues,
     filterValuesOnClick,
+    filterByName,
+    filterByNumericValues,
   };
 
   return (
     <Provider value={ context }>
-      { children }
+      { children}
     </Provider>
   );
 }

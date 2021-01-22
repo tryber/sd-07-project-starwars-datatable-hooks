@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 export default function Filter() {
@@ -6,7 +6,30 @@ export default function Filter() {
     handleChange,
     handleNumericValues,
     filterValuesOnClick,
+    filterByNumericValues,
   } = useContext(StarWarsContext);
+
+  const [columnOptions, setColumnsOptions] = useState([
+    'population',
+    'diameter',
+    'orbital_period',
+    'rotation_period',
+    'surface_water',
+  ]);
+
+  const handleClick = () => {
+    if (!columnOptions.length) return;
+    const lastIndex = filterByNumericValues.length - 1;
+    const { column } = filterByNumericValues[lastIndex];
+
+    setColumnsOptions(
+      (prevOptions) => prevOptions.filter((option) => option !== column),
+    );
+  };
+
+  useEffect(() => {
+    filterValuesOnClick();
+  }, [columnOptions]);
 
   return (
     <section>
@@ -20,22 +43,23 @@ export default function Filter() {
         />
       </label>
       <label htmlFor="column">
-        Filtrar por nome
+        Filtrar por coluna
+
         <select
           data-testid="column-filter"
           onChange={ ({ target }) => handleNumericValues(target.name, target.value) }
           name="column"
           id="column"
         >
-          <option>population</option>
-          <option>diameter</option>
-          <option>orbital_period</option>
-          <option>rotation_period</option>
-          <option>surface_water</option>
+          {
+            columnOptions.map((column, index) => (
+              <option key={ index }>{column}</option>
+            ))
+          }
         </select>
       </label>
       <label htmlFor="comparison">
-        Filtrar por nome
+        comparacao
         <select
           data-testid="comparison-filter"
           onChange={ ({ target }) => handleNumericValues(target.name, target.value) }
@@ -48,7 +72,7 @@ export default function Filter() {
         </select>
       </label>
       <label htmlFor="name">
-        Filtrar por nome
+        valor
         <input
           data-testid="value-filter"
           type="number"
@@ -60,9 +84,9 @@ export default function Filter() {
       <button
         data-testid="button-filter"
         type="button"
-        onClick={ filterValuesOnClick }
+        onClick={ handleClick }
       >
-        Adicionar filtro
+        Aplicar filtro
       </button>
     </section>
   );

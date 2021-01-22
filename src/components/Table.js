@@ -26,7 +26,7 @@ export default function Table() {
       <tbody>
 
         {
-          data.length ? data.map((planet) => {
+          data ? data.map((planet) => {
             const {
               name,
               rotation_period: rotationPeriod,
