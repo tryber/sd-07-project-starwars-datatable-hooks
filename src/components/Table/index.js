@@ -49,6 +49,28 @@ function Table() {
     return filteredResults;
   };
 
+  const handleOrder = (first, second) => {
+    const {
+      order: {
+        column,
+        sort,
+      },
+    } = filters;
+    const positive = 1;
+    const negative = -1;
+    const asc = (a, b) => {
+      if (Number.isNaN(parseFloat(a))) return a > b ? positive : negative;
+      return parseFloat(a) - parseFloat(b);
+    };
+    const desc = (a, b) => {
+      if (Number.isNaN(parseFloat(a))) return a > b ? negative : positive;
+      return parseFloat(b) - parseFloat(a);
+    };
+    return sort === 'ASC'
+      ? asc(first[column], second[column])
+      : desc(first[column], second[column]);
+  };
+
   return (
     <table>
       <thead>
@@ -71,6 +93,7 @@ function Table() {
       <tbody>
         {filterNumber()
           .filter(filterName)
+          .sort(handleOrder)
           .map((planet) => {
             const {
               name,
@@ -89,7 +112,7 @@ function Table() {
             } = planet;
             return (
               <tr key={ name }>
-                <td>{name}</td>
+                <td data-testid="planet-name">{name}</td>
                 <td>{rotationPeriod}</td>
                 <td>{orbitalPeriod}</td>
                 <td>{diameter}</td>

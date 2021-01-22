@@ -3,6 +3,7 @@ import { StarWarsContext } from '../../context/StarWarsContext';
 
 import NameFilter from './NameFilter';
 import ColumnFilter from './ColumnFilter';
+import Order from './Order';
 
 function Filters() {
   const {
@@ -13,6 +14,7 @@ function Filters() {
     <>
       <NameFilter />
       <ColumnFilter />
+      <Order />
       <div>
         {filterByNumericValues.map(({ column, comparison, value }) => (
           <div key={ column } data-testid="filter">

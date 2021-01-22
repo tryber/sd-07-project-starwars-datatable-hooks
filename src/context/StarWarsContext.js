@@ -13,6 +13,10 @@ function StarWarsProvider({ children }) {
       name: '',
     },
     filterByNumericValues: [],
+    order: {
+      column: 'name',
+      sort: 'ASC',
+    },
   });
 
   const setNameFilter = (filter) => {
@@ -45,6 +49,13 @@ function StarWarsProvider({ children }) {
     });
   };
 
+  const setOrder = (order) => {
+    setFilters((prevFilters) => ({
+      ...prevFilters,
+      order,
+    }));
+  };
+
   const context = {
     data,
     setData,
@@ -52,6 +63,7 @@ function StarWarsProvider({ children }) {
     setNameFilter,
     setColumnFilter,
     removeColumnFilter,
+    setOrder,
   };
 
   return (
