@@ -33,14 +33,14 @@ function StarWarsContextProvider({ children }) {
         number: filterNumber }) => {
         if (filterComparison === 'maior que') {
           setFilteredPlanets([...data.filter(
-            (planet) => planet[filterColumn] > 1 * filterNumber,
+            (planet) => planet[filterColumn] > filterNumber,
           )]);
         }
         if (filterComparison === 'menor que') {
           setFilteredPlanets([...data.filter(
-            (planet) => planet[filterColumn] < 1 * filterNumber,
+            (planet) => planet[filterColumn] < filterNumber,
           )]);
-          return data.filter((planet) => planet[filterColumn] < 1 * filterNumber);
+
         }
         if (filterComparison === 'igual a') {
           setFilteredPlanets([...data.filter(
