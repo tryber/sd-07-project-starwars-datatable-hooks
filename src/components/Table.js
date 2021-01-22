@@ -2,27 +2,39 @@ import React, { useContext } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 function Table() {
-  const { data, filters } = useContext(StarWarsContext);
-  const { filterByName } = filters;
-  const dataTags = data[0] || [];
-  const datasSelectedFilterHeader = Object.keys(dataTags).filter(
-    (item) => item !== 'residents',
-  );
-  const dataFilterResult = data.filter(
+  const { data, filters, dataHeader, filter } = useContext(StarWarsContext);
+
+  const { filterByName, filterByNumericValues } = filters;
+  const { comparison } = filterByNumericValues[0];
+  const { column } = filterByNumericValues[0];
+  const { value } = filterByNumericValues[0];
+  const dataFilterResultName = data.filter(
     (planet) => planet.name.toLowerCase().includes(filterByName.name.toLowerCase()),
   ) || [];
+
+  const filterCompare = () => {
+    if (comparison === 'igual a') {
+      return dataFilterResultName.filter((item) => item[column] === value);
+    } if (comparison === 'maior que') {
+      return dataFilterResultName.filter((item) => Number(item[column]) > value);
+    } if (comparison === 'menor que') {
+      return dataFilterResultName.filter((item) => item[column] <= value);
+    }
+  };
+
+  const tableRender = filter ? filterCompare() : dataFilterResultName;
 
   return (
     <div>
       <table border="1">
         <thead>
           <tr>
-            {datasSelectedFilterHeader.map((item, index) => (
+            {dataHeader.map((item, index) => (
               <th key={ index }>{item}</th>
             ))}
           </tr>
         </thead>
-        {dataFilterResult.map((planet, index) => (
+        {tableRender.map((planet, index) => (
           <tbody key={ index }>
             <tr>
               <td>{planet.name}</td>
