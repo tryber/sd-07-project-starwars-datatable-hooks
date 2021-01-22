@@ -36,7 +36,7 @@ function Table() {
           const stringLower = string.toLowerCase();
           let renderize = true;
           filterByNumericValues.forEach((element) => {
-            const { column, comparison, value } = element
+            const { column, comparison, value } = element;
             switch (comparison) {
             case 'menor que':
               if (!(Number(planet[column]) < Number(value))) {
