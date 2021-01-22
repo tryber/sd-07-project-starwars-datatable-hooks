@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 function FilterText() {
-  const { handlerChange, handlerClick } = useContext(StarWarsContext);
+  const { handlerChange, handlerClick, columns } = useContext(StarWarsContext);
 
   return (
     <div>
@@ -17,11 +17,7 @@ function FilterText() {
         data-testid="column-filter"
         onChange={ handlerChange }
       >
-        <option value="population">population</option>
-        <option value="orbital_period">orbital_period</option>
-        <option value="diameter">diameter</option>
-        <option value="rotation_period">rotation_period</option>
-        <option value="surface_water">surface_water</option>
+        {columns.map((value) => <option key={ value } value={ value }>{value}</option>)}
       </select>
       <select
         name="comparison"

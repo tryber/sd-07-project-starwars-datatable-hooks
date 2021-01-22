@@ -3,7 +3,13 @@ import StarWarsContext from '../context/StarWarsContext';
 
 function Table() {
   const { filteredData, isFetching } = useContext(StarWarsContext);
+  const zero = 0;
   if (isFetching) return <div>Loading...</div>;
+  if (filteredData.length === zero) {
+    return (
+      <div>Nenhum planeta corresponde a pesquisa</div>
+    );
+  }
   return (
     <table>
       <thead>
