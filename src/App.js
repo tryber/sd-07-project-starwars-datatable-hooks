@@ -2,11 +2,18 @@ import React, { useState, useEffect } from 'react';
 import './App.css';
 import SWContext from './context/SWContext';
 import Table from './components/Table';
+import NumericFilter from './components/NumericFilter';
 
 function App() {
   const [apiResponse, setResponse] = useState();
   const [nameFilter, setNameFilter] = useState();
-  const [filters, setFilters] = useState({ filterByName: { name: '' } });
+  const [numericFilter, setNumericFilter] = useState();
+  const [filters, setFilters] = useState(
+    {
+      filterByName: { name: '' },
+      filterByNumericValues: [],
+    },
+  );
   useEffect(() => {
     if (apiResponse === undefined) {
       const fetchFromApi = async () => {
@@ -22,16 +29,35 @@ function App() {
     }
   });
   useEffect(() => {
-    setFilters({ filterByName: { name: nameFilter } });
-  }, [nameFilter]);
+    if (filters.filterByNumericValues.length < 1 && numericFilter !== undefined) {
+      setFilters({
+        filterByName: { name: nameFilter },
+        filterByNumericValues: [numericFilter],
+      });
+    } else if (!(filters.filterByNumericValues[filters.filterByNumericValues.length - 1]
+      === numericFilter)) {
+      setFilters({
+        filterByName: { name: nameFilter },
+        filterByNumericValues: [...filters.filterByNumericValues, numericFilter],
+      });
+    } else if (nameFilter !== filters.filterByName.name) {
+      setFilters({
+        filterByName: { name: nameFilter },
+        filterByNumericValues: [],
+      });
+    }
+  }, [nameFilter, numericFilter, filters]);
   return (
     <div className="App">
-      <SWContext.Provider value={ { apiResponse, filters } }>
+      <SWContext.Provider
+        value={ { apiResponse, numericFilter, setNumericFilter, filters } }
+      >
         <input
           value={ nameFilter }
           onChange={ ({ target }) => setNameFilter(target.value) }
           data-testid="name-filter"
         />
+        <NumericFilter />
         <Table />
       </SWContext.Provider>
     </div>

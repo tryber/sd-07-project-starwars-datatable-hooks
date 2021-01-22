@@ -32,6 +32,24 @@ function Table() {
                     .filter((planet) => planet.name
                       .includes(value.filters.filterByName.name));
                 }
+                const zero = 0;
+                if (value.filters.filterByNumericValues.length > zero) {
+                  value.filters.filterByNumericValues.forEach((condition) => {
+                    if (condition.comparison === 'maior que') {
+                      shown = shown
+                        .filter((planet) => Number(planet[condition.column])
+                        > Number(condition.value));
+                    } else if (condition.comparison === 'menor que') {
+                      shown = shown
+                        .filter((planet) => Number(planet[condition.column])
+                        < Number(condition.value));
+                    } else if (condition.comparison === 'igual a') {
+                      shown = shown
+                        .filter((planet) => Number(planet[condition.column])
+                        === Number(condition.value));
+                    }
+                  });
+                }
                 return shown.map((planet) => (
                   <tr key={ planet.name }>
                     {Object.keys(planet)
