@@ -2,10 +2,12 @@ import React, { useContext } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 function Table() {
-  const { data, filters } = useContext(StarWarsContext);
+  const { filters, activateFilters } = useContext(StarWarsContext);
   const { name } = filters.filterByName;
   // console.log(data);
   // console.log(filters)
+
+  const filtersChanges = activateFilters();
 
   return (
     <div>
@@ -29,7 +31,8 @@ function Table() {
           </tr>
         </thead>
         <tbody>
-          {data.filter((item) => item.name.toLowerCase().includes(name.toLowerCase()))
+          {filtersChanges.filter((item) => item.name.toLowerCase()
+            .includes(name.toLowerCase()))
             .map((item, index) => (
               <tr key={ index }>
                 <td>{ item.name }</td>
