@@ -2,7 +2,8 @@ import React, { useContext } from 'react';
 import { StarWarsContext } from '../context/StarWarsContext';
 
 function Table() {
-  const { data } = useContext(StarWarsContext);
+  const { data, filters } = useContext(StarWarsContext);
+  const { filterByName } = filters;
   const chaves = [
     'name',
     'rotation_period',
@@ -30,18 +31,25 @@ function Table() {
         </tr>
       </thead>
       <tbody>
-        {data.map((planet, position) => (
-          <tr key={ position }>
-            {Object.entries(planet).map(([key, value]) => {
-              if (key === 'residents') {
-                return null;
-              }
-              return (
-                <td key={ key }>{value}</td>
-              );
-            })}
-          </tr>
-        ))}
+        {data.map((planet, position) => {
+          const string = planet.name;
+          const stringLower = string.toLowerCase();
+          if (!stringLower.includes(filterByName)) {
+            return null;
+          }
+          return (
+            <tr key={ position }>
+              {Object.entries(planet).map(([key, value]) => {
+                if (key === 'residents') {
+                  return null;
+                }
+                return (
+                  <td key={ key }>{value}</td>
+                );
+              })}
+            </tr>
+          );
+        })}
       </tbody>
     </table>
   );
