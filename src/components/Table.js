@@ -7,7 +7,7 @@ function Table() {
 
   useEffect(() => {
     fetchPlanets();
-  }, [fetchPlanets]);
+  }, []);
 
   if (data.length === EMPTY) {
     return (
@@ -26,9 +26,9 @@ function Table() {
         </thead>
         <tbody>
           {data.map((planet) => (
-            <tr key={ planet }>
-              {filteredHeader.map((key) => (
-                <td key={ key.value }>{planet[key]}</td>
+            <tr key={ planet.name }>
+              {filteredHeader.map((key, index) => (
+                <td key={ `key-${index}` }>{planet[key]}</td>
               ))}
             </tr>
           ))}
