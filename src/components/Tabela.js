@@ -3,7 +3,7 @@ import { StarWarsContext } from '../context/StarWarsContext';
 
 function Table() {
   const { data, filters } = useContext(StarWarsContext);
-  const { filterByName } = filters;
+  const { filterByName, filterByNumericValues } = filters;
   const chaves = [
     'name',
     'rotation_period',
@@ -34,7 +34,30 @@ function Table() {
         {data.map((planet, position) => {
           const string = planet.name;
           const stringLower = string.toLowerCase();
-          if (!stringLower.includes(filterByName)) {
+          let renderize = true;
+          filterByNumericValues.forEach((element) => {
+            const { column, comparison, value } = element
+            switch (comparison) {
+            case 'menor que':
+              if (!(Number(planet[column]) < Number(value))) {
+                renderize = false;
+              }
+              break;
+            case 'maior que':
+              if (!(Number(planet[column]) > Number(value))) {
+                renderize = false;
+              }
+              break;
+            case 'igual a':
+              if (!(Number(planet[column]) === Number(value))) {
+                renderize = false;
+              }
+              break;
+            default:
+              break;
+            }
+          });
+          if (!stringLower.includes(filterByName) || !renderize) {
             return null;
           }
           return (
