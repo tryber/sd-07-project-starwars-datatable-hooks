@@ -4,18 +4,31 @@ import StarWarsContext from './StarWarsContext';
 import { getPlanets } from '../services/starwarsAPI';
 
 const StarWarsProvider = ({ children }) => {
-  const [data, setPlanets] = useState([]);
+  const [data, setDataPlanets] = useState([]);
+  const [filterName, setFilterName] = useState('');
 
   useEffect(() => {
     async function fetchPlanets() {
       const { results } = await getPlanets();
-      setPlanets(results);
+      const dataPlanets = results;
+      setDataPlanets(dataPlanets);
     }
     fetchPlanets();
   });
 
+  const handleFilterByName = (input) => {
+    const { value } = input.target;
+    setFilterName(value);
+  };
+
   const context = {
     data, // resultado da api
+    filters: {
+      filterByName: {
+        name: filterName,
+      },
+    },
+    handleFilterByName,
   };
 
   return (

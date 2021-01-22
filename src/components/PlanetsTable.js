@@ -2,8 +2,11 @@ import React, { useContext } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 function PlanetsTable() {
-  const { data } = useContext(StarWarsContext);
+  const { data, filters: { filterByName: { name } } } = useContext(StarWarsContext);
   const ZERO = 0;
+
+  const dataFiltered = data.filter((planet) => planet.name.includes(name));
+
   return data.length > ZERO ? (
     <table>
       <tr>
@@ -21,7 +24,7 @@ function PlanetsTable() {
         <th>Edited</th>
         <th>url</th>
       </tr>
-      {data.map((planet) => (
+      {dataFiltered.map((planet) => (
         <tr key={ planet.name }>
           <td>{planet.name}</td>
           <td>{planet.rotation_period}</td>
