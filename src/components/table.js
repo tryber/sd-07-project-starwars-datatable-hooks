@@ -15,22 +15,19 @@ function Table() {
         films,
         gravity,
         name,
-        // surface_water,
         terrain,
         url,
-        // rotation_period,
-        // orbital_period,
         population,
       } = planet;
       return (
         <tr key={ name }>
+          <td>{name}</td>
           <td>{climate}</td>
           <td>{created}</td>
           <td>{diameter}</td>
           <td>{edited}</td>
           <td>{films}</td>
           <td>{gravity}</td>
-          <td>{name}</td>
           <td>{planet.surface_water}</td>
           <td>{terrain}</td>
           <td>{url}</td>
@@ -48,18 +45,37 @@ function Table() {
   useEffect(() => {
     renderRow(contextValue);
   }, [contextValue]);
+
+  const changeHandler = (target) => {
+    console.log(target.value);
+    const filtered = contextValue.filter((item) => item.name.includes(target.value)); // falta fazer alguma coisa com esse filtro.
+    console.log(filtered);
+    renderRow(filtered);
+  };
   return (
     <div>
+      <div>
+        <label htmlFor="search">
+          <input
+            type="text"
+            id="search"
+            name="search"
+            data-testid="name-filter"
+            placeholder="Digite aqui"
+            onChange={ ({ target }) => changeHandler(target) }
+          />
+        </label>
+      </div>
       <table>
         <thead>
           <tr>
+            <th>name</th>
             <th>Climate</th>
             <th>Created</th>
             <th>Diameter</th>
             <th>Edited</th>
             <th>Films</th>
             <th>Gravity</th>
-            <th>name</th>
             <th>Orbital Period</th>
             <th>Population</th>
             <th>Rotation Period</th>
