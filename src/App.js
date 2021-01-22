@@ -8,12 +8,15 @@ function App() {
     InputFilterName,
     PlanetsTable,
     FormFilterNumericValue,
-    ListFilterNumeric } = components;
+    ListFilterNumeric,
+    FormSort,
+  } = components;
   return (
     <Provider>
       <InputFilterName />
       <FormFilterNumericValue />
       <ListFilterNumeric />
+      <FormSort />
       <PlanetsTable />
     </Provider>
   );

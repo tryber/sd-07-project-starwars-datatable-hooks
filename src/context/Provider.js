@@ -15,6 +15,8 @@ class Provider extends Component {
       columnFilter: '',
       comparisonFilter: '',
       valueFilter: '',
+      columnSort: '',
+      valueSort: '',
       numericColumns: {
         population: 'Population',
         orbital_period: 'Orbital Period',
@@ -27,6 +29,10 @@ class Provider extends Component {
           name: '',
         },
         filterByNumericValues: [],
+        order: {
+          column: 'name',
+          sort: 'ASC',
+        },
       },
     };
 
@@ -34,10 +40,12 @@ class Provider extends Component {
     this.handleStarWarsPlanetsSuccess = this.handleStarWarsPlanetsSuccess.bind(this);
     this.handleStarWarsPlanetsFailure = this.handleStarWarsPlanetsFailure.bind(this);
     this.handleChangeFilterByName = this.handleChangeFilterByName.bind(this);
-    this.handleChangeFormFilter = this.handleChangeFormFilter.bind(this);
+    this.handleChangeFilter = this.handleChangeFilter.bind(this);
     this.addFilterByNumericValues = this.addFilterByNumericValues.bind(this);
     this.deleteFilterByNumericValues = this.deleteFilterByNumericValues.bind(this);
     this.applyFilters = this.applyFilters.bind(this);
+    this.applySort = this.applySort.bind(this);
+    this.updateSort = this.updateSort.bind(this);
   }
 
   fetchStarWarsPlanets() {
@@ -58,7 +66,7 @@ class Provider extends Component {
       isFetching: false,
       data: results,
       filteredData: results,
-    });
+    }, () => this.applySort());
   }
 
   handleStarWarsPlanetsFailure(error) {
@@ -79,7 +87,7 @@ class Provider extends Component {
     }), () => this.applyFilters());
   }
 
-  handleChangeFormFilter({ target: { name, value } }) {
+  handleChangeFilter({ target: { name, value } }) {
     this.setState({ [name]: value });
   }
 
@@ -142,14 +150,47 @@ class Provider extends Component {
     this.setState({ filteredData: newFilteredData });
   }
 
+  applySort() {
+    const { data, filters: { order: { column, sort } }, numericColumns } = this.state;
+    const newFilteredData = [...data];
+    const NEGATIVE_UM = -1;
+    const ZERO = 0;
+    newFilteredData.sort((a, b) => {
+      if (Object.prototype.hasOwnProperty.call(numericColumns, column)) {
+        return sort === 'ASC' ? a[column] - b[column] : b[column] - a[column];
+      }
+      if (a[column] > b[column]) return sort === 'ASC' ? 1 : NEGATIVE_UM;
+      if (a[column] < b[column]) return sort === 'ASC' ? NEGATIVE_UM : 1;
+      return ZERO;
+    });
+
+    this.setState({ filteredData: newFilteredData });
+  }
+
+  updateSort() {
+    this.setState((prevState) => ({
+      filters: {
+        ...prevState.filters,
+        order: {
+          column: prevState.columnSort,
+          sort: prevState.valueSort,
+        },
+      },
+    }), () => this.setState({
+      columnSort: '',
+      valueSort: '',
+    }, () => this.applySort()));
+  }
+
   render() {
     const contextValue = {
       ...this.state,
       getStarWarsPlanets: this.fetchStarWarsPlanets,
       changeFilterName: this.handleChangeFilterByName,
       addFilterByNumericValues: this.addFilterByNumericValues,
-      changeFormFilter: this.handleChangeFormFilter,
+      changeFilter: this.handleChangeFilter,
       deleteFilterByNumericValues: this.deleteFilterByNumericValues,
+      updateSort: this.updateSort,
     };
 
     const { children } = this.props;

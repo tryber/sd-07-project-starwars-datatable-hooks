@@ -8,7 +8,7 @@ const FormFilterNumericValue = () => {
     comparisonFilter,
     valueFilter,
     filters: { filterByNumericValues },
-    changeFormFilter,
+    changeFilter,
     addFilterByNumericValues,
   } = useContext(StarWarsContext);
 
@@ -26,7 +26,7 @@ const FormFilterNumericValue = () => {
         name="columnFilter"
         value={ columnFilter }
         data-testid="column-filter"
-        onChange={ (e) => changeFormFilter(e) }
+        onChange={ (e) => changeFilter(e) }
       >
         {/* <option disabled value="">{' '}</option> */}
         { Object.entries(availableFilters(numericColumns, filterByNumericValues))
@@ -38,7 +38,7 @@ const FormFilterNumericValue = () => {
         name="comparisonFilter"
         value={ comparisonFilter }
         data-testid="comparison-filter"
-        onChange={ (e) => changeFormFilter(e) }
+        onChange={ (e) => changeFilter(e) }
       >
         <option disabled value="">{' '}</option>
         <option value="maior que">maior que</option>
@@ -51,7 +51,7 @@ const FormFilterNumericValue = () => {
         name="valueFilter"
         value={ valueFilter }
         data-testid="value-filter"
-        onChange={ (e) => changeFormFilter(e) }
+        onChange={ (e) => changeFilter(e) }
       />
       <button
         type="button"
