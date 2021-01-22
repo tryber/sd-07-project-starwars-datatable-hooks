@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 const Table = () => {
-  const { data } = useContext(StarWarsContext);
+  const { data, novo } = useContext(StarWarsContext);
   return (
     <table>
       <thead>
@@ -25,7 +25,7 @@ const Table = () => {
         </tr>
       </thead>
       <tbody>
-        {data && data.map((planeta, index) => (
+        {novo && novo.map((planeta, index) => (
           <tr key={ index }>
             {Object.entries(planeta).map(([key, value]) => {
               if (key === 'residents') {
