@@ -1,9 +1,5 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto+Mono);
 
-body {
-  background: #eee;
-  box-sizing: border-box;
-}
 
 .main {
   top: 0;
@@ -569,11 +565,6 @@ h1, h2 {
 
 h2 {
   color: #666;
-}
-
-iframe {
-  margin: 50px auto;
-  display: block;
 }
 
 hr {

@@ -1,26 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import StarWarsContext from './StarWarsContext';
-import getPlanet from '../services/starWarsAPI';
+import useGlobal from '../hooks/useGlobal';
 
 const StarWarsProvider = ({ children }) => {
-  const [planets, setPlanets] = useState([]);
-  const [loading, setLoaing] = useState(true);
-
-  async function handlePlants() {
-    const recivedPlnets = await getPlanet();
-    setPlanets(recivedPlnets);
-    setLoaing(false);
-  }
-
-  useEffect(() => {
-    handlePlants();
-  }, []);
-
   const state = {
-    planets,
-    isLoading: loading,
+    globalState: useGlobal(),
   };
+
   return (
     <StarWarsContext.Provider value={ state }>
       {children}

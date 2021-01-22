@@ -7,7 +7,7 @@ const getPlanets = async () => {
     throw new Error(message);
   }
   const planets = await response.json();
-  return planets.results;
+  return planets;
 };
 
 export default getPlanets;
