@@ -6,6 +6,7 @@ const SearchBar = () => {
   return (
     <div>
       <label htmlFor="searchBar">
+        Pesquisar por nome:
         <input
           type="text"
           id="searchBar"

@@ -2,10 +2,7 @@ import React, { useContext } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 const Table = () => {
-  const { data, filters } = useContext(StarWarsContext);
-  let newData = [];
-  if (filters) newData = filters.filterByName.name;
-  if (!filters) newData = data;
+  const { data, newData } = useContext(StarWarsContext);
   const magicNumber = 0;
   return (
     <table>
