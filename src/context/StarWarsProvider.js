@@ -5,14 +5,39 @@ import RequestApi from '../services/RequestApi';
 
 const StarWarsProvider = ({ children }) => {
   const [data, setData] = useState();
-  const [filters, setFilter] = useState();
+  const [filter, setFilter] = useState({
+    filters: {
+      filterByName: { name: undefined },
+      filterByNumericValues: {
+        column: 'population',
+        comparison: 'maior que',
+        value: undefined,
+      },
+    } });
 
-  function filterByName({ target: { value } }) {
-    const name = data.filter((item) => item.name
-      .toLowerCase()
-      .includes(value.toLowerCase()));
-    if (data.includes(name)) return name;
-    setFilter({ ...filters, filterByName: { name } });
+  function filterByNames({ target: { value, name } }) {
+    setFilter({
+      ...filter,
+      filters: {
+        ...filter.filters,
+        filterByName: {
+          [name]: value,
+        },
+      },
+    });
+  }
+
+  function filterByNumeric({ target: { value, name } }) {
+    setFilter({
+      ...filter,
+      filters: {
+        ...filter.filters,
+        filterByNumericValues: {
+          ...filter.filters.filterByNumericValues,
+          [name]: value,
+        },
+      },
+    });
   }
 
   useEffect(() => {
@@ -25,9 +50,11 @@ const StarWarsProvider = ({ children }) => {
 
   const context = {
     data,
-    filters,
+    filter,
     setData,
-    filterByName,
+    setFilter,
+    filterByNames,
+    filterByNumeric,
   };
   return (
     <StarWarsContext.Provider value={ context }>
