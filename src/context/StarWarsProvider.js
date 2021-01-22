@@ -8,7 +8,9 @@ const StarWarsProvider = ({ children }) => {
   const [filters, setFilter] = useState();
 
   function filterByName({ target: { value } }) {
-    const name = data.filter((item) => item.name.includes(value));
+    const name = data.filter((item) => item.name
+      .toLowerCase()
+      .includes(value.toLowerCase()));
     if (data.includes(name)) return name;
     setFilter({ ...filters, filterByName: { name } });
   }
