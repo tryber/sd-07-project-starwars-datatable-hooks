@@ -21,7 +21,7 @@ function App() {
   return (
     <StarWarsContext.Provider value={ planetList }>
       <div className="App">
-        <header className="App-header">Star Wars Datatable </header>
+        <header>Star Wars Datatable </header>
         <Table />
       </div>
     </StarWarsContext.Provider>
