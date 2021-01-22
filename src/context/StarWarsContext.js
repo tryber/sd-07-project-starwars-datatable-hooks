@@ -5,14 +5,14 @@ const StarWarsContext = createContext();
 
 const StarWarsProvider = ({ children }) => {
   const [nameFilter, setNameFilter] = useState('');
-  const [filters, setFilters] = useState({'filterByName':{name:''}});
+  const [filters, setFilters] = useState({ filterByName: { name: '' } });
 
   const handleFilterInput = (event) => {
     setNameFilter(event.target.value);
     setFilters({
-      'filterByName': {name: nameFilter,},
+      filterByName: { name: nameFilter },
     });
-  }
+  };
 
   const context = {
     nameFilter,

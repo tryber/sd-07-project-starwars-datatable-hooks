@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect} from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { StarWarsContext } from '../context/StarWarsContext';
 
 function Table() {
@@ -8,8 +8,7 @@ function Table() {
 
   useEffect(() => {
     async function fetchPlanets() {
-      const response = 
-      await fetch('https://swapi-trybe.herokuapp.com/api/planets/');
+      const response = await fetch('https://swapi-trybe.herokuapp.com/api/planets/');
       const json = await response.json();
       setData(json.results);
     }
