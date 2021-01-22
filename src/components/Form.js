@@ -70,47 +70,38 @@ export default function Form() {
           </button>
         </div>
 
-        <select
-          data-testid="comparison-filter"
-          onChange={ (e) => setComparison(e.target.value) }
-          value={ comparison }
-        >
-          <option value="maior que">maior que</option>
-          <option value="menor que">menor que</option>
-          <option value="igual a">igual a</option>
-        </select>
-        <button
-          data-testid="filter"
-          type="button"
-          onClick={ () => {
-            setByNum({
-              populationType: type,
-              logic: comparison,
-              number: parseInt(value, 10),
-            });
-          } }
-        >
-          x
-        </button>
+        <div data-testid="filter">
+          <select
+            data-testid="comparison-filter"
+            onChange={ (e) => setComparison(e.target.value) }
+            value={ comparison }
+          >
+            <option value="maior que">maior que</option>
+            <option value="menor que">menor que</option>
+            <option value="igual a">igual a</option>
+          </select>
+          <button
+            type="button"
+            onClick={ () => {
+              setComparison('');
+              setByNum({
+                populationType: type,
+                logic: '',
+                number: parseInt(value, 10),
+              });
+            } }
+          >
+            x
+          </button>
+        </div>
+
         <input
           type="number"
           data-testid="value-filter"
           onChange={ (e) => setValue(e.target.value) }
           value={ value }
         />
-        <button
-          data-testid="filter"
-          type="button"
-          onClick={ () => {
-            setByNum({
-              populationType: type,
-              logic: comparison,
-              number: parseInt(value, 10),
-            });
-          } }
-        >
-          x
-        </button>
+
         <button type="submit" data-testid="button-filter" onClick={ handleClick }>
           acionar
         </button>

@@ -43,7 +43,7 @@ function useFilter(planetsArray) {
         break;
 
       default:
-        console.log('segunda variavel da funcao não foi passada');
+        setFilteredPlanets(planetsArray);
         break;
       }
     } else {
