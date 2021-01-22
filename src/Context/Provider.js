@@ -20,6 +20,11 @@ const Provider = ({ children }) => {
     <Context.Provider
       value={ {
         data,
+        filters: {
+          filterByName: {
+            name: '',
+          },
+        },
       } }
     >
       {children}
