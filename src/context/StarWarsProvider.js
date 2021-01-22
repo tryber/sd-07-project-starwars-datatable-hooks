@@ -5,6 +5,9 @@ import api from '../services/api';
 
 function StarWarsProvider({ children }) {
   const [data, setData] = useState([]);
+  const [filters, setFilters] = useState({
+    filterByName: { name: '' },
+  });
 
   const starWarsPlanets = async () => {
     const { results } = await api();
@@ -15,7 +18,15 @@ function StarWarsProvider({ children }) {
     starWarsPlanets();
   }, []);
 
-  const context = { data };
+  const handleChange = (e) => {
+    const inputValue = e.target.value;
+    setFilters({
+      ...filters,
+      filterByName: { name: inputValue },
+    });
+  };
+
+  const context = { data, handleChange, filters };
 
   return (
     <StarWarsContext.Provider value={ context }>
