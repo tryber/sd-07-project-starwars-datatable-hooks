@@ -10,6 +10,7 @@ function App() {
   const [filterSelect, setFilterSelect] = useState([]);
   const [proportion, setProportion] = useState([]);
   const [number, setNumber] = useState([]);
+  const [filteredPlanets, setFilteredPlanets] = useState([]);
 
   useEffect(() => {
     async function fetchData() {
@@ -19,12 +20,30 @@ function App() {
     fetchData();
   }, []);
 
+  function proportionCalculate(item) {
+    const value = parseInt(number, 10);
+    if (proportion === 'maior que') {
+      return item[filterSelect] > value;
+    }
+    if (proportion === 'menor que') {
+      return item[filterSelect] < value;
+    }
+    return item[filterSelect] === number;
+  }
+
+  function filteringPlanets() {
+    const getFilteredPlanets = planets.filter((item) => proportionCalculate(item));
+    setFilteredPlanets(getFilteredPlanets);
+    console.log(getFilteredPlanets);
+  }
+
   const context = {
     planets,
     text,
     filterSelect,
     proportion,
     number,
+    filteredPlanets,
   };
 
   return (
@@ -62,7 +81,7 @@ function App() {
       <button
         type="button"
         data-testid="button-filter"
-        onClick={() => console.log('click')}
+        onClick={ () => filteringPlanets() }
       >
         Adicionar Filtro
       </button>

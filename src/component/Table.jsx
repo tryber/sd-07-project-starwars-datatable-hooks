@@ -3,14 +3,19 @@ import StarWarsContext from '../context/StarWarsContext';
 import TableList from './TableList';
 
 export default function Table() {
-  const { planets, text, filterSelect, proportion, number } = useContext(StarWarsContext);
+  const { planets, text, filteredPlanets } = useContext(StarWarsContext);
 
-  function proportionCalculate(item) {
-    if (proportion === 'maior que') {
-      return item[filterSelect] > number;
-    } if (proportion === 'menor que') {
-      return item[filterSelect] < number;
-    } return item[filterSelect] === number;
+  function renderTable() {
+    const zero = 0;
+    if (filteredPlanets.length > zero) {
+      return (
+        filteredPlanets.map((item) => (<TableList planet={ item } key={ item } />))
+      );
+    }
+    return (
+      planets.filter((item) => item.name.includes(text))
+        .map((item) => (<TableList planet={ item } key={ item } />))
+    );
   }
 
   return (
@@ -33,10 +38,7 @@ export default function Table() {
         </tr>
       </thead>
       <tbody>
-        {planets
-          // .filter((item) => item.name.includes(text))
-          .filter((item) => proportionCalculate(item))
-          .map((item) => (<TableList planet={ item } key={ item } />))}
+        {renderTable()}
       </tbody>
     </table>
   );
