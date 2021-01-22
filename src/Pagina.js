@@ -49,7 +49,6 @@ function Pagina() {
           data-testid="column-filter"
           onChange={ (event) => setcolumn(event.target.value) }
         >
-          <option value="">escolha</option>
           {lista.map((nome) => {
             let render = true;
             filterByNumericValues.forEach((element) => {
@@ -72,7 +71,6 @@ function Pagina() {
           data-testid="comparison-filter"
           onChange={ (event) => setcomparison(event.target.value) }
         >
-          <option value="">escolha</option>
           <option value="igual a">igual a</option>
           <option value="maior que">maior que</option>
           <option value="menor que">menor que</option>
