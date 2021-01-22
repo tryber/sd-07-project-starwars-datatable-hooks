@@ -1,12 +1,12 @@
 .form-container {
   align-items: center;
-  background-color: burlywood;
+  background-color: whitesmoke;
   display: flex;
   flex-flow: column nowrap;
   justify-content: center;
-  margin: 20px 0;
+  margin: 20px auto;
   padding: 20px;
-  width: 100%;
+  max-width: max-content;
 }
 
 .input-container {
@@ -17,7 +17,37 @@
   justify-content: center;
 }
 
-.input-container input {
+.input-container input, select, option {
   margin: 10px;
+  padding: 5px 0;
+}
+
+fieldset {
+  font-weight: 700;
+  padding: 20px;
+}
+
+button {
+  background-color: gray;
+  color: white;
+  font-weight: 700;
+  margin-top: 20px;
+  padding: 10px;
+}
+
+button:hover {
+  background-color: black;
+}
+
+.filter-container-div {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: baseline;
+  margin: 10px;
+}
+
+.filter-container-div button {
+  margin: 5px;
   padding: 5px;
 }

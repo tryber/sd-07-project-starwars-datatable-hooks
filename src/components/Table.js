@@ -1,21 +1,21 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 import '../css/Table.css';
 
 function Table() {
   const {
-    planets,
-    filterPlanets,
-    setfilterPlanets,
     isFetching,
-    keysPlanets,
-    setkeysPlanets,
-    filters: { filterByName: { name } },
+    planets,
+    filters,
+    filters: { filterByName: { name }, filterByNumericValues },
   } = useContext(StarWarsContext);
+
+  const [filterPlanets, setfilterPlanets] = useState(planets);
+  const [keysPlanets, setkeysPlanets] = useState([]);
   
   const keysTable = () => {
     if (!isFetching) {
-      console.log(planets);
+      // console.log(planets);
       const keys = Object.keys(planets[0]).filter((key) => key !== 'residents');
       setkeysPlanets(keys);
       // console.log(keys);
@@ -25,9 +25,23 @@ function Table() {
   useEffect(keysTable, []);
 
   useEffect(() => {
-    const newPlanets = planets.filter((planet) => planet.name.includes(name));
+    let newPlanets = planets.filter((planet) => planet.name.includes(name));
+    filterByNumericValues.map(({ comparison, column, value }) => {
+      switch (comparison) {
+        case 'maior que':
+          console.log('entrou');
+          return newPlanets = newPlanets.filter((planet) => planet[column] > value );
+        case 'menor que':
+          return newPlanets = newPlanets.filter((planet) => planet[column] < value );
+        case 'igual a':
+          return newPlanets = newPlanets.filter((planet) => planet[column] === value );
+        default:
+          return newPlanets;
+      }
+    })
+    console.log(newPlanets);
     setfilterPlanets(newPlanets);
-  }, [name]);
+  }, [filters]);
 
   return (
     <table>

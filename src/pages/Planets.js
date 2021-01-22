@@ -11,7 +11,9 @@ function Planets() {
   return (
     <main className="main-container" >
       <FilterTable />
-      <Table />
+      <div className="div-table">
+        <Table />
+      </div>
     </main>
   )
 }

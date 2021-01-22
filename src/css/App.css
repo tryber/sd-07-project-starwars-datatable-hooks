@@ -9,18 +9,21 @@ body {
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
   background-color: black;
-  display: flex;
-  flex-flow: column nowrap;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
-  justify-content: center;
-  margin: auto;
-  max-height: 100vh;
-  max-width: 100vw;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+.App {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  margin: auto;
+  height: 100vh;
+  width: 100vw;
 }
