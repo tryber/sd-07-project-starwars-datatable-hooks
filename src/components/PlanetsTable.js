@@ -13,7 +13,35 @@ function PlanetsTable() {
     if (!data.length) fetchApiData();
   }, [data, fetchApiData]);
 
-  const { filterByName: { name } } = filters;
+  const { filterByName: { name }, filterByNumericValues } = filters;
+
+  const filteredByValues = () => {
+    let newData = [...data];
+    filterByNumericValues.forEach(({ column, comparison, value }) => {
+      newData = newData.filter((planet) => {
+        if (comparison === 'maior que') {
+          return parseFloat(planet[column]) > parseFloat(value);
+        }
+        if (comparison === 'menor que') {
+          return parseFloat(planet[column]) < parseFloat(value);
+        }
+        return parseFloat(planet[column]) === parseFloat(value);
+      });
+    });
+    return newData;
+  };
+
+  const filteredByName = () => {
+    const planets = (!filterByNumericValues.length) ? data : filteredByValues();
+    return (
+      planets.filter((planet) => planet.name.includes(name)).map((planet) => (
+        <tr key={ planet.name }>
+          { Object.entries(planet).filter((entry) => entry[0] !== 'residents')
+            .map((entry) => <td key={ entry[0] }>{entry[1]}</td>) }
+        </tr>
+      ))
+    );
+  };
 
   return (
     <div>
@@ -37,12 +65,7 @@ function PlanetsTable() {
           </tr>
         </thead>
         <tbody>
-          { data.filter((planet) => planet.name.includes(name)).map((planet) => (
-            <tr key={ planet.name }>
-              { Object.entries(planet).filter((entry) => entry[0] !== 'residents')
-                .map((entry) => <td key={ entry[0] }>{entry[1]}</td>) }
-            </tr>
-          )) }
+          { filteredByName() }
         </tbody>
       </table>
     </div>

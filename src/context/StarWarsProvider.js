@@ -11,6 +11,7 @@ function Provider({ children }) {
     filterByName: {
       name: '',
     },
+    filterByNumericValues: [],
   });
 
   const fetchApiData = async () => {
@@ -26,6 +27,13 @@ function Provider({ children }) {
       filterByName: {
         name: value,
       },
+    });
+  };
+
+  const handleFilterByValues = (filter) => {
+    setFilters({
+      ...filters,
+      filterByNumericValues: filters.filterByNumericValues.concat(filter),
     });
   };
 
@@ -45,6 +53,7 @@ function Provider({ children }) {
     handleIsFetching,
     handleData,
     handleFilterByName,
+    handleFilterByValues,
   };
 
   return (
