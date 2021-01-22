@@ -10,7 +10,7 @@ const StarWarsProvider = ({ children }) => {
   const [filterComparison, setComparison] = useState('');
   const [filterValue, setValue] = useState('');
   const [filteredData, setFilteredData] = useState(data);
-  const [filterObject, setFilterObject] = useState({});
+  // const [filterObject, setFilterObject] = useState({});
   const [filtersArray, setFiltersArray] = useState([]);
 
   useEffect(() => {
@@ -46,11 +46,11 @@ const StarWarsProvider = ({ children }) => {
   const filterDataButton = () => {
     if (filterColumn !== '' && filterComparison !== '' && filterValue !== '') {
       // console.log(filterColumn);
-      setFilterObject({
-        column: filterColumn,
-        comparison: filterComparison,
-        value: filterValue,
-      });
+      // setFilterObject({
+      //   column: filterColumn,
+      //   comparison: filterComparison,
+      //   value: filterValue,
+      // });
       // console.log(filterObject);
       // add o obj ao array de filtros
       setFiltersArray([...filtersArray, {
