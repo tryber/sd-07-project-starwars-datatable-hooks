@@ -1,38 +1,23 @@
 import React, { createContext, useState } from 'react';
 import PropTypes from 'prop-types';
-import getPlanets from '../services/planetsAPI';
 
 const StarWarsContext = createContext();
 
 const StarWarsProvider = ({ children }) => {
-  const [isFetching, setIsFetching] = useState(false);
-  const [data, setData] = useState([]);
-  const [error, setError] = useState('');
-  const [filters, setFilters] = useState({ filterByName });
-  const [filterByName, setFilterByName] = useState({name: ''});
+  const [nameFilter, setNameFilter] = useState('');
+  const [filters, setFilters] = useState({'filterByName':{name:''}});
 
-  const handleSuccess = (response) => {
-    setData(response.results);
-  };
-
-  const handleFailure = (response) => {
-    setError(response);
-  };
-
-  async function fetchPlanets() {
-    setIsFetching(true);
-    getPlanets()
-      .then(handleSuccess, handleFailure);
-    setIsFetching(false);
+  const handleFilterInput = (event) => {
+    setNameFilter(event.target.value);
+    setFilters({
+      'filterByName': {name: nameFilter,},
+    });
   }
 
   const context = {
-    isFetching,
-    data,
-    error,
-    fetchPlanets,
+    nameFilter,
+    handleFilterInput,
     filters,
-    setFilters,
   };
 
   return (

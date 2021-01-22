@@ -1,11 +1,18 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useState, useEffect} from 'react';
 import { StarWarsContext } from '../context/StarWarsContext';
 
 function Table() {
-  const { data, fetchPlanets } = useContext(StarWarsContext);
+  const { nameFilter } = useContext(StarWarsContext);
+  const [data, setData] = useState([]);
   const EMPTY = 0;
 
   useEffect(() => {
+    async function fetchPlanets() {
+      const response = 
+      await fetch('https://swapi-trybe.herokuapp.com/api/planets/');
+      const json = await response.json();
+      setData(json.results);
+    }
     fetchPlanets();
   }, []);
 
@@ -25,7 +32,7 @@ function Table() {
           </tr>
         </thead>
         <tbody>
-          {data.map((planet) => (
+          {data.filter((item) => item.name.includes(nameFilter)).map((planet) => (
             <tr key={ planet.name }>
               {filteredHeader.map((key, index) => (
                 <td key={ `key-${index}` }>{planet[key]}</td>
