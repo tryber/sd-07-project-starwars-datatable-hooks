@@ -5,7 +5,9 @@ import StarWarsContext from './StarWarsContext';
 function StarWarsContextProvider({ children }) {
   const [data, setData] = useState([]);
   const [inputName, setInputName] = useState('');
+  const [inputNumbers, setInputNumbers] = useState([]);
   const [filterdPlanets, setFilteredPlanets] = useState([]);
+
   useEffect(() => {
     const fetchPlanets = async () => {
       const response = await fetch('https://swapi-trybe.herokuapp.com/api/planets/');
@@ -22,6 +24,34 @@ function StarWarsContextProvider({ children }) {
     setFilteredPlanets(filter);
   }, [data, inputName]);
 
+  useEffect(() => {
+    const zero = 0;
+    if (inputNumbers.length > zero) {
+      inputNumbers.map(({
+        column: filterColumn,
+        comparison: filterComparison,
+        number: filterNumber }) => {
+        if (filterComparison === 'maior que') {
+          setFilteredPlanets([...data.filter(
+            (planet) => planet[filterColumn] > 1 * filterNumber,
+          )]);
+        }
+        if (filterComparison === 'menor que') {
+          setFilteredPlanets([...data.filter(
+            (planet) => planet[filterColumn] < 1 * filterNumber,
+          )]);
+          return data.filter((planet) => planet[filterColumn] < 1 * filterNumber);
+        }
+        if (filterComparison === 'igual a') {
+          setFilteredPlanets([...data.filter(
+            (planet) => Number(planet[filterColumn]) === filterNumber,
+          )]);
+        }
+        return data;
+      });
+    }
+  }, [data, inputNumbers, setFilteredPlanets]);
+
   return (
     <StarWarsContext.Provider
       value={ {
@@ -29,6 +59,9 @@ function StarWarsContextProvider({ children }) {
         inputName,
         setInputName,
         filterdPlanets,
+        inputNumbers,
+        setInputNumbers,
+        setFilteredPlanets,
       } }
     >
       {children}
