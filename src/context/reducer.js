@@ -23,6 +23,23 @@ const reducer = (state, action) => {
       },
     };
 
+  case 'REMOVE_NUM_FILTER':
+    return {
+      ...state,
+      filters: {
+        ...state.filters,
+        filterByNumericValues: state.filters.filterByNumericValues.filter(
+          (element) => element.column !== action.column,
+        ),
+      },
+    };
+
+  case 'SET_SORT':
+    return {
+      ...state,
+      order: { ...state.order, [action.field]: action.value },
+    };
+
   case 'SET_DATA':
     return {
       ...state,

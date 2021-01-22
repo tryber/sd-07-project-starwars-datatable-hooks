@@ -6,6 +6,10 @@ const initState = {
     filterByNumericValues: [],
   },
   data: [],
+  order: {
+    column: 'name',
+    sort: 'ASC',
+  },
 };
 
 export default initState;
