@@ -7,9 +7,17 @@ const FormFilterNumericValue = () => {
     columnFilter,
     comparisonFilter,
     valueFilter,
+    filters: { filterByNumericValues },
     changeFormFilter,
     addFilterByNumericValues,
   } = useContext(StarWarsContext);
+
+  const availableFilters = (columnsObject, filterList) => {
+    filterList.forEach(({ column }) => {
+      delete columnsObject[column];
+    });
+    return columnsObject;
+  };
 
   return (
     <form>
@@ -20,9 +28,10 @@ const FormFilterNumericValue = () => {
         onChange={ (e) => changeFormFilter(e) }
       >
         {/* <option disabled value="">{' '}</option> */}
-        { Object.entries(numericColumns).map(([key/* , value */]) => (
-          <option key={ key } value={ key }>{key}</option>
-        ))}
+        { Object.entries(availableFilters(numericColumns, filterByNumericValues))
+          .map(([key/* , value */]) => (
+            <option key={ key } value={ key }>{key}</option>
+          ))}
       </select>
       <select
         name="comparisonFilter"
