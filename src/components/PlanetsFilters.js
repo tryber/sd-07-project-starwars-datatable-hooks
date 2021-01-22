@@ -8,7 +8,23 @@ function PlanetsFilters() {
     handleInputComparison,
     handleInputValue,
     filterDataButton,
+    filters: { filterByNumericValues },
   } = useContext(StarWarsContext);
+
+  const optionsColumn = [
+    'population',
+    'orbital_period',
+    'diameter',
+    'rotation_period',
+    'surface_water',
+  ];
+  const ONE = 1;
+  // let newOptionsColumn = [];
+
+  // if (filterByNumericValues.length > ONE) {
+  //   newOptionsColumn = optionsColumn
+  //     .filter((option) => (option !== filterByNumericValues[0].column));
+  // }
 
   return (
     <div>
@@ -23,10 +39,13 @@ function PlanetsFilters() {
         onChange={ handleInputColumn }
       >
         <option value="population">population</option>
-        <option value="orbital_period">orbital_period</option>
-        <option value="diameter">diameter</option>
-        <option value="rotation_period">rotation_period</option>
-        <option value="surface_water">surface_water</option>
+        { filterByNumericValues.length > ONE
+          ? optionsColumn
+            .filter((option) => (option !== filterByNumericValues[0].column))
+            .map((option) => (
+              <option key={ option } value={ option }>{ option }</option>))
+          : optionsColumn.map((option) => (
+            <option key={ option } value={ option }>{ option }</option>))}
       </select>
       <select
         data-testid="comparison-filter"

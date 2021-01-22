@@ -10,6 +10,8 @@ const StarWarsProvider = ({ children }) => {
   const [filterComparison, setComparison] = useState('');
   const [filterValue, setValue] = useState('');
   const [filteredData, setFilteredData] = useState(data);
+  const [filterObject, setFilterObject] = useState({});
+  const [filtersArray, setFiltersArray] = useState([]);
 
   useEffect(() => {
     async function fetchPlanets() {
@@ -43,6 +45,20 @@ const StarWarsProvider = ({ children }) => {
 
   const filterDataButton = () => {
     if (filterColumn !== '' && filterComparison !== '' && filterValue !== '') {
+      // console.log(filterColumn);
+      setFilterObject({
+        column: filterColumn,
+        comparison: filterComparison,
+        value: filterValue,
+      });
+      // console.log(filterObject);
+      // add o obj ao array de filtros
+      setFiltersArray([...filtersArray, {
+        column: filterColumn,
+        comparison: filterComparison,
+        value: filterValue,
+      }]);
+      // console.log(filtersArray);
       switch (filterComparison) {
       case 'maior que':
         setFilteredData(data
@@ -72,13 +88,14 @@ const StarWarsProvider = ({ children }) => {
       filterByName: {
         name: filterName,
       },
-      filterByNumericValues: [
-        {
-          column: filterColumn,
-          comparison: filterComparison,
-          value: filterValue,
-        },
-      ],
+      // filterByNumericValues: [
+      //   {
+      //     column: filterColumn,
+      //     comparison: filterComparison,
+      //     value: filterValue,
+      //   },
+      // ],
+      filterByNumericValues: filtersArray,
     },
     handleFilterByName,
     handleInputColumn,
