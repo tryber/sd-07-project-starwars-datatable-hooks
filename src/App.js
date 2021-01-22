@@ -1,15 +1,13 @@
 import React from 'react';
-import { StarWarsContext } from './context/StarWarsContext';
-import { Filters, Table } from './components/index';
+import StarWars from './pages/StarWars';
+import Provider from './context/Provider';
 import './App.css';
 
 function App() {
   return (
-    <div>
-      <Filters />
-      <Table />
-    </div>
-
+    <Provider>
+      <StarWars />
+    </Provider>
   );
 }
 
