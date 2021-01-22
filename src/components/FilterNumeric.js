@@ -9,6 +9,7 @@ const FilterNumeric = () => {
     changeNumber,
     comparison,
     number,
+    column,
     objectFinal,
   } = useContext(StarWarsContext);
   const arrayColumn = [
@@ -26,14 +27,10 @@ const FilterNumeric = () => {
           id="columnFilter"
           name="columnFilter"
           onChange={ (e) => changeColumn(e) }
+          value={ column }
         >
           {arrayColumn.filter((col) => col !== objectFinal.column)
             .map((option, index) => <option key={ index }>{ option }</option>)}
-          {/* <option value="population">population</option>
-          <option value="orbital_period">orbital_period</option>
-          <option value="diameter">diameter</option>
-          <option value="rotation_period">rotation_period</option>
-          <option value="surface_water">surface_water</option> */}
         </select>
       </label>
       <label htmlFor="comparison">

@@ -32,7 +32,6 @@ const StarWarsProvider = ({ children }) => {
   }
 
   function onClickFilterBtn() {
-    console.log(column, comparison, number);
     setObjectFinal({
       column,
       comparison,
