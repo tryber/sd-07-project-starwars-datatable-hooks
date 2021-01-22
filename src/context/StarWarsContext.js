@@ -1,10 +1,10 @@
 import React, { createContext, useState, useEffect, useReducer } from 'react';
+import propTypes from 'prop-types';
 
 const StarWarsContext = createContext();
 
 const StarWarsProvider = ({ children }) => {
-  
-  const initialFilterState = { 
+  const initialFilterState = {
     name: '',
     column: 'population',
     comparison: 'maior que',
@@ -15,48 +15,48 @@ const StarWarsProvider = ({ children }) => {
   const filterReducer = (state, action) => {
     const { type, value } = action;
     switch (type) {
-      case 'name':
+    case 'name':
+      return {
+        ...state,
+        name: value,
+      };
+    case 'column':
+      return {
+        ...state,
+        column: value,
+      };
+    case 'comparison':
+      return {
+        ...state,
+        comparison: value,
+      };
+    case 'value':
+      return {
+        ...state,
+        value,
+      };
+    case 'apply-filter':
+      if (state.applyFilter) {
         return {
           ...state,
-          name: value, 
+          applyFilter: false,
         };
-      case 'column':
-        return {
-          ...state,
-          column: value,
-        };
-      case 'comparison':
-        return {
-          ...state,
-          comparison: value,
-        }
-      case 'value':
-        return {
-          ...state,
-          value: value,
-        }
-      case 'apply-filter':
-        if (state.applyFilter) {
-          return {
-            ...state,
-            applyFilter: false,
-          }
-        }
-        return {
-          ...state,
-          applyFilter: true,
-        }
-      default:
-        return state;
+      }
+      return {
+        ...state,
+        applyFilter: true,
+      };
+    default:
+      return state;
     }
-  }
-  
+  };
+
   const [data, setData] = useState([]);
   const [filter, dispatch] = useReducer(filterReducer, initialFilterState);
 
   async function fetchData() {
     const { results } = await fetch('https://swapi-trybe.herokuapp.com/api/planets/')
-    .then(response => response.json());
+      .then((response) => response.json());
     setData(results);
   }
 
@@ -75,6 +75,10 @@ const StarWarsProvider = ({ children }) => {
       { children }
     </StarWarsContext.Provider>
   );
-}
+};
 
 export { StarWarsContext, StarWarsProvider as Provider };
+
+StarWarsProvider.propTypes = {
+  children: propTypes.objectOf(propTypes.object),
+}.isRequired;

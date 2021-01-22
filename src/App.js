@@ -4,9 +4,9 @@ import { Provider } from './context/StarWarsContext';
 
 function App() {
   return (
-  <Provider>
-    <StarWarsPlanets />
-  </Provider>
+    <Provider>
+      <StarWarsPlanets />
+    </Provider>
   );
 }
 

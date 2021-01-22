@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import propTypes from 'prop-types';
 import { StarWarsContext } from '../context/StarWarsContext';
 
 function Table({ planets }) {
@@ -8,9 +9,9 @@ function Table({ planets }) {
   const filterByName = planets.filter((planet) => planet
     .name.includes(name) === true);
   const filterWithNumbers = filterByName.filter((planet) => {
-    const parameter = planet[`${ column }`];
-    const parameterToNumber = parseInt(parameter);
-    const valueToNumber = parseInt(value);
+    const parameter = planet[`${column}`];
+    const parameterToNumber = parseInt(parameter, 10);
+    const valueToNumber = parseInt(value, 10);
     if (comparison === 'maior que') {
       return parameterToNumber > valueToNumber;
     }
@@ -18,8 +19,8 @@ function Table({ planets }) {
       return parameterToNumber < valueToNumber;
     }
     return parameterToNumber === valueToNumber;
-    });
-  
+  });
+
   const renderPlanets = (array) => (
     array.map((planet) => (
       <tr key={ planet.name }>
@@ -38,7 +39,7 @@ function Table({ planets }) {
         <td>{ planet.url }</td>
       </tr>
     ))
-  )
+  );
 
   return (
     <div className="table-container">
@@ -59,8 +60,8 @@ function Table({ planets }) {
             <th>Edited</th>
             <th>URL</th>
           </tr>
-            { !applyFilter ? planets.length > arrayLength && renderPlanets(filterByName) :
-              planets.length > arrayLength && renderPlanets(filterWithNumbers) }
+          { !applyFilter ? planets.length > arrayLength && renderPlanets(filterByName)
+            : planets.length > arrayLength && renderPlanets(filterWithNumbers) }
         </tbody>
       </table>
     </div>
@@ -68,3 +69,7 @@ function Table({ planets }) {
 }
 
 export default Table;
+
+Table.propTypes = {
+  planets: propTypes.arrayOf(propTypes.object),
+}.isRequired;

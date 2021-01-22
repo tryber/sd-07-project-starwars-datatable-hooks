@@ -1,1 +1,1 @@
-export { default as StarWarsPlanets } from './StarWarsPlanets';
+// export { default as StarWarsPlanets } from './StarWarsPlanets';

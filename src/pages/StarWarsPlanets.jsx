@@ -5,16 +5,16 @@ import Table from '../components/Table';
 function StarWarsPlanets() {
   const { data, filter, dispatch } = useContext(StarWarsContext);
   const { name, column, comparison, value } = filter;
-  
+
   const handleChange = ({ target }) => {
-    const { name, value } = target;
-    dispatch({ type: name, value });
-  }
+    dispatch({ type: target.name, value: target.value });
+  };
 
   return (
     <div className="star-wars-planets">
       <h1>Star Wars Planets</h1>
-      Search: <input
+      Search:
+      <input
         name="name"
         type="text"
         value={ name }
@@ -60,7 +60,7 @@ function StarWarsPlanets() {
       </button>
       <span data-testid="column-sorte" />
       <span data-testid="planet-name" />
-      <Table planets={ data }/>
+      <Table planets={ data } />
     </div>
   );
 }
