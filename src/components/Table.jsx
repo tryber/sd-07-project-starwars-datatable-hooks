@@ -50,11 +50,28 @@ function Table() {
                     }
                   });
                 }
+                const mn = -1;
+                shown.sort((a, b) => ((a.name > b.name) ? 1 : mn));
+                if (value.filters.order) {
+                  if (value.filters.order.sort === 'ASC') {
+                    shown.sort((a, b) => ((Number(b[value.filters.order.column])
+                      < Number(a[value.filters.order.column])) ? 1 : mn));
+                  } else if (value.filters.order.sort === 'DESC') {
+                    shown.sort((a, b) => ((Number(a[value.filters.order.column])
+                      < Number(b[value.filters.order.column])) ? 1 : mn));
+                  }
+                }
                 return shown.map((planet) => (
                   <tr key={ planet.name }>
                     {Object.keys(planet)
                       .filter((key) => key !== 'residents')
-                      .map((key) => <td key={ key }>{planet[key]}</td>)}
+                      .map((key) => (
+                        <td
+                          data-testid={ `planet-${key}` }
+                          key={ key }
+                        >
+                          {planet[key]}
+                        </td>))}
                   </tr>
                 ));
               }

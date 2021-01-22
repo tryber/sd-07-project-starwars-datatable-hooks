@@ -8,12 +8,27 @@ function App() {
   const [apiResponse, setResponse] = useState();
   const [nameFilter, setNameFilter] = useState();
   const [numericFilter, setNumericFilter] = useState();
+  const [columnSelected, setColumnSelected] = useState();
+  const [orientationSelected, setOrientationSelected] = useState();
+  const [sort, setSort] = useState();
   const [filters, setFilters] = useState(
     {
       filterByName: { name: '' },
       filterByNumericValues: [],
+      order: {
+        column: '',
+        sort: 'ASC',
+      },
     },
   );
+  const clickSort = () => {
+    console.log('clicksort');
+    setSort({ column: columnSelected, sort: orientationSelected });
+    console.log(sort);
+  };
+  const columnOptions = [
+    'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water',
+  ];
   useEffect(() => {
     if (apiResponse === undefined) {
       const fetchFromApi = async () => {
@@ -31,22 +46,30 @@ function App() {
   useEffect(() => {
     if (filters.filterByNumericValues.length < 1 && numericFilter !== undefined) {
       setFilters({
+        order: sort,
         filterByName: { name: nameFilter },
         filterByNumericValues: [numericFilter],
       });
     } else if (!(filters.filterByNumericValues[filters.filterByNumericValues.length - 1]
       === numericFilter) && numericFilter !== undefined) {
       setFilters({
+        order: sort,
         filterByName: { name: nameFilter },
         filterByNumericValues: [...filters.filterByNumericValues, numericFilter],
       });
     } else if (nameFilter !== filters.filterByName.name) {
       setFilters({
+        order: sort,
         filterByName: { name: nameFilter },
         filterByNumericValues: [],
       });
+    } else if (filters.order !== sort) {
+      setFilters({
+        ...filters,
+        order: sort,
+      });
     }
-  }, [nameFilter, numericFilter, filters]);
+  }, [nameFilter, numericFilter, filters, sort]);
   return (
     <div className="App">
       <SWContext.Provider
@@ -74,7 +97,36 @@ function App() {
               x
             </button>
           </div>))}
-        <NumericFilter />
+        <select
+          data-testid="column-sort"
+          onChange={ ({ target }) => setColumnSelected(target.value) }
+        >
+          {
+            columnOptions.map((option, index) => <option key={ index }>{option}</option>)
+          }
+        </select>
+        <input
+          type="radio"
+          name="sort"
+          onChange={ ({ target }) => setOrientationSelected(target.value) }
+          value="ASC"
+          data-testid="column-sort-input-asc"
+        />
+        <input
+          type="radio"
+          name="sort"
+          onChange={ ({ target }) => setOrientationSelected(target.value) }
+          value="DESC"
+          data-testid="column-sort-input-desc"
+        />
+        <button
+          data-testid="column-sort-button"
+          onClick={ () => clickSort() }
+          type="button"
+        >
+          sort
+        </button>
+        <NumericFilter columnOptions={ columnOptions } />
         <Table />
       </SWContext.Provider>
     </div>

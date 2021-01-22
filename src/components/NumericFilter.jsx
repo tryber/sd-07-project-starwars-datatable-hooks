@@ -1,7 +1,8 @@
 import React, { useContext, useState } from 'react';
+import PropTypes from 'prop-types';
 import SWContext from '../context/SWContext';
 
-function NumericFilter() {
+function NumericFilter(props) {
   const context = useContext(SWContext);
   const [column, setColumn] = useState();
   const [comparison, setComparison] = useState();
@@ -9,9 +10,7 @@ function NumericFilter() {
   const btnClick = () => {
     context.setNumericFilter({ column, comparison, value });
   };
-  const columnOptions = [
-    'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water',
-  ];
+  const { columnOptions } = props;
   return (
     <div>
       <select
@@ -58,5 +57,8 @@ function NumericFilter() {
     </div>
   );
 }
+NumericFilter.propTypes = {
+  columnOptions: PropTypes.arrayOf(String).isRequired,
+};
 
 export default NumericFilter;
