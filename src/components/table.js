@@ -4,13 +4,18 @@ import StarWarsContext from '../context/StarWarsContext';
 function Table() {
   const zero = 0;
   const [elements, setElements] = useState([]);
-  const [column, setColumn] = useState('');
+  const [coluna, setColuna] = useState('');
   const [comp, setComparador] = useState('');
   const [num, setSearchValue] = useState(zero);
-  const contextValue = useContext(StarWarsContext);
+  const { context } = useContext(StarWarsContext);
+  const { planetList } = context;
+  if (context) {
+    // const { filterByNumericValues } = filters;
+    // const { column, comparison, value } = filterByNumericValues;
+  }
 
-  const renderRow = (planetList) => {
-    const elementList = planetList.map((planet) => {
+  const renderRow = (list) => {
+    const elementList = list.map((planet) => {
       const {
         climate,
         created,
@@ -46,29 +51,40 @@ function Table() {
   };
 
   useEffect(() => {
-    renderRow(contextValue);
-  }, [contextValue]);
+    renderRow(planetList);
+  }, [context, planetList]);
 
   const handleClick = () => {
     let filtered = [];
-    console.log(column, comp, num);
-    if (comp === 'igual') {
-      filtered = contextValue.filter((item) => parseInt(item[column], 10) === num);
+    console.log(coluna, comp, num);
+    if (comp === 'igual a') {
+      filtered = planetList.filter((item) => parseInt(item[coluna], 10) === num);
     }
-    if (comp === 'maior') {
-      filtered = contextValue.filter((item) => parseInt(item[column], 10) > num);
-    }
-    if (comp === 'menor') {
-      filtered = contextValue.filter((item) => parseInt(item[column], 10) < num);
-    }
-    renderRow(filtered);
-    console.log(filtered);
-  };
-  const changeHandler = (target) => {
-    const filtered = contextValue.filter((item) => item.name.includes(target.value));
+    if (comp === 'maior que') {
+      filtered = planetList
+        .filter(
 
+          (item) => (parseInt(item[coluna], 10)) > num && item[coluna] !== 'unknown',
+        );
+    }
+    if (comp === 'menor que') {
+      filtered = planetList
+        .filter(
+          (item) => (parseInt(item[coluna], 10)) < num && item[coluna] !== 'unknown',
+        );
+    }
+    // setContext({
+    //   ...context, filters: { ...filterByNumericValues[0], column: coluna, comparison: comp, value: num }
+    // })
+    // console.log(filtered)
     renderRow(filtered);
   };
+
+  const changeHandler = (target) => {
+    const filtered = planetList.filter((item) => item.name.includes(target.value));
+    renderRow(filtered);
+  };
+
   return (
     <div>
       <div>
@@ -87,14 +103,13 @@ function Table() {
             id="class_selection"
             name="class_selection"
             data-testid="column-filter"
-            onChange={ ({ target }) => setColumn(target.value) }
+            onChange={ ({ target }) => setColuna(target.value) }
           >
-            <option>Selecione</option>
-            <option value="population">Population </option>
-            <option value="orbital_period">Orbital Period</option>
-            <option value="diameter">Diameter</option>
-            <option value="rotation_period">Rotation Period</option>
-            <option value="surface_water">Surface Water</option>
+            <option value="population">population</option>
+            <option value="orbital_period">orbital_period</option>
+            <option value="diameter">diameter</option>
+            <option value="rotation_period">rotation_period</option>
+            <option value="surface_water">surface_water</option>
           </select>
         </label>
         <label htmlFor="comp">
@@ -105,10 +120,9 @@ function Table() {
             onChange={ ({ target }) => setComparador(target.value) }
 
           >
-            <option>Selecione</option>
-            <option value="maior">Maior que</option>
-            <option value="menor">Menor que</option>
-            <option value="igual">Igual a</option>
+            <option value="maior que">maior que</option>
+            <option value="menor que">menor que</option>
+            <option value="igual a">igual a</option>
           </select>
         </label>
         <label htmlFor="search_value">
@@ -131,10 +145,10 @@ function Table() {
       <table>
         <thead>
           <tr>
-            <th>name</th>
+            <th>Name</th>
             <th>Orbital Period</th>
             <th>Population</th>
-            <th>Rotation Period</th>
+            <th>Rotation_period</th>
             <th>Climate</th>
             <th>Created</th>
             <th>Diameter</th>
