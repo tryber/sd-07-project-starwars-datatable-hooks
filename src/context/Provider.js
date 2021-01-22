@@ -5,15 +5,26 @@ const StarWarsContext = createContext();
 
 const StarWarsProvider = ({ children }) => {
   const [data, setData] = useState([]);
+  const [filters, setFilters] = useState({
+    filterByName: '',
+  });
 
   useEffect(() => {
     fetch('https://swapi-trybe.herokuapp.com/api/planets/')
       .then((response) => response.json())
-      .then((json) => setData(json.results));
+      .then((json) => {
+        setData(json.results);
+      });
   }, []);
+
+  const filterByName = (name) => {
+    setFilters({ ...filters, filterByName: name });
+  };
 
   const context = {
     data,
+    filters,
+    filterByName,
   };
 
   return (
