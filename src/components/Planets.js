@@ -1,18 +1,21 @@
 import React, { useContext, useEffect } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 import RowPlanet from './RowPlanet';
+import Filter from './Filter';
 
 function Planets() {
   const {
     fetchStarWars,
     isFetching,
     planets,
+    filters,
   } = useContext(StarWarsContext);
   useEffect(() => {
     fetchStarWars();
   }, []);
   return (
     <div>
+      <Filter />
       {isFetching && <span>Loading</span>}
       {!isFetching && (
         <table>
@@ -34,7 +37,7 @@ function Planets() {
             </tr>
           </thead>
           <tbody>
-            {planets.map((planet) => <RowPlanet key={ planet.name } planet={ planet } />)}
+            {planets.filter(({ name }) => name.match(filters.filterByName.name)).map((planet) => <RowPlanet key={ planet.name } planet={ planet } />)}
           </tbody>
         </table>
       )}
