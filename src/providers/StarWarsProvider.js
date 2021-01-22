@@ -7,12 +7,14 @@ const StarWarsProvider = ({ children }) => {
   const INITIAL_STATE = {
     filterByName: { name: '' },
     filterByNumericValues: [
-      { column: 'population', comparasion: 'maior que', value: '0' },
+      { column: 'population', comparasion: 'maior que', value: 0 },
     ],
   };
+  const COLUMN_OPTIONS = [
+    'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water'];
   const [data, setData] = useState([]);
-  const [filterBtn, setFilterBtn] = useState(false);
   const [filters, setFilters] = useState(INITIAL_STATE);
+  const [options, setOptions] = useState(COLUMN_OPTIONS);
 
   useEffect(() => {
     async function fetchApi() {
@@ -24,21 +26,19 @@ const StarWarsProvider = ({ children }) => {
     fetchApi();
   }, []);
 
-  const filterByName = (name) => setFilters({ ...filters, filterByName: { name } });
-  const filterByNum = (ob) => setFilters({ ...filters, filterByNumericValues: [ob] });
-  const resetFilters = () => setFilters(INITIAL_STATE);
-
-  const provObjct = {
-    data,
-    filters,
-    filterByName,
-    filterByNum,
-    filterBtn,
-    setFilterBtn,
-    resetFilters,
+  const filterFuncs = {
+    filterByName: (name) => setFilters({ ...filters, filterByName: { name } }),
+    filterByNum: (ob) => setFilters({ ...filters, filterByNumericValues: [ob] }),
+    resetFilters: () => {
+      setOptions(COLUMN_OPTIONS);
+      setFilters(INITIAL_STATE);
+    },
+    updateOptions: (opt) => setOptions(options.filter((option) => option !== opt)),
   };
+
+  const providerValue = { data, filters, filterFuncs, options };
   return (
-    <StarWarsContext.Provider value={ provObjct }>
+    <StarWarsContext.Provider value={ providerValue }>
       { children }
     </StarWarsContext.Provider>
   );

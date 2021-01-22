@@ -2,20 +2,21 @@ import React, { useContext, useEffect, useState } from 'react';
 import { StarWarsContext } from '../../providers/StarWarsProvider';
 
 const Table = () => {
-  const {
-    data,
-    filters: { filterByName, filterByNumericValues },
-    resetFilters,
-  } = useContext(StarWarsContext);
+  const { data, filters, filterFuncs } = useContext(StarWarsContext);
+  const { filterByName, filterByNumericValues } = filters;
+  const { resetFilters } = filterFuncs;
+
   const [dataFiltered, setDataFiltered] = useState(data);
 
+  useEffect(() => setDataFiltered(data), [data]);
   useEffect(() => {
     setDataFiltered(data.filter(({ name }) => name.includes(filterByName.name)));
-  }, [data, filterByName.name, resetFilters]);
+  }, [data, filterByName.name]);
 
   const filterButton = () => {
-    setDataFiltered(data.filter((info) => {
+    setDataFiltered(dataFiltered.filter((info) => {
       const { comparasion, column, value } = filterByNumericValues[0];
+      filterFuncs.updateOptions(column);
 
       switch (comparasion) {
       case 'maior que':
@@ -32,16 +33,19 @@ const Table = () => {
     }));
   };
 
+  const resetButton = () => {
+    setDataFiltered(data);
+    resetFilters();
+  };
+
   return (
     <>
-      <button
-        data-testid="button-filter"
-        type="button"
-        onClick={ filterButton }
-      >
+      <button data-testid="button-filter" type="button" onClick={ filterButton }>
         Filtrar
       </button>
-      <button data-testid="filter" type="button" onClick={ resetFilters }>X</button>
+      <button type="button" onClick={ resetButton }>
+        X
+      </button>
       <table>
         <thead>
           <tr>
@@ -56,11 +60,11 @@ const Table = () => {
             <th>População</th>
             <th>Filmes</th>
             <th>Criado em</th>
-            <th>Editado em</th>
             <th>Mais informações</th>
+            <th>Apagar filtro</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody data-testid="filter">
           { dataFiltered.map((info) => (
             <tr key={ info.name }>
               <td>{info.name}</td>
@@ -74,8 +78,12 @@ const Table = () => {
               <td>{info.population}</td>
               <td>{info.films.map((film) => film)}</td>
               <td>{info.created}</td>
-              <td>{info.edited}</td>
               <td>{info.url}</td>
+              <td>
+                <button type="button" onClick={ resetButton }>
+                  X
+                </button>
+              </td>
             </tr>
           ))}
         </tbody>

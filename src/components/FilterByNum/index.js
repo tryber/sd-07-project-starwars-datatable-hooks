@@ -2,7 +2,9 @@ import React, { useContext } from 'react';
 import { StarWarsContext } from '../../providers/StarWarsProvider';
 
 const FilterByNum = () => {
-  const { filterByNum, filters: { filterByNumericValues } } = useContext(StarWarsContext);
+  const { filterFuncs, filters, options } = useContext(StarWarsContext);
+  const { filterByNum } = filterFuncs;
+  const { filterByNumericValues } = filters;
 
   const handleChange = ({ target }) => {
     const { id, value } = target;
@@ -26,11 +28,9 @@ const FilterByNum = () => {
         onChange={ (e) => handleChange(e) }
         value={ filterByNumericValues.column }
       >
-        <option value="population">population</option>
-        <option value="orbital_period">orbital_period</option>
-        <option value="diameter">diameter</option>
-        <option value="rotation_period">rotation_period</option>
-        <option value="surface_water">surface_water</option>
+        { options.map((option) => (
+          <option key={ option } value={ option }>{option}</option>
+        ))}
       </select>
       <select
         id="greater-less"
