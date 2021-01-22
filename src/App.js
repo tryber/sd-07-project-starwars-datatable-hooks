@@ -35,7 +35,7 @@ function App() {
         filterByNumericValues: [numericFilter],
       });
     } else if (!(filters.filterByNumericValues[filters.filterByNumericValues.length - 1]
-      === numericFilter)) {
+      === numericFilter) && numericFilter !== undefined) {
       setFilters({
         filterByName: { name: nameFilter },
         filterByNumericValues: [...filters.filterByNumericValues, numericFilter],
@@ -57,6 +57,23 @@ function App() {
           onChange={ ({ target }) => setNameFilter(target.value) }
           data-testid="name-filter"
         />
+        {filters.filterByNumericValues.map((filt, index) => (
+          <div data-testid="filter" key={ index }>
+            <p>{`${filt.column} filter`}</p>
+            <button
+              type="button"
+              onClick={ () => {
+                setNumericFilter();
+                setFilters({
+                  filterByName: { name: nameFilter },
+                  filterByNumericValues: [
+                    ...filters.filterByNumericValues.filter((val) => !(val.column
+                    === filt.column))] });
+              } }
+            >
+              x
+            </button>
+          </div>))}
         <NumericFilter />
         <Table />
       </SWContext.Provider>
