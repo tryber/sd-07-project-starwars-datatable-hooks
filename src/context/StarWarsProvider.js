@@ -6,6 +6,8 @@ import StarWarsContext from './StarWarsContext';
 function Provider({ children }) {
   const [data, setData] = useState([]);
   const [isFetching, setIsFetching] = useState(true);
+  const [name, setName] = useState('');
+  const [nameFiltered, setNameFiltered] = useState([]);
 
   const getPlanets = async () => {
     setData(await fetchPlanets());
@@ -16,8 +18,27 @@ function Provider({ children }) {
     getPlanets();
   }, []);
 
+  useEffect(() => {
+    setNameFiltered(
+      data.filter((planet) => planet.name.toLowerCase().includes(name.toLowerCase())),
+    );
+  }, [name, data]);
+
   return (
-    <StarWarsContext.Provider value={ { data, isFetching } }>
+    <StarWarsContext.Provider
+      value={
+        {
+          data,
+          isFetching,
+          setName,
+          nameFiltered,
+          filters: {
+            filterByName: {
+              name,
+            },
+          } }
+      }
+    >
       { children }
     </StarWarsContext.Provider>
   );
