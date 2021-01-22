@@ -4,6 +4,11 @@ import StarWarsContext from './context/StarWarsContext';
 import getCurrencePlanets from './services/planetsApi';
 
 function Provider({ children }) {
+  const columnsSave = ['population',
+    'orbital_period',
+    'diameter',
+    'rotation_period',
+    'surface_water'];
   const [filterName, setFilterByName] = useState('');
   const [data, setData] = useState([]);
   const [tagCompare, setTagCompare] = useState('');
@@ -14,6 +19,7 @@ function Provider({ children }) {
   const [tagSecond, setTagSecond] = useState('');
   const [valueCompareSecond, setValueCompareSecond] = useState('');
   const [primaryFilter, setPrimaryFilter] = useState([]);
+  const [columns, setColomns] = useState(columnsSave);
   const dataTags = data[0] || [];
   useEffect(() => {
     getCurrencePlanets('https://swapi-trybe.herokuapp.com/api/planets/')
@@ -23,10 +29,12 @@ function Provider({ children }) {
   const myContext = {
     data,
     filter,
+    columns,
     primaryFilter,
     dataHeader: Object.keys(dataTags).filter(
       (item) => item !== 'residents',
     ),
+    setColomns,
     setPrimaryFilter,
     setFilterByName,
     setTagCompare,

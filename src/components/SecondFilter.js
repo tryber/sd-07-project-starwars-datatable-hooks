@@ -6,19 +6,13 @@ function SecondFilter() {
     setTagCompareSecond,
     setTagSecond,
     setValueCompareSecond,
-    dataHeader,
+    columns,
   } = useContext(StarWarsContext);
 
   const { filterByNumericValues } = filters;
+  const { column } = filterByNumericValues[0];
 
-  const dataFilter = dataHeader.filter((item) => item === 'population'
-        || item === 'orbital_period'
-        || item === 'diameter'
-        || item === 'rotation_period'
-        || item === 'surface_water').filter((item2) => {
-    const { column } = filterByNumericValues[0];
-    return item2 !== column;
-  });
+  const colonsfilter = columns.filter((item) => item !== column);
 
   const handlerChangeTagCompare = ({ target }) => {
     setTagCompareSecond(target.value);
@@ -26,6 +20,7 @@ function SecondFilter() {
 
   const handlerChangeTag = ({ target }) => {
     setTagSecond(target.value);
+    columns.splice(columns.indexOf(target.value), 1);
   };
 
   const handlerChangeValue = ({ target }) => {
@@ -36,7 +31,7 @@ function SecondFilter() {
       <label htmlFor="select">
         Selecione:
         <select onChange={ handlerChangeTag } id="select">
-          {dataFilter.map((item) => (
+          {colonsfilter.map((item) => (
             <option
               key={ item }
               value={ item }
@@ -64,7 +59,7 @@ function SecondFilter() {
           type="number"
         />
       </label>
-
+      <button data-testid="filter" type="button">x</button>
     </form>
 
   );
