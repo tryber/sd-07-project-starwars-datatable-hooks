@@ -4,6 +4,14 @@ import StarWarsContext from './StarWarsContext';
 import fetchPlanets from '../services/starWarsAPI';
 
 const Provider = ({ children }) => {
+  const columnInitialNames = [
+    'population',
+    'orbital_period',
+    'diameter',
+    'rotation_period',
+    'surface_water',
+  ];
+  const [columnNames, setColumnNames] = useState(columnInitialNames);
   const [planets, setPlanets] = useState([]);
   const [isFetching, setIsFetching] = useState(false);
   const [filters, setFilters] = useState({
@@ -20,6 +28,8 @@ const Provider = ({ children }) => {
       ...filters.filterByNumericValues,
       { column, comparison, value }];
     setFilters({ ...filters, filterByNumericValues: newNumericFilter });
+    const newColumnNames = [...columnNames];
+    setColumnNames(newColumnNames.filter((name) => name !== column));
   };
 
   const handleStarWarsSuccess = (response) => {
@@ -48,6 +58,7 @@ const Provider = ({ children }) => {
     filters,
     setName,
     addNumericFilter,
+    columnNames,
   };
 
   return (

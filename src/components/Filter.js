@@ -6,14 +6,8 @@ function Filter() {
     setName,
     filters,
     addNumericFilter,
+    columnNames,
   } = useContext(StarWarsContext);
-  const columnNames = [
-    'population',
-    'orbital_period',
-    'diameter',
-    'rotation_period',
-    'surface_water',
-  ];
   const comparison = ['maior que', 'igual a', 'menor que'];
 
   const zero = 0;
