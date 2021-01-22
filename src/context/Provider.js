@@ -36,6 +36,7 @@ class Provider extends Component {
     this.handleChangeFilterByName = this.handleChangeFilterByName.bind(this);
     this.handleChangeFormFilter = this.handleChangeFormFilter.bind(this);
     this.addFilterByNumericValues = this.addFilterByNumericValues.bind(this);
+    this.deleteFilterByNumericValues = this.deleteFilterByNumericValues.bind(this);
     this.applyFilters = this.applyFilters.bind(this);
   }
 
@@ -84,7 +85,6 @@ class Provider extends Component {
 
   addFilterByNumericValues() {
     this.setState((prevState) => ({
-      ...prevState,
       filters: {
         ...prevState.filters,
         filterByNumericValues: [
@@ -99,6 +99,17 @@ class Provider extends Component {
       comparisonFilter: '',
       valueFilter: '',
     }, () => this.applyFilters()));
+  }
+
+  deleteFilterByNumericValues(filterColumn) {
+    this.setState((prevState) => ({
+      filters: {
+        ...prevState.filters,
+        filterByNumericValues: [...prevState.filters.filterByNumericValues]
+          .filter(({ column }) => column !== filterColumn),
+      },
+    }),
+    () => this.applyFilters());
   }
 
   applyFilters() {
@@ -138,6 +149,7 @@ class Provider extends Component {
       changeFilterName: this.handleChangeFilterByName,
       addFilterByNumericValues: this.addFilterByNumericValues,
       changeFormFilter: this.handleChangeFormFilter,
+      deleteFilterByNumericValues: this.deleteFilterByNumericValues,
     };
 
     const { children } = this.props;

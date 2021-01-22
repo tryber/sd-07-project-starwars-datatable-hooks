@@ -13,10 +13,11 @@ const FormFilterNumericValue = () => {
   } = useContext(StarWarsContext);
 
   const availableFilters = (columnsObject, filterList) => {
-    filterList.forEach(({ column }) => {
-      delete columnsObject[column];
+    const newColumnsObject = { ...columnsObject };
+    [...filterList].forEach(({ column }) => {
+      delete newColumnsObject[column];
     });
-    return columnsObject;
+    return newColumnsObject;
   };
 
   return (
