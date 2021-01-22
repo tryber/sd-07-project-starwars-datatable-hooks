@@ -12,6 +12,8 @@ function Provider({ children }) {
   const [comparison, setComparison] = useState('maior que');
   const [value, setValue] = useState();
   const [numberFiltered, setNumberFiltered] = useState([]);
+  const [optionsOfColumn, setOptionsOfColumn] = useState([
+    'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water']);
 
   const getPlanets = async () => {
     setData(await fetchPlanets());
@@ -43,6 +45,7 @@ function Provider({ children }) {
         data.filter((planet) => Number(planet[column]) === Number(value)),
       );
     }
+    setOptionsOfColumn(optionsOfColumn.filter((item) => item !== column));
   };
 
   return (
@@ -53,6 +56,7 @@ function Provider({ children }) {
           isFetching,
           setName,
           nameFiltered,
+          optionsOfColumn,
           filters:
           {
             filterByName: {

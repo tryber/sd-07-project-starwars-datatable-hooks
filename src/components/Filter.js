@@ -4,6 +4,7 @@ import StarWarsContext from '../context/StarWarsContext';
 function Filter() {
   const {
     setName,
+    optionsOfColumn,
     setColumn,
     setComparison,
     setValue,
@@ -25,11 +26,16 @@ function Filter() {
         name="column"
         onChange={ (e) => setColumn(e.target.value) }
       >
-        <option value="population">population</option>
-        <option value="orbital_period">orbital_period</option>
-        <option value="diameter">diameter</option>
-        <option value="rotation_period">rotation_period</option>
-        <option value="surface_water">surface_water</option>
+        {
+          optionsOfColumn.map((column, index) => (
+            <option
+              key={ index }
+              value={ `${column}` }
+            >
+              {column}
+            </option>
+          ))
+        }
       </select>
 
       <select
