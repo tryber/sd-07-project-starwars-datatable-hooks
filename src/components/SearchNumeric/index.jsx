@@ -8,7 +8,14 @@ const SearchNumeric = () => {
     value: '',
   });
 
+  const optionsColumn = ['population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water'];
+
   const { dispatch } = useContext(StarWarsContext);
+  const {
+    state: {
+      filters: { filterByNumericValues: numericFilter },
+    },
+  } = useContext(StarWarsContext);
 
   const modifyNumbers = ({ target }) => {
     const { value, name } = target;
@@ -27,11 +34,18 @@ const SearchNumeric = () => {
         data-testid="column-filter"
         onChange={ modifyNumbers }
       >
-        <option value="population">population</option>
+        {optionsColumn.map((opt) => {
+          if (!numericFilter.some((filter) => filter.column === opt)) {
+            return (<option key={ opt } value={ opt }>{opt}</option>);
+          }
+          return null;
+        })}
+
+        {/* <option value="population">population</option>
         <option value="orbital_period">orbital_period</option>
         <option value="diameter">diameter</option>
         <option value="rotation_period">rotation_period</option>
-        <option value="surface_water">surface_water</option>
+        <option value="surface_water">surface_water</option> */}
       </select>
 
       <select

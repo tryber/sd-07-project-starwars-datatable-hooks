@@ -4,9 +4,24 @@ import filterLoop from '../../helper/filterLoop';
 
 const Table = () => {
   const { dispatch } = useContext(StarWarsContext);
-  const { state: { data: arrayPlanets } } = useContext(StarWarsContext);
-  const { state: { filters: { filterByName: { name } } } } = useContext(StarWarsContext);
-  const { state: { filters: { filterByNumericValues: numericFilter } } } = useContext(StarWarsContext);
+
+  const {
+    state: { data: arrayPlanets },
+  } = useContext(StarWarsContext);
+
+  const {
+    state: {
+      filters: {
+        filterByName: { name },
+      },
+    },
+  } = useContext(StarWarsContext);
+
+  const {
+    state: {
+      filters: { filterByNumericValues: numericFilter },
+    },
+  } = useContext(StarWarsContext);
 
   useEffect(() => {
     fetch('https://swapi-trybe.herokuapp.com/api/planets')
@@ -19,17 +34,21 @@ const Table = () => {
 
     const filteredPlanets = filterByNumeric.filter((elem) => elem.name.includes(name));
 
-    const categories = Object.keys(arrayPlanets[0]).filter((elem) => elem !== 'residents');
+    const categories = Object.keys(arrayPlanets[0]).filter(
+      (elem) => elem !== 'residents',
+    );
 
     return (
       <table>
         <thead>
           <tr>
-            { categories.map((elem) => (<th key={ elem }>{elem}</th>)) }
+            {categories.map((elem) => (
+              <th key={ elem }>{elem}</th>
+            ))}
           </tr>
         </thead>
         <tbody>
-          { filteredPlanets.map((elem) => (
+          {filteredPlanets.map((elem) => (
             <tr key={ elem.name }>
               <td>{elem.name}</td>
               <td>{elem.rotation_period}</td>
