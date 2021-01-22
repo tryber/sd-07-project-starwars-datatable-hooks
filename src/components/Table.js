@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect } from 'react';
 import { StarWarsContext } from '../context/StarWarsContext';
 
 function Table() {
-  const { nameFilter } = useContext(StarWarsContext);
+  const { filters } = useContext(StarWarsContext);
   const [data, setData] = useState([]);
   const EMPTY = 0;
 
@@ -22,6 +22,7 @@ function Table() {
   }
   const header = Object.keys(data[EMPTY]);
   const filteredHeader = header.filter((key) => key !== 'residents');
+  const {filterByNumericValues , filterByName} = filters;
   return (
     <div>
       <table>
@@ -31,13 +32,35 @@ function Table() {
           </tr>
         </thead>
         <tbody>
-          {data.filter((item) => item.name.includes(nameFilter)).map((planet) => (
+          {data.filter((item) => item.name.includes(filterByName.name)).map((planet) => {
+            let controlVar = EMPTY;
+            filterByNumericValues.forEach((filter) => {
+              const {column, comparison, value} = filter;
+              if (
+                comparison === 'maior que' && Number(planet[column]) > Number(value)
+              ) {
+                controlVar += 1;
+              } else if (
+                comparison === 'menor que' && Number(planet[column]) < Number(value)
+              ) {
+                controlVar += 1;
+              } else if (
+                comparison === 'igual a' && Number(planet[column]) === Number(value)
+              ) {
+                controlVar += 1;
+              }
+            });
+            if (
+              (planet.population === '	unknown') || !(controlVar === filterByNumericValues.length)
+            ) return null;
+          return (
             <tr key={ planet.name }>
               {filteredHeader.map((key, index) => (
                 <td key={ `key-${index}` }>{planet[key]}</td>
               ))}
-            </tr>
-          ))}
+            </tr>            
+          );
+          })}
         </tbody>
       </table>
     </div>

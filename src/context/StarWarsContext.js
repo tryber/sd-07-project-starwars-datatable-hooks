@@ -4,20 +4,27 @@ import PropTypes from 'prop-types';
 const StarWarsContext = createContext();
 
 const StarWarsProvider = ({ children }) => {
-  const [nameFilter, setNameFilter] = useState('');
-  const [filters, setFilters] = useState({ filterByName: { name: '' } });
+  const [filters, setFilters] = useState({ filterByName: { name: '' },
+  filterByNumericValues: [],
+  });
 
-  const handleFilterInput = (event) => {
-    setNameFilter(event.target.value);
-    setFilters({
-      filterByName: { name: nameFilter },
-    });
+  const handleNameFilterInput = ({target}) => {
+    setFilters({...filters, filterByName: {name: target.value}});
   };
 
+  // função de @vitor-rc1
+  const filterByNumericValues = (newFilter) => {
+    const { filterByNumericValues: filterNumeric } = filters;
+    setFilters({
+      ...filters,
+      filterByNumericValues: [...filterNumeric, newFilter],
+    });
+  }
+
   const context = {
-    nameFilter,
-    handleFilterInput,
+    handleNameFilterInput,
     filters,
+    filterByNumericValues,
   };
 
   return (
