@@ -8,6 +8,13 @@ function SearchByNumber() {
   const [column, setColumn] = useState('population');
   const [comparison, setComparison] = useState('maior que');
   const [number, setNumber] = useState(zero);
+  const [columns, setColumns] = useState([
+    'population',
+    'orbital_period',
+    'diameter',
+    'rotation_period',
+    'surface_water',
+  ]);
 
   const updateColumn = ({ target }) => {
     const { value } = target;
@@ -34,10 +41,18 @@ function SearchByNumber() {
         number,
       },
     ]);
+    setColumns(columns.filter((col) => col !== column));
   };
 
   const clearFilter = () => {
     setInputNumbers([]);
+    setColumns('population',
+      'orbital_period',
+      'diameter',
+      'rotation_period',
+      'surface_water');
+    setComparison('maior que');
+    setNumber(zero);
     setFilteredPlanets(data);
   };
 
@@ -48,11 +63,7 @@ function SearchByNumber() {
         data-testid="column-filter"
         value={ column }
       >
-        <option value="population">population</option>
-        <option value="orbital_period">orbital_period</option>
-        <option value="diameter">diameter</option>
-        <option value="rotation_period">rotation_period</option>
-        <option value="surface_water">surface_water</option>
+        {columns.map((col) => <option key={ col } value={ col }>{ col }</option>)}
       </select>
       <select
         onChange={ updateComparison }
