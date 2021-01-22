@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 const SearchBar = () => {
-  const { setFilter, filterByNames } = useContext(StarWarsContext);
+  const { setFilter, filterByNames, filter } = useContext(StarWarsContext);
   const [state, setState] = useState({
     column: [
       'population',
@@ -58,7 +58,9 @@ const SearchBar = () => {
         name="column"
         onChange={ (e) => filterByNumeric(e) }
       >
-        {state.column.map((option) => <option key={ option }>{option}</option>)}
+        {state.column.filter((options) => options
+        !== filter.filters.filterByNumericValues.column)
+          .map((option) => <option key={ option }>{option}</option>)}
       </select>
       <select
         data-testid="comparison-filter"

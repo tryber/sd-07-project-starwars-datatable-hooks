@@ -9,7 +9,7 @@ const StarWarsProvider = ({ children }) => {
     filters: {
       filterByName: { name: undefined },
       filterByNumericValues: {
-        column: 'population',
+        column: null,
         comparison: 'maior que',
         value: undefined,
       },
