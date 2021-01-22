@@ -15,16 +15,17 @@ function Table() {
   const tableRender = filter
     ? filterCompare(comparison, dataFilterResultName, column, value)
     : dataFilterResultName;
-  const check = () => {
-    const checkPrimaryFilter = column !== '' && value !== '' && comparison !== '';
-    if (checkPrimaryFilter && filter) {
-      return filterCompare(filterByNumericValues[1].comparison,
-        tableRender,
-        filterByNumericValues[1].column,
-        filterByNumericValues[1].value);
-    }
-    return tableRender;
-  };
+
+  const checkPrimaryFilter = filterByNumericValues[1].column !== ''
+    && filterByNumericValues[1].value !== ''
+    && filterByNumericValues[1].comparison !== '';
+
+  const secondFilter = checkPrimaryFilter && filter
+    ? filterCompare(filterByNumericValues[1].comparison,
+      tableRender,
+      filterByNumericValues[1].column,
+      filterByNumericValues[1].value)
+    : tableRender;
 
   return (
     <div>
@@ -36,7 +37,7 @@ function Table() {
             ))}
           </tr>
         </thead>
-        {check().map((planet, index) => (
+        {secondFilter.map((planet, index) => (
           <tbody key={ index }>
             <tr>
               <td>{planet.name}</td>
