@@ -18,6 +18,9 @@ function Provider({ children }) {
 
   const contextValue = {
     data: resultsApi,
+    filters: {
+      filterByName: {},
+    },
   };
 
   return (
