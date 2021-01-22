@@ -7,6 +7,7 @@ const StarWarsProvider = ({ children }) => {
   const [data, setData] = useState([]);
   const [filters, setFilters] = useState({
     filterByName: '',
+    filterByNumericValues: [],
   });
 
   useEffect(() => {
