@@ -34,12 +34,24 @@ function StarWarsProvider({ children }) {
     });
   };
 
+  const removeColumnFilter = (columnName) => {
+    setFilters((prevFilters) => {
+      const { filterByNumericValues } = prevFilters;
+      return {
+        ...prevFilters,
+        filterByNumericValues: filterByNumericValues
+          .filter(({ column }) => column !== columnName),
+      };
+    });
+  };
+
   const context = {
     data,
     setData,
     filters,
     setNameFilter,
     setColumnFilter,
+    removeColumnFilter,
   };
 
   return (
