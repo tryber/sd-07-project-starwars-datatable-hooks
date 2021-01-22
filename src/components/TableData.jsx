@@ -7,11 +7,17 @@ function TableData() {
   const [dataApi, setDataApi] = useState([]);
   const [inputs, setInputs] = useState({
     name: '',
-    column: '',
+    column: 'population',
     comparison: '',
     valueFilter: 0,
   });
-  const [lastColumn, setLastColumn] = useState('');
+  const [options, setOptions] = useState([
+    'population',
+    'orbital_period',
+    'diameter',
+    'rotation_period',
+    'surface_water',
+  ]);
 
   useEffect(() => {
     setDataApi(data);
@@ -22,27 +28,29 @@ function TableData() {
     setInputs({ ...inputs, [name]: value });
   };
 
+  // prettier-ignore
   const handleClick = () => {
     const indexColumn = inputs.column;
-    if (lastColumn === indexColumn) {
-      setDataApi(dataApi);
-    } else {
-      setLastColumn(indexColumn);
-      setDataApi(
-        dataApi.filter((element) => {
-          switch (inputs.comparison) {
-          case 'maior que':
-            return parseFloat(element[indexColumn]) > parseFloat(inputs.valueFilter);
-          case 'menor que':
-            return parseFloat(element[indexColumn]) < parseFloat(inputs.valueFilter);
-          case 'igual a':
-            return parseFloat(element[indexColumn]) === parseFloat(inputs.valueFilter);
-          default:
-            return true;
-          }
-        }),
-      );
-    }
+    // if (lastColumn === indexColumn) {
+    //   setDataApi(dataApi);
+    // } else {
+    //   setLastColumn(indexColumn);
+    setDataApi(
+      dataApi.filter((element) => {
+        switch (inputs.comparison) {
+        case 'maior que':
+          return parseFloat(element[indexColumn]) > parseFloat(inputs.valueFilter);
+        case 'menor que':
+          return parseFloat(element[indexColumn]) < parseFloat(inputs.valueFilter);
+        case 'igual a':
+          return parseFloat(element[indexColumn]) === parseFloat(inputs.valueFilter);
+        default:
+          return true;
+        }
+      }),
+    );
+    // }
+    setOptions(options.filter((element) => element !== indexColumn));
   };
 
   // prettier-ignore
@@ -63,12 +71,9 @@ function TableData() {
         onChange={ handleChange }
         value={ inputs.column }
       >
-        <option>Selecione</option>
-        <option>population</option>
-        <option>orbital_period</option>
-        <option>diameter</option>
-        <option>rotation_period</option>
-        <option>surface_water</option>
+        {options.map((element) => (
+          <option key={ element }>{element}</option>
+        ))}
       </select>
       <select
         data-testid="comparison-filter"
@@ -76,7 +81,6 @@ function TableData() {
         onChange={ handleChange }
         value={ inputs.comparison }
       >
-        <option>Selecione</option>
         <option>maior que</option>
         <option>menor que</option>
         <option>igual a</option>
