@@ -158,7 +158,7 @@ describe('Filtre a tabela através de um texto, inserido num *campo de texto*, e
     }
   });
 });
-
+ 
 describe('Crie um filtro para valores numéricos', () => {
   beforeAll(mockFetch);
   beforeEach(cleanup);

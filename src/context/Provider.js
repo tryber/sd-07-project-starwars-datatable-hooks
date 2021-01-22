@@ -1,23 +1,36 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import StarWarsContext from './StarWarsContext';
-import getPlanet from '../services/planetAPI';
+import { getPlanet } from '../services/planetAPI';
 
 const { Provider } = StarWarsContext;
 const ProviderStarWars = ({ children }) => {
-  const [planets, setPlanets] = useState([]);
+  const [data, setData] = useState([]);
+  const [inputText, setInputText] = useState('');
+  const [newArray, setNewArray] = useState([]);
 
-  const fetchPlanets = async () => {
+  const fetchdata = async () => {
     const results = await getPlanet();
-    setPlanets([...results]);
+    setData([...results]);
   };
 
   useEffect(() => {
-    fetchPlanets();
+    fetchdata();
   }, []);
 
+  const handleIncludesArray = (array) => {
+    setNewArray(array)
+  }
+
+ const handleInput = ({target}) => {
+  setInputText(target.value);
+ }
   const context = {
-    planets,
+    data,
+    inputText,
+    handleInput,
+    handleIncludesArray,
+    newArray,
   };
 
   return (
