@@ -1,5 +1,5 @@
 import React from 'react';
-import { Table, FilterInput } from './components';
+import { Table, FilterInput, FilterByNum } from './components';
 import './App.css';
 import StarWarsProvider from './providers/StarWarsProvider';
 
@@ -8,6 +8,7 @@ function App() {
     <StarWarsProvider>
       <div className="App">
         <FilterInput />
+        <FilterByNum />
         <Table />
       </div>
     </StarWarsProvider>

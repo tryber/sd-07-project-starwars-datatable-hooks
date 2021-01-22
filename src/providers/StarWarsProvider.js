@@ -5,8 +5,13 @@ export const StarWarsContext = createContext();
 
 const StarWarsProvider = ({ children }) => {
   const [data, setData] = useState([]);
+  const [filterBtn, setFilterBtn] = useState(false);
   const [filters, setFilters] = useState(
-    { filterByName: { name: '' }, filterByNumericValues: [] },
+    { filterByName: { name: '' },
+      filterByNumericValues: [
+        { column: 'population', comparasion: 'maior que', value: '100000' },
+      ],
+    },
   );
 
   useEffect(() => {
@@ -20,10 +25,11 @@ const StarWarsProvider = ({ children }) => {
   }, []);
 
   const filterByName = (name) => setFilters({ ...filters, filterByName: { name } });
-  const filterByNum = (obj) => setFilters({ ...filters, filterByNumericValues: [obj] });
+  const filterByNum = (ob) => setFilters({ ...filters, filterByNumericValues: [ob] });
 
+  const provObjct = { data, filters, filterByName, filterByNum, filterBtn, setFilterBtn };
   return (
-    <StarWarsContext.Provider value={ { data, filters, filterByName, filterByNum } }>
+    <StarWarsContext.Provider value={ provObjct }>
       { children }
     </StarWarsContext.Provider>
   );
