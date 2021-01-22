@@ -43,7 +43,6 @@ function TableData() {
         }),
       );
     }
-   
   };
 
   // prettier-ignore
