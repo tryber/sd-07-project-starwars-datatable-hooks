@@ -11,6 +11,7 @@ function TableData() {
     comparison: '',
     valueFilter: 0,
   });
+  const [lastColumn, setLastColumn] = useState('');
 
   useEffect(() => {
     setDataApi(data);
@@ -23,21 +24,26 @@ function TableData() {
 
   const handleClick = () => {
     const indexColumn = inputs.column;
-
-    setDataApi(
-      dataApi.filter((element) => {
-        switch (inputs.comparison) {
-        case 'maior que':
-          return parseFloat(element[indexColumn]) > parseFloat(inputs.valueFilter);
-        case 'menor que':
-          return parseFloat(element[indexColumn]) < parseFloat(inputs.valueFilter);
-        case 'igual a':
-          return parseFloat(element[indexColumn]) === parseFloat(inputs.valueFilter);
-        default:
-          return true;
-        }
-      }),
-    );
+    if (lastColumn === indexColumn) {
+      setDataApi(dataApi);
+    } else {
+      setLastColumn(indexColumn);
+      setDataApi(
+        dataApi.filter((element) => {
+          switch (inputs.comparison) {
+          case 'maior que':
+            return parseFloat(element[indexColumn]) > parseFloat(inputs.valueFilter);
+          case 'menor que':
+            return parseFloat(element[indexColumn]) < parseFloat(inputs.valueFilter);
+          case 'igual a':
+            return parseFloat(element[indexColumn]) === parseFloat(inputs.valueFilter);
+          default:
+            return true;
+          }
+        }),
+      );
+    }
+   
   };
 
   // prettier-ignore

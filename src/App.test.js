@@ -159,7 +159,7 @@ describe('Filtre a tabela através de um texto, inserido num *campo de texto*, e
   });
 });
 
-describe.only('Crie um filtro para valores numéricos', () => {
+describe('Crie um filtro para valores numéricos', () => {
   beforeAll(mockFetch);
   beforeEach(cleanup);
 
@@ -249,7 +249,7 @@ describe.only('Crie um filtro para valores numéricos', () => {
   });
 });
 
-describe('Não utilize filtros repetidos', () => {
+describe.only('Não utilize filtros repetidos', () => {
   beforeAll(mockFetch);
   beforeEach(cleanup);
 
