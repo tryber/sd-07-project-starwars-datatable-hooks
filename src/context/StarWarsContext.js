@@ -8,7 +8,8 @@ const StarWarsProvider = ({ children }) => {
   const [isFetching, setIsFetching] = useState(false);
   const [data, setData] = useState([]);
   const [error, setError] = useState('');
-  const [filters, setFilters] = useState({ filterByName: { name: '' } });
+  const [filters, setFilters] = useState({ filterByName });
+  const [filterByName, setFilterByName] = useState({name: ''});
 
   const handleSuccess = (response) => {
     setData(response.results);

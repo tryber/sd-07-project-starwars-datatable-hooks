@@ -14,7 +14,7 @@ function Table() {
       <p>Loading...</p>
     );
   }
-  const header = Object.keys(data[0]);
+  const header = Object.keys(data[EMPTY]);
   const filteredHeader = header.filter((key) => key !== 'residents');
   return (
     <div>
