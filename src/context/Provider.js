@@ -134,12 +134,10 @@ class Provider extends Component {
 
     const filteredData = data.filter((curr) => {
       if (comparison === 'maior que') {
-        // eslint-disable-next-line radix
-        return parseInt(curr[column]) > parseInt(value);
+        return Number(curr[column]) > Number(value);
       }
       if (comparison === 'menor que') {
-        // eslint-disable-next-line radix
-        return parseInt(curr[column]) < parseInt(value);
+        return Number(curr[column]) < Number(value);
       }
       if (comparison === 'igual a') return curr[column] === value;
       return true;
