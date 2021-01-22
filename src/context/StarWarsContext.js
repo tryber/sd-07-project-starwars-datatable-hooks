@@ -4,18 +4,35 @@ import PropTypes from 'prop-types';
 const StarWarsContext = createContext();
 
 function StarWarsProvider({ children }) {
-  const [data, setData] = useState({});
+  const [data, setData] = useState({
+    results: [],
+  });
+
   const [filters, setFilters] = useState({
     filtersByName: {
       name: '',
     },
+    filterByNumericValues: [
+      {
+        column: '',
+        comparison: '',
+        value: '',
+      },
+    ],
   });
+
+  const handleFilters = (filter) => {
+    setFilters((prevFilters) => ({
+      ...prevFilters,
+      ...filter,
+    }));
+  };
 
   const context = {
     data,
     setData,
     filters,
-    setFilters,
+    setFilters: handleFilters,
   };
 
   return (
