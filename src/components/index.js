@@ -1,7 +1,9 @@
 import PlanetsTable from './PlanetsTable';
-import FilterName from './FilterName';
+import InputFilterName from './InputFilterName';
+import FormFilterNumericValue from './FormFilterNumericValue';
 
 export default {
   PlanetsTable,
-  FilterName,
+  InputFilterName,
+  FormFilterNumericValue,
 };

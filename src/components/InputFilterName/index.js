@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import StarWarsContext from '../../context/StarWarsContext';
 
-const FilterName = () => {
+const InputFilterName = () => {
   const {
     filters: {
       filterByName: {
@@ -20,4 +20,4 @@ const FilterName = () => {
   );
 };
 
-export default FilterName;
+export default InputFilterName;

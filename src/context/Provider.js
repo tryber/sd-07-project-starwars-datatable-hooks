@@ -12,10 +12,21 @@ class Provider extends Component {
       isFetching: false,
       data: undefined,
       filteredData: undefined,
+      columnFilter: '',
+      comparisonFilter: '',
+      valueFilter: '',
+      numericColumns: {
+        population: 'Population',
+        orbital_period: 'Orbital Period',
+        diameter: 'Diameter',
+        rotation_period: 'Rotation Period',
+        surface_water: 'Surface Water',
+      },
       filters: {
         filterByName: {
           name: '',
         },
+        filterByNumericValues: [],
       },
     };
 
@@ -23,6 +34,9 @@ class Provider extends Component {
     this.handleStarWarsPlanetsSuccess = this.handleStarWarsPlanetsSuccess.bind(this);
     this.handleStarWarsPlanetsFailure = this.handleStarWarsPlanetsFailure.bind(this);
     this.handleChangeFilterByName = this.handleChangeFilterByName.bind(this);
+    this.handleChangeFormFilter = this.handleChangeFormFilter.bind(this);
+    this.addFilterByNumericValues = this.addFilterByNumericValues.bind(this);
+    this.applyFilters = this.applyFilters.bind(this);
   }
 
   fetchStarWarsPlanets() {
@@ -55,14 +69,66 @@ class Provider extends Component {
 
   handleChangeFilterByName(name) {
     this.setState((prevState) => ({
-      filteredData: [...prevState.data.filter((planet) => planet.name.includes(name))],
       filters: {
         ...prevState.filters,
         filterByName: {
           name,
         },
       },
-    }));
+    }), () => this.applyFilters());
+  }
+
+  handleChangeFormFilter({ target: { name, value } }) {
+    this.setState({ [name]: value });
+  }
+
+  addFilterByNumericValues() {
+    this.setState((prevState) => ({
+      ...prevState,
+      filters: {
+        ...prevState.filters,
+        filterByNumericValues: [
+          ...prevState.filters.filterByNumericValues,
+          { column: prevState.columnFilter,
+            comparison: prevState.comparisonFilter,
+            value: prevState.valueFilter },
+        ],
+      },
+    }), () => this.setState({
+      columnFilter: '',
+      comparisonFilter: '',
+      valueFilter: '',
+    }, () => this.applyFilters()));
+  }
+
+  applyFilters() {
+    const { data, filters: { filterByName, filterByNumericValues } } = this.state;
+    let newFilteredData = [...data];
+    if (filterByName.name !== '') {
+      newFilteredData = newFilteredData.filter(
+        (planet) => planet.name.includes(filterByName.name),
+      );
+    }
+    filterByNumericValues.forEach(({ column, comparison, value }) => {
+      switch (comparison) {
+      case 'maior que':
+        newFilteredData = newFilteredData.filter(
+          (planet) => parseFloat(planet[column]) > parseFloat(value),
+        );
+        break;
+      case 'menor que':
+        newFilteredData = newFilteredData.filter(
+          (planet) => parseFloat(planet[column]) < parseFloat(value),
+        );
+        break;
+      default:
+        newFilteredData = newFilteredData.filter(
+          (planet) => parseFloat(planet[column]) === parseFloat(value),
+        );
+      }
+    });
+
+    this.setState({ filteredData: newFilteredData });
   }
 
   render() {
@@ -70,6 +136,8 @@ class Provider extends Component {
       ...this.state,
       getStarWarsPlanets: this.fetchStarWarsPlanets,
       changeFilterName: this.handleChangeFilterByName,
+      addFilterByNumericValues: this.addFilterByNumericValues,
+      changeFormFilter: this.handleChangeFormFilter,
     };
 
     const { children } = this.props;

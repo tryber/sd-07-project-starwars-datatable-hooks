@@ -4,10 +4,11 @@ import Provider from './context/Provider';
 import components from './components';
 
 function App() {
-  const { FilterName, PlanetsTable } = components;
+  const { InputFilterName, PlanetsTable, FormFilterNumericValue } = components;
   return (
     <Provider>
-      <FilterName />
+      <InputFilterName />
+      <FormFilterNumericValue />
       <PlanetsTable />
     </Provider>
   );

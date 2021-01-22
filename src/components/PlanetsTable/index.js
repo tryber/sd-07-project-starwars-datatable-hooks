@@ -3,6 +3,7 @@ import StarWarsContext from '../../context/StarWarsContext';
 
 const PlanetsTable = () => {
   const { filteredData, getStarWarsPlanets, isFetching } = useContext(StarWarsContext);
+
   useEffect(() => {
     getStarWarsPlanets();
   }, [getStarWarsPlanets]);
