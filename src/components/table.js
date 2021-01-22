@@ -1,19 +1,46 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 function Table() {
-  const { data, filters } = useContext(StarWarsContext);
+  const {
+    data,
+    filters,
+    column,
+    comparison,
+    value,
+    filterData,
+    setFilterData,
+    useFilter,
+  } = useContext(StarWarsContext);
 
-  const filteredData = () => {
-    const minLength = 0;
-    if (data.length > minLength) {
-      const search = filters.filterByName.name;
-      return data.filter((planet) => planet.name.includes(search));
-    }
-    return data;
-  };
+  useEffect(() => {
+    const makeComparison = (planet) => {
+      switch (comparison) {
+      case 'maior que':
+        return parseInt(planet[column], 10) > parseInt(value, 10);
+      case 'menor que':
+        return parseInt(planet[column], 10) < parseInt(value, 10);
+      case 'igual a':
+        return parseInt(planet[column], 10) === parseInt(value, 10);
+      default:
+      }
+    };
 
-  const renderTableData = () => filteredData().map((planet) => (
+    setFilterData(() => {
+      const minLength = 0;
+      if (data.length > minLength) {
+        const search = filters.filterByName.name;
+        if (useFilter) {
+          return data.filter((planet) => planet.name.includes(search)
+            && makeComparison(planet));
+        }
+        return data.filter((planet) => planet.name.includes(search));
+      }
+      return data;
+    });
+  }, [filters, data]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const renderTableData = () => filterData.map((planet) => (
     <tr key={ planet.name }>
       <td>{planet.climate}</td>
       <td>{planet.created}</td>
@@ -61,7 +88,6 @@ function Table() {
               {renderTableData()}
             </tbody>
           </table>
-          {/* { value.data.map((item) => (<li key={ item.name }>{ item.name }</li>)) } */}
         </div>
       )}
     </StarWarsContext.Consumer>
