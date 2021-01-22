@@ -17,8 +17,7 @@ function Table() {
       const response = await getPlanets();
       setData(response);
     })();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [setData]);
 
   const filterName = (planet) => {
     const nameFilter = filters.filtersByName.name !== '';
