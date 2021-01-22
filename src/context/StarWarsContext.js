@@ -7,6 +7,13 @@ const { Provider } = Context;
 
 function StarWarsContext({ children }) {
   const [data, setData] = useState([]);
+  const [filteredData, setFilteredData] = useState([]);
+  const [allFilters, setFilter] = useState({
+    filters: {
+      filtersByName: '',
+    },
+  });
+  // const [filteredData, setNameFilter] = useNameFilter();
   // const [isScanning, setScanning] = useState(true);
   // const [planets, setPlanets] = useState([]);
 
@@ -28,9 +35,43 @@ function StarWarsContext({ children }) {
     fetchPlanets();
   }, []);
 
+  const handleNameFilterChange = (value) => {
+    setFilter({
+      filters: {
+        filtersByName: value,
+      },
+    });
+    // setNameFilter(value);
+  };
+
+  const updateData = (newData) => {
+    console.log('chamnou');
+    setFilteredData(newData);
+  };
+
+  useEffect(() => {
+    const { filters } = allFilters;
+    const { filtersByName } = filters;
+    if (filtersByName !== '') {
+      console.log('aqui');
+      const dataFiltered = data.filter(
+        (value) => value.name.includes(filtersByName) === true,
+      );
+      console.log(dataFiltered);
+      updateData(dataFiltered);
+    } else {
+      console.log('vazio');
+      updateData([]);
+    }
+  }, [allFilters, data]);
+
   const context = {
     data,
     fetchPlanets,
+    allFilters,
+    handleNameFilterChange,
+    filteredData,
+    // handleNameChange: setNameFilter,
   };
   return (
     <Provider value={ context }>
