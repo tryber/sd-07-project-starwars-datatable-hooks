@@ -1,12 +1,13 @@
-import React, {useState} from 'react';
-import StarWarsContext, { data } from './context/StarWarsContext';
+import React, { useState } from 'react';
+import StarWarsContext from './context/StarWarsContext';
+import data from './Store/index';
 import RenderForm from './components/RenderForm';
 import RenderTable from './components/RenderTable';
 
 function App() {
-  const [state, setState] = useState(data)
+  const [state, setState] = useState(data);
   return (
-    <StarWarsContext.Provider value={{state, setState}}>
+    <StarWarsContext.Provider value={ { state, setState } }>
       <div>
         <RenderForm />
         <RenderTable />

@@ -1,16 +1,31 @@
-import React, { useContext } from 'react';
-import StarWarsContext from '../context/StarWarsContext';
+import React from 'react';
+import Table from './Table';
 
-
-const RenderTable = props => {
-    const context = useContext(StarWarsContext);
-    // console.log(context) obj {state: initialState, setState: fn}
-    return(
-        <div>
-            <span></span>
-            <h1>Eu sou o RenderTable</h1>
-        </div>
-    )
-}
+const RenderTable = () => (
+  <div>
+    <table>
+      <thead>
+        <tr>
+          <th>Climate</th>
+          <th>Created</th>
+          <th>Diameter</th>
+          <th>Edited</th>
+          <th>Films</th>
+          <th>Gravity</th>
+          <th>Name</th>
+          <th>Orbital_period</th>
+          <th>Population</th>
+          <th>rotation_period</th>
+          <th>surface_water</th>
+          <th>terrain</th>
+          <th>url</th>
+        </tr>
+      </thead>
+      <tbody>
+        <Table />
+      </tbody>
+    </table>
+  </div>
+);
 
 export default RenderTable;
