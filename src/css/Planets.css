@@ -1,0 +1,9 @@
+body {
+  background-color: black;
+}
+
+.main-container {
+  margin: auto;
+  width: 90%;
+  background-color: whitesmoke;
+}
