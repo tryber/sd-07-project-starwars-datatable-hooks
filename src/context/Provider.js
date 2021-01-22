@@ -20,6 +20,7 @@ function Provider({ children }) {
     data: resultsApi,
     filters: {
       filterByName: {},
+      filterByNumericValues: [{}],
     },
   };
 

@@ -1,22 +1,43 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { Table } from 'reactstrap';
 import StarWarsContext from '../context/StarWarsContext';
 
 function TableData() {
   const { data } = useContext(StarWarsContext);
-  const [input, setInput] = useState({
-    filters: {
-      filterByName: { name: '' },
-    },
+  const [dataApi, setDataApi] = useState([]);
+  const [inputs, setInputs] = useState({
+    name: '',
+    column: '',
+    comparison: '',
+    valueFilter: 0,
   });
 
+  useEffect(() => {
+    setDataApi(data);
+  }, [data]);
+
   const handleChange = ({ target }) => {
-    const { value } = target;
-    setInput({
-      filters: {
-        filterByName: { name: value },
-      },
-    });
+    const { name, value } = target;
+    setInputs({ ...inputs, [name]: value });
+  };
+
+  const handleClick = () => {
+    const indexColumn = inputs.column;
+
+    setDataApi(
+      dataApi.filter((element) => {
+        switch (inputs.comparison) {
+        case 'maior que':
+          return parseFloat(element[indexColumn]) > parseFloat(inputs.valueFilter);
+        case 'menor que':
+          return parseFloat(element[indexColumn]) < parseFloat(inputs.valueFilter);
+        case 'igual a':
+          return parseFloat(element[indexColumn]) === parseFloat(inputs.valueFilter);
+        default:
+          return true;
+        }
+      }),
+    );
   };
 
   // prettier-ignore
@@ -24,11 +45,47 @@ function TableData() {
     <div className="test-class">
       <input
         type="text"
-        placeholder="Type text to filter"
+        placeholder="Type text to filter by name"
         data-testid="name-filter"
+        name="name"
         onChange={ handleChange }
-        value={ input.filters.filterByName.name }
+        value={ inputs.name }
       />
+      <br />
+      <select
+        data-testid="column-filter"
+        name="column"
+        onChange={ handleChange }
+        value={ inputs.column }
+      >
+        <option>Selecione</option>
+        <option>population</option>
+        <option>orbital_period</option>
+        <option>diameter</option>
+        <option>rotation_period</option>
+        <option>surface_water</option>
+      </select>
+      <select
+        data-testid="comparison-filter"
+        name="comparison"
+        onChange={ handleChange }
+        value={ inputs.comparison }
+      >
+        <option>Selecione</option>
+        <option>maior que</option>
+        <option>menor que</option>
+        <option>igual a</option>
+      </select>
+      <input
+        type="number"
+        data-testid="value-filter"
+        name="valueFilter"
+        onChange={ handleChange }
+        value={ inputs.valueFilter }
+      />
+      <button type="button" data-testid="button-filter" onClick={ handleClick }>
+        Filter
+      </button>
       <Table striped>
         <thead>
           <tr>
@@ -48,8 +105,10 @@ function TableData() {
           </tr>
         </thead>
         <tbody>
-          {data
-            .filter((element) => element.name.includes(input.filters.filterByName.name))
+          {dataApi
+            .filter(
+              (element) => element.name.includes(inputs.name),
+            )
             .map((element) => (
               <tr key={ element.name }>
                 <td>{element.name}</td>
