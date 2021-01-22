@@ -1,13 +1,15 @@
 import React, { useContext } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
-import Filter from './Filter';
+import FilterByName from './FilterByName';
+import FilterByNumber from './FilterByNumber';
 
 const Table = () => {
   const { filteredPlanets } = useContext(StarWarsContext);
   return (
     <div>
       <h1>Planets of Star Wars</h1>
-      <Filter />
+      <FilterByName />
+      <FilterByNumber />
       <table className="table table-hover">
         <thead className="thead-dark">
           <tr>

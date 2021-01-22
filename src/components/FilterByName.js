@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
-const Filter = () => {
+const FilterByName = () => {
   const {
     planets,
     setFilterPlanetName,
@@ -30,4 +30,4 @@ const Filter = () => {
   );
 };
 
-export default Filter;
+export default FilterByName;
