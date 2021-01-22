@@ -2,12 +2,12 @@ import React, { useContext } from 'react';
 import StarWarsContext from '../../context/StarWarsContext';
 
 function Table() {
-  const { data: { planets }, filteredPlanets } = useContext(StarWarsContext);
+  const { data: { planets }, filteredPlanetsByName } = useContext(StarWarsContext);
   const noNull = 0;
 
   function getToRender() {
-    if (filteredPlanets.length > noNull) {
-      return filteredPlanets;
+    if (filteredPlanetsByName.length > noNull) {
+      return filteredPlanetsByName;
     }
     return planets;
   }
