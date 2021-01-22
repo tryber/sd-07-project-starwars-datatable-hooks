@@ -6,15 +6,9 @@ function Header() {
     setSearchFilterColumn,
     setSearchFilterComparison,
     setSearchFilterValue,
-    filterBySetValues } = useContext(StarWarsContext);
-
-  const columnFilter = ['population',
-    'orbital_period',
-    'diameter',
-    'rotation_period',
-    'surface_water'];
-
-  const comparisonFilter = ['maior que', 'menor que', 'igual a'];
+    filterBySetValues,
+    columnFilter,
+    comparisonFilter } = useContext(StarWarsContext);
 
   return (
     <header>

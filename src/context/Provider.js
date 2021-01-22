@@ -12,6 +12,14 @@ function Provider({ children }) {
   const [comparison, setSearchFilterComparison] = useState('maior que');
   const [value, setSearchFilterValue] = useState(noNull);
   const [filteredPlanetsByValue, setFilteredByValue] = useState([]);
+  const [columnFilter, setColumnFilter] = useState(['population',
+    'orbital_period',
+    'diameter',
+    'rotation_period',
+    'surface_water']);
+  const [comparisonFilter, setComparisonFilter] = useState(['maior que',
+    'menor que',
+    'igual a']);
 
   const fetchPlanets = async () => {
     const response = await getStarWarsDataAPI();
@@ -29,20 +37,24 @@ function Provider({ children }) {
     );
   }, [name, planets]);
   const filterBySetValues = () => {
-    console.log('chamou filterBySetValues');
-
     if (comparison === 'maior que') {
       setFilteredByValue(
         planets.filter((planet) => (Number(planet[column]) > Number(value))),
       );
+      setColumnFilter(columnFilter.filter((item) => item !== column));
+      setComparisonFilter(comparisonFilter.filter((item) => item !== comparison));
     } else if (comparison === 'menor que') {
       setFilteredByValue(
         planets.filter((planet) => (Number(planet[column]) < Number(value))),
       );
+      setColumnFilter(columnFilter.filter((item) => item !== column));
+      setComparisonFilter(comparisonFilter.filter((item) => item !== comparison));
     } else {
       setFilteredByValue(
         planets.filter((planet) => (Number(planet[column]) === Number(value))),
       );
+      setColumnFilter(columnFilter.filter((item) => item !== column));
+      setComparisonFilter(comparisonFilter.filter((item) => item !== comparison));
     }
   };
 
@@ -57,6 +69,8 @@ function Provider({ children }) {
           setSearchFilterValue,
           filterBySetValues,
           filteredPlanetsByValue,
+          comparisonFilter,
+          columnFilter,
           filters: {
             filterByName: {
               name,
