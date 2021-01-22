@@ -16,13 +16,17 @@ const Filter = () => {
   };
 
   return (
-    <input
-      type="text"
-      data-testid="name-filter"
-      name="name-filter"
-      placeholder="Search a planet by name"
-      onChange={ handleChange }
-    />
+    <div className="input-group mb-3">
+      <div className="input-group-prepend">
+        <input
+          type="text"
+          data-testid="name-filter"
+          name="name-filter"
+          placeholder="Search a planet by name"
+          onChange={ handleChange }
+        />
+      </div>
+    </div>
   );
 };
 
