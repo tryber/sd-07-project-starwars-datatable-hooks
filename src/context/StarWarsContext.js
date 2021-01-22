@@ -8,7 +8,6 @@ const StarWarsProvider = ({ children }) => {
   const [isFetching, setIsFetching] = useState(false);
   const [data, setData] = useState([]);
   const [error, setError] = useState('');
-  const [filters, setFilters] = useState({filterByName: {name: ''}});
 
   const handleSuccess = (response) => {
     setData(response.results);
@@ -30,8 +29,6 @@ const StarWarsProvider = ({ children }) => {
     data,
     error,
     fetchPlanets,
-    setFilters,
-    filters,
   };
 
   return (
