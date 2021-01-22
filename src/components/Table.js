@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 function Table() {
-  const { data, isFetching, nameFiltered } = useContext(StarWarsContext);
+  const { data, isFetching, nameFiltered, numberFiltered } = useContext(StarWarsContext);
   if (isFetching) return <div>Loading...</div>;
 
   return (
@@ -15,8 +15,16 @@ function Table() {
       </thead>
       <tbody>
         {
-          nameFiltered
-          && nameFiltered.map((planet, index) => (
+          nameFiltered.map((planet, index) => (
+            <tr key={ index }>
+              {Object.values(planet).map((value, i) => (<td key={ i }>{value}</td>))}
+            </tr>
+          ))
+
+        }
+
+        {
+          numberFiltered.map((planet, index) => (
             <tr key={ index }>
               {Object.values(planet).map((value, i) => (<td key={ i }>{value}</td>))}
             </tr>
