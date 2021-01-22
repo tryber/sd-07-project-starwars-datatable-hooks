@@ -42,19 +42,21 @@ export default function StarWarsProvider({ children }) {
 
   const filterValuesOnClick = () => {
     if (!data) return;
-    const lastIndex = filterByNumericValues.length - 1;
-    const { column, comparison, value } = filterByNumericValues[lastIndex];
+    
+    filterByNumericValues.forEach((filter) => {
+      const { column, comparison, value } = filter;
 
-    if (comparison === 'maior que') {
-      const filteredPlanets = data.filter((planet) => +value < +planet[column]);
-      setData(filteredPlanets);
-    } else if (comparison === 'menor que') {
-      const filteredPlanets = data.filter((planet) => +value > +planet[column]);
-      setData(filteredPlanets);
-    } else {
-      const filteredPlanets = data.filter((planet) => +value === +planet[column]);
-      setData(filteredPlanets);
-    }
+      if (comparison === 'maior que') {
+        const filteredPlanets = data.filter((planet) => +value < +planet[column]);
+        setData(filteredPlanets);
+      } else if (comparison === 'menor que') {
+        const filteredPlanets = data.filter((planet) => +value > +planet[column]);
+        setData(filteredPlanets);
+      } else {
+        const filteredPlanets = data.filter((planet) => +value === +planet[column]);
+        setData(filteredPlanets);
+      }
+    })
   };
 
   useEffect(() => {
