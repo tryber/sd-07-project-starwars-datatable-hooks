@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { Context } from '../context/StarWarsContext';
 import NameFilter from './NameFilter';
+import MultipleFilter from './MultipleFilter';
 
 function Table() {
   const { data, filteredData } = useContext(Context);
@@ -18,6 +19,7 @@ function Table() {
   return (
     <div>
       <NameFilter />
+      <MultipleFilter />
       <table>
         <thead>
           {/* { data && keysData.map(
@@ -26,19 +28,19 @@ function Table() {
           ),
         )} */}
           <tr>
-            <th>Item 1</th>
-            <th>Item 1</th>
-            <th>Item 1</th>
-            <th>Item 1</th>
-            <th>Item 1</th>
-            <th>Item 1</th>
-            <th>Item 1</th>
-            <th>Item 1</th>
-            <th>Item 1</th>
-            <th>Item 1</th>
-            <th>Item 1</th>
-            <th>Item 1</th>
-            <th>Item 1</th>
+            <th>Name</th>
+            <th>Rotation Orbid</th>
+            <th>Orbital Period</th>
+            <th>Diameter</th>
+            <th>Climate</th>
+            <th>Gravity</th>
+            <th>Terrain</th>
+            <th>Surface</th>
+            <th>Population</th>
+            <th>Films</th>
+            <th>Created</th>
+            <th>Edited</th>
+            <th>Url</th>
           </tr>
         </thead>
         <tbody>
