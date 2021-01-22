@@ -1,55 +1,43 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import StarWarsContext from './StarWarsContext';
+import fetchData from '../services';
 
-const Provider = ({ children }) => {
-  const [originals, setOriginals] = useState([]);
+function StarWarsProvider({ children }) {
   const [data, setData] = useState([]);
-  const [filters, setFilters] = useState({ filterByName: { name: '' } });
+  const [filters, setFilters] = useState({
+    filterByName: { name: '' },
+    filterByNumericValues: [],
+    availableColumns: [
+      'population',
+      'orbital_period',
+      'diameter',
+      'rotation_period',
+      'surface_water',
+    ],
+  });
 
   useEffect(() => {
-    const fetchData = async () => {
-      const response = await fetch('https://swapi-trybe.herokuapp.com/api/planets/');
-      const results = await response.json();
-      setData(results.results);
-      setFilters(results.results);
-      setOriginals(results.results);
-    };
-    fetchData();
-  }, [filters]);
-
-  const searchTable = (value) => {
-    const filteredData = [];
-    const numberMagic = 0;
-
-    if (value.length === numberMagic) {
-      return originals;
+    async function getPlanet() {
+      const response = await fetchData();
+      setData(response);
     }
-    for (let i = numberMagic; i < filters.length; i += 1) {
-      const newValue = value.toLowerCase();
-      const planet = filters[i].name.toLowerCase();
-      if (planet.includes(newValue)) {
-        filteredData.push(filters[i]);
-      }
-    }
+    getPlanet();
+  }, [setData]);
 
-    return filteredData;
+  const context = {
+    data,
+    filters,
+    setFilters,
   };
-
-  const handleInput = (event) => {
-    setData(searchTable(event.target.value));
-  };
-
-  const context = { data, handleInput };
   return (
     <StarWarsContext.Provider value={ context }>
-      { children }
+      { children}
     </StarWarsContext.Provider>
   );
+}
+StarWarsProvider.propTypes = {
+  children: PropTypes.node.isRequired,
 };
 
-Provider.propTypes = {
-  children: PropTypes.instanceOf(Object),
-}.isRequired;
-
-export default Provider;
+export default StarWarsProvider;
