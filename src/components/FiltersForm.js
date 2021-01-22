@@ -11,6 +11,7 @@ function FiltersForm() {
           id="textFilter"
           type="text"
           placeholder="Search something"
+          data-testid="name-filter"
           value={ textInputValue }
           onChange={ handleTextChange }
         />
