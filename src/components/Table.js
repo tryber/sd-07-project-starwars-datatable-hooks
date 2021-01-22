@@ -7,7 +7,7 @@ function Table() {
 
   useEffect(() => {
     fetchPlanets();
-  }, [fetchPlanets]);
+  }, []);
 
   if (data.length === EMPTY) {
     return (
