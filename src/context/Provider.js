@@ -9,9 +9,18 @@ const Provider = ({ children }) => {
   const [filters, setFilters] = useState({
     filterByName: {
       name: '',
-    } });
+    },
+    filterByNumericValues: [],
+  });
 
   const setName = (name) => setFilters({ ...filters, filterByName: { name } });
+
+  const addNumericFilter = ({ column, comparison, value }) => {
+    const newNumericFilter = [
+      ...filters.filterByNumericValues,
+      { column, comparison, value }];
+    setFilters({ ...filters, filterByNumericValues: newNumericFilter });
+  };
 
   const handleStarWarsSuccess = (response) => {
     const { results } = response;
@@ -38,6 +47,7 @@ const Provider = ({ children }) => {
     fetchStarWars,
     filters,
     setName,
+    addNumericFilter,
   };
 
   return (
