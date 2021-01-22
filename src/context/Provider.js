@@ -13,13 +13,12 @@ class Provider extends Component {
       data: [],
       filters: {
         filterByName: { name: '' },
-        filterByNumericValues: [
-          {
-            column: 'population',
-            comparison: 'maior que',
-            value: '0',
-          },
-        ],
+        filterByNumericValues: [],
+        filterByNumericsCurrency: {
+          column: 'population',
+          comparison: 'maior que',
+          value: '0',
+        },
       },
     };
 
@@ -31,7 +30,7 @@ class Provider extends Component {
     this.changeSelectColumn = this.changeSelectColumn.bind(this);
     this.changeSelectComparison = this.changeSelectComparison.bind(this);
     this.changeSelectValue = this.changeSelectValue.bind(this);
-    this.filterByNumericValues = this.filterByNumericValues.bind(this);
+    this.handleFilterByNumericValues = this.handleFilterByNumericValues.bind(this);
   }
 
   componentDidMount() {
@@ -81,8 +80,8 @@ class Provider extends Component {
     this.setState((state) => ({
       filters: {
         ...state.filters,
-        filterByNumericValues: {
-          ...state.filters.filterByNumericValues,
+        filterByNumericsCurrency: {
+          ...state.filters.filterByNumericsCurrency,
           column: value,
         },
       },
@@ -94,8 +93,8 @@ class Provider extends Component {
     this.setState((state) => ({
       filters: {
         ...state.filters,
-        filterByNumericValues: {
-          ...state.filters.filterByNumericValues,
+        filterByNumericsCurrency: {
+          ...state.filters.filterByNumericsCurrency,
           comparison: value,
         },
       },
@@ -107,8 +106,8 @@ class Provider extends Component {
     this.setState((state) => ({
       filters: {
         ...state.filters,
-        filterByNumericValues: {
-          ...state.filters.filterByNumericValues,
+        filterByNumericsCurrency: {
+          ...state.filters.filterByNumericsCurrency,
           value,
         },
       },
@@ -124,13 +123,27 @@ class Provider extends Component {
     }
   }
 
-  filterByNumericValues() {
-    const { filters: { filterByNumericValues }, data } = this.state;
+  handleFilterByNumericValues() {
+    const {
+      filters: { filterByNumericsCurrency },
+      data,
+    } = this.state;
+
     const {
       column,
       comparison,
       value,
-    } = filterByNumericValues;
+    } = filterByNumericsCurrency;
+
+    this.setState((state) => ({
+      filters: {
+        ...state.filters,
+        filterByNumericValues: [
+          ...state.filters.filterByNumericValues,
+          filterByNumericsCurrency,
+        ],
+      },
+    }));
 
     const filteredData = data.filter((curr) => {
       if (comparison === 'maior que') {
@@ -152,7 +165,7 @@ class Provider extends Component {
       changeSelectColumn: this.changeSelectColumn,
       changeSelectComparison: this.changeSelectComparison,
       changeSelectValue: this.changeSelectValue,
-      filterByNumericValues: this.filterByNumericValues,
+      handleFilterByNumericValues: this.handleFilterByNumericValues,
       ...this.state,
     };
     const { children } = this.props;

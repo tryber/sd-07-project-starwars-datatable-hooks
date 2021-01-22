@@ -9,10 +9,28 @@ function Header() {
     changeSelectColumn,
     changeSelectComparison,
     changeSelectValue,
-    filterByNumericValues,
+    handleFilterByNumericValues,
+    filters: { filterByNumericValues },
   } = useContext(StarWarsContext);
 
   const { filterByName: { name } } = filters;
+  const columns = [
+    'population',
+    'orbital_period',
+    'diameter',
+    'rotation_period',
+    'surface_water',
+  ];
+
+  if (filterByNumericValues.length) {
+    filterByNumericValues.forEach(({ column }) => {
+      const index = columns.indexOf(column);
+      const zero = 0;
+      if (index >= zero) {
+        columns.splice(index, 1);
+      }
+    });
+  }
 
   return (
     <div>
@@ -34,11 +52,11 @@ function Header() {
           onChange={ changeSelectColumn }
         >
           <option>selecione</option>
-          <option value="population">population</option>
-          <option value="orbital_period">orbital_period</option>
-          <option value="diameter">diameter</option>
-          <option value="rotation_period">rotation_period</option>
-          <option value="surface_water">surface_water</option>
+          {columns.map((column) => (
+            <option key={ column } value={ column }>
+              { column }
+            </option>
+          ))}
         </select>
         <select
           name="comparison"
@@ -59,7 +77,7 @@ function Header() {
         <button
           type="button"
           data-testid="button-filter"
-          onClick={ filterByNumericValues }
+          onClick={ handleFilterByNumericValues }
         >
           Pesquisar
         </button>
