@@ -3,14 +3,12 @@ import React from 'react';
 import { StarWarsProvider } from './context/StarWarsContext';
 
 import Table from './components/Table';
-import NumberFilter from './components/Filters/NumberFilter';
-import NameFilter from './components/Filters/NameFilter';
+import Filters from './components/Filters';
 
 function App() {
   return (
     <StarWarsProvider>
-      <NameFilter />
-      <NumberFilter />
+      <Filters />
       <Table />
     </StarWarsProvider>
   );

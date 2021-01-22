@@ -3,14 +3,14 @@ import React, { useContext } from 'react';
 import { StarWarsContext } from '../../context/StarWarsContext';
 
 function NameFilter() {
-  const { setFilters } = useContext(StarWarsContext);
+  const { setNameFilter } = useContext(StarWarsContext);
 
   return (
     <input
       type="text"
       data-testid="name-filter"
       onChange={ ({ target }) => {
-        setFilters({
+        setNameFilter({
           filtersByName: {
             name: target.value,
           },

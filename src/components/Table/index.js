@@ -28,19 +28,25 @@ function Table() {
       : planet;
   };
 
-  const filterNumber = (planet) => {
-    const { column, comparison, value } = filters.filterByNumericValues[0];
-    if (value === '') return planet;
-    switch (comparison) {
-    case 'maior que':
-      return parseFloat(planet[column]) > parseFloat(value);
-    case 'igual a':
-      return parseFloat(planet[column]) === parseFloat(value);
-    case 'menor que':
-      return parseFloat(planet[column]) < parseFloat(value);
-    default:
-      return planet;
-    }
+  const filterNumber = () => {
+    const { filterByNumericValues } = filters;
+    let filteredResults = data.results;
+    filterByNumericValues.forEach((_, index) => {
+      filteredResults = filteredResults.filter((planet) => {
+        const { column, comparison, value } = filterByNumericValues[index];
+        switch (comparison) {
+        case 'maior que':
+          return parseFloat(planet[column]) > parseFloat(value);
+        case 'igual a':
+          return parseFloat(planet[column]) === parseFloat(value);
+        case 'menor que':
+          return parseFloat(planet[column]) < parseFloat(value);
+        default:
+          return planet;
+        }
+      });
+    });
+    return filteredResults;
   };
 
   return (
@@ -63,9 +69,8 @@ function Table() {
         </tr>
       </thead>
       <tbody>
-        {data.results
+        {filterNumber()
           .filter(filterName)
-          .filter(filterNumber)
           .map((planet) => {
             const {
               name,

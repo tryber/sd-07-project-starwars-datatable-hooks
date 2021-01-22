@@ -12,27 +12,34 @@ function StarWarsProvider({ children }) {
     filtersByName: {
       name: '',
     },
-    filterByNumericValues: [
-      {
-        column: '',
-        comparison: '',
-        value: '',
-      },
-    ],
+    filterByNumericValues: [],
   });
 
-  const handleFilters = (filter) => {
+  const setNameFilter = (filter) => {
     setFilters((prevFilters) => ({
       ...prevFilters,
       ...filter,
     }));
   };
 
+  const setColumnFilter = (filter) => {
+    setFilters((prevFilters) => {
+      const { filterByNumericValues } = prevFilters;
+      const find = filterByNumericValues.find(({ column }) => column === filter.column);
+      if (!find) filterByNumericValues.push(filter);
+      return {
+        ...prevFilters,
+        filterByNumericValues,
+      };
+    });
+  };
+
   const context = {
     data,
     setData,
     filters,
-    setFilters: handleFilters,
+    setNameFilter,
+    setColumnFilter,
   };
 
   return (
