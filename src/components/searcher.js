@@ -9,6 +9,7 @@ function Searcher() {
     'diameter',
     'rotation_period',
     'surface_water'];
+  const comparation = ['maior que', 'menor que', 'igual a'];
 
   return (
     <StarWarsContext.Consumer>
@@ -27,6 +28,14 @@ function Searcher() {
             <select data-testid="column-filter" id="collumns">
               {columns.map((collum) => (
                 <option key={ collum } value={ collum }>{ collum }</option>
+              ))}
+            </select>
+          </label>
+          <label htmlFor="comparation">
+            Comparação
+            <select data-testid="comparison-filter" id="comparation">
+              {comparation.map((item) => (
+                <option key={ item } value={ item }>{ item }</option>
               ))}
             </select>
           </label>
