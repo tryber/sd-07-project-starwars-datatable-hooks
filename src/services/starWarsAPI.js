@@ -5,7 +5,7 @@ export const getStarWarsPlanets = () => (
     .then((response) => (
       response
         .json()
-        .then((json) => (response.ok ? Promisses.resolve(json) : Promise.reject(json)))
+        .then((json) => (response.ok ? Promise.resolve(json) : Promise.reject(json)))
     ))
 );
 
