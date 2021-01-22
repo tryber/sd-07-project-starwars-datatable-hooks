@@ -37,7 +37,10 @@ function Planets() {
             </tr>
           </thead>
           <tbody>
-            {planets.filter(({ name }) => name.match(filters.filterByName.name)).map((planet) => <RowPlanet key={ planet.name } planet={ planet } />)}
+            {planets
+              .filter(({ name }) => name
+                .match(filters.filterByName.name))
+              .map((planet) => <RowPlanet key={ planet.name } planet={ planet } />)}
           </tbody>
         </table>
       )}
