@@ -1,23 +1,38 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 import FilterByNumber from './FilterByNumber';
 
 const FilterSearch = () => {
+  const {
+    changeFilterByName,
+    filters: { filterByNumericValues },
+    removeFilter,
+  } = useContext(StarWarsContext);
+
+  const zero = 0;
+  const menosUm = -1;
+
   const columnData = [
     'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water',
   ];
 
-  const [columnFilter, setColumnFilter] = useState(columnData);
-  const zero = 0;
-
-  const {
-    changeFilterByName,
-    filters: { filterByNumericValues },
-  } = useContext(StarWarsContext);
-
-  const removeOption = (column) => {
-    setColumnFilter(columnFilter.filter((option) => option !== column));
+  const initialFilter = () => {
+    if (filterByNumericValues.length > zero) {
+      const arrayInContext = filterByNumericValues.map((e) => e.column);
+      const newArray = columnData.filter((data) => {
+        if (arrayInContext.indexOf(data) === menosUm) return data;
+        return zero;
+      });
+      return newArray;
+    }
+    return columnData;
   };
+
+  const [columnFilter, setColumnFilter] = useState(columnData);
+
+  useEffect(() => {
+    setColumnFilter(initialFilter());
+  }, [filterByNumericValues]);
 
   return (
     <div>
@@ -31,15 +46,16 @@ const FilterSearch = () => {
           onChange={ ({ target }) => changeFilterByName(target.value) }
         />
       </label>
-      <FilterByNumber removeOption={ removeOption } columnFilter={ columnFilter } />
+      <FilterByNumber columnFilter={ columnFilter } />
       <ul>
         {filterByNumericValues.length > zero
         && filterByNumericValues.map((filter) => (
-          <li key={ filter.column }>
+          <li key={ filter.column } data-testid="filter">
             {`Filtro: 
             ${filter.column}
             ${filter.comparison}
             ${filter.value}`}
+            <button type="button" onClick={ () => removeFilter(filter.column) }>X</button>
           </li>
         ))}
       </ul>

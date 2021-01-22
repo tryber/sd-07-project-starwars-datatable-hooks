@@ -6,6 +6,7 @@ import starWarsAPI from '../services/starWarsAPI';
 function Provider({ children }) {
   const initialFilter = { filterByName: { name: '' }, filterByNumericValues: [] };
 
+  const [initialData, setInitialData] = useState([]);
   const [data, setData] = useState([]);
   const [isFetching, setIsFetching] = useState(false);
   const [error, setError] = useState('');
@@ -14,6 +15,7 @@ function Provider({ children }) {
   const handlePlanetSuccess = (response) => {
     setIsFetching(false);
     setData(response.results);
+    setInitialData(response.results);
   };
 
   const handlePlanetFailure = (e) => {
@@ -44,15 +46,48 @@ function Provider({ children }) {
     }));
   };
 
+  const removeFilter = (column) => {
+    setFilters((prevState) => ({
+      ...prevState,
+      filterByNumericValues: prevState.filterByNumericValues
+        .filter((filterNum) => filterNum.column !== column),
+    }));
+  };
+
+  const filterPlanetsBynumbers = () => {
+    let planetFilter = initialData;
+    filters.filterByNumericValues.forEach((filter) => {
+      const { column, comparison, value } = filter;
+      switch (comparison) {
+      case 'maior que':
+        planetFilter = planetFilter
+          .filter((planet) => Number(planet[column]) > Number(value));
+        break;
+      case 'menor que':
+        planetFilter = planetFilter
+          .filter((planet) => Number(planet[column]) < Number(value));
+        break;
+      case 'igual a':
+        planetFilter = planetFilter
+          .filter((planet) => Number(planet[column]) === Number(value));
+        break;
+      default: return planetFilter;
+      }
+    });
+    setData(planetFilter);
+  };
+
   const valueProvider = {
     data,
     isFetching,
     error,
     filters,
+    removeFilter,
     setData,
     getPlanetsAPI,
     changeFilterByName,
     changeFilterByNumber,
+    filterPlanetsBynumbers,
   };
 
   return (

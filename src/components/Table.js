@@ -4,42 +4,19 @@ import StarWarsContext from '../context/StarWarsContext';
 function Table() {
   const
     { data,
-      setData,
       isFetching,
       getPlanetsAPI,
       filters: { filterByName: { name } },
       filters: { filterByNumericValues },
+      filterPlanetsBynumbers,
     } = useContext(StarWarsContext);
 
   useEffect(() => {
     getPlanetsAPI();
   }, []);
 
-  const filterPlanetsBynumbers = () => {
-    let planetFilter = data;
-    filterByNumericValues.forEach((filter) => {
-      const { column, comparison, value } = filter;
-      switch (comparison) {
-      case 'maior que':
-        planetFilter = planetFilter
-          .filter((planet) => Number(planet[column]) > Number(value));
-        break;
-      case 'menor que':
-        planetFilter = planetFilter
-          .filter((planet) => Number(planet[column]) < Number(value));
-        break;
-      case 'igual a':
-        planetFilter = planetFilter
-          .filter((planet) => Number(planet[column]) === Number(value));
-        break;
-      default: return planetFilter;
-      }
-    });
-    return planetFilter;
-  };
-
   useEffect(() => {
-    setData(filterPlanetsBynumbers());
+    filterPlanetsBynumbers();
   }, [filterByNumericValues]);
 
   if (isFetching) return 'Carregando...';

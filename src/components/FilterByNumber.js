@@ -2,8 +2,8 @@ import React, { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
 import StarWarsContext from '../context/StarWarsContext';
 
-const FilterByNumber = ({ removeOption, columnFilter }) => {
-  const [column, setColumn] = useState('default');
+const FilterByNumber = ({ columnFilter }) => {
+  const [column, setColumn] = useState('population');
   const [comparison, setComparison] = useState('maior que');
   const [value, setValue] = useState();
 
@@ -41,7 +41,6 @@ const FilterByNumber = ({ removeOption, columnFilter }) => {
         type="button"
         data-testid="button-filter"
         onClick={ () => {
-          removeOption(column);
           changeFilterByNumber(column, comparison, value);
         } }
       >
@@ -52,7 +51,6 @@ const FilterByNumber = ({ removeOption, columnFilter }) => {
 };
 
 FilterByNumber.propTypes = {
-  removeOption: PropTypes.func.isRequired,
   columnFilter: PropTypes.shape([]).isRequired,
 };
 
