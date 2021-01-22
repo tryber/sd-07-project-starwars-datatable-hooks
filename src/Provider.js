@@ -6,82 +6,72 @@ import planetsApi from './services/planetsApi';
 const { Provider } = StarWarsContext;
 export default function StarWarsProvider({ children }) {
   const [data, setData] = useState();
-  const [filterByName, setFilterByName] = useState({
-    name: '',
-  });
-  const [filterByNumericValues, setFilterByNumericValues] = useState([
-    {
-      column: 'population',
-      comparison: 'maior que',
-      value: '',
-    },
-  ]);
+  const [filteredPlanets, setFilteredPlanets] = useState();
+  const [filterByNumericValues, setFilterByNumericValues] = useState([]);
 
   const fetchPlanets = async () => {
     const planets = await planetsApi();
     setData(planets);
+    setFilteredPlanets(planets);
   };
 
-  const handleChange = (name) => {
-    setFilterByName({
-      ...filterByName,
-      name,
-    });
+  const filterNameOnchange = (name) => {
+    if (data && name !== '') {
+      const filteredData = data.filter((planet) => planet.name.includes(name));
+      setFilteredPlanets(filteredData);
+    } else {
+      setFilteredPlanets(data);
+    }
   };
 
-  const handleNumericValues = (name, value) => {
-    setFilterByNumericValues((prevState) => (
-      [
-        {
-          ...prevState[0],
-          [name]: value,
-        },
-      ]
-    ));
-  };
-
-  const filterValuesOnClick = () => {
+  const filterPlanets = () => {
     if (!data) return;
-    
+    setFilteredPlanets(data);
+
     filterByNumericValues.forEach((filter) => {
       const { column, comparison, value } = filter;
 
       if (comparison === 'maior que') {
-        const filteredPlanets = data.filter((planet) => +value < +planet[column]);
-        setData(filteredPlanets);
+        setFilteredPlanets(
+          (prevPlanets) => prevPlanets.filter((planet) => +value < +planet[column]),
+        );
       } else if (comparison === 'menor que') {
-        const filteredPlanets = data.filter((planet) => +value > +planet[column]);
-        setData(filteredPlanets);
+        setFilteredPlanets(
+          (prevPlanets) => prevPlanets.filter((planet) => +value > +planet[column]),
+        );
       } else {
-        const filteredPlanets = data.filter((planet) => +value === +planet[column]);
-        setData(filteredPlanets);
+        setFilteredPlanets(
+          (prevPlanets) => prevPlanets.filter((planet) => +value === +planet[column]),
+        );
       }
-    })
+    });
+  };
+
+  const removeFilter = (column) => {
+    setFilterByNumericValues(
+      filterByNumericValues.filter((filter) => filter.column !== column),
+    );
   };
 
   useEffect(() => {
-    const { name } = filterByName;
+    filterPlanets();
+  }, [filterByNumericValues]);
 
-    if (data && name !== '') {
-      const filteredData = data.filter((planet) => planet.name.includes(name));
-      setData(filteredData);
-    } else {
-      fetchPlanets();
-    }
-  }, [filterByName]);
+  useEffect(() => {
+    fetchPlanets();
+  }, []);
 
   const context = {
-    data,
-    handleChange,
-    handleNumericValues,
-    filterValuesOnClick,
-    filterByName,
+    filteredPlanets,
     filterByNumericValues,
+    removeFilter,
+    filterNameOnchange,
+    setFilterByNumericValues,
   };
 
   return (
     <Provider value={ context }>
-      { children}
+      { children }
     </Provider>
   );
 }

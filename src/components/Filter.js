@@ -1,15 +1,19 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 export default function Filter() {
   const {
-    handleChange,
-    handleNumericValues,
-    filterValuesOnClick,
-    filterByNumericValues,
+    removeFilter,
+    filterNameOnchange,
+    setFilterByNumericValues,
   } = useContext(StarWarsContext);
 
   const [newFilter, setNewFilter] = useState([]);
+  const [filterValues, setFilterValues] = useState({
+    column: '',
+    comparison: '',
+    value: '',
+  });
 
   const [columnOptions, setColumnsOptions] = useState([
     'population',
@@ -19,40 +23,60 @@ export default function Filter() {
     'surface_water',
   ]);
 
-  const createNewfilter = (column, comparison, value) => {
-    return (
-      <div
-        className="filter-column"
-        data-testid="filter"
+  const createNewfilter = (column, comparison, value) => (
+    <div
+      key={ column }
+      className="filter-column"
+      data-testid="filter"
+    >
+      <p>
+        Coluna
+        {column}
+      </p>
+      <p>
+        Comparção
+        {comparison}
+      </p>
+      <p>
+        Valor
+        {value}
+      </p>
+      <button
+        onClick={ () => removeFilter(column) }
+        type="button"
       >
-        <p>Coluna {column}</p>
-        <p>Comparção {comparison}</p>
-        <p>Valor {value}</p>
-        <button>
-          X
-        </button>
-      </div>
-    )
-  }
+        X
+      </button>
+    </div>
+  );
 
   const handleClick = () => {
     if (!columnOptions.length) return;
-    const lastIndex = filterByNumericValues.length - 1;
-    const { column, comparison, value } = filterByNumericValues[lastIndex];
-    const newFilter = createNewfilter(column, comparison, value);
+
+    const { column, comparison, value } = filterValues;
+    const filtered = createNewfilter(column, comparison, value);
 
     setColumnsOptions(
       (prevOptions) => prevOptions.filter((option) => option !== column),
     );
 
     setNewFilter(
-      (prevFilters) => ([...prevFilters, newFilter])
-    )
+      (prevFilters) => [...prevFilters, filtered],
+    );
+
+    setFilterByNumericValues(
+      (prevValues) => [...prevValues, { column, comparison, value }],
+    );
   };
 
-  useEffect(() => {
-    filterValuesOnClick();
-  }, [columnOptions]);
+  const handleNumericValues = (name, value) => {
+    setFilterValues((prevState) => (
+      {
+        ...prevState,
+        [name]: value,
+      }
+    ));
+  };
 
   return (
     <section>
@@ -62,7 +86,7 @@ export default function Filter() {
           data-testid="name-filter"
           type="text"
           id="name"
-          onChange={({ target }) => handleChange(target.value)}
+          onChange={ ({ target }) => filterNameOnchange(target.value) }
         />
       </label>
       <label htmlFor="column">
@@ -70,13 +94,14 @@ export default function Filter() {
 
         <select
           data-testid="column-filter"
-          onChange={({ target }) => handleNumericValues(target.name, target.value)}
+          onChange={ ({ target }) => handleNumericValues(target.name, target.value) }
           name="column"
           id="column"
         >
+          <option>chose one column</option>
           {
             columnOptions.map((column, index) => (
-              <option key={index}>{column}</option>
+              <option key={ index }>{column}</option>
             ))
           }
         </select>
@@ -85,10 +110,11 @@ export default function Filter() {
         comparacao
         <select
           data-testid="comparison-filter"
-          onChange={({ target }) => handleNumericValues(target.name, target.value)}
+          onChange={ ({ target }) => handleNumericValues(target.name, target.value) }
           name="comparison"
           id="comparison"
         >
+          <option>chose a comparison</option>
           <option>maior que</option>
           <option>menor que</option>
           <option>igual a</option>
@@ -100,20 +126,20 @@ export default function Filter() {
           data-testid="value-filter"
           type="number"
           id="value"
-          onChange={({ target }) => handleNumericValues(target.name, target.value)}
+          onChange={ ({ target }) => handleNumericValues(target.name, target.value) }
           name="value"
         />
       </label>
       <div>
         <p>Filtros</p>
         {
-          newFilter && newFilter.map(filter => filter)
+          newFilter && newFilter.map((filter) => filter)
         }
       </div>
       <button
         data-testid="button-filter"
         type="button"
-        onClick={handleClick}
+        onClick={ handleClick }
       >
         Aplicar filtro
       </button>
