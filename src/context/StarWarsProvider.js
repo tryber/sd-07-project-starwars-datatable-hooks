@@ -8,12 +8,14 @@ const { Provider } = StarWarsContext;
 function StarWarsProvider({ children }) {
   const initialFilter = {
     filterByName: '',
-    filterNumericValues: {
-      column: 'population',
-      comparison: 'maior que',
-      value: '',
-      active: false,
-    },
+    filterNumericValues: [
+      {
+        column: 'population',
+        comparison: 'maior que',
+        value: '',
+        active: false,
+      },
+    ],
   };
 
   const [isFetching, setIsFetching] = useState(false);
@@ -24,7 +26,10 @@ function StarWarsProvider({ children }) {
 
   const [filter, setFilter] = useState(initialFilter);
 
-  const handleComparison = (planet, column, comparison, value, active) => {
+  const handleComparison = (planet, index) => {
+    const { column, comparison, value, active } = filter.filterNumericValues[
+      index
+    ];
     if (!column || !comparison || !value || !active) return true;
     const sizePlanet = parseInt(planet[column], 10);
     const valueInt = parseInt(value, 10);
@@ -48,18 +53,14 @@ function StarWarsProvider({ children }) {
 
   useEffect(() => {
     async function fetchData() {
-      const { filterByName, filterNumericValues } = filter;
-      const { column, comparison, value, active } = filterNumericValues;
-
+      const { filterByName } = filter;
+      const first = 0;
       setIsFetching(true);
       const planets = await getPlanets();
-      // filtros
-      const newData = planets.filter(
-        (planet) => planet.name.includes(filterByName)
-          && handleComparison(planet, column, comparison, value, active),
-      );
+      const newData = planets.filter((planet) => planet.name.includes(filterByName));
+      const newData2 = newData.filter((planet) => handleComparison(planet, first));
       setIsFetching(false);
-      setData(newData);
+      setData(newData2);
     }
     fetchData();
   }, [filter]);
@@ -71,26 +72,22 @@ function StarWarsProvider({ children }) {
     });
   };
 
-  const handleChangeSelect = (e) => {
+  const handleChangeSelect = (e, id) => {
     const keyOnChange = e.target.name;
+    const a = [...filter.filterNumericValues];
+    a[id] = { ...a[id], [keyOnChange]: e.target.value };
     setFilter({
       ...filter,
-      filterNumericValues: {
-        ...filter.filterNumericValues,
-        [keyOnChange]: e.target.value,
-      },
+      filterNumericValues: a,
     });
   };
 
-  const handleActiveFilter = () => {
-    const { filterNumericValues } = filter;
-    const { active } = filterNumericValues;
+  const handleActiveFilter = (id) => {
+    const a = [...filter.filterNumericValues];
+    a[id] = { ...a[id], active: !a[id].active };
     setFilter({
       ...filter,
-      filterNumericValues: {
-        ...filterNumericValues,
-        active: !active,
-      },
+      filterNumericValues: a,
     });
   };
 

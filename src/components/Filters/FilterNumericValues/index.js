@@ -2,9 +2,10 @@ import React, { useContext } from 'react';
 import StarWarsContext from '../../../context/StarWarsContext';
 
 function FilterNumericValues() {
-  const { filter, handleChangeSelect } = useContext(StarWarsContext);
+  const { filter, handleChangeSelect, handleActiveFilter } = useContext(StarWarsContext);
   const { filterNumericValues } = filter;
   const { column, comparison, value } = filterNumericValues;
+  const id = 0;
 
   return (
     <div>
@@ -12,7 +13,7 @@ function FilterNumericValues() {
         data-testid="column-filter"
         name="column"
         value={ column }
-        onChange={ handleChangeSelect }
+        onChange={ (e) => handleChangeSelect(e, id) }
       >
         <option value="population">population</option>
         <option value="orbital_period">orbital_period</option>
@@ -25,7 +26,7 @@ function FilterNumericValues() {
         data-testid="comparison-filter"
         name="comparison"
         value={ comparison }
-        onChange={ handleChangeSelect }
+        onChange={ (e) => handleChangeSelect(e, id) }
       >
         <option value="maior que">maior que</option>
         <option value="menor que">menor que</option>
@@ -39,9 +40,17 @@ function FilterNumericValues() {
           type="number"
           name="value"
           value={ value }
-          onChange={ handleChangeSelect }
+          onChange={ (e) => handleChangeSelect(e, id) }
         />
       </label>
+
+      <button
+        type="button"
+        onClick={ () => handleActiveFilter(id) }
+        data-testid="button-filter"
+      >
+        Acionar Numeric Filter
+      </button>
     </div>
   );
 }
