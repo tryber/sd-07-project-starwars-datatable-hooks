@@ -1,0 +1,25 @@
+.div-table {
+  background-color: green;
+  overflow: scroll;
+}
+
+.table {
+  border-collapse: collapse;
+}
+
+.table th {
+  background-color: red;
+  border-style: solid;
+  border-width: 1px;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  padding: 5px 5px;
+}
+
+.table td {
+  border-style: solid;
+  border-width: 1px;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  padding: 5px 5px;
+}
