@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 function Searcher() {
@@ -11,15 +11,48 @@ function Searcher() {
     column,
     comparison,
     value,
+    selectColumn,
+    setSelectColumn,
   } = useContext(StarWarsContext);
 
-  const columns = [
-    'population',
-    'orbital_period',
-    'diameter',
-    'rotation_period',
-    'surface_water'];
   const comparation = ['maior que', 'menor que', 'igual a'];
+
+  useEffect(() => {
+    setSelectColumn(() => {
+      const originalColumns = [
+        'population',
+        'orbital_period',
+        'diameter',
+        'rotation_period',
+        'surface_water'];
+
+      const forDeletion = filters.filterByNumericValues.map((item) => item.column);
+      // console.log(forDeletion)
+      const columns = originalColumns.filter((item) => !forDeletion.includes(item));
+      // console.log(columns)
+
+      return columns;
+    });
+  }, [filters]);
+
+  // console.log(selectColumn)
+
+  // const columns = () => {
+  //   const originalColumns = [
+  //     'population',
+  //     'orbital_period',
+  //     'diameter',
+  //     'rotation_period',
+  //     'surface_water'];
+  //   return originalColumns.filter((column) => {
+  //     if (filters.filterByNumericValues.length > 0) {
+  //       filters.filterByNumericValues.forEach((filter) => {
+  //         return column !== filter.column
+  //       })
+  //     }
+  //     return originalColumns;
+  //   })
+  // };
 
   return (
     <StarWarsContext.Consumer>
@@ -40,7 +73,7 @@ function Searcher() {
               id="collumns"
               onChange={ (event) => setColumn(event.target.value) }
             >
-              {columns.map((collum) => (
+              {selectColumn.map((collum) => (
                 <option key={ collum } value={ collum }>{ collum }</option>
               ))}
             </select>

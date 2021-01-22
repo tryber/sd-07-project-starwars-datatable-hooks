@@ -7,6 +7,7 @@ import starWarsAPI from './services/starWarsAPI';
 function App() {
   const [data, setData] = useState([]);
   const [filterData, setFilterData] = useState([]);
+  const [selectColumn, setSelectColumn] = useState([]);
   const [column, setColumn] = useState('population');
   const [comparison, setComparison] = useState('maior que');
   const initialValue = 0;
@@ -16,13 +17,7 @@ function App() {
     filterByName: {
       name: '',
     },
-    filterByNumericValues: [
-      {
-        column: '',
-        comparison: '',
-        value: '',
-      },
-    ],
+    filterByNumericValues: [],
   });
 
   useEffect(() => {
@@ -38,9 +33,11 @@ function App() {
         ...filters, [field]: { name: info },
       });
     } else {
-      setFilters({
-        ...filters, [field[0]]: { column, comparison, value },
-      });
+      setFilters((currentFilter) => ({
+        ...currentFilter,
+        [field]: [...currentFilter[field],
+          { column, comparison, value }],
+      }));
       setUseFilter(true);
     }
   };
@@ -53,6 +50,8 @@ function App() {
     value,
     filterData,
     useFilter,
+    selectColumn,
+    setSelectColumn,
     setUseFilter,
     setFilterData,
     setColumn,
