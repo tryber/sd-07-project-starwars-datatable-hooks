@@ -2,12 +2,16 @@ import React, { useContext, useEffect, useState } from 'react';
 import { StarWarsContext } from '../../providers/StarWarsProvider';
 
 const Table = () => {
-  const { data, filters: { filterByName, filterByNumericValues } } = useContext(StarWarsContext);
+  const {
+    data,
+    filters: { filterByName, filterByNumericValues },
+    resetFilters,
+  } = useContext(StarWarsContext);
   const [dataFiltered, setDataFiltered] = useState(data);
 
   useEffect(() => {
     setDataFiltered(data.filter(({ name }) => name.includes(filterByName.name)));
-  }, [data, filterByName.name]);
+  }, [data, filterByName.name, resetFilters]);
 
   const filterButton = () => {
     setDataFiltered(data.filter((info) => {
@@ -37,6 +41,7 @@ const Table = () => {
       >
         Filtrar
       </button>
+      <button data-testid="filter" type="button" onClick={ resetFilters }>X</button>
       <table>
         <thead>
           <tr>
