@@ -27,19 +27,19 @@ const Table = () => {
           </tr>
           {planets.map((planet, index) => (
             <tr key={ index }>
-              <td key={ index }>{planet.name}</td>
-              <td key={ index }>{planet.rotation_period}</td>
-              <td key={ index }>{planet.orbital_period}</td>
-              <td key={ index }>{planet.diameter}</td>
-              <td key={ index }>{planet.climate}</td>
-              <td key={ index }>{planet.gravity}</td>
-              <td key={ index }>{planet.terrain}</td>
-              <td key={ index }>{planet.surface_water}</td>
-              <td key={ index }>{planet.population}</td>
-              <td key={ index }>{planet.films}</td>
-              <td key={ index }>{planet.created}</td>
-              <td key={ index }>{planet.edited}</td>
-              <td key={ index }>{planet.url}</td>
+              <td>{planet.name}</td>
+              <td>{planet.rotation_period}</td>
+              <td>{planet.orbital_period}</td>
+              <td>{planet.diameter}</td>
+              <td>{planet.climate}</td>
+              <td>{planet.gravity}</td>
+              <td>{planet.terrain}</td>
+              <td>{planet.surface_water}</td>
+              <td>{planet.population}</td>
+              <td>{planet.films}</td>
+              <td>{planet.created}</td>
+              <td>{planet.edited}</td>
+              <td>{planet.url}</td>
             </tr>
           ))}
         </table>
