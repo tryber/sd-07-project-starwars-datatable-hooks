@@ -11,7 +11,7 @@ const StarWarsProvider = ({ children }) => {
   const [comparison, setComparison] = useState('maior que');
   const zero = 0;
   const [number, setNumber] = useState(zero);
-  const [objectFinal, setObjectFinal] = useState();
+  const [objectFinal, setObjectFinal] = useState({ column: '' });
 
   function filterChar({ target: { value } }) {
     const name = data.filter((item) => item.name
@@ -89,6 +89,7 @@ const StarWarsProvider = ({ children }) => {
     column,
     number,
     comparison,
+    objectFinal,
   };
   return (
     <StarWarsContext.Provider value={ context }>

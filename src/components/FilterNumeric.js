@@ -6,10 +6,18 @@ const FilterNumeric = () => {
     onClickFilterBtn,
     changeColumn,
     changeComparison,
-    changeNumber, column,
+    changeNumber,
     comparison,
     number,
+    objectFinal,
   } = useContext(StarWarsContext);
+  const arrayColumn = [
+    'population',
+    'orbital_period',
+    'diameter',
+    'rotation_period',
+    'surface_water',
+  ];
   return (
     <div>
       <label htmlFor="columnFilter">
@@ -18,13 +26,14 @@ const FilterNumeric = () => {
           id="columnFilter"
           name="columnFilter"
           onChange={ (e) => changeColumn(e) }
-          value={ column }
         >
-          <option value="population">population</option>
+          {arrayColumn.filter((col) => col !== objectFinal.column)
+            .map((option, index) => <option key={ index }>{ option }</option>)}
+          {/* <option value="population">population</option>
           <option value="orbital_period">orbital_period</option>
           <option value="diameter">diameter</option>
           <option value="rotation_period">rotation_period</option>
-          <option value="surface_water">surface_water</option>
+          <option value="surface_water">surface_water</option> */}
         </select>
       </label>
       <label htmlFor="comparison">
