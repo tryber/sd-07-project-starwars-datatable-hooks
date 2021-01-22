@@ -44,6 +44,7 @@ function Form() {
       <input
         type="number"
         placeholder="Valor"
+        data-testid="value-filter"
         value={ value }
         onChange={ ({ target }) => setValue(target.value) }
       />
