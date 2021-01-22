@@ -1,9 +1,8 @@
 import React from 'react';
 import logo from '../../images/trybe-400x400.jpg';
-import './style.css'
+import './style.css';
 
 const Header = () => {
-  
   function renderTitle() {
     return (<h1>StarWars Planets</h1>);
   }
@@ -29,7 +28,6 @@ const Header = () => {
       </div>
     );
   }
-
 
   return (
     <div className="header">

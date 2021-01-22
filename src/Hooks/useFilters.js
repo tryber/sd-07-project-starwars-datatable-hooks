@@ -1,11 +1,10 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 // import getApi from '../Services/SWPlanetsAPI';
 
-useFilter = () => {
-  const [, ] = useState({});
-
-
-  return [];
-}
+const useFilter = () => {
+  const [planet, useNameFilter] = useState({});
+  useNameFilter(planet);
+  return (planet);
+};
 
 export default useFilter;
