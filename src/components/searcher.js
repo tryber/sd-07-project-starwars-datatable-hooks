@@ -39,6 +39,11 @@ function Searcher() {
               ))}
             </select>
           </label>
+          <input
+            placeholder="Número"
+            type="number"
+            data-testid="value-filter"
+          />
         </div>
       )}
     </StarWarsContext.Consumer>
