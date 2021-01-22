@@ -40,8 +40,8 @@ function StarWarsContextProvider({ children }) {
           setFilteredPlanets([...data.filter(
             (planet) => planet[filterColumn] < filterNumber,
           )]);
-
         }
+
         if (filterComparison === 'igual a') {
           setFilteredPlanets([...data.filter(
             (planet) => Number(planet[filterColumn]) === filterNumber,
