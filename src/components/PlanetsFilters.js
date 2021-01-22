@@ -25,6 +25,7 @@ function PlanetsFilters() {
   //   newOptionsColumn = optionsColumn
   //     .filter((option) => (option !== filterByNumericValues[0].column));
   // }
+  console.log(filterByNumericValues);
 
   return (
     <div>
@@ -38,8 +39,7 @@ function PlanetsFilters() {
         data-testid="column-filter"
         onChange={ handleInputColumn }
       >
-        <option value="population">population</option>
-        { filterByNumericValues.length > ONE
+        { filterByNumericValues.length >= ONE
           ? optionsColumn
             .filter((option) => (option !== filterByNumericValues[0].column))
             .map((option) => (
