@@ -3,8 +3,7 @@ import React, { useState } from 'react';
 import PlanetsContext from './PlanetsContext';
 
 function PlanetsProvider({ children }) {
-  const [planets, setPlanets] = useState('XABLAU');
-
+  const [planets, setPlanets] = useState({});
   return (
     <main>
       <PlanetsContext.Provider value={ { planets, setPlanets } }>
