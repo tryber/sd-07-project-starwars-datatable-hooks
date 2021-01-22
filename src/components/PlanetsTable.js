@@ -2,10 +2,16 @@ import React, { useContext } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 function PlanetsTable() {
-  const { data, filters: { filterByName: { name } } } = useContext(StarWarsContext);
-  const ZERO = 0;
+  const {
+    data,
+    filteredData,
+    filters: {
+      filterByName: { name },
+    } } = useContext(StarWarsContext);
 
-  const dataFiltered = data.filter((planet) => planet.name.includes(name));
+  const dataFilteredByName = data.filter((planet) => planet.name.includes(name));
+
+  const ZERO = 0;
 
   return data.length > ZERO ? (
     <table>
@@ -24,7 +30,23 @@ function PlanetsTable() {
         <th>Edited</th>
         <th>url</th>
       </tr>
-      {dataFiltered.map((planet) => (
+      {name !== '' ? dataFilteredByName.map((planet) => (
+        <tr key={ planet.name }>
+          <td>{planet.name}</td>
+          <td>{planet.rotation_period}</td>
+          <td>{planet.orbital_period}</td>
+          <td>{planet.diameter}</td>
+          <td>{planet.climate}</td>
+          <td>{planet.gravity}</td>
+          <td>{planet.terrain}</td>
+          <td>{planet.surface_water}</td>
+          <td>{planet.population}</td>
+          <td>{planet.films[0]}</td>
+          <td>{planet.created}</td>
+          <td>{planet.edited}</td>
+          <td>{planet.url}</td>
+        </tr>
+      )) : filteredData.map((planet) => (
         <tr key={ planet.name }>
           <td>{planet.name}</td>
           <td>{planet.rotation_period}</td>
