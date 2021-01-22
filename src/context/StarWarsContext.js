@@ -32,6 +32,7 @@ const StarWarsProvider = ({ children }) => {
     data,
     filters,
     filterByName,
+    setFilter,
     filterByNumericValues,
   };
 

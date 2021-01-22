@@ -10,12 +10,6 @@ function FilterByNumericValues() {
   const [comparison, setComparison] = useState('maior que');
   const [value, setValue] = useState('');
 
-  // const disableOptionSelected = filterNumerics.reduce((acc, filter) => {
-  //     const { comparison } = filter;
-  //     return { ...acc, comparison }
-  // }, {})
-  // console.log(disableOptionSelected)
-
   const handleClick = () => {
     filterByNumericValues({ column, comparison, value });
   };
@@ -52,7 +46,7 @@ function FilterByNumericValues() {
         {comparisons.map((operand) => {
           let isExistOperand = false;
           filterNumerics.forEach((filter) => {
-            isExistOperand = filter.column === operand;
+            isExistOperand = filter.comparison === operand;
           });
           if (isExistOperand) return null;
 
