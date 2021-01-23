@@ -5,8 +5,11 @@ import StartWarsContext from './StartWarsContext';
 
 function Provider({ children }) {
   const [data, setData] = useState([]);
-  const [filters, setFilters] = useState({ filterByName: { name: '' } });
-
+  const [filters, setFilters] = useState({
+    filterByName: { name: '' },
+    filterByNumericValues: [],
+  });
+  // { column: '', comparison: '', value: 0 }
   useEffect(() => {
     async function fetchPlanets() {
       const arrayPlanets = await fetchData();
@@ -15,11 +18,21 @@ function Provider({ children }) {
     fetchPlanets();
   }, []);
 
+  // código @vitor-rc1
+  const filterByNumericValues = (newNumericFilter) => {
+    const { filterByNumericValues: filterNumeric } = filters;
+    setFilters({
+      ...filters,
+      filterByNumericValues: [...filterNumeric, newNumericFilter],
+    });
+  };
+
   const context = {
     data,
     setData,
     filters,
     setFilters,
+    filterByNumericValues,
   };
 
   return (
