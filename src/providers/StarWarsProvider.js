@@ -29,11 +29,8 @@ const StarWarsProvider = ({ children }) => {
   const filterFuncs = {
     filterByName: (name) => setFilters({ ...filters, filterByName: { name } }),
     filterByNum: (ob) => setFilters({ ...filters, filterByNumericValues: [ob] }),
-    resetFilters: () => {
-      setOptions(COLUMN_OPTIONS);
-      setFilters(INITIAL_STATE);
-    },
     updateOptions: (opt) => setOptions(options.filter((option) => option !== opt)),
+    resetFilters: () => setOptions(COLUMN_OPTIONS) || setFilters(INITIAL_STATE),
   };
 
   const providerValue = { data, filters, filterFuncs, options };

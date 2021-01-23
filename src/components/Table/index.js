@@ -1,17 +1,18 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { StarWarsContext } from '../../providers/StarWarsProvider';
+import FilterSort from '../FilterSort';
+import PlanetsTable from '../PlanetsTable';
 
 const Table = () => {
   const { data, filters, filterFuncs } = useContext(StarWarsContext);
   const { filterByName, filterByNumericValues } = filters;
-  const { resetFilters } = filterFuncs;
+  const negative = -1;
 
   const [dataFiltered, setDataFiltered] = useState(data);
-
-  useEffect(() => setDataFiltered(data), [data]);
   useEffect(() => {
-    setDataFiltered(data.filter(({ name }) => name.includes(filterByName.name)));
-  }, [data, filterByName.name]);
+    setDataFiltered(data.filter(({ name }) => name.includes(filterByName.name))
+      .sort(({ name: a }, { name: b }) => (a > b ? 1 : negative)));
+  }, [data, filterByName.name, negative]);
 
   const filterButton = () => {
     setDataFiltered(dataFiltered.filter((info) => {
@@ -33,18 +34,29 @@ const Table = () => {
     }));
   };
 
-  const resetButton = () => {
-    setDataFiltered(data);
-    resetFilters();
-  };
+  const resetButton = () => setDataFiltered(data) || filterFuncs.resetFilters();
+
+  const sortBy = useCallback((sorting, column) => {
+    switch (column) {
+    case 'name':
+      return setDataFiltered([...data].sort(({ [column]: a }, { [column]: b }) => {
+        if (sorting === 'DESC') return b > a ? 1 : negative;
+        return a > b ? 1 : negative;
+      }));
+    case 'orbital_period':
+      return setDataFiltered([...data].sort(({ [column]: a }, { [column]: b }) => {
+        if (sorting === 'DESC') return b - a;
+        return a - b;
+      }));
+    default:
+      return null;
+    }
+  }, [data, negative]);
 
   return (
     <>
       <button data-testid="button-filter" type="button" onClick={ filterButton }>
         Filtrar
-      </button>
-      <button type="button" onClick={ resetButton }>
-        X
       </button>
       <table>
         <thead>
@@ -64,30 +76,13 @@ const Table = () => {
             <th>Apagar filtro</th>
           </tr>
         </thead>
-        <tbody data-testid="filter">
+        <tbody>
           { dataFiltered.map((info) => (
-            <tr key={ info.name }>
-              <td>{info.name}</td>
-              <td>{info.rotation_period}</td>
-              <td>{info.orbital_period}</td>
-              <td>{info.diameter}</td>
-              <td>{info.climate}</td>
-              <td>{info.gravity}</td>
-              <td>{info.terrain}</td>
-              <td>{info.surface_water}</td>
-              <td>{info.population}</td>
-              <td>{info.films.map((film) => film)}</td>
-              <td>{info.created}</td>
-              <td>{info.url}</td>
-              <td>
-                <button type="button" onClick={ resetButton }>
-                  X
-                </button>
-              </td>
-            </tr>
-          ))}
+            <PlanetsTable key={ info.name } info={ info } resetButton={ resetButton } />
+          )) }
         </tbody>
       </table>
+      <FilterSort sortBy={ sortBy } />
     </>
   );
 };

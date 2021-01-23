@@ -1,6 +1,5 @@
 import FilterInput from './FilterInput';
-import Table from './Table';
 import FilterByNum from './FilterByNum';
-import FilterButtons from './FilterButtons';
+import Table from './Table';
 
-export { FilterInput, Table, FilterByNum, FilterButtons };
+export { FilterInput, FilterByNum, Table };
