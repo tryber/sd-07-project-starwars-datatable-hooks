@@ -5,6 +5,13 @@ import StarWarsContext from './StarWarsContext';
 
 function Provider({ children }) {
   const [data, setData] = useState([]);
+  const [filters, setFilters] = useState({
+    filters: {
+      filterByName: {
+        name: '',
+      },
+    },
+  });
 
   const endPoint = 'https://swapi-trybe.herokuapp.com/api/planets/';
 
@@ -23,12 +30,12 @@ function Provider({ children }) {
   }, []);
 
   return (
-    <StarWarsContext.Provider value={ { data } }>
+    <StarWarsContext.Provider value={ { data, setFilters, filters } }>
       {children}
     </StarWarsContext.Provider>
   );
 }
 
-Provider.propTypes = { children: PropTypes.objectOf(PropTypes.object).isRequired };
+Provider.propTypes = { children: PropTypes.element.isRequired };
 
 export default Provider;
