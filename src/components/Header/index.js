@@ -10,6 +10,7 @@ function Header() {
     changeSelectComparison,
     changeSelectValue,
     handleFilterByNumericValues,
+    handleRemoveFilter,
     filters: { filterByNumericValues },
   } = useContext(StarWarsContext);
 
@@ -80,6 +81,14 @@ function Header() {
         >
           Pesquisar
         </button>
+        <div data-testid="filter">
+          <button
+            type="button"
+            onClick={ handleRemoveFilter }
+          >
+            X
+          </button>
+        </div>
       </div>
     </div>
   );

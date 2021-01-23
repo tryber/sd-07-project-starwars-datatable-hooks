@@ -23,14 +23,13 @@ class Provider extends Component {
     };
 
     this.getStarWarsAPI = this.getStarWarsAPI.bind(this);
-    this.handleStartWarsSuccess = this.handleStartWarsSuccess.bind(this);
-    this.handleStartWarsFailure = this.handleStartWarsFailure.bind(this);
     this.changeInputsByName = this.changeInputsByName.bind(this);
     this.filterByName = this.filterByName.bind(this);
     this.changeSelectColumn = this.changeSelectColumn.bind(this);
     this.changeSelectComparison = this.changeSelectComparison.bind(this);
     this.changeSelectValue = this.changeSelectValue.bind(this);
     this.handleFilterByNumericValues = this.handleFilterByNumericValues.bind(this);
+    this.handleRemoveFilter = this.handleRemoveFilter.bind(this);
   }
 
   componentDidMount() {
@@ -42,23 +41,19 @@ class Provider extends Component {
     if (isFetching) return;
     this.setState({ isFetching: true });
     fetchStarWars()
-      .then(this.handleStartWarsSuccess, this.handleStartWarsFailure);
-  }
-
-  handleStartWarsSuccess(response) {
-    const { results } = response;
-    results.forEach((starwars) => delete starwars.residents);
-    this.setState({
-      isFetching: false,
-      data: results,
-    });
-  }
-
-  handleStartWarsFailure(error) {
-    this.setState({
-      isFetching: false,
-      error: error.message,
-    });
+      .then((response) => {
+        const { results } = response;
+        results.forEach((starwars) => delete starwars.residents);
+        this.setState({
+          isFetching: false,
+          data: results,
+        });
+      }, (error) => {
+        this.setState({
+          isFetching: false,
+          error: error.message,
+        });
+      });
   }
 
   changeInputsByName({ target }) {
@@ -158,6 +153,22 @@ class Provider extends Component {
     this.setState({ data: filteredData });
   }
 
+  handleRemoveFilter() {
+    const { filters: { filterByNumericValues }, filters } = this.state;
+    if (filterByNumericValues.length) {
+      const previousFilters = filterByNumericValues.pop();
+      this.setState(
+        {
+          filters: {
+            ...filters,
+            filterByNumericValues: previousFilters,
+          },
+        },
+      );
+    }
+    this.getStarWarsAPI();
+  }
+
   render() {
     const contextValue = {
       getStarWarsAPI: this.getStarWarsAPI,
@@ -166,6 +177,7 @@ class Provider extends Component {
       changeSelectComparison: this.changeSelectComparison,
       changeSelectValue: this.changeSelectValue,
       handleFilterByNumericValues: this.handleFilterByNumericValues,
+      handleRemoveFilter: this.handleRemoveFilter,
       ...this.state,
     };
     const { children } = this.props;
