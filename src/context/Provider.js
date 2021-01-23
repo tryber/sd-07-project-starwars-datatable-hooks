@@ -24,12 +24,24 @@ const StarWarsProvider = ({ children }) => {
   };
 
   const filterByValues = (chosenFilters) => {
-    const newFilter = filters.filterByNumericValues;
-    const newUsedFilters = usedFilters;
-    newFilter.push(chosenFilters);
-    newUsedFilters.push(chosenFilters.column);
+    const newFilter = filters.filterByNumericValues.concat(chosenFilters);
+    const newUsedFilters = usedFilters.concat(chosenFilters.column);
     setFilters({ ...filters, filterByNumericValues: newFilter });
     setUsedFilters(newUsedFilters);
+  };
+
+  const removeFilter = (index) => {
+    const zero = 0;
+    const one = 1;
+    if (index === zero && usedFilters.length === one) {
+      setFilters({ ...filters, filterByNumericValues: [] });
+      setUsedFilters([]);
+    } else {
+      const newFilter = filters.filterByNumericValues.splice(index, 1);
+      const newUsedFilters = usedFilters.splice(index, 1);
+      setFilters({ ...filters, filterByNumericValues: newFilter });
+      setUsedFilters(newUsedFilters);
+    }
   };
 
   const context = {
@@ -38,6 +50,7 @@ const StarWarsProvider = ({ children }) => {
     usedFilters,
     filterByName,
     filterByValues,
+    removeFilter,
   };
 
   return (

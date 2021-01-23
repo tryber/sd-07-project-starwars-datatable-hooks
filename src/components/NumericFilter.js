@@ -9,7 +9,10 @@ export default function NumericFilter() {
     value: 0,
   });
 
-  const { filterByValues, usedFilters } = useContext(StarWarsContext);
+  const { filters,
+    filterByValues,
+    usedFilters,
+    removeFilter } = useContext(StarWarsContext);
 
   const columns = ['population',
     'orbital_period',
@@ -20,6 +23,28 @@ export default function NumericFilter() {
   const comparisons = ['maior que', 'menor que', 'igual a'];
   return (
     <div>
+      <section>
+        filtros ativos:
+        {filters.filterByNumericValues.map((filter, index) => (
+          <div data-testid="filter" key={ index }>
+            <span>
+              { `${filter.column} ` }
+            </span>
+            <span>
+              { `${filter.comparison} ` }
+            </span>
+            <span>
+              { `${filter.value} ` }
+            </span>
+            <button
+              type="button"
+              onClick={ () => removeFilter(index) }
+            >
+              x
+            </button>
+          </div>
+        ))}
+      </section>
       <select
         data-testid="column-filter"
         onChange={
