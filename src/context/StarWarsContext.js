@@ -5,11 +5,11 @@ const StarWarsContext = createContext();
 
 const StarWarsProvider = ({ children }) => {
   const [filters, setFilters] = useState({ filterByName: { name: '' },
-  filterByNumericValues: [],
+    filterByNumericValues: [],
   });
 
-  const handleNameFilterInput = ({target}) => {
-    setFilters({...filters, filterByName: {name: target.value}});
+  const handleNameFilterInput = ({ target }) => {
+    setFilters({ ...filters, filterByName: { name: target.value } });
   };
 
   // função de @vitor-rc1
@@ -19,7 +19,7 @@ const StarWarsProvider = ({ children }) => {
       ...filters,
       filterByNumericValues: [...filterNumeric, newFilter],
     });
-  }
+  };
 
   const context = {
     handleNameFilterInput,

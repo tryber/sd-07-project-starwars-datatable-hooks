@@ -22,7 +22,7 @@ function Table() {
   }
   const header = Object.keys(data[EMPTY]);
   const filteredHeader = header.filter((key) => key !== 'residents');
-  const {filterByNumericValues , filterByName} = filters;
+  const { filterByNumericValues, filterByName } = filters;
   return (
     <div>
       <table>
@@ -35,31 +35,36 @@ function Table() {
           {data.filter((item) => item.name.includes(filterByName.name)).map((planet) => {
             let controlVar = EMPTY;
             filterByNumericValues.forEach((filter) => {
-              const {column, comparison, value} = filter;
+              const { column, comparison, value } = filter;
               if (
-                comparison === 'maior que' && Number(planet[column]) > Number(value)
+                comparison === 'maior que'
+                && Number(planet[column]) > Number(value)
+                && !(planet[column] === 'unknown')
               ) {
                 controlVar += 1;
               } else if (
-                comparison === 'menor que' && Number(planet[column]) < Number(value)
+                comparison === 'menor que'
+                && Number(planet[column]) < Number(value)
+                && !(planet[column] === 'unknown')
               ) {
                 controlVar += 1;
               } else if (
                 comparison === 'igual a' && Number(planet[column]) === Number(value)
+                && !(planet[column] === 'unknown')
               ) {
                 controlVar += 1;
               }
             });
             if (
-              (planet.population === '	unknown') || !(controlVar === filterByNumericValues.length)
+              !(controlVar === filterByNumericValues.length)
             ) return null;
-          return (
-            <tr key={ planet.name }>
-              {filteredHeader.map((key, index) => (
-                <td key={ `key-${index}` }>{planet[key]}</td>
-              ))}
-            </tr>            
-          );
+            return (
+              <tr key={ planet.name }>
+                {filteredHeader.map((key, index) => (
+                  <td key={ `key-${index}` }>{planet[key]}</td>
+                ))}
+              </tr>
+            );
           })}
         </tbody>
       </table>

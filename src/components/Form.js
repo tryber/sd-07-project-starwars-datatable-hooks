@@ -5,13 +5,13 @@ function Form() {
   const { handleNameFilterInput,
     filterByNumericValues,
   } = useContext(StarWarsContext);
-    const [column, setColumn] = useState('');
-    const [comparison, setComparison] = useState('');
-    const [value, setValue] = useState('');
+  const [column, setColumn] = useState('');
+  const [comparison, setComparison] = useState('');
+  const [value, setValue] = useState('');
 
-    const handleClick = () => {
-      filterByNumericValues({column, comparison, value});
-    }
+  const handleClick = () => {
+    filterByNumericValues({ column, comparison, value });
+  };
 
   return (
     <form>
@@ -22,7 +22,7 @@ function Form() {
         onChange={ handleNameFilterInput }
       />
       <select
-        data-testid='column-filter'
+        data-testid="column-filter"
         value={ column }
         onChange={ ({ target }) => setColumn(target.value) }
       >
@@ -33,9 +33,11 @@ function Form() {
         <option>rotation_period</option>
         <option>surface_water</option>
       </select>
-      <select data-testid='comparison-filter'
+      <select
+        data-testid="comparison-filter"
         value={ comparison }
-        onChange={ ({ target }) => setComparison(target.value) }>
+        onChange={ ({ target }) => setComparison(target.value) }
+      >
         <option>Comparar</option>
         <option>maior que</option>
         <option>menor que</option>
@@ -49,9 +51,10 @@ function Form() {
         onChange={ ({ target }) => setValue(target.value) }
       />
       <button
-      data-testid='button-filter'
-      type="button"
-      onClick={ handleClick }>
+        data-testid="button-filter"
+        type="button"
+        onClick={ handleClick }
+      >
         Adicionar filtro numérico
       </button>
     </form>
