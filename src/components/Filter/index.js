@@ -32,11 +32,11 @@ function Filter() {
     setGlobalState({
       filters: {
         filterByName,
-        filterByNumericValues: {
+        filterByNumericValues: [{
           column,
           comparison,
           value: valueFilter,
-        },
+        }],
       },
     });
   }

@@ -8,26 +8,27 @@ function Table() {
   const { data, globalState } = useContext(StarWarsContext);
 
   useEffect(() => {
-    if (globalState.filters.filterByName.name !== '') {
-      console.log('entrei');
-      const zero = 0;
+    const zero = 0;
+    if (globalState.filters.filterByName.name !== ''
+      || globalState.filters.filterByNumericValues.length !== zero) {
       const planetsFilteredByName = data.filter((planet) => (
         planet.name.includes(globalState.filters.filterByName.name)
       ));
-      console.log(`Global: ${globalState}`);
       const { filters } = globalState;
-      console.log(`Filters: ${filters}`);
       const { filterByNumericValues } = filters;
       console.log(`Filter By NUmeric Values: ${filterByNumericValues}`);
       if (filterByNumericValues.length !== zero) {
+        const index = filterByNumericValues.length - 1;
         const planetsFiltered = planetsFilteredByName.filter((planet) => {
-          switch (filterByNumericValues.comparison) {
+          switch (filterByNumericValues[index].comparison) {
           case 'menor que':
-            return planet[filterByNumericValues.column] < filterByNumericValues.value;
+            console.log(planet);
+            console.log(`É ${planet[filterByNumericValues[index].column]} menor que ${filterByNumericValues[index].value}`);
+            return parseInt(planet[filterByNumericValues[index].column], 10) < filterByNumericValues[index].value;
           case 'maior que':
-            return planet[filterByNumericValues.column] > filterByNumericValues.value;
+            return parseInt(planet[filterByNumericValues[index].column], 10) > filterByNumericValues[index].value;
           case 'igual a':
-            return planet[filterByNumericValues.column] === filterByNumericValues.value;
+            return planet[filterByNumericValues[index].column] === filterByNumericValues[index].value;
           default:
             return null;
           }
