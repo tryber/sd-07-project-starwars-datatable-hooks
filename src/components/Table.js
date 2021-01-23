@@ -6,10 +6,21 @@ const Table = () => {
   const [planets, setPlanets] = useState([]);
   const [input, setInput] = useState('');
   const [filtered, setFiltered] = useState(false);
-  const headers = ['climate', 'created', 'diameter',
-    'edited', 'films', 'gravity',
-    'name', 'orbitalPeriod', 'population',
-    'rotationPeriod', 'surfaceWater', 'terrain', 'url'];
+  const headers = [
+    'climate',
+    'created',
+    'diameter',
+    'edited',
+    'films',
+    'gravity',
+    'name',
+    'orbitalPeriod',
+    'population',
+    'rotationPeriod',
+    'surfaceWater',
+    'terrain',
+    'url',
+  ];
 
   useEffect(() => {
     if (!filtered) {
@@ -19,9 +30,7 @@ const Table = () => {
 
   const filterText = () => {
     const { name } = filters.filterByName;
-    return planets.filter(
-      (planet) => planet.name.toUpperCase().includes(name.toUpperCase()),
-    );
+    return planets.filter((planet) => planet.name.toUpperCase().includes(name.toUpperCase()));
   };
 
   const handleChangeInput = ({ target }) => {
@@ -58,7 +67,8 @@ const Table = () => {
       'orbital_period',
       'diameter',
       'rotation_period',
-      'surface_water'];
+      'surface_water',
+    ];
     const index = list.indexOf(column);
     list.splice(index, 1);
     return list;
@@ -71,10 +81,14 @@ const Table = () => {
       ({ column, comparison, value } = second);
     }
     if (comparison === 'maior que') {
-      setPlanets(planets.filter((planet) => parseInt(planet[column], 10) > value));
+      setPlanets(
+        planets.filter((planet) => parseInt(planet[column], 10) > value),
+      );
     }
     if (comparison === 'menor que') {
-      setPlanets(planets.filter((planet) => parseInt(planet[column], 10) < value));
+      setPlanets(
+        planets.filter((planet) => parseInt(planet[column], 10) < value),
+      );
     }
 
     if (comparison === 'igual a') {
@@ -90,48 +104,49 @@ const Table = () => {
     return planets;
   };
 
-  const mapPlanets = (parameters) => parameters.map(({ climate,
-    created,
-    diameter,
-    edited,
-    films,
-    gravity,
-    name,
-    orbital_period: orbitalPeriod,
-    population,
-    rotation_period: rotationPeriod,
-    surface_water: surfaceWater,
-    terrain,
-    url,
-  }) => (
-    <tr key={ name }>
-      <td>{ climate }</td>
-      <td>{ created }</td>
-      <td>{ diameter }</td>
-      <td>{ edited }</td>
-      <td>
-        {films.map((filme) => (
-          <p key={ filme }>{ filme }</p>
-        ))}
-      </td>
-      <td>{ gravity }</td>
-      <td>{ name }</td>
-      <td>{ orbitalPeriod }</td>
-      <td>{ population }</td>
-      <td>{ rotationPeriod }</td>
-      <td>{ surfaceWater }</td>
-      <td>{ terrain }</td>
-      <td>{ url }</td>
-    </tr>
-  ));
+  const mapPlanets = (parameters) => parameters.map(
+    ({
+      climate,
+      created,
+      diameter,
+      edited,
+      films,
+      gravity,
+      name,
+      orbital_period: orbitalPeriod,
+      population,
+      rotation_period: rotationPeriod,
+      surface_water: surfaceWater,
+      terrain,
+      url,
+    }) => (
+      <tr key={ name }>
+        <td>{climate}</td>
+        <td>{created}</td>
+        <td>{diameter}</td>
+        <td>{edited}</td>
+        <td>
+          {films.map((filme) => (
+            <p key={ filme }>{filme}</p>
+          ))}
+        </td>
+        <td>{gravity}</td>
+        <td>{name}</td>
+        <td>{orbitalPeriod}</td>
+        <td>{population}</td>
+        <td>{rotationPeriod}</td>
+        <td>{surfaceWater}</td>
+        <td>{terrain}</td>
+        <td>{url}</td>
+      </tr>
+    ),
+  );
 
   return (
     <div>
       <input
         data-testid="name-filter"
-        onChange={
-          (target) => handleChangeInput(target)
-        }
+        onChange={ (target) => handleChangeInput(target) }
       />
       <select
         className="column-filter"
@@ -167,48 +182,46 @@ const Table = () => {
       >
         Adicionar filtro
       </button>
-      {
-        filtered
-          ? (
-            <div>
-              <select
-                className="column-filter"
-                onChange={ (obj) => handleChangeOptions(obj) }
-              >
-                {spliceList().map((value) => <option key={ value.id }>{value}</option>)}
-              </select>
-              <select
-                className="comparison-filter"
-                onChange={ (obj) => handleChangeOptions(obj) }
-              >
-                <option>maior que</option>
-                <option>menor que</option>
-                <option>igual a</option>
-              </select>
+      {filtered ? (
+        <div>
+          <select
+            className="column-filter"
+            onChange={ (obj) => handleChangeOptions(obj) }
+          >
+            {spliceList().map((value) => (
+              <option key={ value.id }>{value}</option>
+            ))}
+          </select>
+          <select
+            className="comparison-filter"
+            onChange={ (obj) => handleChangeOptions(obj) }
+          >
+            <option>maior que</option>
+            <option>menor que</option>
+            <option>igual a</option>
+          </select>
 
-              <input
-                className="value-filter"
-                type="number"
-                onChange={ (obj) => handleChangeOptions(obj) }
-              />
-              <button
-                type="button"
-                onClick={ () => addFilter() }
-              >
-                Adicionar filtro
-              </button>
-            </div>)
-          : ''
-      }
+          <input
+            className="value-filter"
+            type="number"
+            onChange={ (obj) => handleChangeOptions(obj) }
+          />
+          <button type="button" onClick={ () => addFilter() }>
+            Adicionar filtro
+          </button>
+        </div>
+      ) : (
+        ''
+      )}
       <table>
         <thead>
           <tr>
-            {headers.map((header) => <th key={ header.id }>{header.toUpperCase()}</th>)}
+            {headers.map((header) => (
+              <th key={ header.id }>{header.toUpperCase()}</th>
+            ))}
           </tr>
         </thead>
-        <tbody>
-          {mapPlanets(verifyCondition())}
-        </tbody>
+        <tbody>{mapPlanets(verifyCondition())}</tbody>
       </table>
     </div>
   );
