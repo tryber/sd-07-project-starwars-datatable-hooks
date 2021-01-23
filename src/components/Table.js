@@ -146,44 +146,51 @@ const Table = () => {
 
   return (
     <div>
-      <input
-        data-testid="name-filter"
-        onChange={ (target) => handleChangeInput(target) }
-      />
-      <select
-        className="column-filter"
-        onChange={ (obj) => handleChangeOptions(obj) }
-        data-testid="column-filter"
-      >
-        <option>population</option>
-        <option>orbital_period</option>
-        <option>diameter</option>
-        <option>rotation_period</option>
-        <option>surface_water</option>
-      </select>
-      <select
-        className="comparison-filter"
-        onChange={ (obj) => handleChangeOptions(obj) }
-        data-testid="comparison-filter"
-      >
-        <option>maior que</option>
-        <option>menor que</option>
-        <option>igual a</option>
-      </select>
+      {/*  */}
+      {!filtered ? (
+        <div>
+          <input
+            data-testid="name-filter"
+            onChange={ (target) => handleChangeInput(target) }
+          />
+          <select
+            className="column-filter"
+            onChange={ (obj) => handleChangeOptions(obj) }
+            data-testid="column-filter"
+          >
+            <option>population</option>
+            <option>orbital_period</option>
+            <option>diameter</option>
+            <option>rotation_period</option>
+            <option>surface_water</option>
+          </select>
+          <select
+            className="comparison-filter"
+            onChange={ (obj) => handleChangeOptions(obj) }
+            data-testid="comparison-filter"
+          >
+            <option>maior que</option>
+            <option>menor que</option>
+            <option>igual a</option>
+          </select>
 
-      <input
-        className="value-filter"
-        type="number"
-        onChange={ (obj) => handleChangeOptions(obj) }
-        data-testid="value-filter"
-      />
-      <button
-        type="button"
-        data-testid="button-filter"
-        onClick={ () => addFilter() }
-      >
-        Adicionar filtro
-      </button>
+          <input
+            className="value-filter"
+            type="number"
+            onChange={ (obj) => handleChangeOptions(obj) }
+            data-testid="value-filter"
+          />
+          <button
+            type="button"
+            data-testid="button-filter"
+            onClick={ () => addFilter() }
+          >
+            Adicionar filtro
+          </button>
+        </div>
+      ) : (
+        ''
+      )}
       {filtered ? (
         <div>
           <select

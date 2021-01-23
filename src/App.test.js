@@ -281,6 +281,7 @@ describe('Não utilize filtros repetidos', () => {
       expect(child).toHaveProperty('nodeName', 'OPTION');
       return child.innerHTML;
     });
+    console.log(foundColumnFilter)
     expect(foundColumnFilter).toEqual(expect.arrayContaining(['orbital_period', 'diameter', 'rotation_period', 'surface_water']));
   });
 });
