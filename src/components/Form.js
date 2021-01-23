@@ -50,7 +50,6 @@ function Form() {
           data-testid="column-filter"
           onChange={ ({ target }) => setColumn(target.value) }
         >
-          <option hidden>Selecione coluna</option>
           {columnSelection.map((col) => {
             if (checkSelected(col)) return null;
             return (<option value={ col } key={ col }>{col}</option>);
