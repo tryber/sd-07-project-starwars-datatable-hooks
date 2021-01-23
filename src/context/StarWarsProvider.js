@@ -81,6 +81,12 @@ const StarWarsProvider = ({ children }) => {
     } else setFilteredData(data);
   };
 
+  const deleteFilter = (event) => {
+    const { value } = event.target;
+    const removedFilter = filtersArray.filter((filter) => (filter.column !== value));
+    setFiltersArray(removedFilter);
+  };
+
   const context = {
     data,
     filteredData,
@@ -103,6 +109,7 @@ const StarWarsProvider = ({ children }) => {
     handleInputValue,
     setFilteredData,
     filterDataButton,
+    deleteFilter,
   };
 
   return (
@@ -115,5 +122,5 @@ const StarWarsProvider = ({ children }) => {
 export default StarWarsProvider;
 
 StarWarsProvider.propTypes = {
-  children: PropTypes.element.isRequired,
+  children: PropTypes.node.isRequired,
 };

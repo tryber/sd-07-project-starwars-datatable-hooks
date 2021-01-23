@@ -8,6 +8,7 @@ function PlanetsFilters() {
     handleInputComparison,
     handleInputValue,
     filterDataButton,
+    deleteFilter,
     filters: { filterByNumericValues },
   } = useContext(StarWarsContext);
 
@@ -25,7 +26,6 @@ function PlanetsFilters() {
   //   newOptionsColumn = optionsColumn
   //     .filter((option) => (option !== filterByNumericValues[0].column));
   // }
-  console.log(filterByNumericValues);
 
   return (
     <div>
@@ -68,6 +68,22 @@ function PlanetsFilters() {
       >
         Filter
       </button>
+      { filterByNumericValues.length >= ONE
+        ? filterByNumericValues.map((filter, index) => (
+          <div data-testid="filter" key={ index }>
+            <p>
+              {`Filter ${index + 1}:
+              ${filter.column} ${filter.comparison} ${filter.value}` }
+            </p>
+            <button
+              type="button"
+              value={ filter.column }
+              onClick={ deleteFilter }
+            >
+              X
+            </button>
+          </div>
+        )) : <div>Sem filtros</div>}
     </div>
   );
 }
