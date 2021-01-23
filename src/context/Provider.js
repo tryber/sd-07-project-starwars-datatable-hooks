@@ -6,12 +6,21 @@ import fetchPlanets from '../services/fetchPlanetsAPI';
 function Provider(props) {
   const [data, setData] = useState([{ teste: 'só testando' }]);
   const [textInputValue, setTextInputValue] = useState('');
+  const [columnValue, setColumnValue] = useState('population');
+  const [comparisonValue, setComparisonValue] = useState('maior que');
+  const [numberValue, setNumberValue] = useState(0);
   const [filteredData, setFilteredData] = useState([]);
   const [filters, setFilters] = useState({
     filters: {
       filterByName: {
         name: '',
       },
+      filterByNumericValues: [
+        {
+          column: columnValue,
+          comparison: comparisonValue,
+          value: numberValue,
+        }],
     },
   });
 
@@ -44,11 +53,59 @@ function Provider(props) {
     filterByName(value.toLowerCase());
   };
 
+  const handleColumnChange = (event) => {
+    const { target } = event;
+    const { value } = target;
+    console.log(value);
+    setColumnValue(value);
+    console.log(columnValue);
+  };
+
+  const handleComparisonChange = (event) => {
+    const { target } = event;
+    const { value } = target;
+    setComparisonValue(value);
+  };
+
+  const handleNumberChange = (event) => {
+    const { target } = event;
+    const { value } = target;
+    setNumberValue(value);
+  };
+
+  const filterByNumber = () => {
+    const arrayToFilter = [...data];
+    // const filteredArray = arrayToFilter.filter((item) => (
+    //   item.name.toLowerCase().includes(value)
+    // ));
+    // setFilteredData(filteredArray);
+    console.log(filters);
+  };
+
+  const handleFilterClick = () => {
+    setFilters({
+      filterByNumericValues: [
+        {
+          column: columnValue,
+          comparison: comparisonValue,
+          value: numberValue,
+        }],
+    });
+    filterByNumber();
+  };
+
   const context = {
     data,
     filters,
     textInputValue,
     filteredData,
+    columnValue,
+    comparisonValue,
+    numberValue,
+    handleColumnChange,
+    handleComparisonChange,
+    handleNumberChange,
+    handleFilterClick,
     handleTextChange,
   };
   const { children } = props;
