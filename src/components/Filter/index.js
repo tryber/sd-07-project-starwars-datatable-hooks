@@ -9,6 +9,15 @@ function Filter() {
   const [valueFilter, setValueFilter] = useState(initialValueFilter);
   const [filterByNumericValues, setFilterByNumericValues] = useState([]);
   const [filterByName, setFilterByName] = useState({ name: '' });
+  const [options, setOptions] = useState(
+    [
+      'population',
+      'orbital_period',
+      'diameter',
+      'rotation_period',
+      'surface_water',
+    ],
+  );
 
   function handleChange({ target }) {
     const { value } = target;
@@ -39,6 +48,9 @@ function Filter() {
         }],
       },
     });
+
+    const newOptionsArray = options.filter((option) => option !== column);
+    setOptions(newOptionsArray);
   }
 
   return (
@@ -55,11 +67,9 @@ function Filter() {
         value={ column }
         onChange={ (e) => setColumn(e.target.value) }
       >
-        <option value="population">population</option>
-        <option value="orbital_period">orbital_period</option>
-        <option value="diameter">diameter</option>
-        <option value="rotation_period">rotation_period</option>
-        <option value="surface_water">surface_water</option>
+        { options.map((option) => (
+          <option value={ option } key={ option }>{option}</option>
+        )) }
       </select>
       <select
         name="comparison"
