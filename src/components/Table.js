@@ -2,15 +2,16 @@ import React, { useContext } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 function Table() {
-  const { data, filters, setFilters } = useContext(StarWarsContext);
+  const {
+    filters,
+    dataApi,
+    setFilters,
+    setNumeric,
+    handleClick,
+  } = useContext(StarWarsContext);
 
-  // const handleInput = (e) => {
-  //   setFilters({
-  //     filterByName: {
-  //       name: e.target.value,
-  //     },
-  //   });
-  // };
+  const { filterByName } = filters;
+  const { name } = filterByName;
 
   return (
     <div>
@@ -33,8 +34,8 @@ function Table() {
           </tr>
         </thead>
         <tbody>
-          {data
-            .filter((planet) => planet.name.includes(filters))
+          {dataApi
+            .filter((planet) => planet.name.includes(name))
             .map((planet) => (
               <tr key={ planet.name }>
                 <td>{planet.name}</td>
@@ -56,9 +57,51 @@ function Table() {
       </table>
       <input
         data-testid="name-filter"
-        onChange={ (e) => setFilters(e.target.value) }
+        onChange={ (e) => setFilters({
+          filterByName: { name: e.target.value },
+        }) }
         placeholder="Digite o nome do planeta"
       />
+      <select
+        data-testid="column-filter"
+        onChange={ ({ target }) => setNumeric((prevState) => ({
+          ...prevState,
+          column: target.value,
+        })) }
+      >
+        <option value="population">population</option>
+        <option value="orbital_period">orbital_period</option>
+        <option value="diameter">diameter</option>
+        <option value="rotation_period">rotation_period</option>
+        <option value="surface_water">surface_water</option>
+      </select>
+      <select
+        data-testid="comparison-filter"
+        onChange={ ({ target }) => setNumeric((prevState) => ({
+          ...prevState,
+          comparison: target.value,
+        })) }
+      >
+        <option value="maior que">maior que</option>
+        <option value="menor que">menor que</option>
+        <option value="igual a">igual a</option>
+      </select>
+      <input
+        type="number"
+        data-testid="value-filter"
+        name="value"
+        onChange={ ({ target }) => setNumeric((prevState) => ({
+          ...prevState,
+          value: target.value,
+        })) }
+      />
+      <button
+        type="button"
+        data-testid="button-filter"
+        onClick={ () => handleClick() }
+      >
+        Filtrar
+      </button>
     </div>
   );
 }

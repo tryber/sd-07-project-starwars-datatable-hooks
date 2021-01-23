@@ -6,30 +6,67 @@ import StarWarsContext from './StarWarsContext';
 
 function StarWarsProvider({ children }) {
   const [data, setData] = useState([]);
-  const [filters, setFilters] = useState([]);
+  const [dataApi, setDataApi] = useState([]);
+  const [filters, setFilters] = useState({
+    filterByName: {
+      name: '',
+    },
+    filterByNumericValues: [{}],
+  });
+
+  const [numeric, setNumeric] = useState({
+    column: 'population',
+    comparison: 'maior que',
+    value: 0,
+  });
 
   const handleFetch = async () => {
     const planets = await fetchPlanets();
     setData(planets.results);
   };
 
-  // const handleFiltered = async () => {
-  //   const { filterByName } = filters;
-  //   const filtered = await filteredPlanets(filterByName);
-  //   setData(filtered.results);
-  // };
-
   useEffect(() => {
     handleFetch();
   }, []);
 
-  // useEffect(() => {
-  //   handleFiltered();
-  // }, [filters]);
+  useEffect(() => {
+    setDataApi(data);
+  }, [data]);
+
+  const handleClick = () => {
+    const initialColumn = numeric.column;
+
+    setDataApi(
+      dataApi.filter((item) => {
+        switch (numeric.comparison) {
+        case 'maior que':
+          return parseFloat(item[initialColumn]) > parseFloat(numeric.value);
+        case 'menor que':
+          return parseFloat(item[initialColumn]) < parseFloat(numeric.value);
+        case 'igual a':
+          return parseFloat(item[initialColumn]) === parseFloat(numeric.value);
+        default:
+          return true;
+        }
+      }),
+    );
+  };
+
+  const context = {
+    data,
+    setData,
+    filters,
+    setFilters,
+    numeric,
+    setNumeric,
+    handleClick,
+    dataApi,
+    setDataApi,
+  };
 
   return (
     <main>
-      <StarWarsContext.Provider value={ { data, setData, filters, setFilters } }>
+      <StarWarsContext.Provider value={ context }>
         {children}
       </StarWarsContext.Provider>
     </main>
