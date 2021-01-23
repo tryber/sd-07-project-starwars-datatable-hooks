@@ -11,6 +11,9 @@ function Header() {
     changeSelectValue,
     handleFilterByNumericValues,
     handleRemoveFilter,
+    changeSortType,
+    changeSortColumn,
+    sortPlanets,
     filters: { filterByNumericValues },
   } = useContext(StarWarsContext);
 
@@ -87,6 +90,43 @@ function Header() {
             onClick={ handleRemoveFilter }
           >
             X
+          </button>
+        </div>
+        <div>
+          <select
+            data-testid="column-sort"
+            onChange={ changeSortColumn }
+          >
+            {columns.map((column) => (
+              <option key={ column } value={ column }>
+                { column }
+              </option>
+            ))}
+          </select>
+          <div>
+            ASC
+            <input
+              type="radio"
+              name="order"
+              value="ASC"
+              onChange={ changeSortType }
+              data-testid="column-sort-input-asc"
+            />
+            DESC
+            <input
+              type="radio"
+              name="order"
+              value="DESC"
+              onChange={ changeSortType }
+              data-testid="column-sort-input-desc"
+            />
+          </div>
+          <button
+            type="button"
+            data-testid="column-sort-button"
+            onClick={ sortPlanets }
+          >
+            Ordenar
           </button>
         </div>
       </div>

@@ -49,7 +49,7 @@ function Table() {
                 ))}
               </td>
               <td>{ gravity }</td>
-              <td>{ name }</td>
+              <td data-testid="planet-name">{ name }</td>
               <td>{ orbitalPeriod }</td>
               <td>{ population }</td>
               <td>{ rotationPeriod }</td>

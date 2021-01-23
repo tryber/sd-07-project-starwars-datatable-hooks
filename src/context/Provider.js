@@ -19,6 +19,7 @@ class Provider extends Component {
           comparison: 'maior que',
           value: '0',
         },
+        order: { column: 'name', sort: 'ASC' },
       },
     };
 
@@ -30,6 +31,9 @@ class Provider extends Component {
     this.changeSelectValue = this.changeSelectValue.bind(this);
     this.handleFilterByNumericValues = this.handleFilterByNumericValues.bind(this);
     this.handleRemoveFilter = this.handleRemoveFilter.bind(this);
+    this.sortPlanets = this.sortPlanets.bind(this);
+    this.changeSortType = this.changeSortType.bind(this);
+    this.changeSortColumn = this.changeSortColumn.bind(this);
   }
 
   componentDidMount() {
@@ -48,6 +52,7 @@ class Provider extends Component {
           isFetching: false,
           data: results,
         });
+        this.sortPlanets();
       }, (error) => {
         this.setState({
           isFetching: false,
@@ -169,6 +174,68 @@ class Provider extends Component {
     this.getStarWarsAPI();
   }
 
+  getValue(currency, nexting) {
+    const cur = currency.match(/^[0-9]+$/) ? Number(currency) : currency;
+    const nex = nexting.match(/^[0-9]+$/) ? Number(nexting) : nexting;
+    return {
+      cur,
+      nex,
+    };
+  }
+
+  sortPlanets() {
+    const { filters: { order: { column, sort } }, data } = this.state;
+    let sortedData = [];
+    const negative = -1;
+    const positive = 1;
+    const nullo = 0;
+    if (sort === 'ASC') {
+      sortedData = data.sort((curr, next) => {
+        const { cur, nex } = this.getValue(curr[column], next[column]);
+        if (cur > nex) return positive;
+        if (cur < nex) return negative;
+        return nullo;
+      });
+    }
+    if (sort === 'DESC') {
+      sortedData = data.sort((curr, next) => {
+        const { cur, nex } = this.getValue(curr[column], next[column]);
+        if (cur > nex) return negative;
+        if (cur < nex) return positive;
+        return nullo;
+      });
+    }
+    this.setState({ data: sortedData });
+  }
+
+  changeSortType({ target }) {
+    const { value } = target;
+    const { filters } = this.state;
+    this.setState({
+      filters: {
+        ...filters,
+        order: {
+          ...filters.order,
+          sort: value,
+        },
+      },
+    });
+  }
+
+  changeSortColumn({ target }) {
+    const { value } = target;
+    const { filters } = this.state;
+    this.setState({
+      filters: {
+        ...filters,
+        order: {
+          ...filters.order,
+          column: value,
+        },
+      },
+    });
+  }
+
   render() {
     const contextValue = {
       getStarWarsAPI: this.getStarWarsAPI,
@@ -178,6 +245,9 @@ class Provider extends Component {
       changeSelectValue: this.changeSelectValue,
       handleFilterByNumericValues: this.handleFilterByNumericValues,
       handleRemoveFilter: this.handleRemoveFilter,
+      changeSortType: this.changeSortType,
+      sortPlanets: this.sortPlanets,
+      changeSortColumn: this.changeSortColumn,
       ...this.state,
     };
     const { children } = this.props;
