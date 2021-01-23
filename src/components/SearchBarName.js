@@ -4,9 +4,8 @@ import StarWarsContextfrom from '../context/StarWarsContext';
 function SearchBarName() {
   const { searchBarValue, setSearchBarValue } = useContext(StarWarsContextfrom);
 
-  const handleChange = ({ target }) => {
-    const currentValue = target.value;
-    setSearchBarValue(currentValue);
+  const handleChange = ({ target: value }) => {
+    setSearchBarValue(value);
   };
 
   return (

@@ -8,6 +8,7 @@ function Provider({ children }) {
   const [data, setData] = useState({});
   const [searchBarValue, setSearchBarValue] = useState('');
   const [tBodyList, setTBodyList] = useState([]);
+  const [clickFilter, setClickFilter] = useState(false);
 
   useEffect(() => {
     const callAPI = async () => {
@@ -20,12 +21,18 @@ function Provider({ children }) {
   }, []);
 
   useEffect(() => {
-    const { results } = data;
-    if (results) {
+    if (data.results) {
+      const { results } = data;
       const currentList = results.filter(({ name }) => name.includes(searchBarValue));
       setTBodyList(currentList);
     }
   }, [searchBarValue, data]);
+
+  useEffect(() => {
+    if (data.results) {
+      /**ok */
+    }
+  }, [clickFilter, data]);
 
   const contextValue = {
     isFetching,
