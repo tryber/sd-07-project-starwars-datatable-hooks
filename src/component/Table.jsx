@@ -3,20 +3,7 @@ import StarWarsContext from '../context/StarWarsContext';
 import TableList from './TableList';
 
 export default function Table() {
-  const { planets, text, filteredPlanets } = useContext(StarWarsContext);
-
-  function renderTable() {
-    const zero = 0;
-    if (filteredPlanets.length > zero) {
-      return (
-        filteredPlanets.map((item) => (<TableList planet={ item } key={ item } />))
-      );
-    }
-    return (
-      planets.filter((item) => item.name.includes(text))
-        .map((item) => (<TableList planet={ item } key={ item } />))
-    );
-  }
+  const { filteredPlanets } = useContext(StarWarsContext);
 
   return (
     <table>
@@ -38,7 +25,8 @@ export default function Table() {
         </tr>
       </thead>
       <tbody>
-        {renderTable()}
+        { filteredPlanets
+          .map((item) => (<TableList planet={ item } key={ item.name } />)) }
       </tbody>
     </table>
   );

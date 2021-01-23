@@ -4,6 +4,18 @@ import planetsAPI from './services';
 import Table from './component/Table';
 import './App.css';
 
+const proportionGreaterThan = 'maior que';
+const proportionLessThan = 'menor que';
+const proportionIsEqualTo = 'igual a';
+const proportionValues = [proportionGreaterThan, proportionLessThan, proportionIsEqualTo];
+const filterByValues = [
+  'population',
+  'orbital_period',
+  'diameter',
+  'rotation_period',
+  'surface_water',
+];
+
 function App() {
   const [planets, setPlanets] = useState([]);
   const [text, setText] = useState([]);
@@ -11,6 +23,7 @@ function App() {
   const [proportion, setProportion] = useState([]);
   const [number, setNumber] = useState([]);
   const [filteredPlanets, setFilteredPlanets] = useState([]);
+  const [filters, setFilters] = useState([]);
 
   useEffect(() => {
     async function fetchData() {
@@ -20,21 +33,37 @@ function App() {
     fetchData();
   }, []);
 
-  function proportionCalculate(item) {
-    const value = parseInt(number, 10);
-    if (proportion === 'maior que') {
-      return item[filterSelect] > value;
+  function proportionCalculate(item, filter) {
+    const value = parseInt(filter.number, 10);
+    if (filter.proportion === proportionGreaterThan) {
+      return item[filter.filterSelect] > value;
     }
-    if (proportion === 'menor que') {
-      return item[filterSelect] < value;
+    if (filter.proportion === proportionLessThan) {
+      return item[filter.filterSelect] < value;
     }
-    return item[filterSelect] === number;
+    return item[filter.filterSelect] === filter.number;
   }
 
-  function filteringPlanets() {
-    const getFilteredPlanets = planets.filter((item) => proportionCalculate(item));
-    setFilteredPlanets(getFilteredPlanets);
-    console.log(getFilteredPlanets);
+  useEffect(() => {
+    let filtered = Array.from(planets);
+    filters.forEach((filter) => {
+      filtered = filtered.filter((item) => proportionCalculate(item, filter));
+    });
+    // planets.filter((item) => filters.every((f) => proportionCalculate(item, filter)));
+    setFilteredPlanets(filtered.filter((item) => item.name.includes(text)));
+  }, [filters, planets, text]);
+
+  function addFilter() {
+    setFilters(filters.concat([{
+      filterSelect,
+      proportion,
+      number,
+    }]));
+  }
+
+  function getUniqueFilterByValues() {
+    return filterByValues
+      .filter((value) => !filters.find((f) => f.filterSelect === value));
   }
 
   const context = {
@@ -54,24 +83,22 @@ function App() {
         onChange={ (e) => setText(e.target.value) }
       />
       <select
+        defaultValue="default"
         data-testid="column-filter"
         onChange={ (e) => setFilterSelect(e.currentTarget.value) }
       >
-        <option selected="true" disabled="disabled">Choose one</option>
-        <option>population</option>
-        <option>orbital_period</option>
-        <option>diameter</option>
-        <option>rotation_period</option>
-        <option>surface_water</option>
+        <option disabled value="default">Choose one</option>
+        {getUniqueFilterByValues()
+          .map((item) => <option key={ item } value={ item }>{ item }</option>)}
       </select>
       <select
+        defaultValue="default"
         data-testid="comparison-filter"
         onChange={ (e) => setProportion(e.currentTarget.value) }
       >
-        <option selected="true" disabled="disabled">Choose one</option>
-        <option value="maior que">maior que</option>
-        <option value="menor que">menor que</option>
-        <option value="igual a">igual a</option>
+        <option disabled value="default">Choose one</option>
+        {proportionValues
+          .map((item) => <option key={ item } value={ item }>{ item }</option>)}
       </select>
       <input
         type="number"
@@ -81,7 +108,7 @@ function App() {
       <button
         type="button"
         data-testid="button-filter"
-        onClick={ () => filteringPlanets() }
+        onClick={ () => addFilter() }
       >
         Adicionar Filtro
       </button>
