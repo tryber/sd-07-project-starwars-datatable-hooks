@@ -16,19 +16,19 @@ function Table() {
       ));
       const { filters } = globalState;
       const { filterByNumericValues } = filters;
-      console.log(`Filter By NUmeric Values: ${filterByNumericValues}`);
       if (filterByNumericValues.length !== zero) {
         const index = filterByNumericValues.length - 1;
         const planetsFiltered = planetsFilteredByName.filter((planet) => {
           switch (filterByNumericValues[index].comparison) {
           case 'menor que':
-            console.log(planet);
-            console.log(`É ${planet[filterByNumericValues[index].column]} menor que ${filterByNumericValues[index].value}`);
-            return parseInt(planet[filterByNumericValues[index].column], 10) < filterByNumericValues[index].value;
+            return parseInt(planet[filterByNumericValues[index].column], 10)
+              < filterByNumericValues[index].value;
           case 'maior que':
-            return parseInt(planet[filterByNumericValues[index].column], 10) > filterByNumericValues[index].value;
+            return parseInt(planet[filterByNumericValues[index].column], 10)
+              > filterByNumericValues[index].value;
           case 'igual a':
-            return planet[filterByNumericValues[index].column] === filterByNumericValues[index].value;
+            return planet[filterByNumericValues[index].column]
+              === filterByNumericValues[index].value;
           default:
             return null;
           }
