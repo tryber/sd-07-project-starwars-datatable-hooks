@@ -8,7 +8,7 @@ function App() {
   return (
     <div className="App-header">
       <Provider>
-        <h1 class="text-center">StarWars Planets!</h1>
+        <h1 className="text-center">StarWars Planets!</h1>
         <Form />
         <Table />
       </Provider>
