@@ -10,7 +10,7 @@ function Table() {
   useEffect(() => {
     if (filters !== '') {
       const planetsFiltered = data.filter((planet) => (
-        planet.name.includes(filters)
+        planet.name.includes(filters.filters.filterByName.name)
       ));
       setPlanets(planetsFiltered);
     } else {

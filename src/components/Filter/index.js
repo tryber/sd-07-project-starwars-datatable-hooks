@@ -6,14 +6,14 @@ function Filter() {
 
   function handleChange({ target }) {
     const { value } = target;
-    setFilters(value);
+    setFilters({ filters: { filterByName: { name: value } } });
   }
 
   return (
     <div>
       <input
         type="text"
-        value={ filters }
+        value={ filters.filters.filterByName.name }
         onChange={ (e) => handleChange(e) }
         data-testid="name-filter"
       />
