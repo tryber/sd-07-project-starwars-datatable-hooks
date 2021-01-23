@@ -12,7 +12,6 @@ function Table() {
         .filter((header) => header !== 'residents');
       setHeaders(getHeaders);
     }
-    // renderizeHeaders();
   }, [contextValue]);
 
   return (
