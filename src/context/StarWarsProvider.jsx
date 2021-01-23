@@ -17,12 +17,22 @@ const StarWarsProvide = ({ children }) => {
 
   const renderLines = (data) => {
     console.log(data);
-      return (
-    <tr>
-      {/* {data.map(planeta => <tr key={planeta}>{planeta.map(infoDoPlaneta => <td key={infoDoPlaneta}>{infoDoPlaneta}</td>)}</tr>)} */}
-      {data.map(item => setLine(item))}
-    </tr>
-    );
+
+    const temp = [];
+    //tratar data ate sobrar a string que eu quero
+    // remover index 9
+    data.map(planeta => /* console.log(Object.values(planeta)) */ temp.push(Object.values(planeta)));
+    // console.log(temp);
+    temp.forEach((linha) => linha.splice(9, 1))
+    console.log(temp);
+    setLine(temp);
+
+    //   return (
+    // <tr>
+    //   {/* {data.map(planeta => <tr key={planeta}>{planeta.map(infoDoPlaneta => <td key={infoDoPlaneta}>{infoDoPlaneta}</td>)}</tr>)} */}
+    //   {data.map(item => setLine(item))}
+    // </tr>
+    // );
   }
 
     useEffect(() => {

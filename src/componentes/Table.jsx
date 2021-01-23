@@ -24,6 +24,7 @@ function Table() {
         <th>url</th>
       </thead>
       <tbody>
+        {line.map(info => <td>{info}</td>)}
         {/* {Object.keys(line).forEach((item) => {console.log(line)})} */}
           {/* {Object.keys(line).forEach((item) => {})} */}
       </tbody>
