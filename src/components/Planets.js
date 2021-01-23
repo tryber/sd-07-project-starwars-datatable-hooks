@@ -61,6 +61,14 @@ function Planets() {
                 });
                 return match;
               })
+              .sort((a, b) => {
+                const { column } = filters.order;
+                const NEGATIVE = -1;
+                if (filters.order.sort === 'ASC') {
+                  return a[column] < b[column] ? NEGATIVE : 1;
+                }
+                return a[column] > b[column] ? NEGATIVE : 1;
+              })
               .map((planet) => <RowPlanet key={ planet.name } planet={ planet } />)}
           </tbody>
         </table>

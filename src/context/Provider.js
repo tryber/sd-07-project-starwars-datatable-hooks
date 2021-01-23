@@ -19,6 +19,10 @@ const Provider = ({ children }) => {
       name: '',
     },
     filterByNumericValues: [],
+    order: {
+      column: 'name',
+      sort: 'ASC',
+    },
   });
 
   const setName = (name) => setFilters({ ...filters, filterByName: { name } });
