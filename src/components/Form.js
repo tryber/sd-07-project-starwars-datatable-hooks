@@ -58,7 +58,7 @@ export default function Form() {
           <button
             type="button"
             onClick={ () => {
-              setType('');
+              // setType('');
               setByNum({
                 populationType: '',
                 logic: comparison,
@@ -83,7 +83,7 @@ export default function Form() {
           <button
             type="button"
             onClick={ () => {
-              setComparison('');
+              // setComparison('');
               setByNum({
                 populationType: type,
                 logic: '',
