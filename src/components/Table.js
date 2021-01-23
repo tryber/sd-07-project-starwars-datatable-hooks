@@ -2,11 +2,11 @@ import React, { useContext } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 function Table() {
-  const { data } = useContext(StarWarsContext);
-  const zero = 0;
+  const { data, filterByName } = useContext(StarWarsContext);
+
   return (
     <div>
-      { data.length === zero ? <p>Loading...</p>
+      { !data.length ? <p>Loading...</p>
         : (
           <table>
             <tbody>
@@ -18,15 +18,18 @@ function Table() {
                 }
               </tr>
               {
-                data.map((planet) => {
-                  delete planet.residents;
-                  return (
-                    <tr key={ planet.name }>
-                      { Object.values(planet)
-                        .map((value) => <td key={ value }>{ value }</td>) }
-                    </tr>
-                  );
-                })
+                data.filter((planet) => planet.name.includes(filterByName))
+                  .map((filteredPlanets) => {
+                    delete filteredPlanets.residents;
+                    return (
+                      <tr key={ filteredPlanets.name }>
+                        {
+                          Object.values(filteredPlanets)
+                            .map((value) => <td key={ value }>{ value }</td>)
+                        }
+                      </tr>
+                    );
+                  })
               }
             </tbody>
           </table>

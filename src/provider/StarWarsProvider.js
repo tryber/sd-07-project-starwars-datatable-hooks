@@ -4,10 +4,11 @@ import StarWarsContext from '../context/StarWarsContext';
 
 function StarWarsProvider({ children }) {
   const [data, setData] = useState([]);
-
-  const url = 'https://swapi-trybe.herokuapp.com/api/planets/';
+  const [filterByName, setFilterByName] = useState('');
+  const [filters, setFilters] = useState({ filterByName: { name: '' } });
 
   useEffect(() => {
+    const url = 'https://swapi-trybe.herokuapp.com/api/planets/';
     async function fetchData() {
       const response = await fetch(url);
       const json = await response.json();
@@ -20,6 +21,10 @@ function StarWarsProvider({ children }) {
   const contextValue = {
     data,
     setData,
+    filters,
+    setFilters,
+    filterByName,
+    setFilterByName,
   };
 
   return (

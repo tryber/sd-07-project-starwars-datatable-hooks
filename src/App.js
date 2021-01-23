@@ -1,12 +1,14 @@
 import React from 'react';
+import SearchBar from './components/SearchBar';
 import Table from './components/Table';
-import Provider from './provider/StarWarsProvider';
+import StarWarsProvider from './provider/StarWarsProvider';
 
 function App() {
   return (
-    <Provider>
+    <StarWarsProvider>
+      <SearchBar />
       <Table />
-    </Provider>
+    </StarWarsProvider>
   );
 }
 
