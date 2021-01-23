@@ -12,6 +12,7 @@ function FiltersForm() {
     handleComparisonChange,
     handleNumberChange,
     handleFilterClick,
+    handleResetClick,
   } = useContext(StarWarsContext);
   return (
     <form>
@@ -70,8 +71,11 @@ function FiltersForm() {
         data-testid="button-filter"
         onClick={ () => handleFilterClick() }
       >
-        Filter
+        Teste
       </button>
+      <div data-testid="filter">
+        <button type="button" onClick={ () => handleResetClick() }>X</button>
+      </div>
     </form>
   );
 }

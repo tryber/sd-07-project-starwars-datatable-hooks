@@ -111,9 +111,16 @@ function Provider(props) {
     filterByNumber();
   };
 
+  const handleResetClick = () => {
+    const resetedArray = [...data];
+    setColumnValue('population');
+    setComparisonValue('maior que');
+    setNumberValue(initialNumber);
+    setFilteredData(resetedArray);
+  };
+
   useEffect(() => {
     setFilters({
-      ...filters,
       filterByNumericValues: [
         {
           column: columnValue,
@@ -121,7 +128,7 @@ function Provider(props) {
           value: numberValue,
         }],
     });
-  }, [columnValue, comparisonValue, filters, numberValue]);
+  }, [columnValue, comparisonValue, numberValue]);
 
   const context = {
     data,
@@ -136,6 +143,7 @@ function Provider(props) {
     handleNumberChange,
     handleFilterClick,
     handleTextChange,
+    handleResetClick,
   };
   const { children } = props;
   return (
