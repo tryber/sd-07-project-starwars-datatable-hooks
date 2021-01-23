@@ -31,23 +31,45 @@ const Table = () => {
 
   const handleChangeOptions = ({ target }) => {
     const { className, value } = target;
-
+    let positionArr;
+    if (filtered) {
+      positionArr = 1;
+    } else {
+      positionArr = 1 - 1;
+    }
     if (className === 'column-filter') {
-      filters.filterByNumericValues[0].column = value;
+      filters.filterByNumericValues[positionArr].column = value;
     }
 
     if (className === 'comparison-filter') {
-      filters.filterByNumericValues[0].comparison = value;
+      filters.filterByNumericValues[positionArr].comparison = value;
     }
 
     if (className === 'value-filter') {
-      filters.filterByNumericValues[0].value = value;
+      filters.filterByNumericValues[positionArr].value = value;
     }
   };
 
-  const addFilter = () => {
+  const spliceList = () => {
     const values = filters.filterByNumericValues[0];
-    const { column, comparison, value } = values;
+    const { column } = values;
+    const list = [
+      'population',
+      'orbital_period',
+      'diameter',
+      'rotation_period',
+      'surface_water'];
+    const index = list.indexOf(column);
+    list.splice(index, 1);
+    return list;
+  };
+
+  const addFilter = () => {
+    const [first, second] = filters.filterByNumericValues;
+    let { column, comparison, value } = first;
+    if (filtered) {
+      ({ column, comparison, value } = second);
+    }
     if (comparison === 'maior que') {
       setPlanets(planets.filter((planet) => parseInt(planet[column], 10) > value));
     }
@@ -131,6 +153,7 @@ const Table = () => {
         <option>menor que</option>
         <option>igual a</option>
       </select>
+
       <input
         className="value-filter"
         type="number"
@@ -144,6 +167,39 @@ const Table = () => {
       >
         Adicionar filtro
       </button>
+      {
+        filtered
+          ? (
+            <div>
+              <select
+                className="column-filter"
+                onChange={ (obj) => handleChangeOptions(obj) }
+              >
+                {spliceList().map((value) => <option key={ value.id }>{value}</option>)}
+              </select>
+              <select
+                className="comparison-filter"
+                onChange={ (obj) => handleChangeOptions(obj) }
+              >
+                <option>maior que</option>
+                <option>menor que</option>
+                <option>igual a</option>
+              </select>
+
+              <input
+                className="value-filter"
+                type="number"
+                onChange={ (obj) => handleChangeOptions(obj) }
+              />
+              <button
+                type="button"
+                onClick={ () => addFilter() }
+              >
+                Adicionar filtro
+              </button>
+            </div>)
+          : ''
+      }
       <table>
         <thead>
           <tr>

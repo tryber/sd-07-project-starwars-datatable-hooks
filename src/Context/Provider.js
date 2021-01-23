@@ -24,7 +24,8 @@ const Provider = ({ children }) => {
             name: '',
           },
           filterByNumericValues: [
-            { column: 'population', comparison: 'maior que', value: 10000 }],
+            { column: 'population', comparison: 'maior que', value: 10000 },
+            { column: 'orbital_period', comparison: 'maior que', value: 10000 }],
         },
       } }
     >
