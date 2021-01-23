@@ -87,7 +87,6 @@ function App() {
         data-testid="column-filter"
         onChange={ (e) => setFilterSelect(e.currentTarget.value) }
       >
-        <option disabled value="default">Choose one</option>
         {getUniqueFilterByValues()
           .map((item) => <option key={ item } value={ item }>{ item }</option>)}
       </select>
@@ -96,7 +95,6 @@ function App() {
         data-testid="comparison-filter"
         onChange={ (e) => setProportion(e.currentTarget.value) }
       >
-        <option disabled value="default">Choose one</option>
         {proportionValues
           .map((item) => <option key={ item } value={ item }>{ item }</option>)}
       </select>
