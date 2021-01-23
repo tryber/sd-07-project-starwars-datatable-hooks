@@ -2,13 +2,11 @@ import React, { useContext } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 const NameFilter = () => {
-  const { filters, setFilter } = useContext(StarWarsContext);
+  const { filters, dispatch } = useContext(StarWarsContext);
   const { name } = filters.filterByName;
 
   const handleChange = ({ target }) => {
-    setFilter({ filterByName: {
-      name: target.value,
-    } });
+    dispatch({ type: 'FILTER_BY_NAME', payload: target.value });
   };
 
   return (

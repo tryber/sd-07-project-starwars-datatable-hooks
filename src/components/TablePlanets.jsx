@@ -1,11 +1,12 @@
 import React, { useContext } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
+import ApplyFilter from './ApplyFilter';
 
 const TablePlanets = () => {
-  const { data, filters } = useContext(StarWarsContext);
+  const { data } = useContext(StarWarsContext);
   if (!data) return null;
-  const nameFilter = filters.filterByName.name;
-  const filteredData = data.filter((planet) => planet.name.includes(nameFilter));
+  const filteredData = ApplyFilter();
+  console.log('API DATA:');
   console.log(filteredData);
 
   return (

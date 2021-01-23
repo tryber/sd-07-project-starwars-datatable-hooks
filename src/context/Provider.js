@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useReducer } from 'react';
 import PropTypes from 'prop-types';
 import StarWarsContext from './StarWarsContext';
+import reducer from './reducer';
 
 function Provider({ children }) {
   const dataInitialState = [];
@@ -8,16 +9,29 @@ function Provider({ children }) {
     filterByName: {
       name: '',
     },
+    filterByNumericValues: [
+      {
+        column: 'population',
+        comparison: 'maior que',
+        value: '100000',
+      },
+    ],
   };
+  const customFilterInitialState = false;
 
   const [data, setData] = useState(dataInitialState);
-  const [filters, setFilter] = useState(filterInitialState);
+  // const [filters, setFilter] = useState(filterInitialState);
+  const [filters, dispatch] = useReducer(reducer, filterInitialState);
+  const [customFilter, setCustomFilter] = useState(customFilterInitialState);
 
   const contextValue = {
     data,
     setData,
     filters,
-    setFilter,
+    // setFilter,
+    dispatch,
+    customFilter,
+    setCustomFilter,
   };
 
   return (
