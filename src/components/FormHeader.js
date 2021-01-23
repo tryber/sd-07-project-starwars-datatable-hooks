@@ -14,7 +14,6 @@ function FormHeader() {
 
   const { filterByNumericValues } = filters;
   const { column, comparison, value } = filterByNumericValues[0];
-
   const dataFilter = dataHeader.filter((item) => item === 'population'
     || item === 'orbital_period'
     || item === 'diameter'
@@ -59,7 +58,7 @@ function FormHeader() {
           />
         </label>
       </form>
-      <form>
+      <form data-testid="filter">
         <label htmlFor="select">
           Selecione:
           <select onChange={ handlerChangeTag } id="select" data-testid="column-filter">
@@ -94,9 +93,9 @@ function FormHeader() {
           />
         </label>
         {checkPrimaryFilter ? <SecondFilter /> : ''}
-
+        <button onClick={ noFiltered } type="button">X</button>
       </form>
-      <button onClick={ noFiltered } data-testid="filter" type="button">x</button>
+
       <button
         onClick={ filtered }
         data-testid="button-filter"

@@ -7,6 +7,7 @@ function SecondFilter() {
     setTagSecond,
     setValueCompareSecond,
     columns,
+
   } = useContext(StarWarsContext);
 
   const { filterByNumericValues } = filters;
@@ -17,15 +18,15 @@ function SecondFilter() {
   const handlerChangeTagCompare = ({ target }) => {
     setTagCompareSecond(target.value);
   };
-
+    // columns.splice(columns.indexOf(target.value), 1);
   const handlerChangeTag = ({ target }) => {
     setTagSecond(target.value);
-    columns.splice(columns.indexOf(target.value), 1);
   };
 
   const handlerChangeValue = ({ target }) => {
     setValueCompareSecond(target.value);
   };
+
   return (
     <form>
       <label htmlFor="select">
@@ -59,7 +60,7 @@ function SecondFilter() {
           type="number"
         />
       </label>
-      <button data-testid="filter" type="button">x</button>
+
     </form>
 
   );

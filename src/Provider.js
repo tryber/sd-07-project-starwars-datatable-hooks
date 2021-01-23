@@ -4,17 +4,19 @@ import StarWarsContext from './context/StarWarsContext';
 import getCurrencePlanets from './services/planetsApi';
 
 function Provider({ children }) {
-  const columnsSave = ['population',
+  const columnsSave = [
     'orbital_period',
     'diameter',
     'rotation_period',
-    'surface_water'];
+    'surface_water',
+    'population'];
   const [filterName, setFilterByName] = useState('');
   const [data, setData] = useState([]);
   const [tagCompare, setTagCompare] = useState('');
   const [tag, setTag] = useState('');
   const [valueCompare, setValueCompare] = useState('');
   const [filter, setFilter] = useState(false);
+  const [filter2, setFilter2] = useState(true);
   const [tagCompareSecond, setTagCompareSecond] = useState('');
   const [tagSecond, setTagSecond] = useState('');
   const [valueCompareSecond, setValueCompareSecond] = useState('');
@@ -30,10 +32,12 @@ function Provider({ children }) {
     data,
     filter,
     columns,
+    filter2,
     primaryFilter,
     dataHeader: Object.keys(dataTags).filter(
       (item) => item !== 'residents',
     ),
+    setFilter2,
     setColomns,
     setPrimaryFilter,
     setFilterByName,

@@ -3,7 +3,7 @@ import StarWarsContext from '../context/StarWarsContext';
 import filterCompare from '../hooks/hookFIlter';
 
 function Table() {
-  const { data, filters, dataHeader, filter } = useContext(StarWarsContext);
+  const { data, filters, dataHeader, filter, filter2 } = useContext(StarWarsContext);
 
   const { filterByName, filterByNumericValues } = filters;
   const { comparison, column, value } = filterByNumericValues[0];
@@ -20,7 +20,7 @@ function Table() {
     && filterByNumericValues[1].value !== ''
     && filterByNumericValues[1].comparison !== '';
 
-  const secondFilter = checkPrimaryFilter && filter
+  const secondFilter = checkPrimaryFilter && filter2
     ? filterCompare(filterByNumericValues[1].comparison,
       tableRender,
       filterByNumericValues[1].column,
