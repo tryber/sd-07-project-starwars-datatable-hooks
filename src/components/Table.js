@@ -189,6 +189,7 @@ const Table = () => {
           <select
             className="column-filter"
             onChange={ (obj) => handleChangeOptions(obj) }
+            data-testid="column-filter"
           >
             {spliceList().map((value) => (
               <option key={ value.id }>{value}</option>
@@ -197,6 +198,7 @@ const Table = () => {
           <select
             className="comparison-filter"
             onChange={ (obj) => handleChangeOptions(obj) }
+            data-testid="comparison-filter"
           >
             <option>maior que</option>
             <option>menor que</option>
@@ -207,8 +209,9 @@ const Table = () => {
             className="value-filter"
             type="number"
             onChange={ (obj) => handleChangeOptions(obj) }
+            data-testid="value-filter"
           />
-          <button type="button" onClick={ () => addFilter() }>
+          <button type="button" onClick={ () => addFilter() } data-testid="button-filter">
             Adicionar filtro
           </button>
         </div>
