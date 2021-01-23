@@ -26,22 +26,18 @@ const StarWarsProvider = ({ children }) => {
   const filterByValues = (chosenFilters) => {
     const newFilter = filters.filterByNumericValues.concat(chosenFilters);
     const newUsedFilters = usedFilters.concat(chosenFilters.column);
-    setFilters({ ...filters, filterByNumericValues: newFilter });
     setUsedFilters(newUsedFilters);
+    setFilters({ ...filters, filterByNumericValues: newFilter });
   };
 
-  const removeFilter = (index) => {
-    const zero = 0;
-    const one = 1;
-    if (index === zero && usedFilters.length === one) {
-      setFilters({ ...filters, filterByNumericValues: [] });
-      setUsedFilters([]);
-    } else {
-      const newFilter = filters.filterByNumericValues.splice(index, 1);
-      const newUsedFilters = usedFilters.splice(index, 1);
-      setFilters({ ...filters, filterByNumericValues: newFilter });
-      setUsedFilters(newUsedFilters);
-    }
+  const removeFilter = (column) => {
+    const newFilters = filters.filterByNumericValues
+      .filter((filter) => filter.column !== column);
+
+    const newUsedFilters = usedFilters.filter((usedFilter) => usedFilter === column);
+
+    setFilters({ ...filters, filterByNumericValues: newFilters });
+    setUsedFilters(newUsedFilters);
   };
 
   const context = {

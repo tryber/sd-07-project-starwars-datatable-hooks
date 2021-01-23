@@ -21,6 +21,17 @@ export default function NumericFilter() {
     'surface_water',
   ];
   const comparisons = ['maior que', 'menor que', 'igual a'];
+
+  const updateChosenColumn = () => {
+    const newColumn = columns
+      .filter((column) => {
+        if (usedFilters.includes(column)) return false;
+        return true;
+      })[1];
+    console.log(columns, usedFilters);
+    setChosenFilters({ ...chosenFilters, column: newColumn });
+  };
+
   return (
     <div>
       <section>
@@ -38,7 +49,9 @@ export default function NumericFilter() {
             </span>
             <button
               type="button"
-              onClick={ () => removeFilter(index) }
+              onClick={ () => {
+                removeFilter(filter.column);
+              } }
             >
               x
             </button>
@@ -80,6 +93,7 @@ export default function NumericFilter() {
         type="button"
         onClick={ () => {
           filterByValues(chosenFilters);
+          updateChosenColumn();
         } }
       >
         filtrar
