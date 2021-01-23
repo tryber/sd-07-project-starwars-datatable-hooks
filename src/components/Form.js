@@ -3,14 +3,37 @@ import { StarWarsContext } from '../context/StarWarsContext';
 
 function Form() {
   const { handleNameFilterInput,
-    filterByNumericValues,
+    addNumericFilter,
+    filters,
   } = useContext(StarWarsContext);
   const [column, setColumn] = useState('');
   const [comparison, setComparison] = useState('');
   const [value, setValue] = useState('');
 
+  const { filterByNumericValues } = filters;
+
+  const columnSelection = [
+    'population',
+    'orbital_period',
+    'diameter',
+    'rotation_period',
+    'surface_water',
+  ];
+
   const handleClick = () => {
-    filterByNumericValues({ column, comparison, value });
+    addNumericFilter({ column, comparison, value });
+    setColumn('');
+    setComparison('');
+    setValue('');
+  };
+
+  const checkSelected = (entry) => {
+    let columnSelected = false;
+    filterByNumericValues.forEach((filter) => {
+      columnSelected = (entry === filter.column);
+      if (columnSelected) return null;
+    });
+    if (columnSelected) return true;
   };
 
   return (
@@ -25,15 +48,13 @@ function Form() {
         <select
           className="form-select"
           data-testid="column-filter"
-          value={ column }
           onChange={ ({ target }) => setColumn(target.value) }
         >
-          <option>Selecionar colunas</option>
-          <option>population</option>
-          <option>orbital_period</option>
-          <option>diameter</option>
-          <option>rotation_period</option>
-          <option>surface_water</option>
+          <option hidden>Selecione coluna</option>
+          {columnSelection.map((col) => {
+            if (checkSelected(col)) return null;
+            return (<option value={ col } key={ col }>{col}</option>);
+          })}
         </select>
         <select
           className="form-select"
@@ -41,7 +62,7 @@ function Form() {
           value={ comparison }
           onChange={ ({ target }) => setComparison(target.value) }
         >
-          <option>Comparar</option>
+          <option hidden>Comparação</option>
           <option>maior que</option>
           <option>menor que</option>
           <option>igual a</option>

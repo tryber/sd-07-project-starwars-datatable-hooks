@@ -13,7 +13,7 @@ const StarWarsProvider = ({ children }) => {
   };
 
   // função de @vitor-rc1
-  const filterByNumericValues = (newFilter) => {
+  const addNumericFilter = (newFilter) => {
     const { filterByNumericValues: filterNumeric } = filters;
     setFilters({
       ...filters,
@@ -24,7 +24,7 @@ const StarWarsProvider = ({ children }) => {
   const context = {
     handleNameFilterInput,
     filters,
-    filterByNumericValues,
+    addNumericFilter,
   };
 
   return (
