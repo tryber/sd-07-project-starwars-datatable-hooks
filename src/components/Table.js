@@ -24,11 +24,7 @@ function Table() {
         </tr>
       </thead>
       <tbody>
-        { // se o state input for diferente de ""
-          // data.filter((planet) => {
-          //  if(filterByName !== '') {
-          //  return -- fazer filtro com a condição do nome - depois do parênteses do if retornar todos
-          // })
+        {
           data.map((planet) => {
             const {
               climate,
@@ -45,10 +41,7 @@ function Table() {
               terrain,
               url,
             } = planet;
-            // console.log('filterByName.name', filterByName.name);
-            // console.log('planet.name', planet.name);
             if (filterByName.name !== '' && planet.name.includes(filterByName.name)) {
-              // console.log('chegou no IF');
               return (
                 <tr key={ name }>
                   <td>{ name }</td>
@@ -67,7 +60,6 @@ function Table() {
                 </tr>
               );
             }
-            // console.log('não entrou do if');
             if (filterByName.name === '') {
               return (
                 <tr key={ name }>

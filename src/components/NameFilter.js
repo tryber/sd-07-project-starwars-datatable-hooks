@@ -23,7 +23,5 @@ function NameFilter() {
     </label>
   );
 }
-// 1. monitorar o input com um onChange e salvar no estado
-// 2. Na table, colocar um IF
-// 3. Se o estado for diferente de "", fazer um filter no data,
+
 export default NameFilter;

@@ -10,7 +10,6 @@ function Provider({ children }) {
   useEffect(() => {
     async function fetchPlanets() {
       const arrayPlanets = await fetchData();
-      // console.log('array provider', arrayPlanets);
       setData(arrayPlanets);
     }
     fetchPlanets();
