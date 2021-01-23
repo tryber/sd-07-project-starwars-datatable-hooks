@@ -9,10 +9,10 @@ function Table() {
   const [num, setSearchValue] = useState(zero);
   const { context } = useContext(StarWarsContext);
   const { planetList } = context;
-  if (context) {
-    // const { filterByNumericValues } = filters;
-    // const { column, comparison, value } = filterByNumericValues;
-  }
+  // if (context) {
+  // const { filterByNumericValues } = filters;
+  // const { column, comparison, value } = filterByNumericValues;
+  // }
 
   const renderRow = (list) => {
     const elementList = list.map((planet) => {
@@ -58,7 +58,8 @@ function Table() {
     let filtered = [];
     console.log(coluna, comp, num);
     if (comp === 'igual a') {
-      filtered = planetList.filter((item) => parseInt(item[coluna], 10) === num);
+      filtered = planetList
+        .filter((item) => parseInt(item[coluna], 10) === parseInt(num, 10));
     }
     if (comp === 'maior que') {
       filtered = planetList

@@ -5,7 +5,7 @@ import StarWarsContext from './context/StarWarsContext';
 
 function App() {
   const url = 'https://swapi-trybe.herokuapp.com/api/planets/';
-  const [planetList, setPlanetList] = useState([]);
+  // const [planetList, setPlanetList] = useState([]);
   const [context, setContext] = useState({
     filters:
     {
@@ -20,20 +20,20 @@ function App() {
         },
       ],
     },
-    planetList,
+    planetList: [],
   });
 
-  const fetchPlanets = async () => {
-    const { results } = await fetch(url)
-      .then((response) => response.json());
-    if (results !== undefined) setPlanetList(results);
-    setPlanetList(results);
-    setContext({ ...context, planetList: results });
-  };
-
   useEffect(() => {
-    fetchPlanets();
-  }, [fetchPlanets]);
+    async function fetchPlanet() {
+      // console.log('rodou fetch');
+      const { results } = await fetch(url)
+        .then((response) => response.json());
+      // console.log(results);
+      // if (results !== undefined )
+      setContext({ ...context, planetList: results });
+    }
+    fetchPlanet();
+  }, []);
 
   return (
     <StarWarsContext.Provider value={ { context, setContext } }>
