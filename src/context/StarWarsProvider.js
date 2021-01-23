@@ -4,11 +4,12 @@ import StarWarsContext from './StarWarsContext';
 
 function StarWarsProvider({ children }) {
   const [data, setData] = useState([]);
-  const [filters, setFilters] = useState({
+  const [globalState, setGlobalState] = useState({
     filters: {
       filterByName: {
         name: '',
       },
+      filterByNumericValues: [],
     },
   });
 
@@ -24,7 +25,7 @@ function StarWarsProvider({ children }) {
   }, []);
 
   return (
-    <StarWarsContext.Provider value={ { data, filters, setFilters } }>
+    <StarWarsContext.Provider value={ { data, globalState, setGlobalState } }>
       {children}
     </StarWarsContext.Provider>
   );

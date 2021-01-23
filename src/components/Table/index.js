@@ -5,18 +5,41 @@ import { TableHeader, TableData } from './styles';
 function Table() {
   const [planets, setPlanets] = useState([]);
 
-  const { data, filters } = useContext(StarWarsContext);
+  const { data, globalState } = useContext(StarWarsContext);
 
   useEffect(() => {
-    if (filters !== '') {
-      const planetsFiltered = data.filter((planet) => (
-        planet.name.includes(filters.filters.filterByName.name)
+    if (globalState.filters.filterByName.name !== '') {
+      console.log('entrei');
+      const zero = 0;
+      const planetsFilteredByName = data.filter((planet) => (
+        planet.name.includes(globalState.filters.filterByName.name)
       ));
-      setPlanets(planetsFiltered);
+      console.log(`Global: ${globalState}`);
+      const { filters } = globalState;
+      console.log(`Filters: ${filters}`);
+      const { filterByNumericValues } = filters;
+      console.log(`Filter By NUmeric Values: ${filterByNumericValues}`);
+      if (filterByNumericValues.length !== zero) {
+        const planetsFiltered = planetsFilteredByName.filter((planet) => {
+          switch (filterByNumericValues.comparison) {
+          case 'menor que':
+            return planet[filterByNumericValues.column] < filterByNumericValues.value;
+          case 'maior que':
+            return planet[filterByNumericValues.column] > filterByNumericValues.value;
+          case 'igual a':
+            return planet[filterByNumericValues.column] === filterByNumericValues.value;
+          default:
+            return null;
+          }
+        });
+        setPlanets(planetsFiltered);
+      } else {
+        setPlanets(planetsFilteredByName);
+      }
     } else {
       setPlanets(data);
     }
-  }, [filters, data]);
+  }, [globalState, data]);
 
   return (
     <div>
