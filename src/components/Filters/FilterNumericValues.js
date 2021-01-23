@@ -11,8 +11,7 @@ function FilterNumericValues() {
     columnsAvalible,
     comparisonsAvalible,
   } = useContext(StarWarsContext);
-  const { filterNumericValues } = filter;
-  const { column, comparison, value } = filterNumericValues[currentId];
+  const { column, comparison, value } = filter.filterNumericValues;
 
   return (
     <div data-testid="filter">
@@ -23,7 +22,9 @@ function FilterNumericValues() {
         onChange={ (e) => handleChangeSelect(e, currentId) }
       >
         {columnsAvalible[currentId].map((option) => (
-          <option key={ option } value={ option }>{option}</option>
+          <option key={ option } value={ option }>
+            {option}
+          </option>
         ))}
       </select>
 
@@ -34,7 +35,9 @@ function FilterNumericValues() {
         onChange={ (e) => handleChangeSelect(e, currentId) }
       >
         {comparisonsAvalible[currentId].map((option) => (
-          <option key={ option } value={ option }>{option}</option>
+          <option key={ option } value={ option }>
+            {option}
+          </option>
         ))}
       </select>
 

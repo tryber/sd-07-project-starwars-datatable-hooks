@@ -28,6 +28,10 @@ function StarWarsProvider({ children }) {
         value: '',
       },
     ],
+    order: {
+      column: 'name',
+      sort: 'ASC',
+    },
   };
 
   const [isFetching, setIsFetching] = useState(false);
@@ -69,6 +73,7 @@ function StarWarsProvider({ children }) {
     async function fetchData() {
       setIsFetching(true);
       const planets = await getPlanets();
+      planets.forEach((planet) => delete planet.residents);
       setHeader(Object.keys(planets[0]));
       setData(planets);
       setDataStored(planets);
@@ -89,7 +94,54 @@ function StarWarsProvider({ children }) {
       });
     }
     setData(intersection);
-  }, [dataInputName, dataFilter, dataStored]);
+  }, [dataInputName, dataFilter]);
+
+  const sortNuber = (column, how, arrObj) => {
+    if (how === 'ASC') {
+      return arrObj.sort(
+        (a, b) => parseFloat(a[column]) - parseFloat(b[column]),
+      );
+    }
+    if (how === 'DESC') {
+      return arrObj.sort(
+        (a, b) => parseFloat(b[column]) - parseFloat(a[column]),
+      );
+    }
+  };
+
+  const sortString = (column, how, arrObj) => {
+    const negative = -1;
+    const positive = 1;
+    const igual = 0;
+    if (how === 'ASC') {
+      return arrObj.sort((a, b) => {
+        const nameA = a[column].toLowerCase();
+        const nameB = b[column].toLowerCase();
+        if (nameA < nameB) return negative;
+        if (nameA > nameB) return positive;
+        return igual;
+      });
+    }
+    if (how === 'DESC') {
+      return arrObj.sort((a, b) => {
+        const nameA = a[column].toLowerCase();
+        const nameB = b[column].toLowerCase();
+        if (nameA < nameB) return positive;
+        if (nameA > nameB) return negative;
+        return igual;
+      });
+    }
+  };
+
+  const sortAll = (column, how, arrObj) => {
+    const isNaN = Number.isNaN(parseFloat(arrObj[0][column]));
+    if (isNaN) {
+      return sortString(column, how, arrObj);
+    }
+    if (!isNaN) {
+      return sortNuber(column, how, arrObj);
+    }
+  };
 
   const handleChangeSelect = (e, id) => {
     const keyOnChange = e.target.name;
@@ -98,6 +150,14 @@ function StarWarsProvider({ children }) {
     setFilter({
       ...filter,
       filterNumericValues: a,
+    });
+  };
+
+  const handleChangeOrder = (e) => {
+    const { name, value } = e.target;
+    setFilter({
+      ...filter,
+      order: { ...filter.order, [name]: value },
     });
   };
 
@@ -179,6 +239,8 @@ function StarWarsProvider({ children }) {
     handleChangeSelect,
     handleActiveFilter,
     handleDeleteFilter,
+    handleChangeOrder,
+    sortAll,
     currentId,
     columnsAvalible,
     comparisonsAvalible,

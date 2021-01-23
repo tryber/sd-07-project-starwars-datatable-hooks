@@ -3,33 +3,46 @@ import StarWarsContext from '../../context/StarWarsContext';
 import './index.css';
 
 function Table() {
-  const { isFetching, header, data } = useContext(StarWarsContext);
+  const { isFetching, header, data, sortAll, filter } = useContext(
+    StarWarsContext,
+  );
+  const { column, sort } = filter.order;
 
-  const renderLine = (planet) => {
-    delete planet.residents;
-    return (
-      <tr key={ planet.name }>
-        {Object.values(planet).map((value) => (
-          <td key={ value }>{value}</td>
-        ))}
-      </tr>
-    );
-  };
+  if (!data) return null;
+
+  const sortedData = sortAll(column, sort, data);
+  const renderLine = (planet) => (
+    <tr key={ planet.name }>
+      {Object.values(planet).map((value, index) => {
+        const indexName = 0;
+        if (index === indexName) {
+          return (
+            <td data-testid="planet-name" key={ value }>
+              {value}
+            </td>
+          );
+        }
+        return <td key={ value }>{value}</td>;
+      })}
+    </tr>
+  );
 
   const renderTable = () => {
     if (!header) return null;
-    const headerNames = header.filter((title) => title !== 'residents');
     return (
       <div className="div-table">
         <table className="table">
           <thead>
             <tr>
-              {headerNames.map((title) => (
+              {header.map((title) => (
                 <th key={ title }>{title}</th>
               ))}
             </tr>
           </thead>
-          <tbody>{data.map((planetValues) => renderLine(planetValues))}</tbody>
+
+          <tbody>
+            {sortedData.map((planetValues) => renderLine(planetValues))}
+          </tbody>
         </table>
       </div>
     );
