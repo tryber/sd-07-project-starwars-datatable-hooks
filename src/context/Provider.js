@@ -6,6 +6,7 @@ import getPlanetsList from '../services/callAPI';
 function Provider({ children }) {
   const [isFetching, setIsFetching] = useState(false);
   const [data, setData] = useState({});
+  const [searchBarValue, setSearchBarValue] = useState('');
 
   useEffect(() => {
     const callAPI = async () => {
@@ -20,6 +21,8 @@ function Provider({ children }) {
   const contextValue = {
     isFetching,
     data,
+    searchBarValue,
+    setSearchBarValue,
   };
 
   return (
