@@ -5,15 +5,27 @@ import getPlanets from '../services/planetsAPI';
 
 const { Provider } = StarWarsContext;
 
+const columnOption = [
+  'population',
+  'orbital_period',
+  'diameter',
+  'rotation_period',
+  'surface_water',
+];
+
+const comparisonsOption = ['maior que', 'menor que', 'igual a'];
+
 function StarWarsProvider({ children }) {
   const initialFilter = {
-    filterByName: '',
+    filterByName: {
+      name: '',
+    },
     filterNumericValues: [
       {
+        id: 0,
         column: 'population',
         comparison: 'maior que',
         value: '',
-        active: false,
       },
     ],
   };
@@ -22,15 +34,28 @@ function StarWarsProvider({ children }) {
 
   const [header, setHeader] = useState();
 
-  const [data, setData] = useState([]);
+  const [data, setData] = useState();
 
   const [filter, setFilter] = useState(initialFilter);
 
-  const handleComparison = (planet, index) => {
-    const { column, comparison, value, active } = filter.filterNumericValues[
-      index
-    ];
-    if (!column || !comparison || !value || !active) return true;
+  const INITIAL_ID = 0;
+  const [currentId, setCurrentId] = useState(INITIAL_ID);
+
+  const [columnsAvalible, setColumnsAvalible] = useState({ 0: columnOption });
+
+  const [comparisonsAvalible, setComparisonsAvalible] = useState({
+    0: comparisonsOption,
+  });
+
+  const [dataInputName, setDataInputName] = useState();
+
+  const [dataFilter, setDataFilter] = useState();
+
+  const [dataStored, setDataStored] = useState();
+
+  const handleComparison = (planet, id) => {
+    const { column, comparison, value } = filter.filterNumericValues[id];
+    if (!column || !comparison || !value) return true;
     const sizePlanet = parseInt(planet[column], 10);
     const valueInt = parseInt(value, 10);
 
@@ -46,31 +71,25 @@ function StarWarsProvider({ children }) {
       const planets = await getPlanets();
       setHeader(Object.keys(planets[0]));
       setData(planets);
+      setDataStored(planets);
       setIsFetching(false);
     }
     fetchData();
   }, []);
 
   useEffect(() => {
-    async function fetchData() {
-      const { filterByName } = filter;
-      const first = 0;
-      setIsFetching(true);
-      const planets = await getPlanets();
-      const newData = planets.filter((planet) => planet.name.includes(filterByName));
-      const newData2 = newData.filter((planet) => handleComparison(planet, first));
-      setIsFetching(false);
-      setData(newData2);
+    let intersection = dataStored;
+    if (dataInputName) {
+      intersection = intersection.filter((value) => dataInputName.includes(value));
     }
-    fetchData();
-  }, [filter]);
-
-  const handleChangeInputName = (e) => {
-    setFilter({
-      ...filter,
-      filterByName: e.target.value,
-    });
-  };
+    if (dataFilter) {
+      Object.values(dataFilter).forEach((dataFiltered) => {
+        intersection = intersection.filter((value) => Object.values(dataFiltered)
+          .includes(value));
+      });
+    }
+    setData(intersection);
+  }, [dataInputName, dataFilter, dataStored]);
 
   const handleChangeSelect = (e, id) => {
     const keyOnChange = e.target.name;
@@ -82,13 +101,67 @@ function StarWarsProvider({ children }) {
     });
   };
 
-  const handleActiveFilter = (id) => {
-    const a = [...filter.filterNumericValues];
-    a[id] = { ...a[id], active: !a[id].active };
+  const handleChangeInputName = (e) => {
     setFilter({
       ...filter,
-      filterNumericValues: a,
+      filterByName: { name: e.target.value },
     });
+    const newData = dataStored.filter((planet) => planet.name.includes(e.target.value));
+    setDataInputName(newData);
+  };
+
+  const handleActiveFilter = (id) => {
+    // atualização do dataFilter
+    const newData = dataStored.filter((planet) => handleComparison(planet, id));
+    setDataFilter({ ...dataFilter, [id]: newData });
+
+    // remoção dos dropdowns não mais disponíveis via id das condições filtradas após clicar em filter
+    // colunas
+    const { filterNumericValues } = filter;
+    const newCols = columnsAvalible[id].filter(
+      (c) => c !== filterNumericValues[id].column,
+    );
+    setColumnsAvalible({ ...columnsAvalible, [id + 1]: newCols });
+
+    // condicoes
+    const newCond = comparisonsAvalible[id].filter(
+      (c) => c !== filterNumericValues[id].comparison,
+    );
+    setComparisonsAvalible({ ...comparisonsAvalible, [id + 1]: newCond });
+
+    // add objeto no filtroNumericValues
+    setFilter({
+      ...filter,
+      filterNumericValues: filter.filterNumericValues.concat({}),
+    });
+    setCurrentId(id + 1);
+  };
+
+  const handleDeleteFilter = (id) => {
+    if (currentId === INITIAL_ID) return null;
+    // deleta filtro
+    const newDataFilter = dataFilter;
+    delete newDataFilter[id - 1];
+    setDataFilter({ ...newDataFilter });
+
+    // deleta objeto criado pelo filtro em filterNumericValues
+    const inicio = 0;
+    const fim = -1;
+    const { filterNumericValues } = filter;
+    const newFilter = filterNumericValues.slice(inicio, fim);
+    setFilter({ ...filter, filterNumericValues: newFilter });
+
+    // deleta ultima alteração feita em colums avalible
+    const newColumnsAvalible = columnsAvalible;
+    delete newColumnsAvalible[id];
+    setColumnsAvalible({ ...newColumnsAvalible });
+
+    // deleta ultima alteração feita em comparisons avalible
+    const newComparisonsAvalible = comparisonsAvalible;
+    delete newComparisonsAvalible[id];
+    setComparisonsAvalible({ ...newComparisonsAvalible });
+
+    setCurrentId(id - 1);
   };
 
   const context = {
@@ -102,8 +175,13 @@ function StarWarsProvider({ children }) {
     setFilter,
     getPlanets,
     handleChangeInputName,
+    handleComparison,
     handleChangeSelect,
     handleActiveFilter,
+    handleDeleteFilter,
+    currentId,
+    columnsAvalible,
+    comparisonsAvalible,
   };
   return <Provider value={ context }>{children}</Provider>;
 }

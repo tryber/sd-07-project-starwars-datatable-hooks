@@ -1,7 +1,7 @@
 import React from 'react';
 
-import FilterByName from '../FilterByName/index';
-import FilterNumericValues from '../FilterNumericValues/index';
+import FilterByName from './FilterByName';
+import FilterNumericValues from './FilterNumericValues';
 
 function FilterAll() {
   return (
