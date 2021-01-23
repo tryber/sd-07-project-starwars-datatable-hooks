@@ -1,12 +1,11 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 function Table() {
   const contextValue = useContext(StarWarsContext);
-  const [headers, setHeaders] = useState([]);
 
   useEffect(() => {
-    const { data: { results } } = contextValue;
+    const { data: { results }, setHeaders } = contextValue;
     if (results) {
       const getHeaders = Object.keys(results[1])
         .filter((header) => header !== 'residents');
@@ -18,7 +17,7 @@ function Table() {
     <table>
       {contextValue.isFetching && 'loading...'}
       <tr>
-        {headers.map((header) => <th key={ header }>{ header }</th>)}
+        {contextValue.headers.map((header) => <th key={ header }>{ header }</th>)}
       </tr>
       {contextValue.tBodyList && contextValue.tBodyList.map((object, index) => {
         const {

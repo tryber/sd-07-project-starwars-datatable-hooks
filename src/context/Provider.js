@@ -6,9 +6,13 @@ import getPlanetsList from '../services/callAPI';
 function Provider({ children }) {
   const [isFetching, setIsFetching] = useState(false);
   const [data, setData] = useState({});
+  const [headers, setHeaders] = useState([]);
   const [searchBarValue, setSearchBarValue] = useState('');
   const [tBodyList, setTBodyList] = useState([]);
   const [clickFilter, setClickFilter] = useState(false);
+  const [columnValue, setColumnValue] = useState('population');
+  const [arithmeticLogic, setArithmeticLogic] = useState('maior que');
+  const [numberValue, setNumberValue] = useState(0);
 
   useEffect(() => {
     const callAPI = async () => {
@@ -28,11 +32,12 @@ function Provider({ children }) {
     }
   }, [searchBarValue, data]);
 
-  useEffect(() => {
-    if (data.results) {
-      /**ok */
-    }
-  }, [clickFilter, data]);
+  // useEffect(() => {
+  //   if (data.results) {
+  //     c
+  //     currentList.filter(({}) => );
+  //   }
+  // }, [clickFilter, data]);
 
   const contextValue = {
     isFetching,
@@ -40,6 +45,15 @@ function Provider({ children }) {
     searchBarValue,
     setSearchBarValue,
     tBodyList,
+    setClickFilter,
+    setColumnValue,
+    columnValue,
+    setArithmeticLogic,
+    arithmeticLogic,
+    setNumberValue,
+    numberValue,
+    setHeaders,
+    headers,
   };
 
   return (
