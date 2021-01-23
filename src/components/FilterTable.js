@@ -45,7 +45,7 @@ function FilterTable() {
 
   useEffect(filterOptions, [filterByNumericValues]);
 
-  const saveValues = (callback, { target }) => {
+  const saveValues = ({ target }, callback) => {
     callback(target.value);
   };
 
@@ -113,7 +113,7 @@ function FilterTable() {
               name="name"
               id="name"
               value={ name }
-              onChange={ () => saveValues(setName) }
+              onChange={ (e) => saveValues(e, setName) }
               data-testid="name-filter"
             />
           </label>
@@ -126,7 +126,7 @@ function FilterTable() {
               id="numeric"
               data-testid="column-filter"
               value={ column }
-              onChange={ () => saveValues(setColumn) }
+              onChange={ (e) => saveValues(e, setColumn) }
             >
               {optionsNumeric.map((option) => (
                 <option key={ option }>{option}</option>
@@ -142,7 +142,7 @@ function FilterTable() {
               id="comparison"
               data-testid="comparison-filter"
               value={ comparison }
-              onChange={ () => saveValues(setComparison) }
+              onChange={ (e) => saveValues(e, setComparison) }
             >
               {optionsComparison.map((option) => (
                 <option key={ option }>{option}</option>
@@ -158,7 +158,7 @@ function FilterTable() {
               name="value"
               id="value"
               value={ value }
-              onChange={ () => saveValues(setValue) }
+              onChange={ (e) => saveValues(e, setValue) }
               data-testid="value-filter"
             />
           </label>
