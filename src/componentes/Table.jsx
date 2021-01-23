@@ -8,7 +8,7 @@ function Table() {
 
   return (
     <table>
-      <thead>
+      {/* <thead> */}
         <th>name</th>
         <th>rotation_period</th>
         <th>orbital_period</th>
@@ -22,12 +22,12 @@ function Table() {
         <th>created</th>
         <th>edited</th>
         <th>url</th>
-      </thead>
-      <tbody>
+      {/* </thead> */}
+      {/* // <tbody> */}
         {line.map(cell => <tr>{cell.map(info => <td>{info}</td>)}</tr>)}
         {/* {Object.keys(line).forEach((item) => {console.log(line)})} */}
           {/* {Object.keys(line).forEach((item) => {})} */}
-      </tbody>
+      {/* </tbody> */}
     </table>
   );
 }
