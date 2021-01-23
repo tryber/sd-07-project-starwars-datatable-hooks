@@ -21,43 +21,43 @@ function Table() {
           <tbody>
             {data.map((element, index) => (
               <tr key={ index }>
-                <td key={ element.name }>
+                <td>
                   { element.name }
                 </td>
-                <td key={ element.rotation_period }>
+                <td>
                   { element.rotation_period }
                 </td>
-                <td key={ element.orbital_period }>
+                <td>
                   { element.orbital_period }
                 </td>
-                <td key={ element.diameter }>
+                <td>
                   { element.diameter }
                 </td>
-                <td key={ element.climate }>
+                <td>
                   { element.climate }
                 </td>
-                <td key={ element.gravity }>
+                <td>
                   { element.gravity }
                 </td>
-                <td key={ element.terrain }>
+                <td>
                   { element.terrain }
                 </td>
-                <td key={ element.surface_water }>
+                <td>
                   { element.surface_water }
                 </td>
-                <td key={ element.population }>
+                <td>
                   { element.population }
                 </td>
-                <td key={ element.films }>
+                <td>
                   { element.films }
                 </td>
-                <td key={ element.created }>
+                <td>
                   { element.created }
                 </td>
-                <td key={ element.edited }>
+                <td>
                   { element.edited }
                 </td>
-                <td key={ element.url }>
+                <td>
                   { element.url }
                 </td>
               </tr>
