@@ -53,11 +53,11 @@ function Provider(props) {
     filterByName(value.toLowerCase());
   };
 
-  const handleColumnChange = (event) => {
+  const handleColumnChange = async (event) => {
     const { target } = event;
     const { value } = target;
     console.log(value);
-    setColumnValue(value);
+    await setColumnValue(value);
     console.log(columnValue);
   };
 
@@ -80,13 +80,19 @@ function Provider(props) {
     let filteredArray = [];
     switch (comparison) {
     case 'maior que':
-      filteredArray = arrayToFilter.filter((item) => item[column] > value);
+      filteredArray = arrayToFilter.filter(
+        (item) => parseInt(item[column], 10) > parseInt(value, 10),
+      );
       break;
     case 'menor que':
-      filteredArray = arrayToFilter.filter((item) => item[column] < value);
+      filteredArray = arrayToFilter.filter(
+        (item) => parseInt(item[column], 10) < parseInt(value, 10),
+      );
       break;
     default:
-      filteredArray = arrayToFilter.filter((item) => item[column] === value);
+      filteredArray = arrayToFilter.filter(
+        (item) => parseInt(item[column], 10) === parseInt(value, 10),
+      );
       break;
     }
     setFilteredData(filteredArray);
@@ -104,6 +110,18 @@ function Provider(props) {
     });
     filterByNumber();
   };
+
+  useEffect(() => {
+    setFilters({
+      ...filters,
+      filterByNumericValues: [
+        {
+          column: columnValue,
+          comparison: comparisonValue,
+          value: numberValue,
+        }],
+    });
+  }, [columnValue, comparisonValue, filters, numberValue]);
 
   const context = {
     data,
