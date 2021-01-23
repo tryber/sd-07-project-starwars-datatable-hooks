@@ -1,4 +1,3 @@
-import { render } from '@testing-library/react';
 import React, { useContext } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
@@ -9,6 +8,7 @@ function Table() {
   return (
     <table>
       {/* <thead> */}
+      <tr>
         <th>name</th>
         <th>rotation_period</th>
         <th>orbital_period</th>
@@ -22,11 +22,15 @@ function Table() {
         <th>created</th>
         <th>edited</th>
         <th>url</th>
+      </tr>
       {/* </thead> */}
       {/* // <tbody> */}
-        {line.map(cell => <tr>{cell.map(info => <td>{info}</td>)}</tr>)}
-        {/* {Object.keys(line).forEach((item) => {console.log(line)})} */}
-          {/* {Object.keys(line).forEach((item) => {})} */}
+      {line.map((cell) => (
+        <tr key={ cell }>
+          {cell.map((info) => (<td key={ info }>{info}</td>))}
+        </tr>))}
+      {/* {Object.keys(line).forEach((item) => {console.log(line)})} */}
+      {/* {Object.keys(line).forEach((item) => {})} */}
       {/* </tbody> */}
     </table>
   );
