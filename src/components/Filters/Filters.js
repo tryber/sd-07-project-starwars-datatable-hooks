@@ -1,33 +1,33 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
+import StarWarsContext from '../../context/StarWarsContext';
 import './style.css';
 
 function Filters() {
-  const [state, setState] = useState();
+  const { setState } = useContext(StarWarsContext);
 
-  function handleChange({ target: { name, value } }) {
-    setState({ [name]: value });
+  function handleChange({ target: { value } }) {
+    setState(value);
   }
 
-  function handleClick(event) {
-    event.preventDefault();
-  }
+  // function handleClick(event) {
+  //   event.preventDefault();
+  // }
 
-  function renderValueInput() {
-    return (
-      <label htmlFor="value">
-        Valor:
-        <input
-          id="value"
-          type="number"
-          placeholder="Valor"
-          name="value"
-          value={ state }
-          onChange={ handleChange }
-          className="input"
-        />
-      </label>
-    );
-  }
+  // function renderValueInput() {
+  //   return (
+  //     <label htmlFor="value">
+  //       Valor:
+  //       <input
+  //         id="value"
+  //         type="number"
+  //         placeholder="Valor"
+  //         name="value"
+  //         onChange={ (e) => handleChange(e) }
+  //         className="input"
+  //       />
+  //     </label>
+  //   );
+  // }
 
   function renderTextInput() {
     return (
@@ -35,10 +35,9 @@ function Filters() {
         Name:
         <input
           id="text"
+          data-testid="name-filter"
           type="text"
-          name="text"
-          value={ state }
-          onChange={ handleChange }
+          onChange={ (e) => handleChange(e) }
           placeholder="Text to Filter"
           className="input"
         />
@@ -46,24 +45,22 @@ function Filters() {
     );
   }
 
-  function renderButton() {
-    return (
-      <button className="button" type="button" onClick={ handleClick }>
-        Filter
-      </button>
-    );
-  }
+  // function renderButton() {
+  //   return (
+  //     <button className="button" type="button" onClick={ handleClick }>
+  //       Filter
+  //     </button>
+  //   );
+  // }
 
   return (
     <section className="form">
       <div>
-        <h2>
-          Planets
-        </h2>
+        <h2>Planets</h2>
         <form>
-          { renderValueInput() }
-          { renderTextInput() }
-          { renderButton() }
+          {/* {renderValueInput()} */}
+          {renderTextInput()}
+          {/* {renderButton()} */}
         </form>
       </div>
     </section>
