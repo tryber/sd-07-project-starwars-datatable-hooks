@@ -25,7 +25,7 @@ function Table() {
   const { filterByNumericValues, filterByName } = filters;
   return (
     <div>
-      <table>
+      <table className="table table-dark table-striped table-hover">
         <thead>
           <tr>
             {filteredHeader.map((item) => <th key={ item }>{item}</th>)}

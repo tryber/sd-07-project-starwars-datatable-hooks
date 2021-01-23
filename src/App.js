@@ -6,10 +6,13 @@ import Form from './components/Form';
 
 function App() {
   return (
-    <Provider>
-      <Form />
-      <Table />
-    </Provider>
+    <div className="App-header">
+      <Provider>
+        <h1 class="text-center">StarWars Planets!</h1>
+        <Form />
+        <Table />
+      </Provider>
+    </div>
   );
 }
 
