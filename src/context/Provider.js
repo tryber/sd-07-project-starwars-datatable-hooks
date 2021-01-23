@@ -4,24 +4,26 @@ import PropTypes from 'prop-types';
 import fetchStarWars from '../services/api';
 import StarWarsContext from './StarWarsContext';
 
+const initialState = {
+  error: null,
+  isFetching: false,
+  data: [],
+  filters: {
+    filterByName: { name: '' },
+    filterByNumericValues: [],
+    filterByNumericsCurrency: {
+      column: 'population',
+      comparison: 'maior que',
+      value: '0',
+    },
+    order: { column: 'name', sort: 'ASC' },
+  },
+};
+
 class Provider extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      error: null,
-      isFetching: false,
-      data: [],
-      filters: {
-        filterByName: { name: '' },
-        filterByNumericValues: [],
-        filterByNumericsCurrency: {
-          column: 'population',
-          comparison: 'maior que',
-          value: '0',
-        },
-        order: { column: 'name', sort: 'ASC' },
-      },
-    };
+    this.state = initialState;
 
     this.getStarWarsAPI = this.getStarWarsAPI.bind(this);
     this.changeInputsByName = this.changeInputsByName.bind(this);
@@ -59,6 +61,15 @@ class Provider extends Component {
           error: error.message,
         });
       });
+  }
+
+  getValue(currency, nexting) {
+    const cur = currency.match(/^[0-9]+$/) ? Number(currency) : currency;
+    const nex = nexting.match(/^[0-9]+$/) ? Number(nexting) : nexting;
+    return {
+      cur,
+      nex,
+    };
   }
 
   changeInputsByName({ target }) {
@@ -172,15 +183,6 @@ class Provider extends Component {
       );
     }
     this.getStarWarsAPI();
-  }
-
-  getValue(currency, nexting) {
-    const cur = currency.match(/^[0-9]+$/) ? Number(currency) : currency;
-    const nex = nexting.match(/^[0-9]+$/) ? Number(nexting) : nexting;
-    return {
-      cur,
-      nex,
-    };
   }
 
   sortPlanets() {
