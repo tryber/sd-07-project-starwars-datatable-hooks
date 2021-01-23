@@ -20,7 +20,7 @@ function Table() {
       <tr>
         {headers.map((header) => <th key={ header }>{ header }</th>)}
       </tr>
-      {contextValue.data.results && contextValue.data.results.map((object, index) => {
+      {contextValue.tBodyList && contextValue.tBodyList.map((object, index) => {
         const {
           name,
           rotation_period: rotationPeriod,

@@ -7,6 +7,7 @@ function Provider({ children }) {
   const [isFetching, setIsFetching] = useState(false);
   const [data, setData] = useState({});
   const [searchBarValue, setSearchBarValue] = useState('');
+  const [tBodyList, setTBodyList] = useState([]);
 
   useEffect(() => {
     const callAPI = async () => {
@@ -18,11 +19,20 @@ function Provider({ children }) {
     callAPI();
   }, []);
 
+  useEffect(() => {
+    const { results } = data;
+    if (results) {
+      const currentList = results.filter(({ name }) => name.includes(searchBarValue));
+      setTBodyList(currentList);
+    }
+  }, [searchBarValue, data]);
+
   const contextValue = {
     isFetching,
     data,
     searchBarValue,
     setSearchBarValue,
+    tBodyList,
   };
 
   return (
