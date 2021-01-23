@@ -4,24 +4,24 @@ import StarWarsContext from './StarWarsContext';
 import fetchPlanets from '../services/fetchPlanetsAPI';
 
 function Provider(props) {
+  const initialNumber = 0;
   const [data, setData] = useState([{ teste: 'só testando' }]);
   const [textInputValue, setTextInputValue] = useState('');
   const [columnValue, setColumnValue] = useState('population');
   const [comparisonValue, setComparisonValue] = useState('maior que');
-  const [numberValue, setNumberValue] = useState(0);
+  const [numberValue, setNumberValue] = useState(initialNumber);
   const [filteredData, setFilteredData] = useState([]);
   const [filters, setFilters] = useState({
-    filters: {
-      filterByName: {
-        name: '',
-      },
-      filterByNumericValues: [
-        {
-          column: columnValue,
-          comparison: comparisonValue,
-          value: numberValue,
-        }],
+    filterByName: {
+      name: '',
     },
+    filterByNumericValues: [
+      {
+        column: columnValue,
+        comparison: comparisonValue,
+        value: numberValue,
+      },
+    ],
   });
 
   useEffect(() => {
@@ -75,15 +75,26 @@ function Provider(props) {
 
   const filterByNumber = () => {
     const arrayToFilter = [...data];
-    // const filteredArray = arrayToFilter.filter((item) => (
-    //   item.name.toLowerCase().includes(value)
-    // ));
-    // setFilteredData(filteredArray);
-    console.log(filters);
+    const { filterByNumericValues } = filters;
+    const { column, comparison, value } = filterByNumericValues[0];
+    let filteredArray = [];
+    switch (comparison) {
+    case 'maior que':
+      filteredArray = arrayToFilter.filter((item) => item[column] > value);
+      break;
+    case 'menor que':
+      filteredArray = arrayToFilter.filter((item) => item[column] < value);
+      break;
+    default:
+      filteredArray = arrayToFilter.filter((item) => item[column] === value);
+      break;
+    }
+    setFilteredData(filteredArray);
   };
 
   const handleFilterClick = () => {
     setFilters({
+      ...filters,
       filterByNumericValues: [
         {
           column: columnValue,
