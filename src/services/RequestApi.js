@@ -1,10 +1,8 @@
 async function RequestAPI() {
-
-  fetch('https://swapi-trybe.herokuapp.com/api/planets/')
-  .then(response => response.JSON())
-  response.json().then(
-    (data) => {return data},
-    (error) => {return error},
-  )}
+  const url = 'https://swapi-trybe.herokuapp.com/api/planets/';
+  const data = await fetch(url).then((response) => response.json());
+  const { results } = data;
+  return results;
+}
 
 export default RequestAPI;
