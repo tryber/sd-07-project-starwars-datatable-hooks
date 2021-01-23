@@ -7,12 +7,15 @@ function Table() {
     isFetching,
     planets,
     filters,
-    filters: { filterByName: { name }, filterByNumericValues },
+    filters: {
+      filterByName: { name },
+      filterByNumericValues,
+    },
   } = useContext(StarWarsContext);
 
   const [filterPlanets, setfilterPlanets] = useState(planets);
   const [keysPlanets, setkeysPlanets] = useState([]);
-  
+
   const keysTable = () => {
     if (!isFetching) {
       // console.log(planets);
@@ -20,50 +23,57 @@ function Table() {
       setkeysPlanets(keys);
       // console.log(keys);
     }
-  }
+  };
 
   useEffect(keysTable, []);
 
   useEffect(() => {
     let newPlanets = planets.filter((planet) => planet.name.includes(name));
-    filterByNumericValues.map(({ comparison, column, value }) => {
+    filterByNumericValues.forEach(({ comparison, column, value }) => {
       switch (comparison) {
-        case 'maior que':
-          return newPlanets = newPlanets.filter((planet) => parseInt(planet[column]) > parseInt(value) );
-        case 'menor que':
-          return newPlanets = newPlanets.filter((planet) => parseInt(planet[column]) < parseInt(value) );
-        case 'igual a':
-          return newPlanets = newPlanets.filter((planet) => parseInt(planet[column]) === parseInt(value) );
-        default:
-          return newPlanets;
+      case 'maior que':
+        (newPlanets = newPlanets.filter(
+          (planet) => parseInt(planet[column], 10) > parseInt(value, 10),
+        ));
+        break;
+      case 'menor que':
+        (newPlanets = newPlanets.filter(
+          (planet) => parseInt(planet[column], 10) < parseInt(value, 10),
+        ));
+        break;
+      case 'igual a':
+        (newPlanets = newPlanets.filter(
+          (planet) => parseInt(planet[column], 10) === parseInt(value, 10),
+        ));
+        break;
+      default:
+        return newPlanets;
       }
-    })
+    });
     // console.log(newPlanets);
     setfilterPlanets(newPlanets);
-  }, [filters]);
+  }, [filterByNumericValues, filters, name, planets]);
 
   return (
     <table>
       <thead>
         <tr>
-          {
-            keysPlanets.map((titleTable) => <th key={titleTable} >{ titleTable }</th>)
-          }
+          {keysPlanets.map((titleTable) => (
+            <th key={ titleTable }>{titleTable}</th>
+          ))}
         </tr>
       </thead>
       <tbody>
-          {
-            filterPlanets.map((rowTable) =>
-              <tr key={ rowTable.name } >
-                { keysPlanets.map((infoRow) =>
-                  <td key={ infoRow } >
-                    { rowTable[infoRow].toString() }
-                  </td>) }
-              </tr>)
-          }
+        {filterPlanets.map((rowTable) => (
+          <tr key={ rowTable.name }>
+            {keysPlanets.map((infoRow) => (
+              <td key={ infoRow }>{rowTable[infoRow].toString()}</td>
+            ))}
+          </tr>
+        ))}
       </tbody>
     </table>
-  )
+  );
 }
 
 export default Table;

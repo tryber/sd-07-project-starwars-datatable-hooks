@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import StarWarsContext from './StarWarsContext';
 import PlanetAPI from '../services/PlanetStarWarsAPI';
 
-function Provider({ children }) {
+function MyProvider({ children }) {
   const { Provider } = StarWarsContext;
   const [isFetching, setFetching] = useState(true);
   const [planets, setPlanets] = useState([]);
@@ -30,7 +31,11 @@ function Provider({ children }) {
     fetchData();
   }, []);
 
-  return <Provider value={stateValues}>{children}</Provider>;
+  return <Provider value={ stateValues }>{ children }</Provider>;
 }
 
-export default Provider;
+export default MyProvider;
+
+MyProvider.propTypes = {
+  children: PropTypes.element.isRequired,
+};

@@ -7,15 +7,15 @@ import '../css/Planets.css';
 
 function Planets() {
   const { isFetching } = useContext(StarWarsContext);
-  if (isFetching) return <Loading />
+  if (isFetching) return <Loading />;
   return (
-    <main className="main-container" >
+    <main className="main-container">
       <FilterTable />
       <div className="div-table">
         <Table />
       </div>
     </main>
-  )
+  );
 }
 
 export default Planets;

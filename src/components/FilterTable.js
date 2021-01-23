@@ -3,7 +3,11 @@ import StarWarsContext from '../context/StarWarsContext';
 import '../css/Form.css';
 
 function FilterTable() {
-  const { filters, setFilters, filters: { filterByNumericValues }, } = useContext(StarWarsContext);
+  const {
+    filters,
+    setFilters,
+    filters: { filterByNumericValues },
+  } = useContext(StarWarsContext);
   const [name, setName] = useState('');
   const [optionsNumeric, setOptionsNumeric] = useState([]);
   const [optionsComparison, setOptionsComparison] = useState([]);
@@ -12,59 +16,63 @@ function FilterTable() {
   const [value, setValue] = useState('100000');
 
   const filterOptions = () => {
-    let optionsNumeric = [
+    let optionsNumericDefault = [
       'population',
       'orbital_period',
       'diameter',
       'rotation_period',
       'surface_water',
     ];
-  
-    let optionsComparison = [
-      'maior que',
-      'menor que',
-      'igual a',
-    ];
+
+    let optionsComparisonDefault = ['maior que', 'menor que', 'igual a'];
 
     if (filterByNumericValues.length) {
-      filterByNumericValues.forEach(({ column, comparison }) => {
-        optionsNumeric = optionsNumeric.filter((option) => option !== column);
-        optionsComparison = optionsComparison.filter((option) => option !== comparison);
+      filterByNumericValues.forEach((filter) => {
+        optionsNumericDefault = optionsNumericDefault.filter(
+          (option) => option !== filter.column,
+        );
+        optionsComparisonDefault = optionsComparisonDefault.filter(
+          (option) => option !== filter.comparison,
+        );
       });
     }
 
-    setOptionsNumeric(optionsNumeric);
-    setOptionsComparison(optionsComparison);
-    setColumn(optionsNumeric[0]);
-    setComparison(optionsComparison[0]);
-  }
+    setOptionsNumeric(optionsNumericDefault);
+    setOptionsComparison(optionsComparisonDefault);
+    setColumn(optionsNumericDefault[0]);
+    setComparison(optionsComparisonDefault[0]);
+  };
 
   useEffect(filterOptions, [filterByNumericValues]);
 
-  const saveName = ({ target }) => {
-    const { value } = target;
-    setName(value);
-  }
+  const saveValues = (callback, { target }) => {
+    callback(target.value);
+  };
 
-  const saveColumn = ({ target }) => {
-    const { value } = target;
-    setColumn(value);
-  }
+  // const saveName = ({ target }) => {
+  //   const { value } = target;
+  //   setName(value);
+  // };
 
-  const saveComparison = ({ target }) => {
-    const { value } = target;
-    setComparison(value);
-  }
+  // const saveColumn = ({ target }) => {
+  //   const { value } = target;
+  //   setColumn(value);
+  // };
 
-  const saveValue = ({ target }) => {
-    const { value } = target;
-    setValue(value);
-  }
+  // const saveComparison = ({ target }) => {
+  //   const { value } = target;
+  //   setComparison(value);
+  // };
+
+  // const saveValue = ({ target }) => {
+  //   const { value } = target;
+  //   setValue(value);
+  // };
 
   const updateFilterName = () => {
-    const newFilter = { ...filters, filterByName: { name } }
+    const newFilter = { ...filters, filterByName: { name } };
     setFilters(newFilter);
-}
+  };
 
   useEffect(updateFilterName, [name]);
 
@@ -73,27 +81,26 @@ function FilterTable() {
       ...filters,
       filterByNumericValues: [
         ...filters.filterByNumericValues,
-        { column, comparison, value}
+        { column, comparison, value },
       ],
     };
     setFilters(newFilter);
-  }
+  };
 
   const removeFilter = (filterToRemove) => {
     // const { column, comparison, value } = filterToRemove;
-    const removeFilter = filterByNumericValues.filter(({ column }) => {
-      return filterToRemove.column !== column;
-    });
-    console.log(removeFilter);
+    const removeFilterOptions = filterByNumericValues
+      .filter((filter) => filterToRemove.column !== filter.column);
+    // console.log(removeFilterOptions);
 
     const newFilter = {
       ...filters,
-      filterByNumericValues: removeFilter,
+      filterByNumericValues: removeFilterOptions,
     };
-    
+
     setFilters(newFilter);
-  }
-  
+  };
+
   return (
     <form className="form-container">
       <fieldset>
@@ -106,36 +113,40 @@ function FilterTable() {
               name="name"
               id="name"
               value={ name }
-              onChange={ saveName }
+              onChange={ () => saveValues(setName) }
               data-testid="name-filter"
             />
           </label>
         </div>
         <div className="input-container">
-          <label htmlFor="numeric" >
+          <label htmlFor="numeric">
             NUMERIC VALUES
             <select
               name="numeric"
               id="numeric"
               data-testid="column-filter"
               value={ column }
-              onChange={ saveColumn }
+              onChange={ () => saveValues(setColumn) }
             >
-              { optionsNumeric.map((option) => <option key={option} >{ option }</option> ) }
+              {optionsNumeric.map((option) => (
+                <option key={ option }>{option}</option>
+              ))}
             </select>
           </label>
         </div>
         <div className="input-container">
-          <label htmlFor="comparison" >
+          <label htmlFor="comparison">
             COMPARISON VALUES
             <select
               name="comparison"
               id="comparison"
               data-testid="comparison-filter"
               value={ comparison }
-              onChange={ saveComparison }
+              onChange={ () => saveValues(setComparison) }
             >
-              { optionsComparison.map((option) => <option key={option} >{ option }</option> ) }
+              {optionsComparison.map((option) => (
+                <option key={ option }>{option}</option>
+              ))}
             </select>
           </label>
         </div>
@@ -147,7 +158,7 @@ function FilterTable() {
               name="value"
               id="value"
               value={ value }
-              onChange={ saveValue }
+              onChange={ () => saveValues(setValue) }
               data-testid="value-filter"
             />
           </label>
@@ -156,13 +167,18 @@ function FilterTable() {
       <fieldset>
         <legend>Filters</legend>
         <div>
-          {
-            filterByNumericValues.map((filter) => 
-            <div className="filter-container-div" data-testid='filter'>
+          {filterByNumericValues.map((filter) => (
+            <div
+              className="filter-container-div"
+              key={ filter.column }
+              data-testid="filter"
+            >
               <p>{`${filter.column} | ${filter.comparison} | ${filter.value}`}</p>
-              <button type="button" onClick={ () => removeFilter(filter) } >X</button>
-            </div>)
-          }
+              <button type="button" onClick={ () => removeFilter(filter) }>
+                X
+              </button>
+            </div>
+          ))}
         </div>
       </fieldset>
       <button
