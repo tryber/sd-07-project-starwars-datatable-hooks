@@ -23,13 +23,14 @@ function FilterByNumericValues() {
     <div className="filter-numeric">
 
       <select
-        value={ column }
         onChange={ ({ target }) => setColumn(target.value) }
         data-testid="column-filter"
       >
+        <option hidden>Selecione</option>
         {columns.map((item) => {
           let isExistColumn = false;
           filterNumerics.forEach((filter) => {
+            if (isExistColumn) return null;
             isExistColumn = filter.column === item;
           });
           if (isExistColumn) return null;
@@ -39,13 +40,14 @@ function FilterByNumericValues() {
       </select>
 
       <select
-        value={ comparison }
         onChange={ ({ target }) => setComparison(target.value) }
         data-testid="comparison-filter"
       >
+        <option hidden>Selecione</option>
         {comparisons.map((operand) => {
           let isExistOperand = false;
           filterNumerics.forEach((filter) => {
+            if (isExistOperand) return null;
             isExistOperand = filter.comparison === operand;
           });
           if (isExistOperand) return null;
@@ -56,7 +58,6 @@ function FilterByNumericValues() {
 
       <input
         type="number"
-        value={ value }
         onChange={ ({ target }) => setValue(target.value) }
         data-testid="value-filter"
       />

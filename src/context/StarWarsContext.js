@@ -8,12 +8,26 @@ const StarWarsProvider = ({ children }) => {
   const [filters, setFilter] = useState({
     filterByName: '',
     filterByNumericValues: [],
+    order: {
+      column: 'name',
+      sort: 'ASC',
+    },
   });
+  const [columns, setColumns] = useState([]);
 
   useEffect(() => {
     fetch('https://swapi-trybe.herokuapp.com/api/planets/')
       .then((response) => response.json())
-      .then((json) => setData(json.results));
+      .then((json) => {
+        const filteredColumns = json.results
+          .map((planet) => {
+            delete planet.residents;
+            return planet;
+          });
+
+        setData(filteredColumns);
+        setColumns(Object.keys(filteredColumns[0]));
+      });
   }, []);
 
   const filterByName = (name) => {
@@ -28,12 +42,24 @@ const StarWarsProvider = ({ children }) => {
     });
   };
 
+  const orderBy = (sort, column) => {
+    setFilter({
+      ...filters,
+      order: {
+        sort,
+        column,
+      },
+    });
+  };
+
   const context = {
     data,
     filters,
+    columns,
     filterByName,
     setFilter,
     filterByNumericValues,
+    orderBy,
   };
 
   return (

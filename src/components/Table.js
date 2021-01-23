@@ -2,30 +2,49 @@ import React, { useContext } from 'react';
 import { StarWarsContext } from '../context/StarWarsContext';
 
 function Table() {
-  const { data, filters } = useContext(StarWarsContext);
+  const { data, filters, columns } = useContext(StarWarsContext);
+  const planets = [...data];
+  const zero = 0;
+  const one = 1;
+  const minusOne = -1;
+
+  const { order: { sort, column: columnSort } } = filters;
+  planets.sort((a, b) => {
+    if (sort === 'ASC') {
+      if (!Number.isNaN(a[columnSort]) || !Number.isNaN(b[columnSort])) {
+        return a[columnSort] - b[columnSort];
+      } if (a[columnSort] < b[columnSort]) {
+        return minusOne;
+      } if (a[columnSort] > b[columnSort]) {
+        return one;
+      }
+      return zero;
+    } if (sort === 'DESC') {
+      if (!Number.isNaN(a[columnSort]) || !Number.isNaN(b[columnSort])) {
+        return b[columnSort] - a[columnSort];
+      } if (a[columnSort] > b[columnSort]) {
+        return minusOne;
+      } if (a[columnSort] < b[columnSort]) {
+        return one;
+      }
+      return zero;
+    }
+    return null;
+  });
+
   return (
     <table>
       <thead>
         <tr>
-          <th>name</th>
-          <th>rotation_period</th>
-          <th>orbital_period</th>
-          <th>diameter</th>
-          <th>climate</th>
-          <th>gravity</th>
-          <th>terrain</th>
-          <th>surface_water</th>
-          <th>population</th>
-          <th>films</th>
-          <th>created</th>
-          <th>edited</th>
-          <th>url</th>
+          {columns.map((nameColumnHeader, index) => (
+            <th key={ index }>{ nameColumnHeader }</th>
+          ))}
         </tr>
       </thead>
       <tbody>
-        {data.map((planet, position) => {
+        {planets.map((planet, position) => {
           const { filterByName, filterByNumericValues } = filters;
-          const zero = 0;
+
           let controlVar = zero;
           const filterNumericLength = filterByNumericValues.length;
 
@@ -51,14 +70,14 @@ function Table() {
           // render line
           return (
             <tr key={ position }>
-              {Object.entries(planet).map(([key, value]) => {
-                if (key === 'residents') {
-                  return null;
-                }
-                return (
-                  <td key={ key }>{value}</td>
-                );
-              })}
+              {Object.entries(planet).map(([key, value]) => (
+                <td
+                  key={ key }
+                  data-testid={ key === 'name' ? 'planet-name' : '' }
+                >
+                  {value}
+                </td>
+              ))}
             </tr>
           );
         })}
