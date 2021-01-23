@@ -5,6 +5,7 @@ import StartWarsContext from './StartWarsContext';
 
 function Provider({ children }) {
   const [data, setData] = useState([]);
+  const [filters, setFilters] = useState({ filterByName: { name: '' } });
 
   useEffect(() => {
     async function fetchPlanets() {
@@ -18,6 +19,8 @@ function Provider({ children }) {
   const context = {
     data,
     setData,
+    filters,
+    setFilters,
   };
 
   return (
