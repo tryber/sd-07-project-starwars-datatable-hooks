@@ -30,7 +30,9 @@ const Table = () => {
 
   const filterText = () => {
     const { name } = filters.filterByName;
-    return planets.filter((planet) => planet.name.toUpperCase().includes(name.toUpperCase()));
+    return planets.filter(
+      (planet) => planet.name.toUpperCase().includes(name.toUpperCase()),
+    );
   };
 
   const handleChangeInput = ({ target }) => {
