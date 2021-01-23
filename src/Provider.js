@@ -4,15 +4,60 @@ import StarWarsContext from './context/StarWarsContext';
 import planetsApi from './services/planetsApi';
 
 const { Provider } = StarWarsContext;
+const ASC = 'ASC';
+const DESC = 'DESC';
+
 export default function StarWarsProvider({ children }) {
   const [data, setData] = useState();
   const [filteredPlanets, setFilteredPlanets] = useState();
   const [filterByNumericValues, setFilterByNumericValues] = useState([]);
+  const [order, setOrder] = useState({
+    column: 'name',
+    sort: ASC,
+  });
+
+  const sortPlanets = (array) => {
+    let sortedArray = [...array];
+    const { column, sort } = order;
+    const greater = 1;
+    const less = -1;
+    const equal = 0;
+
+    if (+sortedArray[0][column]) {
+      sortedArray = sortedArray.map((planet) => ({
+        ...planet, [column]: +planet[column],
+      }));
+    }
+
+    if (sort === ASC) {
+      sortedArray.sort((a, b) => {
+        if (a[column] > b[column]) {
+          return greater;
+        } if (a[column] < b[column]) {
+          return less;
+        }
+        return equal;
+      });
+    } else if (sort === DESC) {
+      sortedArray.sort((a, b) => {
+        if (a[column] < b[column]) {
+          return greater;
+        } if (a[column] > b[column]) {
+          return less;
+        }
+        return equal;
+      });
+    }
+
+    return sortedArray;
+  };
 
   const fetchPlanets = async () => {
     const planets = await planetsApi();
+    const sortedPlanets = sortPlanets(planets);
+
     setData(planets);
-    setFilteredPlanets(planets);
+    setFilteredPlanets(sortedPlanets);
   };
 
   const filterNameOnchange = (name) => {
@@ -26,6 +71,7 @@ export default function StarWarsProvider({ children }) {
 
   const filterPlanets = () => {
     if (!data) return;
+
     setFilteredPlanets(data);
 
     filterByNumericValues.forEach((filter) => {
@@ -67,6 +113,9 @@ export default function StarWarsProvider({ children }) {
     removeFilter,
     filterNameOnchange,
     setFilterByNumericValues,
+    setOrder,
+    sortPlanets,
+    setFilteredPlanets,
   };
 
   return (

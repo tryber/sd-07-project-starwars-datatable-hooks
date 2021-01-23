@@ -6,6 +6,10 @@ export default function Filter() {
     removeFilter,
     filterNameOnchange,
     setFilterByNumericValues,
+    setOrder,
+    sortPlanets,
+    filteredPlanets,
+    setFilteredPlanets,
   } = useContext(StarWarsContext);
 
   const [newFilter, setNewFilter] = useState([]);
@@ -31,15 +35,15 @@ export default function Filter() {
     >
       <p>
         Coluna
-        {column}
+        { column }
       </p>
       <p>
         Comparção
-        {comparison}
+        { comparison }
       </p>
       <p>
         Valor
-        {value}
+        { value }
       </p>
       <button
         onClick={ () => removeFilter(column) }
@@ -78,6 +82,17 @@ export default function Filter() {
     ));
   };
 
+  const handleOrderChange = (name, value) => {
+    setOrder(
+      (prevState) => ({ ...prevState, [name]: value }),
+    );
+  };
+
+  const orderByClick = () => {
+    const orderedPlanets = sortPlanets(filteredPlanets);
+    setFilteredPlanets(orderedPlanets);
+  };
+
   return (
     <section>
       <label htmlFor="name">
@@ -100,7 +115,7 @@ export default function Filter() {
         >
           {
             columnOptions.map((column, index) => (
-              <option key={ index }>{column}</option>
+              <option key={ index }>{ column }</option>
             ))
           }
         </select>
@@ -133,6 +148,51 @@ export default function Filter() {
         {
           newFilter && newFilter.map((filter) => filter)
         }
+      </div>
+      <div>
+        <select
+          name="column"
+          data-testid="column-sort"
+          onChange={ ({ target }) => handleOrderChange('column', target.value) }
+        >
+          <option value="name">Nome</option>
+          <option value="orbital_period">Periodo de rotação</option>
+          <option value="rotation_period">Período de órbita</option>
+          <option value="diameter">Diâmetro</option>
+          <option value="climate">Clima</option>
+          <option value="surface_water">Água da superfície</option>
+          <option value="population">População</option>
+        </select>
+        <label htmlFor="ASC">
+          Ascendente
+          <input
+            id="ASC"
+            onClick={ ({ target }) => handleOrderChange('sort', target.value) }
+            value="ASC"
+            name="order"
+            testid="column-sort-input-asc"
+            type="radio"
+            defaultChecked
+          />
+        </label>
+        <label htmlFor="DESC">
+          Descendente
+          <input
+            id="DESC"
+            onClick={ ({ target }) => handleOrderChange('sort', target.value) }
+            value="DESC"
+            name="order"
+            data-testid="column-sort-input-desc"
+            type="radio"
+          />
+        </label>
+        <button
+          type="button"
+          data-testid="column-sort-button"
+          onClick={ orderByClick }
+        >
+          Ordenar
+        </button>
       </div>
       <button
         data-testid="button-filter"
