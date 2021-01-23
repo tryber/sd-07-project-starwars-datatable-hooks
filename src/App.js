@@ -7,9 +7,8 @@ function App() {
   return (
     <div className="App">
       <StartWarsProvider>
-          <Table />
+        <Table />
       </StartWarsProvider>
-      
     </div>
   );
 }
