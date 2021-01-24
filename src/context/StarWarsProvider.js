@@ -4,12 +4,10 @@ import StarWarsContext from './StarWarsContext';
 import useGlobal from '../hooks/useGlobal';
 
 const StarWarsProvider = ({ children }) => {
-  const state = {
-    globalState: useGlobal(),
-  };
+  const globalState = useGlobal();
 
   return (
-    <StarWarsContext.Provider value={ state }>
+    <StarWarsContext.Provider value={ globalState }>
       {children}
     </StarWarsContext.Provider>
   );
