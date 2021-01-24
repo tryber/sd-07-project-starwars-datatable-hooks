@@ -3,14 +3,16 @@ import StarWarsContext from '../context/StartWarsContext';
 
 function NumbersFilter() {
   const zero = 0;
-  const [column, setColumn] = useState('population');
-  const [comparison, setComparison] = useState('maior que');
+  const [column, setColumn] = useState('');
+  const [comparison, setComparison] = useState('');
   const [value, setValue] = useState(zero);
 
-  const { filterByNumericValues } = useContext(StarWarsContext);
+  const { filterByNumericValues, optionsColumn, optionsComparison,
+    setOptionsColumn } = useContext(StarWarsContext);
 
-  const handleClick = () => {
-    filterByNumericValues({ column, comparison, value });
+  const handleClick = async () => {
+    await filterByNumericValues({ column, comparison, value });
+    setOptionsColumn(optionsColumn.filter((option) => option !== column));
   };
 
   return (
@@ -20,20 +22,18 @@ function NumbersFilter() {
         data-testid="column-filter"
         onChange={ (event) => setColumn(event.target.value) }
       >
-        <option value="population">population</option>
-        <option value="orbital_period">orbital_period</option>
-        <option value="rotation_period">rotation_period</option>
-        <option value="diameter">diameter</option>
-        <option value="surface_water">surface_water</option>
+        {optionsColumn.map(
+          (option) => <option key={ option } value={ option }>{option}</option>,
+        )}
       </select>
       <select
         name="comparison"
         data-testid="comparison-filter"
         onChange={ (event) => setComparison(event.target.value) }
       >
-        <option value="maior que">maior que</option>
-        <option value="igual a">igual a</option>
-        <option value="menor que">menor que</option>
+        {optionsComparison.map(
+          (option) => <option key={ option } value={ option }>{option}</option>,
+        )}
       </select>
       <input
         name="value"

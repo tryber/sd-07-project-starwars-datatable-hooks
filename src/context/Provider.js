@@ -9,7 +9,14 @@ function Provider({ children }) {
     filterByName: { name: '' },
     filterByNumericValues: [],
   });
-  // { column: '', comparison: '', value: 0 }
+
+  const listColumn = ['orbital_period', 'population',
+    'rotation_period', 'diameter', 'surface_water'];
+  const [optionsColumn, setOptionsColumn] = useState(listColumn);
+
+  const listComparison = ['maior que', 'igual a', 'menor que'];
+  const [optionsComparison, setOptionsComparison] = useState(listComparison);
+
   useEffect(() => {
     async function fetchPlanets() {
       const arrayPlanets = await fetchData();
@@ -33,6 +40,10 @@ function Provider({ children }) {
     filters,
     setFilters,
     filterByNumericValues,
+    optionsColumn,
+    setOptionsColumn,
+    optionsComparison,
+    setOptionsComparison,
   };
 
   return (
