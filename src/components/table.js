@@ -7,14 +7,34 @@ function Table() {
   const [coluna, setColuna] = useState('');
   const [comp, setComparador] = useState('');
   const [num, setSearchValue] = useState(zero);
-  const { context } = useContext(StarWarsContext);
-  const { planetList } = context;
-  // if (context) {
-  // const { filterByNumericValues } = filters;
-  // const { column, comparison, value } = filterByNumericValues;
-  // }
+  const { context, setContext } = useContext(StarWarsContext);
+  const { planetList, filters } = context;
+  const { filterByNumericValues } = filters;
+  const menosUm = -1;
 
-  const renderRow = (list) => {
+  const renderTable = ((param) => { // esse callback tá aparecendo sozinho porque?!!
+    let list = param;
+    console.log(filterByNumericValues.length);
+    if (filterByNumericValues.length > 1) {
+      filterByNumericValues.forEach((item, index) => {
+        if (index !== zero) {
+          list = list.filter((subItem) => {
+            // item.column, item.comparison e item.value
+            switch (item.comparison) {
+            case 'maior que':
+              return parseInt(subItem[item.column], 10) > parseInt(item.value, 10);
+            case 'menor que':
+              return parseInt(subItem[item.column], 10) < parseInt(item.value, 10);
+            case 'igual a':
+              return parseInt(subItem[item.column], 10) === parseInt(item.value, 10);
+            default:
+              return false;
+            }
+          });
+        }
+      });
+    }
+
     const elementList = list.map((planet) => {
       const {
         climate,
@@ -46,44 +66,40 @@ function Table() {
         </tr>
       );
     });
-
     setElements(elementList);
-  };
+  });
 
   useEffect(() => {
-    renderRow(planetList);
-  }, [context, planetList]);
+    renderTable(planetList);
+  }, [context]);
 
   const handleClick = () => {
-    let filtered = [];
-    console.log(coluna, comp, num);
-    if (comp === 'igual a') {
-      filtered = planetList
-        .filter((item) => parseInt(item[coluna], 10) === parseInt(num, 10));
-    }
-    if (comp === 'maior que') {
-      filtered = planetList
-        .filter(
-
-          (item) => (parseInt(item[coluna], 10)) > num && item[coluna] !== 'unknown',
-        );
-    }
-    if (comp === 'menor que') {
-      filtered = planetList
-        .filter(
-          (item) => (parseInt(item[coluna], 10)) < num && item[coluna] !== 'unknown',
-        );
-    }
-    // setContext({
-    //   ...context, filters: { ...filterByNumericValues[0], column: coluna, comparison: comp, value: num }
-    // })
-    // console.log(filtered)
-    renderRow(filtered);
+    setContext({
+      ...context,
+      filters: {
+        ...filters,
+        filterByNumericValues: [
+          ...context.filters.filterByNumericValues, {
+            column: coluna, comparison: comp, value: num,
+          }],
+      },
+    });
   };
 
   const changeHandler = (target) => {
     const filtered = planetList.filter((item) => item.name.includes(target.value));
-    renderRow(filtered);
+    renderTable(filtered);
+  };
+
+  const renderColumnOptions = (list, whichOne) => {
+    // let list = ["population", "orbital_period", "diameter", "rotation_period", "surface_water"]
+    filterByNumericValues.forEach((item) => {
+      const index = list.indexOf(item[whichOne]);
+      if (index > menosUm) list.splice(index, 1);
+    });
+    return list.map((item, index) => (
+      <option key={ index } name={ item } id={ item }>{item}</option>
+    ));
   };
 
   return (
@@ -106,11 +122,14 @@ function Table() {
             data-testid="column-filter"
             onChange={ ({ target }) => setColuna(target.value) }
           >
-            <option value="population">population</option>
-            <option value="orbital_period">orbital_period</option>
-            <option value="diameter">diameter</option>
-            <option value="rotation_period">rotation_period</option>
-            <option value="surface_water">surface_water</option>
+            {renderColumnOptions(
+              ['population',
+                'orbital_period',
+                'diameter',
+                'rotation_period',
+                'surface_water'],
+              'column',
+            )}
           </select>
         </label>
         <label htmlFor="comp">
@@ -121,9 +140,7 @@ function Table() {
             onChange={ ({ target }) => setComparador(target.value) }
 
           >
-            <option value="maior que">maior que</option>
-            <option value="menor que">menor que</option>
-            <option value="igual a">igual a</option>
+            {renderColumnOptions(['maior que', 'menor que', 'igual a'], 'comparison')}
           </select>
         </label>
         <label htmlFor="search_value">

@@ -14,9 +14,9 @@ function App() {
       },
       filterByNumericValues: [
         {
-          column: '',
-          comparison: '',
-          value: '',
+          // column: '',
+          // comparison: '',
+          // value: '',
         },
       ],
     },
@@ -24,12 +24,10 @@ function App() {
   });
 
   useEffect(() => {
+    console.log('entrou no fetch');
     async function fetchPlanet() {
-      // console.log('rodou fetch');
       const { results } = await fetch(url)
         .then((response) => response.json());
-      // console.log(results);
-      // if (results !== undefined )
       setContext({ ...context, planetList: results });
     }
     fetchPlanet();
