@@ -14,8 +14,8 @@ function FilterBar() {
   } = useContext(StarWarsContext);
 
   const [filteredValues, setValues] = useState(
-    { column: '',
-      comparison: '',
+    { column: 'population',
+      comparison: 'maior que',
       value: 0,
     },
   );
@@ -77,7 +77,7 @@ function FilterBar() {
   };
 
   const resetValues = () => {
-    const resetedValues = { column: '', comparison: '', value: 0 };
+    const resetedValues = { column: 'population', comparison: 'maior que', value: 0 };
     setValues(resetedValues);
   };
 
@@ -100,7 +100,7 @@ function FilterBar() {
           data-testid="column-filter"
           onChange={ onChangeHandleValues }
         >
-          <option value="">Coluna</option>
+          {/* <option value="">Coluna</option> */}
           { columnArray.map((e) => <option key={ e } value={ e }>{e}</option>) }
         </select>
         <button type="button" data-testid="filter">X</button>
@@ -112,7 +112,7 @@ function FilterBar() {
           data-testid="comparison-filter"
           onChange={ onChangeHandleValues }
         >
-          <option value="">Comparação</option>
+          {/* <option value="">Comparação</option> */}
           <option value="maior que">maior que</option>
           <option value="menor que">menor que</option>
           <option value="igual a">igual a</option>
