@@ -10,7 +10,7 @@ function Provider({ children }) {
     filterByNumericValues: [],
   });
 
-  const listColumn = ['orbital_period', 'population',
+  const listColumn = ['population', 'orbital_period',
     'rotation_period', 'diameter', 'surface_water'];
   const [optionsColumn, setOptionsColumn] = useState(listColumn);
 

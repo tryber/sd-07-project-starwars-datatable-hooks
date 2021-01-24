@@ -3,7 +3,7 @@ import StarWarsContext from '../context/StartWarsContext';
 
 function NumbersFilter() {
   const zero = 0;
-  const [column, setColumn] = useState('');
+  const [column, setColumn] = useState('population');
   const [comparison, setComparison] = useState('');
   const [value, setValue] = useState(zero);
 
