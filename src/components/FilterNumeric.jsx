@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 const dropdown = [
-  '',
+  // '',
   'population',
   'orbital_period',
   'diameter',
