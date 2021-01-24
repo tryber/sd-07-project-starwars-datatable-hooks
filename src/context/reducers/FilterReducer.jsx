@@ -1,6 +1,8 @@
 const FILTER_NAME = 'FILTER_NAME';
 const FILTER_COLUMN = 'FILTER_COLUMN';
 const FILTER_REMOVE = 'FILTER_REMOVE';
+const FILTER_ORDER = 'FILTER_ORDER';
+
 function FilterReducert(state, action) {
   switch (action.type) {
   case FILTER_NAME:
@@ -18,9 +20,15 @@ function FilterReducert(state, action) {
       filterByNumericValues: [...state.filterByNumericValues
         .filter(({ column }) => column !== action.payload)],
     };
+  case FILTER_ORDER:
+    return {
+      ...state,
+      filterByNumericValues: [...state.filterByNumericValues
+        .filter(({ column }) => column !== action.payload)],
+    };
   default:
     return state;
   }
 }
 
-export { FILTER_NAME, FILTER_COLUMN, FILTER_REMOVE, FilterReducert };
+export { FILTER_NAME, FILTER_COLUMN, FILTER_REMOVE, FILTER_ORDER, FilterReducert };

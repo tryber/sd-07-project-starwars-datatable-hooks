@@ -15,6 +15,7 @@ export default function Filter() {
         {useFiltersArr()}
       </div>
       <select id="column" data-testid="column-filter" onChange={ setFilter }>
+        <option>Column</option>
         <option>population</option>
         <option>orbital_period</option>
         <option>diameter</option>
@@ -22,6 +23,7 @@ export default function Filter() {
         <option>surface_water</option>
       </select>
       <select id="comparison" data-testid="comparison-filter" onChange={ setFilter }>
+        <option>Comparison</option>
         <option>maior que</option>
         <option>menor que</option>
         <option>igual a</option>
