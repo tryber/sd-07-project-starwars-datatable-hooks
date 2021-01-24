@@ -51,44 +51,32 @@ function Table() {
         </div>
         <br />
         <div>
-          <button
-            type="button"
-            data-testid="button-filter"
-            onClick={ handlerClick }
-          >
-            Filtrar
-          </button>
+          <br />
+          {filterByNumericValues.map(({ collumn/* , condition, number */ }, index) => (
+            <div key={ index }>
+              <span data-testid="filter">
+                { collumn }
+              </span>
+              {' '}
+              <button
+                type="button"
+                data-testid="filter"
+                onClick={ removeFilter }
+                value={ collumn }
+              >
+                X
+              </button>
+            </div>
+          ))}
         </div>
         <br />
-        {filterByNumericValues.map(({ collumn, condition, number }, index) => (
-          <div key={ index }>
-            <span>
-              Collumn:
-              {' '}
-              { collumn }
-            </span>
-            {' '}
-            <span>
-              Condition:
-              {' '}
-              { condition }
-            </span>
-            {' '}
-            <span>
-              Number:
-              {' '}
-              { number }
-            </span>
-            {' '}
-            <button
-              type="button"
-              data-testid="filter"
-              onClick={ removeFilter }
-            >
-              X
-            </button>
-          </div>
-        ))}
+        <button
+          type="button"
+          data-testid="button-filter"
+          onClick={ handlerClick }
+        >
+          Filtrar
+        </button>
       </div>
       <br />
       <br />

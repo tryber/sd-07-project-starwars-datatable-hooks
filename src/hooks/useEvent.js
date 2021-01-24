@@ -74,19 +74,19 @@ function useEvent() {
     }
   };
 
-  const removeFilter = () => {
-    const { filterByNumericValues } = filters;
-    filterByNumericValues.map(({ collumn: cols }) => setFilters({
+  const removeFilter = ({ target }) => {
+    const { value } = target;
+    setFilters({
       ...filters,
       filterByNumericValues: [...filters.filterByNumericValues.filter(
-        ({ collumn: col }) => col !== cols,
-      )],
-    }));
+        ({ collumn: col }) => col !== value,
+      ),
+      ],
+    });
+    setOption([...option, value]);
   };
 
   const { filterByNumericValues } = filters;
-
-  console.log(option);
 
   const filtered = filter ? filterNumber : filterName;
 
