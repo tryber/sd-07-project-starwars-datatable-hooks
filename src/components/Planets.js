@@ -64,10 +64,16 @@ function Planets() {
               .sort((a, b) => {
                 const { column } = filters.order;
                 const NEGATIVE = -1;
-                if (filters.order.sort === 'ASC') {
-                  return a[column] < b[column] ? NEGATIVE : 1;
+                if (Number.isNaN(parseFloat(a[column]))) {
+                  if (filters.order.sort === 'ASC') {
+                    return a[column] < b[column] ? NEGATIVE : 1;
+                  }
+                  return a[column] > b[column] ? NEGATIVE : 1;
                 }
-                return a[column] > b[column] ? NEGATIVE : 1;
+                if (filters.order.sort === 'ASC') {
+                  return parseFloat(a[column]) - parseFloat(b[column]);
+                }
+                return parseFloat(b[column]) - parseFloat(a[column]);
               })
               .map((planet) => <RowPlanet key={ planet.name } planet={ planet } />)}
           </tbody>

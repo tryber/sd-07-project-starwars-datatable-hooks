@@ -1,16 +1,75 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 import AddFilterForm from './AddFilterForm';
 
 function Filter() {
   const {
     filters,
+    allColumns,
     removeNumericFilter,
+    setOrder,
   } = useContext(StarWarsContext);
+
+  const [columnFilter, setColumn] = useState('name');
+  const [order, setOrd] = useState('ASC');
 
   return (
     <header>
       <AddFilterForm />
+      <div>
+        <select
+          data-testid="column-sort"
+          value={ columnFilter }
+          onChange={ ({ target: { value } }) => setColumn(value) }
+        >
+          {allColumns.map((column) => (
+            <option
+              key={ column }
+              value={ column }
+            >
+              { column }
+            </option>
+          ))}
+        </select>
+        <label
+          htmlFor="ASC"
+        >
+          <input
+            type="radio"
+            name="order"
+            id="ASC"
+            value="ASC"
+            data-testid="column-sort-input-asc"
+            onClick={ () => setOrd('ASC') }
+            checked={ order === 'ASC' }
+          />
+          Ascendent
+        </label>
+        <label
+          htmlFor="ASC"
+        >
+          <input
+            type="radio"
+            name="order"
+            id="DESC"
+            value="DESC"
+            data-testid="column-sort-input-desc"
+            onClick={ () => setOrd('DESC') }
+            checked={ order === 'DESC' }
+          />
+          Descendent
+        </label>
+        <button
+          type="button"
+          data-testid="column-sort-button"
+          onClick={ () => setOrder({
+            column: columnFilter,
+            sort: order,
+          }) }
+        >
+          Ordenar
+        </button>
+      </div>
       {filters.filterByNumericValues
         .map(({
           column,

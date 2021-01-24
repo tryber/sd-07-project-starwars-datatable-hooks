@@ -1,23 +1,19 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
+import StarWarsContext from '../context/StarWarsContext';
 
 function RowPlanet({ planet }) {
+  const { allColumns } = useContext(StarWarsContext);
   return (
     <tr>
-      <td data-testid="planet-name">{ planet.name }</td>
-      <td>{ planet.rotation_period }</td>
-      <td>{ planet.orbital_period }</td>
-      <td>{ planet.diameter }</td>
-      <td>{ planet.climate }</td>
-      <td>{ planet.gravity }</td>
-      <td>{ planet.terrain }</td>
-      <td>{ planet.surface_water }</td>
-      <td>{ planet.population }</td>
-      <td>{ planet.residents }</td>
-      <td>{ planet.films }</td>
-      <td>{ planet.created }</td>
-      <td>{ planet.edited }</td>
-      <td>{ planet.url }</td>
+      {allColumns.map((column) => (
+        <td
+          key={ column }
+          data-testid={ `planet-${column}` }
+        >
+          { planet[column] }
+        </td>
+      ))}
     </tr>
   );
 }

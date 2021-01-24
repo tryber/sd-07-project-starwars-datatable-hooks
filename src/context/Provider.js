@@ -11,6 +11,22 @@ const Provider = ({ children }) => {
     'rotation_period',
     'surface_water',
   ];
+  const [allColumns] = useState([
+    'name',
+    'rotation_period',
+    'orbital_period',
+    'diameter',
+    'climate',
+    'gravity',
+    'terrain',
+    'surface_water',
+    'population',
+    'residents',
+    'films',
+    'created',
+    'edited',
+    'url',
+  ]);
   const [columnNames, setColumnNames] = useState(columnInitialNames);
   const [planets, setPlanets] = useState([]);
   const [isFetching, setIsFetching] = useState(false);
@@ -26,6 +42,11 @@ const Provider = ({ children }) => {
   });
 
   const setName = (name) => setFilters({ ...filters, filterByName: { name } });
+
+  const setOrder = ({ column, sort }) => setFilters({
+    ...filters,
+    order: { column, sort },
+  });
 
   const addNumericFilter = ({ column, comparison, value }) => {
     const newNumericFilter = [
@@ -72,6 +93,8 @@ const Provider = ({ children }) => {
     addNumericFilter,
     removeNumericFilter,
     columnNames,
+    allColumns,
+    setOrder,
   };
 
   return (
