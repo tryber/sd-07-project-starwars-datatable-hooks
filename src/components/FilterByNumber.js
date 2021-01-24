@@ -13,12 +13,12 @@ const FilterByNumber = () => {
 
   // Lógica do aluno Carlos Souza
   // Fonte: https://github.com/tryber/sd-07-project-starwars-datatable-hooks/blob/121ebd0b46568de1adf8921899e95a07e12e2985/src/components/Table/index.js
-  const filterNumber = () => {
+  const filterNumber = (value) => {
     const { filterByNumericValues } = filters;
     let results = planets;
     filterByNumericValues.forEach((_, index) => {
       results = results.filter((planet) => {
-        const { column, comparison, value } = filterByNumericValues[index];
+        const { column, comparison } = filterByNumericValues[index];
         switch (comparison) {
         case 'maior que':
           return parseFloat(planet[column]) > parseFloat(value);
@@ -31,24 +31,21 @@ const FilterByNumber = () => {
         }
       });
     });
-    console.log(results);
     setFilteredPlanets(results);
     return results;
   };
 
   const handleChangeColumn = ({ target: { value } }) => {
     setFilterColumn(value);
-    filterNumber();
   };
 
   const handleChangeComparison = ({ target: { value } }) => {
     setFilterComparison(value);
-    filterNumber();
   };
 
   const handleChangeValue = ({ target: { value } }) => {
     setFilterValue(value);
-    filterNumber();
+    filterNumber(value);
   };
 
   return (
