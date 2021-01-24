@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import StarWarsContext from './StarWarsContext';
 
 function Provider({ children }) {
-  const [data, setData] = useState();
+  const [data, setData] = useState([]);
   const url = 'https://swapi-trybe.herokuapp.com/api/planets/';
 
   const fetchData = async () => {
@@ -17,8 +17,21 @@ function Provider({ children }) {
     fetchData();
   }, []);
 
+  const [name, setFilterText] = useState('');
+  const [newNameData, setNewNameData] = useState([]);
+
+  useEffect(() => {
+    setNewNameData(data.filter((value) => value.name.includes(name)));
+  }, [name, data]); // referência Carol Andrade
+
+  const contextValue = {
+    data,
+    setFilterText,
+    newNameData,
+  };
+
   return (
-    <StarWarsContext.Provider value={ { data } }>
+    <StarWarsContext.Provider value={ contextValue }>
       { children }
     </StarWarsContext.Provider>
   );

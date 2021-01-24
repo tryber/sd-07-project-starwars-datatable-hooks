@@ -1,39 +1,37 @@
 import React, { useContext } from 'react';
 import StarWarsContext from './StarWarsContext';
+import SearchBar from './SearchBar';
 
 function Table() {
-  const { data } = useContext(StarWarsContext);
-  // if (data === undefined || data === []) return (<p>Loading...</p>);
-
-  // const tableHeader = () => {
-  //   <table>
-  //     <thead>
-  //       <tr>
-  //         {Object.keys(data[0]).map((header) => (<th key={ header }>{ header }</th>)}
-  //       </tr>
-  //     </thead>
-  //   </table>
-  // }
-
-  const thHeader = (property) => {
-    const ZERO = 0;
+  const { data, newNameData } = useContext(StarWarsContext);
+  const ZERO = 0;
+  const tableHeade = (property) => {
     for (let i = ZERO; i <= property.length; i += 1) {
       if (property !== 'residents') return (<th key={ property }>{ property }</th>);
     }
   };
 
+  const tableBody = () => { // referência Carol Andrade
+    if (newNameData.length > ZERO) {
+      return newNameData;
+    }
+    return data;
+  };
+
   return (
-    <table>
-      <thead>
-        <tr>
-          {
-            data ? Object.keys(data[0]).map(thHeader) : (<th>Loading...</th>)
-          }
-        </tr>
-      </thead>
-      <tbody>
-        {
-          data ? data.map((body) => (
+    <div>
+      <SearchBar />
+      <table>
+        <thead>
+          <tr>
+            {
+              data.length > ZERO ? Object.keys(data[0])
+                .map(tableHeade) : (<th>Loading...</th>)
+            }
+          </tr>
+        </thead>
+        <tbody>
+          { data ? tableBody().map((body) => (
             <tr key={ body.name }>
               <td>{ body.name }</td>
               <td>{ body.rotation_period }</td>
@@ -49,11 +47,10 @@ function Table() {
               <td>{ body.edited }</td>
               <td>{ body.url }</td>
             </tr>
-          ))
-            : <tr><th>Loading...</th></tr>
-        }
-      </tbody>
-    </table>
+          )) : (<th>Loading...</th>)}
+        </tbody>
+      </table>
+    </div>
   );
 }
 
