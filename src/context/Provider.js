@@ -58,7 +58,7 @@ function StarWarsProvider({ children }) {
 
   const handleChange = (name) => {
     setNameFilter({
-      ...filterByName,
+      ...nameFilter,
       name,
     });
   };
