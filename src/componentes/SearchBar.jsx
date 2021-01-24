@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import StarWarsContext from '../context/StarWarsContext';
 
 function SearchBar() {
+  const { filterNameInput } = useContext(StarWarsContext);
   return (
-    <div>
-      <h1>SearchBar</h1>
-    </div>
+    <form>
+      <input type="text" data-testid='name-filter' onChange={ (event) => filterNameInput(event) } />
+    </form>
   );
 }
 

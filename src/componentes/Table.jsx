@@ -2,35 +2,32 @@ import React, { useContext } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 function Table() {
-  const { line } = useContext(StarWarsContext);
-  console.log(line);
+  const { line, newRender } = useContext(StarWarsContext);
 
   return (
     <table>
       {/* <thead> */}
       <tr>
-        <th>name</th>
-        <th>rotation_period</th>
-        <th>orbital_period</th>
-        <th>diameter</th>
-        <th>climate</th>
-        <th>gravity</th>
-        <th>terrain</th>
-        <th>surface_water</th>
-        <th>population</th>
-        <th>films</th>
-        <th>created</th>
-        <th>edited</th>
-        <th>url</th>
+        <th>Name</th>
+        <th>Rotation period</th>
+        <th>Orbital period</th>
+        <th>Diameter</th>
+        <th>Climate</th>
+        <th>Gravity</th>
+        <th>Terrain</th>
+        <th>Surface water</th>
+        <th>Population</th>
+        <th>Films</th>
+        <th>Created</th>
+        <th>Edited</th>
+        <th>Url</th>
       </tr>
       {/* </thead> */}
       {/* // <tbody> */}
-      {line.map((cell) => (
+      { newRender ? console.log('vou trabalhar nisso ainda') : line.map((cell) => (
         <tr key={ cell }>
           {cell.map((info) => (<td key={ info }>{info}</td>))}
-        </tr>))}
-      {/* {Object.keys(line).forEach((item) => {console.log(line)})} */}
-      {/* {Object.keys(line).forEach((item) => {})} */}
+        </tr>)) }
       {/* </tbody> */}
     </table>
   );
