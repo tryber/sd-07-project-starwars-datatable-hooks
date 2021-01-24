@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Table from './components/table';
 import Searcher from './components/searcher';
+import Filters from './components/filters';
 import StarWarsContext from './context/StarWarsContext';
 import starWarsAPI from './services/starWarsAPI';
 
@@ -58,10 +59,12 @@ function App() {
     setComparison,
     setValue,
     handleFilter,
+    setFilters,
   };
   return (
     <StarWarsContext.Provider value={ context }>
       <Searcher />
+      <Filters />
       <Table />
     </StarWarsContext.Provider>
   );
