@@ -61,6 +61,10 @@ function App() {
     }]));
   }
 
+  function deleteFilter(comparison) {
+    const deletedFilter = filters.filter((item) => item.filterSelect !== comparison);
+    setFilters(deletedFilter);
+  }
   function getUniqueFilterByValues() {
     return filterByValues
       .filter((value) => !filters.find((f) => f.filterSelect === value));
@@ -75,6 +79,21 @@ function App() {
     filteredPlanets,
   };
 
+  function renderFilters() {
+    return (
+      filters.map((item) => (
+        <div data-testid="filter" key={ item.filterSelect }>
+          {`${item.filterSelect} - ${item.proportion} - ${item.number} - `}
+          <button
+            type="button"
+            onClick={ () => deleteFilter(item.filterSelect) }
+          >
+            X
+          </button>
+        </div>))
+    );
+  }
+
   return (
     <StarWarsContext.Provider value={ context }>
       <input
@@ -87,6 +106,7 @@ function App() {
         data-testid="column-filter"
         onChange={ (e) => setFilterSelect(e.currentTarget.value) }
       >
+        <option disabled value="default">Choose one</option>
         {getUniqueFilterByValues()
           .map((item) => <option key={ item } value={ item }>{ item }</option>)}
       </select>
@@ -95,6 +115,7 @@ function App() {
         data-testid="comparison-filter"
         onChange={ (e) => setProportion(e.currentTarget.value) }
       >
+        <option disabled value="default">Choose one</option>
         {proportionValues
           .map((item) => <option key={ item } value={ item }>{ item }</option>)}
       </select>
@@ -110,6 +131,9 @@ function App() {
       >
         Adicionar Filtro
       </button>
+      <div>
+        {renderFilters()}
+      </div>
       <Table />
     </StarWarsContext.Provider>
   );
