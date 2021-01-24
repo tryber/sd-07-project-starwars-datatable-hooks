@@ -84,23 +84,25 @@ const Table = () => {
               </tr>
             </thead>
             <tbody>
-              {/* {results
+              {results
                 .filter(
                   (planet) => nameFilter(planet) && valueSetFilter(planet),
                 ).sort((prev, next) => sorting(prev, next))
                 .map((planet, index) => (
                   <tr key={ index }>
                     {Object.entries(planet)
-                      .map((orb, index2) => orb[0]
-                        ? (
-                          <td data-testid="planet-name" key={ index2 }>
-                            {orb[1]}
-                          </td>
-                        ) : (
-                          <td key={ index2 }>{orb[1]}</td>
-                        ))}
+                      .map((orb, index2) => {
+                        if (orb[0] === 'name') {
+                          return (
+                            <td data-testid="planet-name" key={ index2 }>
+                              {orb[1]}
+                            </td>
+                          );
+                        }
+                        return <td key={ index2 }>{orb[1]}</td>;
+                      })}
                   </tr>
-                ))} */}
+                ))}
             </tbody>
           </table>
         </div>
