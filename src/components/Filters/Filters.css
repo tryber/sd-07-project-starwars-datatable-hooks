@@ -1,0 +1,24 @@
+.filters-container {
+  align-items: center;
+  background-color: black;
+  color: rgb(107, 116, 117);
+  display: flex;
+  flex-direction: column;
+  font-size: 1.2em;
+  margin-top: 10px;
+  width: 100%;
+}
+
+.delete-button {
+  background-color: black;
+  border: none;
+  color: red;
+  font-weight: 600;
+  font-size: 1.2em;
+  margin-left: 20px;
+}
+
+.delete-button:hover {
+    font-size: 1.3em;
+  text-shadow: 1px 1px 1px red;
+}
