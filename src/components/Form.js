@@ -1,5 +1,6 @@
 import React, { useContext, useState } from 'react';
 import SWContext from '../context/Context';
+import OrderForm from './OrderForm';
 
 export default function Form() {
   const {
@@ -105,6 +106,7 @@ export default function Form() {
         <button type="submit" data-testid="button-filter" onClick={ handleClick }>
           acionar
         </button>
+        <OrderForm types={ [...TYPES, 'name', 'climate', 'terrain', 'films'] } />
       </form>
     </div>
   );
