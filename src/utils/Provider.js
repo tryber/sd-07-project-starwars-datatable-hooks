@@ -16,7 +16,7 @@ function Provider(props) {
 
   /*   const fetchStarWarsPlanet = async () => {
     const { results } = mockData;
-    setData(await results);
+    setData(results);
     setTitle(Object.keys(...results));
   }; */
 

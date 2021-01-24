@@ -35,26 +35,11 @@ function useEvent() {
     ({ name: nameFilter }) => nameFilter.includes(names),
   );
 
-  const handlerNumberChange = ({ target }) => {
+  const handlerNumberChange = async ({ target }) => {
     const { name, value } = target;
     const objValues = { ...values };
     objValues[name] = value;
     setValues(objValues);
-  };
-
-  const handlerClick = () => {
-    setFilter(true);
-    setFilters({
-      ...filters,
-      filterByNumericValues: [...filters.filterByNumericValues, values],
-    });
-
-    const { filterByNumericValues } = filters;
-    const array = option.filter((op) => filterByNumericValues.every(
-      ({ collumn: collumns }) => collumns !== op,
-    ));
-
-    setOption(array);
   };
 
   const { collumn, condition, number } = values;
@@ -74,12 +59,27 @@ function useEvent() {
     }
   });
 
+  const handlerClick = () => {
+    setFilter(true);
+    setFilters({
+      ...filters,
+      filterByNumericValues: [...filters.filterByNumericValues, values],
+    });
+
+    const { filterByNumericValues } = filters;
+    if (filterByNumericValues === undefined) {
+      setOption(option);
+    } else {
+      setOption(option.filter((op) => op !== collumn));
+    }
+  };
+
   const removeFilter = () => {
     const { filterByNumericValues } = filters;
     filterByNumericValues.map(({ collumn: cols }) => setFilters({
       ...filters,
       filterByNumericValues: [...filters.filterByNumericValues.filter(
-        (col) => col === cols,
+        ({ collumn: col }) => col !== cols,
       )],
     }));
   };
@@ -87,7 +87,6 @@ function useEvent() {
   const { filterByNumericValues } = filters;
 
   console.log(option);
-  console.log(filters);
 
   const filtered = filter ? filterNumber : filterName;
 
