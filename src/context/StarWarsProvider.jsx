@@ -35,7 +35,7 @@ const StarWarsProvide = ({ children }) => {
     const input = data.filter((item) => item.name.includes(value));
     setNewRender(true);
     setFilterName({ filterByName: { input } });
-  }
+  };
 
   const context = {
     // valor a ser utilizado,

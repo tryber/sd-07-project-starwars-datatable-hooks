@@ -26,23 +26,18 @@ function Table() {
       {/* </thead> */}
       {/* // <tbody> */}
       { newRender ? Object.values(filterByName).map((obj) => (
-          obj.map((item) => (
-            <tr keys={item} >
-              {Object.values(item).map(info => <td keys={ info }>{info}</td>)}
-            </tr>)
-          )
-      ))
-      : line.map((cell) => (
-        <tr key={ cell }>
-          {cell.map((info) => (<td key={ info }>{info}</td>))}
-        </tr>)) }
+        obj.map((item) => (
+          <tr key={ item }>
+            {Object.values(item).map((info) => <td key={ info }>{info}</td>)}
+          </tr>)))) : line.map(
+        (cell) => (
+          <tr key={ cell }>
+            {cell.map((info) => (<td key={ info }>{info}</td>))}
+          </tr>),
+      ) }
       {/* </tbody> */}
     </table>
   );
 }
-
-// (Object.values(filterByName).map(obj => obj.map(item => console.log(Object.values(item)))))
-
-
 
 export default Table;
