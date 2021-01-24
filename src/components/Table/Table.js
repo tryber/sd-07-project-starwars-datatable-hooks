@@ -1,47 +1,26 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import StarWarsContext from '../../context/StarWarsContext';
+import './style.css';
 
 function Table() {
+  const { planets } = useContext(StarWarsContext);
+  const thead = planets[0] || [];
   return (
-    <StarWarsContext.Consumer>
-      {() => (
-        <table>
-        <thead>
-          <tr>
-            <td>HEAD</td>
-            <td>HEAD</td>
-            <td>HEAD</td>
-            <td>HEAD</td>
-            <td>HEAD</td>
-            <td>HEAD</td>
-            <td>HEAD</td>
-            <td>HEAD</td>
-            <td>HEAD</td>
-            <td>HEAD</td>
-            <td>HEAD</td>
-            <td>HEAD</td>
-            <td>HEAD</td>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>CELL</td>
-            <td>CELL</td>
-            <td>CELL</td>
-            <td>CELL</td>
-            <td>CELL</td>
-            <td>CELL</td>
-            <td>CELL</td>
-            <td>CELL</td>
-            <td>CELL</td>
-            <td>CELL</td>
-            <td>CELL</td>
-            <td>CELL</td>
-            <td>CELL</td>
-          </tr>
-        </tbody>
-      </table>)}
-    </StarWarsContext.Consumer>
+    <table>
+      <thead>
+        <tr>
+          {Object.keys(thead).map((column) => <th key={ column }>{column}</th>)}
+        </tr>
+      </thead>
+      <tbody>
+        {planets
+          .map((planet, index) => (
+            <tr key={ index }>
+              {Object.entries(planet).map((pl) => <td key={ pl[0] }>{pl[1]}</td>)}
+            </tr>
+          ))}
+      </tbody>
+    </table>
   );
 }
 
