@@ -4,7 +4,6 @@ import context from '../../context';
 const Search = () => {
   const { filters, changeFiltersName } = useContext(context);
   const { name } = filters.filterByName;
-  // console.log(name)
   return (
     <div>
       <label htmlFor="search">

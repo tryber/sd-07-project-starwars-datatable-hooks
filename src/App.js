@@ -1,6 +1,6 @@
 import React from 'react';
 import Provider from './Provider';
-import { Table, Search, Filter } from './components';
+import { Table, Search, Filter, ListFilters } from './components';
 import './App.css';
 
 function App() {
@@ -8,6 +8,7 @@ function App() {
     <Provider>
       <Search />
       <Filter />
+      <ListFilters />
       <Table />
     </Provider>
   );

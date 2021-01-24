@@ -8,13 +8,7 @@ const Provider = ({ children }) => {
     filterByName: {
       name: '',
     },
-    filterByNumericValues: [
-      {
-        column: 'population',
-        comparison: 'maior que',
-        value: '0',
-      },
-    ],
+    filterByNumericValues: [],
   };
   const [data, setData] = useState();
   const [filters, setFilters] = useState(filterInitial);
@@ -27,17 +21,61 @@ const Provider = ({ children }) => {
     setFilters(newFilter);
   };
 
-  const changeFiltersNumerics = (column, comparison, value) => {
+  // const clearFiltersNumerics = () => {
+  //   const newFilter = {
+  //     ...filters,
+  //     filterByNumericValues: [],
+  //   };
+  //   setFilters(newFilter);
+  // };
+
+  const addFiltersNumerics = (objFilter) => {
+    const { filterByNumericValues } = filters;
+    const dontRemove = 0;
+    const numberOfFilters = filterByNumericValues.length;
+    filterByNumericValues.splice(numberOfFilters, dontRemove, objFilter);
     const newFilter = {
       ...filters,
-      filterByNumericValues: [{
-        column,
-        comparison,
-        value,
-      }],
+      filterByNumericValues,
     };
     setFilters(newFilter);
   };
+
+  const removeFiltersNumerics = (index) => {
+    const { filterByNumericValues } = filters;
+    filterByNumericValues.splice(index, 1);
+    const newFilter = {
+      ...filters,
+      filterByNumericValues,
+    };
+    setFilters(newFilter);
+  };
+
+  // const changeFiltersNumerics = (index, objFilter) => {
+  //   const { filterByNumericValues } = filters;
+  //   //    altera o filtro
+  //   // filterByNumericValues.splice(index, 1, obj);
+  //   //    remove novo filtro
+  //   // filterByNumericValues.splice(index, 1, {});
+  //   //    add novo filtro
+  //   // filterByNumericValues.splice(-1, 0, obj);
+
+  //   const dontRemove = 0;
+  //   const numberOfFilters = filterByNumericValues.length;
+  //   if (index < numberOfFilters) {
+  //     // altera filtro
+  //     filterByNumericValues.splice(index, 1, objFilter);
+  //   } else {
+  //     // adicionar filtro
+  //     filterByNumericValues.splice(numberOfFilters, dontRemove, objFilter);
+  //   }
+
+  //   const newFilter = {
+  //     ...filters,
+  //     filterByNumericValues,
+  //   };
+  //   setFilters(newFilter);
+  // };
 
   const callRequestData = async () => {
     const { results } = await RequestData();
@@ -51,9 +89,9 @@ const Provider = ({ children }) => {
   const context = {
     data,
     filters,
-    // setData,
     changeFiltersName,
-    changeFiltersNumerics,
+    addFiltersNumerics,
+    removeFiltersNumerics,
   };
 
   return (

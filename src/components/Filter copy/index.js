@@ -1,22 +1,20 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useState, useContext } from 'react';
+import PropTypes from 'prop-types';
 import context from '../../context';
 
-const Filter = () => {
-  const arrayColumns = [
-    'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water',
-  ];
-  const { filters, addFiltersNumerics } = useContext(context);
+const Filter = ({ index, arrayColumns }) => {
+  const { filters, changeFiltersNumerics } = useContext(context);
   const { filterByNumericValues } = filters;
 
-  const updateSelectColumns = () => {
-    const columnsInsered = filterByNumericValues.map((filter) => filter.column);
-    return arrayColumns.filter((item) => (!columnsInsered.includes(item)));
-  };
+  const columnsInsered = filterByNumericValues.map((filter) => filter.column);
+  const arraySelectColumns = arrayColumns.filter((item) => (
+    !columnsInsered.includes(item)
+  ));
 
-  let arraySelectColumns = updateSelectColumns();
+  const [columnsSelect] = useState(arraySelectColumns);
 
   const initialFilters = {
-    column: arraySelectColumns[0],
+    column: arraySelectColumns[0], // columnsSelect[0],
     comparison: 'maior que',
     value: '0',
   };
@@ -25,15 +23,11 @@ const Filter = () => {
   const filterForms = (key, val) => {
     setFilterForms({ ...filter, [key]: val });
   };
-  useEffect(() => {
-    filterForms('comparison', 'maior que');
-    filterForms('value', '0');
-    filterForms('column', arraySelectColumns[0]);
-  }, arraySelectColumns);
 
   const handleClick = () => {
-    addFiltersNumerics({ column, comparison, value });
-    arraySelectColumns = updateSelectColumns();
+    // const indexForAddFilter = -1;
+    // changeFiltersNumerics(indexForAddFilter, { column, comparison, value });
+    changeFiltersNumerics(index, { column, comparison, value });
   };
 
   return (
@@ -44,10 +38,9 @@ const Filter = () => {
           data-testid="column-filter"
           value={ column }
           onChange={ (event) => filterForms('column', event.target.value) }
-          disabled={ (!arraySelectColumns.length) }
         >
           {
-            arraySelectColumns.map((element) => (
+            columnsSelect.map((element) => (
               <option key={ element } value={ element }>{element}</option>
             ))
           }
@@ -59,7 +52,6 @@ const Filter = () => {
           data-testid="comparison-filter"
           value={ comparison }
           onChange={ (event) => filterForms('comparison', event.target.value) }
-          disabled={ (!arraySelectColumns.length) }
         >
           <option value="maior que">maior que</option>
           <option value="menor que">menor que</option>
@@ -74,7 +66,6 @@ const Filter = () => {
           data-testid="value-filter"
           value={ value }
           onChange={ (event) => filterForms('value', event.target.value) }
-          disabled={ (!arraySelectColumns.length) }
         />
       </label>
       <button
@@ -82,12 +73,16 @@ const Filter = () => {
         data-testid="button-filter"
         onClick={ handleClick }
         onKeyPress={ handleClick }
-        disabled={ (!arraySelectColumns.length) }
       >
         Aplicar
       </button>
     </div>
   );
+};
+
+Filter.propTypes = {
+  arrayColumns: PropTypes.arrayOf(PropTypes.string).isRequired,
+  index: PropTypes.number.isRequired,
 };
 
 export default Filter;
