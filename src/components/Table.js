@@ -23,7 +23,7 @@ function Table() {
             data-testid="column-filter"
             onChange={ handlerNumberChange }
           >
-            <option>Selecione</option>
+            {/* <option>Selecione</option> */}
             {option.map((op, index) => (
               <option key={ index } value={ op }>{ op }</option>
             ))}
@@ -35,7 +35,7 @@ function Table() {
             data-testid="comparison-filter"
             onChange={ handlerNumberChange }
           >
-            <option>Selecione</option>
+            {/* <option>Selecione</option> */}
             <option value="maior que">maior que</option>
             <option value="menor que">menor que</option>
             <option value="igual a">igual a</option>
