@@ -1,5 +1,6 @@
 import React, { useContext, useState } from 'react';
 import StarWarsContext from '../../context/StarWarsContext';
+import Button from '../Button';
 
 function FilterBar() {
   const {
@@ -93,7 +94,7 @@ function FilterBar() {
           onChange={ onChangeHandleValues }
         />
       </label>
-      <label htmlFor="column">
+      <label htmlFor="column" data-testid="filter">
         <select
           name="column"
           value={ column }
@@ -103,9 +104,9 @@ function FilterBar() {
           {/* <option value="">Coluna</option> */}
           { columnArray.map((e) => <option key={ e } value={ e }>{e}</option>) }
         </select>
-        <button type="button" data-testid="filter">X</button>
+        <Button />
       </label>
-      <label htmlFor="comparison">
+      <label htmlFor="comparison" data-testid="filter">
         <select
           name="comparison"
           value={ comparison }
@@ -117,9 +118,9 @@ function FilterBar() {
           <option value="menor que">menor que</option>
           <option value="igual a">igual a</option>
         </select>
-        <button type="button" data-testid="filter">X</button>
+        <Button />
       </label>
-      <label htmlFor="value">
+      <label htmlFor="value" data-testid="filter">
         <input
           name="value"
           min="0"
@@ -128,7 +129,7 @@ function FilterBar() {
           data-testid="value-filter"
           onChange={ onChangeHandleValues }
         />
-        <button type="button" data-testid="filter">X</button>
+        <Button />
       </label>
       <button
         type="button"

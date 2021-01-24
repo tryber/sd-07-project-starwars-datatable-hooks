@@ -18,11 +18,20 @@ function Provider({ children }) {
     'rotation_period',
     'surface_water',
   ]);
+  const [initialData, setInitalData] = useState([]);
+  const [initialColumnArray] = useState([
+    'population',
+    'orbital_period',
+    'diameter',
+    'rotation_period',
+    'surface_water',
+  ]);
 
   useEffect(() => {
     async function fetchPlanets() {
       const { results } = await fetchStarWarsPlanets();
       setData(results);
+      setInitalData(results);
     }
 
     fetchPlanets();
@@ -34,6 +43,8 @@ function Provider({ children }) {
         data,
         filters,
         columnArray,
+        initialData,
+        initialColumnArray,
         setData,
         setFilters,
         setColumnArray,
