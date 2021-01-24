@@ -13,10 +13,13 @@ const useGlobal = () => {
 
   useEffect(() => {
     const getPlanets = async () => {
+      const wait = 1500;
       const planets = await getPlanet().then((data) => data.results);
       planets.filter((info) => delete info.residents);
       setResults(planets);
-      setLoading(false);
+      setTimeout(() => {
+        setLoading(false);
+      }, wait);
     };
     getPlanets();
   }, []);
