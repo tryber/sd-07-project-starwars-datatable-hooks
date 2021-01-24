@@ -30,6 +30,10 @@ function Provider({ children }) {
     }
   };
 
+  const clearFilter = () => {
+    setFiltered(planets);
+  };
+
   const handleFilterByNumericValues = () => {
     if (column === 'population') {
       setOptions(
@@ -91,6 +95,7 @@ function Provider({ children }) {
     functions: {
       onHandleChange,
       handleFilterByNumericValues,
+      clearFilter,
     },
   };
 

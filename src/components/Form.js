@@ -8,7 +8,8 @@ function Form() {
     column,
     comparison,
     value,
-    options } = useContext(StarWarsContext);
+    options,
+    filters: { filterByNumericValues } } = useContext(StarWarsContext);
   return (
     <div>
       <label htmlFor="filter-by-name">
@@ -60,7 +61,20 @@ function Form() {
           Filter By Value
         </button>
       </fieldset>
-
+      {filterByNumericValues.map((item, index) => (
+        <fieldset key={ index }>
+          <span>{item.column}</span>
+          <span>{item.comparison}</span>
+          <span>{item.value}</span>
+          <div data-testid="filter">
+            <button
+              onClick={ functions.clearFilter }
+              type="button"
+            >
+              X
+            </button>
+          </div>
+        </fieldset>))}
     </div>
   );
 }
