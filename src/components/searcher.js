@@ -27,32 +27,11 @@ function Searcher() {
         'surface_water'];
 
       const forDeletion = filters.filterByNumericValues.map((item) => item.column);
-      // console.log(forDeletion)
       const columns = originalColumns.filter((item) => !forDeletion.includes(item));
-      // console.log(columns)
 
       return columns;
     });
   }, [filters]);
-
-  // console.log(selectColumn)
-
-  // const columns = () => {
-  //   const originalColumns = [
-  //     'population',
-  //     'orbital_period',
-  //     'diameter',
-  //     'rotation_period',
-  //     'surface_water'];
-  //   return originalColumns.filter((column) => {
-  //     if (filters.filterByNumericValues.length > 0) {
-  //       filters.filterByNumericValues.forEach((filter) => {
-  //         return column !== filter.column
-  //       })
-  //     }
-  //     return originalColumns;
-  //   })
-  // };
 
   return (
     <StarWarsContext.Consumer>
