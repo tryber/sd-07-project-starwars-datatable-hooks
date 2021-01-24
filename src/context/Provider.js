@@ -7,6 +7,7 @@ function Provider({ children }) {
   const [planets, setPlanets] = useState([]);
   const [filtered, setFiltered] = useState([]);
   const [filterByName, setFilterByName] = useState('');
+  const isEmpty = 0;
 
   const onFetchPlanets = async () => {
     const planetsRes = await Services.fetchPlanets();
@@ -32,7 +33,7 @@ function Provider({ children }) {
 
   const contextValue = {
     data: planets,
-    filtered,
+    filtered: filtered.length === isEmpty ? planets : filtered,
     filters: {
       filterByName: {
         name: filterByName,
