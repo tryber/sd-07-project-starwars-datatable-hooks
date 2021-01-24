@@ -11,6 +11,13 @@ function Provider({ children }) {
       filterByNumericValues: [],
     },
   );
+  const [columnArray, setColumnArray] = useState([
+    'population',
+    'orbital_period',
+    'diameter',
+    'rotation_period',
+    'surface_water',
+  ]);
 
   useEffect(() => {
     async function fetchPlanets() {
@@ -26,8 +33,10 @@ function Provider({ children }) {
       value={ {
         data,
         filters,
+        columnArray,
         setData,
         setFilters,
+        setColumnArray,
       } }
     >
       {children}

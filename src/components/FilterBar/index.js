@@ -6,8 +6,11 @@ function FilterBar() {
     data,
     filters,
     filters: { filterByName: { name } },
+    filters: { filterByNumericValues },
+    columnArray,
     setFilters,
     setData,
+    setColumnArray,
   } = useContext(StarWarsContext);
 
   const [filteredValues, setValues] = useState(
@@ -40,7 +43,7 @@ function FilterBar() {
 
   const handleClick = () => {
     setFilters(
-      { ...filters, filterByNumericValues: [filteredValues] },
+      { ...filters, filterByNumericValues: [...filterByNumericValues, filteredValues] },
     );
 
     let filterArray = data;
@@ -67,51 +70,74 @@ function FilterBar() {
   };
 
   const { column, comparison, value } = filteredValues;
+
+  const removeColumnOption = () => {
+    const newColumnArray = [...columnArray.filter((e) => e !== column)];
+    setColumnArray(newColumnArray);
+  };
+
+  const resetValues = () => {
+    const resetedValues = { column: '', comparison: '', value: 0 };
+    setValues(resetedValues);
+  };
+
   return (
     <div>
-      <input
-        type="text"
-        name="name"
-        value={ name }
-        data-testid="name-filter"
-        onChange={ onChangeHandleValues }
-      />
-      <select
-        name="column"
-        value={ column }
-        data-testid="column-filter"
-        onChange={ onChangeHandleValues }
-      >
-        <option value="">Coluna</option>
-        <option value="population">population</option>
-        <option value="orbital_period">orbital_period</option>
-        <option value="diameter">diameter</option>
-        <option value="rotation_period">rotation_period</option>
-        <option value="surface_water">surface_water</option>
-      </select>
-      <select
-        name="comparison"
-        value={ comparison }
-        data-testid="comparison-filter"
-        onChange={ onChangeHandleValues }
-      >
-        <option value="">Comparação</option>
-        <option value="maior que">maior que</option>
-        <option value="menor que">menor que</option>
-        <option value="igual a">igual a</option>
-      </select>
-      <input
-        name="value"
-        min="0"
-        type="number"
-        value={ value }
-        data-testid="value-filter"
-        onChange={ onChangeHandleValues }
-      />
+      <label htmlFor="name">
+        Nome do Planeta:
+        <input
+          type="text"
+          name="name"
+          value={ name }
+          data-testid="name-filter"
+          onChange={ onChangeHandleValues }
+        />
+      </label>
+      <label htmlFor="column">
+        <select
+          name="column"
+          value={ column }
+          data-testid="column-filter"
+          onChange={ onChangeHandleValues }
+        >
+          <option value="">Coluna</option>
+          { columnArray.map((e) => <option key={ e } value={ e }>{e}</option>) }
+        </select>
+        <button type="button" data-testid="filter">X</button>
+      </label>
+      <label htmlFor="comparison">
+        <select
+          name="comparison"
+          value={ comparison }
+          data-testid="comparison-filter"
+          onChange={ onChangeHandleValues }
+        >
+          <option value="">Comparação</option>
+          <option value="maior que">maior que</option>
+          <option value="menor que">menor que</option>
+          <option value="igual a">igual a</option>
+        </select>
+        <button type="button" data-testid="filter">X</button>
+      </label>
+      <label htmlFor="value">
+        <input
+          name="value"
+          min="0"
+          type="number"
+          value={ value }
+          data-testid="value-filter"
+          onChange={ onChangeHandleValues }
+        />
+        <button type="button" data-testid="filter">X</button>
+      </label>
       <button
         type="button"
         data-testid="button-filter"
-        onClick={ handleClick }
+        onClick={ () => {
+          handleClick();
+          removeColumnOption();
+          resetValues();
+        } }
       >
         Filtrar
       </button>
