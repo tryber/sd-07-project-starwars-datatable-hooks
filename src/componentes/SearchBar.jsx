@@ -6,7 +6,9 @@ function SearchBar() {
     setComparaNumeros,
     setChooseColumn,
     setInputNumber,
-    submitFilters } = useContext(StarWarsContext);
+    submitFilters,
+    collumnOptions,
+    setCollumnOptions } = useContext(StarWarsContext);
 
   const valueOfColumns = ({ value }) => {
     const indexForRotation = 1;
@@ -15,11 +17,65 @@ function SearchBar() {
     const indexForSurface = 7;
     const indexForPopulation = 8;
 
-    if (value === 'rotation_period') { setChooseColumn(indexForRotation); }
-    if (value === 'orbital_period') { setChooseColumn(indexForOrbital); }
-    if (value === 'diameter') { setChooseColumn(indexForDiameter); }
-    if (value === 'surface_water') { setChooseColumn(indexForSurface); }
-    if (value === 'population') { setChooseColumn(indexForPopulation); }
+    if (value === 'rotation_period') {
+      setChooseColumn(indexForRotation);
+
+      const collumnOptionsTemp = [
+        'population',
+        'orbital_period',
+        'diameter',
+        'surface_water',
+      ];
+      setCollumnOptions(collumnOptionsTemp);
+    }
+
+    if (value === 'orbital_period') {
+      setChooseColumn(indexForOrbital);
+
+      const collumnOptionsTemp = [
+        'population',
+        'diameter',
+        'rotation_period',
+        'surface_water',
+      ];
+      setCollumnOptions(collumnOptionsTemp);
+    }
+
+    if (value === 'diameter') {
+      setChooseColumn(indexForDiameter);
+
+      const collumnOptionsTemp = [
+        'population',
+        'orbital_period',
+        'rotation_period',
+        'surface_water',
+      ];
+      setCollumnOptions(collumnOptionsTemp);
+    }
+
+    if (value === 'surface_water') {
+      setChooseColumn(indexForSurface);
+
+      const collumnOptionsTemp = [
+        'population',
+        'orbital_period',
+        'diameter',
+        'rotation_period',
+      ];
+      setCollumnOptions(collumnOptionsTemp);
+    }
+
+    if (value === 'population') {
+      setChooseColumn(indexForPopulation);
+
+      const collumnOptionsTemp = [
+        'orbital_period',
+        'diameter',
+        'rotation_period',
+        'surface_water',
+      ];
+      setCollumnOptions(collumnOptionsTemp);
+    }
   };
 
   return (
@@ -36,11 +92,7 @@ function SearchBar() {
           data-testid="column-filter"
           onChange={ ({ target }) => { valueOfColumns(target); } }
         >
-          <option value="population" key="population">population</option>
-          <option value="orbital_period" key="orbital_period">orbital_period</option>
-          <option value="diameter" key="diameter">diameter</option>
-          <option value="rotation_period" key="rotation_period">rotation_period</option>
-          <option value="surface_water" key="surface_water">surface_water</option>
+          { collumnOptions.map((op) => <option value={ op } key={ op }>{op}</option>) }
         </select>
       </label>
       <label htmlFor="comparation">

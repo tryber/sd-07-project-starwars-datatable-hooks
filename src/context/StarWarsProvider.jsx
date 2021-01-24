@@ -11,6 +11,7 @@ const StarWarsProvide = ({ children }) => {
   const [comparaNumeros, setComparaNumeros] = useState();
   const [inputNumber, setInputNumber] = useState();
   const [chooseColumn, setChooseColumn] = useState();
+  const [collumnOptions, setCollumnOptions] = useState([]);
 
   const renderLines = (results) => {
     const temp = [];
@@ -21,12 +22,21 @@ const StarWarsProvide = ({ children }) => {
   };
 
   useEffect(() => {
+    const collumnOptionsTemp = [
+      'population',
+      'orbital_period',
+      'diameter',
+      'rotation_period',
+      'surface_water',
+    ];
+
     async function getApi() {
       const results = await requestApi();
       await setData(results);
       await renderLines(results);
     }
     getApi();
+    setCollumnOptions(collumnOptionsTemp);
   }, []);
 
   const filterNameInput = ({ target }) => {
@@ -66,12 +76,14 @@ const StarWarsProvide = ({ children }) => {
     line,
     filters,
     newRender,
+    collumnOptions,
     requestApi,
     filterNameInput,
     setComparaNumeros,
     setChooseColumn,
     setInputNumber,
     submitFilters,
+    setCollumnOptions,
   };
 
   return (
