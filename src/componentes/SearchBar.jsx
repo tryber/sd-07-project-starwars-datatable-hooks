@@ -36,23 +36,23 @@ function SearchBar() {
           data-testid="column-filter"
           onChange={ ({ target }) => { valueOfColumns(target); } }
         >
-          <option>population</option>
-          <option>orbital_period</option>
-          <option>diameter</option>
-          <option>rotation_period</option>
-          <option>surface_water</option>
+          <option value="population" key="population">population</option>
+          <option value="orbital_period" key="orbital_period">orbital_period</option>
+          <option value="diameter" key="diameter">diameter</option>
+          <option value="rotation_period" key="rotation_period">rotation_period</option>
+          <option value="surface_water" key="surface_water">surface_water</option>
         </select>
       </label>
       <label htmlFor="comparation">
         Choose a comparation method
         <select
-        name="comparation"
+          name="comparation"
           data-testid="comparison-filter"
           onChange={ ({ target }) => { setComparaNumeros(target.value); } }
         >
-          <option>maior que</option>
-          <option>menor que</option>
-          <option>igual a</option>
+          <option value="maior que" key="maior que">maior que</option>
+          <option value="menor que" key="menor que">menor que</option>
+          <option value="igual a" key="igual a">igual a</option>
         </select>
       </label>
       <input
