@@ -5,8 +5,10 @@ function Form() {
   const {
     filters: { filterByName: { name } },
     functions,
-    filters: { filterByNumericValues } } = useContext(StarWarsContext);
-  const { column, comparison, value } = filterByNumericValues;
+    column,
+    comparison,
+    value,
+    options } = useContext(StarWarsContext);
   return (
     <div>
       <label htmlFor="filter-by-name">
@@ -28,11 +30,7 @@ function Form() {
           data-testid="column-filter"
           onChange={ functions.onHandleChange }
         >
-          <option key="1">population</option>
-          <option key="2">orbital_period</option>
-          <option key="3">diameter</option>
-          <option key="4">rotation_period</option>
-          <option key="5">surface_water</option>
+          {options.map((option, index) => <option key={ index }>{option}</option>)}
         </select>
 
         <select
@@ -62,6 +60,7 @@ function Form() {
           Filter By Value
         </button>
       </fieldset>
+
     </div>
   );
 }

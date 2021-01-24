@@ -11,6 +11,10 @@ function Provider({ children }) {
   const [column, setColumn] = useState('');
   const [comparison, setComparison] = useState('');
   const [number, setNumber] = useState(isEmpty);
+  const [filterByNumericArray, setFilterByNumericArray] = useState([]);
+  const [options, setOptions] = useState(
+    ['population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water'],
+  );
 
   const onFetchPlanets = async () => {
     const planetsRes = await Services.fetchPlanets();
@@ -27,6 +31,15 @@ function Provider({ children }) {
   };
 
   const handleFilterByNumericValues = () => {
+    if (column === 'population') {
+      setOptions(
+        options.filter((option) => option !== 'population'),
+      );
+    }
+    setFilterByNumericArray(
+      [...filterByNumericArray, { column, comparison, value: number }],
+    );
+
     const filterByNumeric = planets.filter((planet) => {
       if (comparison === 'maior que') {
         return parseInt(planet[column], 10) > number;
@@ -63,19 +76,17 @@ function Provider({ children }) {
   }, []);
 
   const contextValue = {
+    options,
     data: planets,
+    column,
+    comparison,
+    value: number,
     filtered: filtered.length === isEmpty ? planets : filtered,
     filters: {
       filterByName: {
         name: filterByName,
       },
-      filterByNumericValues: [
-        {
-          column,
-          comparison,
-          value: number,
-        },
-      ],
+      filterByNumericValues: filterByNumericArray,
     },
     functions: {
       onHandleChange,
