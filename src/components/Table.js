@@ -1,9 +1,8 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
-import fetchPlanets from '../services';
 
 function Table() {
-  const { planets, setPlanets } = useContext(PlanetsContext);
+  const { filteredPlanets } = useContext(PlanetsContext);
   const headers = [
     'Name',
     'Rotation Period',
@@ -19,18 +18,16 @@ function Table() {
     'Edited',
     'URL',
   ];
-  useEffect(() => {
-    fetchPlanets(setPlanets);
-  }, [setPlanets]);
+
   return (
     <div>
-      {planets.results
+      {filteredPlanets !== undefined
         ? (
           <table>
             <tr>
               {headers.map((header) => <th key={ header }>{ header }</th>)}
             </tr>
-            {planets.results.map((result) => (
+            {filteredPlanets.map((result) => (
               <tr key={ result.name }>
                 <td key={ result.name }>{ result.name }</td>
                 <td key={ result.rotation_period }>{ result.rotation_period }</td>
@@ -48,8 +45,11 @@ function Table() {
               </tr>
             ))}
           </table>
-        )
-        : 'Loading...' }
+        ) : (
+          <h1>
+            Starwars Datatable Project
+          </h1>
+        ) }
     </div>
   );
 }
