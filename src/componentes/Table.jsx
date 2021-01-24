@@ -2,8 +2,8 @@ import React, { useContext } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 function Table() {
-  const { line, newRender, filterName } = useContext(StarWarsContext);
-  const { filterByName } = filterName;
+  const { line, newRender, filters } = useContext(StarWarsContext);
+  const { filterByName } = filters;
 
   return (
     <table>

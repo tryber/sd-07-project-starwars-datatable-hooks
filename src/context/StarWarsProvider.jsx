@@ -7,11 +7,12 @@ const StarWarsProvide = ({ children }) => {
   // const [valor, setValor] = useState('valor inicial');
   const [data, setData] = useState();
   const [line, setLine] = useState([]);
-  const [filterName, setFilterName] = useState({});
+  const [filters, setFilters] = useState({});
   const [newRender, setNewRender] = useState(false);
   const [comparaNumeros, setComparaNumeros] = useState();
   const [inputNumber, setInputNumber]  = useState(0);
-  const [chooseColumn, setChooseColumn]  = useState();
+  const [chooseColumn, setChooseColumn]  = useState(0);
+  // const [filterByNumericValues, setFilterByNumericValues] = useState([]);
 
   const renderLines = (results) => {
     const temp = [];
@@ -37,21 +38,57 @@ const StarWarsProvide = ({ children }) => {
     const { value } = target;
     const input = data.filter((item) => item.name.includes(value));
     setNewRender(true);
-    setFilterName({ filterByName: { input } });
+    setFilters({ filterByName: { input } });
   };
 
+  const resetInputs = () => {
+    setComparaNumeros();
+    setInputNumber(0);
+    setChooseColumn(0);
+    setFilters({});
+  }
+
   const testPorEnquanto = () =>{
+    const { filterByName } = filters
+
     console.log(comparaNumeros);
     console.log(inputNumber);
     console.log(chooseColumn);
-    console.log(filterName);
+    console.log(filterByName);
+    console.log(filters);
+    console.log(line);
+
+    if (comparaNumeros === 'maior que') {
+      setLine(line.filter(item => item[chooseColumn] > parseInt(inputNumber)));
+      resetInputs();
+    }
+
+    if (comparaNumeros === 'menor que') {
+      setLine(line.filter(item => item[chooseColumn] <= inputNumber));
+      resetInputs();
+    }
+
+    if (comparaNumeros === 'igual a') {
+      setLine(line.filter(item => item[chooseColumn] === inputNumber));
+      resetInputs();
+    }
+
+    // const currFilter = {
+    //   column: 'population',
+    //   comparison: 'maior que',
+    //   value: '100000',
+    // }
+    // const array = []
+    // array.push(currFilter)
+    // setFilterByNumericValues(array)
+    // setFilters(...filterByNumericValues)
   }
 
   const context = {
     // valor a ser utilizado,
     data,
     line,
-    filterName,
+    filters,
     newRender,
     requestApi,
     filterNameInput,

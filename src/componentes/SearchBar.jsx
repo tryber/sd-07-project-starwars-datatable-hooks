@@ -3,6 +3,15 @@ import StarWarsContext from '../context/StarWarsContext';
 
 function SearchBar() {
   const { filterNameInput, setComparaNumeros, setChooseColumn, setInputNumber, testPorEnquanto } = useContext(StarWarsContext);
+
+  const valueOfColumns = ({ value }) => {
+    if(value === 'rotation_period') { setChooseColumn(1); }
+    if(value === 'orbital_period') { setChooseColumn(2); }
+    if(value === 'diameter') { setChooseColumn(3); }
+    if(value === 'surface_water') { setChooseColumn(7); }
+    if(value === 'population') { setChooseColumn(8); }
+  }
+
   return (
     <form>
       <input
@@ -12,7 +21,7 @@ function SearchBar() {
       />
       <select
         data-testid='column-filter'
-        onChange={({ target }) => { setChooseColumn(target.value) }}
+        onChange={({ target }) => { valueOfColumns(target) }}
       >
         <option>Selecione</option>
         <option>population</option>
@@ -36,9 +45,9 @@ function SearchBar() {
         onChange={ ({ target }) => setInputNumber(target.value) }
       />
       <button
-      type="button"
         data-testid='button-filter'
         onClick={() => testPorEnquanto()}
+        type="reset"
       >
         Filtrar
       </button>
