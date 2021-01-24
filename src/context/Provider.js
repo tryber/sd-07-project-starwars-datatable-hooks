@@ -5,22 +5,46 @@ import Services from '../services/PlanetService';
 
 function Provider({ children }) {
   const [planets, setPlanets] = useState([]);
+  const [filtered, setFiltered] = useState([]);
+  const [filterByName, setFilterByName] = useState('');
 
   const onFetchPlanets = async () => {
     const planetsRes = await Services.fetchPlanets();
-    console.log(planetsRes.results);
     setPlanets(planetsRes.results);
+  };
+
+  const filterPlanetByName = (text) => {
+    const filteredPlanets = planets.filter((planet) => planet.name.includes(text));
+    if (text === '') {
+      setFiltered(planets);
+    } else {
+      setFiltered(filteredPlanets);
+    }
+  };
+  const onHandleChange = (e) => {
+    const { value } = e.target;
+    setFilterByName(value);
+    filterPlanetByName(value);
   };
   useEffect(() => {
     onFetchPlanets();
   }, []);
+
   const contextValue = {
     data: planets,
+    filtered,
+    filters: {
+      filterByName: {
+        name: filterByName,
+      },
+    },
+    functions: {
+      onHandleChange,
+    },
   };
 
   return (
     <StarWarsContext.Provider value={ contextValue }>
-      <h1>dkdjlsjd</h1>
       { children }
     </StarWarsContext.Provider>
   );
