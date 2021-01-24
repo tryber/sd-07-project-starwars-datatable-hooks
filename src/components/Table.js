@@ -45,7 +45,7 @@ const Table = () => {
 
   const columnFilterSet = () => (
     order.column === 'rotation_period'
-    || order.column === 'valueital_period'
+    || order.column === 'orbital_period'
     || order.column === 'surface_water'
     || order.column === 'diameter'
     || order.column === 'population');
@@ -91,15 +91,15 @@ const Table = () => {
                 .map((planet, index) => (
                   <tr key={ index }>
                     {Object.entries(planet)
-                      .map((value, index2) => {
-                        if (value[0] === 'name') {
+                      .map((orb, index2) => {
+                        if (orb[0] === 'name') {
                           return (
                             <td data-testid="planet-name" key={ index2 }>
-                              {value[1]}
+                              {orb[1]}
                             </td>
                           );
                         }
-                        return <td key={ index2 }>{value[1]}</td>;
+                        return <td key={ index2 }>{orb[1]}</td>;
                       })}
                   </tr>
                 ))}
