@@ -48,7 +48,6 @@ function Provider({ children }) {
   };
   const filterBySetValues = () => {
     if (comparison === 'maior que') {
-      console.log('entrou na condicao');
       setFilteredByValue(
         [...planets].filter((planet) => (Number(planet[column]) > Number(value))),
       );
