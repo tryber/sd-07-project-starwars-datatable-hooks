@@ -14,12 +14,12 @@ const FilterByNumber = () => {
 
   // Lógica do aluno Carlos Souza
   // Fonte: https://github.com/tryber/sd-07-project-starwars-datatable-hooks/blob/121ebd0b46568de1adf8921899e95a07e12e2985/src/components/Table/index.js
-  const filterNumber = (value) => {
+  const filterNumber = () => {
     const { filterByNumericValues } = filters;
     let results = filteredPlanets;
     filterByNumericValues.forEach((_, index) => {
       results = results.filter((planet) => {
-        const { column, comparison } = filterByNumericValues[index];
+        const { column, comparison, value } = filterByNumericValues[index];
         switch (comparison) {
         case 'maior que':
           return parseFloat(planet[column]) > parseFloat(value);
@@ -48,7 +48,6 @@ const FilterByNumber = () => {
     const emptyValue = 0;
     if (value === '') value = emptyValue;
     setFilterValue(value);
-    filterNumber(value);
   };
 
   return (
@@ -57,27 +56,32 @@ const FilterByNumber = () => {
         data-testid="column-filter"
         onChange={ handleChangeColumn }
       >
-        <option value="">Select a filter</option>
-        <option value="population">Population</option>
-        <option value="orbital_period">Orbital Period</option>
-        <option value="diameter">Diameter</option>
-        <option value="rotation_period">Rotation Period</option>
-        <option value="surface_water">Surface Water</option>
+        <option value="population">population</option>
+        <option value="orbital_period">orbital_period</option>
+        <option value="diameter">diameter</option>
+        <option value="rotation_period">rotation_period</option>
+        <option value="surface_water">surface_water</option>
       </select>
       <select
         data-testid="comparison-filter"
         onChange={ handleChangeComparison }
       >
-        <option value="">Select an option</option>
-        <option value="maior que">Maior que</option>
-        <option value="igual a">Igual a</option>
-        <option value="menor que">Menor que</option>
+        <option value="maior que">maior que</option>
+        <option value="igual a">igual a</option>
+        <option value="menor que">menor que</option>
       </select>
       <input
         data-testid="value-filter"
         placeholder="Type a number"
         onChange={ handleChangeValue }
       />
+      <button
+        type="button"
+        data-testid="button-filter"
+        onClick={ filterNumber }
+      >
+        Filtrar
+      </button>
     </div>
   );
 };
