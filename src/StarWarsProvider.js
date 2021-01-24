@@ -3,7 +3,17 @@ import PropTypes from 'prop-types';
 import StarWarsContext from './StarWarsContext';
 
 const StarWarsProvider = ({ children }) => {
+  const [filter, setFilter] = useState({
+    filterByName: '',
+  });
+
   const [data, setData] = useState([]);
+
+  const filterText = (parameter) => {
+    setFilter({
+      filterByName: parameter,
+    });
+  };
 
   useEffect(() => {
     fetch('https://swapi-trybe.herokuapp.com/api/planets/')
@@ -13,6 +23,8 @@ const StarWarsProvider = ({ children }) => {
 
   const context = {
     data,
+    filter,
+    filterText,
   };
 
   return (
