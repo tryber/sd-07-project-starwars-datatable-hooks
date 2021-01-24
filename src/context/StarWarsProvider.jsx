@@ -10,8 +10,8 @@ const StarWarsProvide = ({ children }) => {
   const [filters, setFilters] = useState({});
   const [newRender, setNewRender] = useState(false);
   const [comparaNumeros, setComparaNumeros] = useState();
-  const [inputNumber, setInputNumber]  = useState(0);
-  const [chooseColumn, setChooseColumn]  = useState(0);
+  const [inputNumber, setInputNumber] = useState();
+  const [chooseColumn, setChooseColumn] = useState();
   // const [filterByNumericValues, setFilterByNumericValues] = useState([]);
 
   const renderLines = (results) => {
@@ -42,14 +42,15 @@ const StarWarsProvide = ({ children }) => {
   };
 
   const resetInputs = () => {
+    const reset = 0;
     setComparaNumeros();
-    setInputNumber(0);
-    setChooseColumn(0);
+    setInputNumber(reset);
+    setChooseColumn(reset);
     setFilters({});
-  }
+  };
 
-  const testPorEnquanto = () =>{
-    const { filterByName } = filters
+  const testPorEnquanto = () => {
+    const { filterByName } = filters;
 
     console.log(comparaNumeros);
     console.log(inputNumber);
@@ -59,17 +60,17 @@ const StarWarsProvide = ({ children }) => {
     console.log(line);
 
     if (comparaNumeros === 'maior que') {
-      setLine(line.filter(item => item[chooseColumn] > parseInt(inputNumber)));
+      setLine(line.filter((item) => item[chooseColumn] > parseInt(inputNumber, 10)));
       resetInputs();
     }
 
     if (comparaNumeros === 'menor que') {
-      setLine(line.filter(item => item[chooseColumn] <= inputNumber));
+      setLine(line.filter((item) => item[chooseColumn] <= inputNumber));
       resetInputs();
     }
 
     if (comparaNumeros === 'igual a') {
-      setLine(line.filter(item => item[chooseColumn] === inputNumber));
+      setLine(line.filter((item) => item[chooseColumn] === inputNumber));
       resetInputs();
     }
 
@@ -82,7 +83,7 @@ const StarWarsProvide = ({ children }) => {
     // array.push(currFilter)
     // setFilterByNumericValues(array)
     // setFilters(...filterByNumericValues)
-  }
+  };
 
   const context = {
     // valor a ser utilizado,

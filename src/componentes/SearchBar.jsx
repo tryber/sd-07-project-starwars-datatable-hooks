@@ -2,15 +2,25 @@ import React, { useContext } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 function SearchBar() {
-  const { filterNameInput, setComparaNumeros, setChooseColumn, setInputNumber, testPorEnquanto } = useContext(StarWarsContext);
+  const { filterNameInput,
+    setComparaNumeros,
+    setChooseColumn,
+    setInputNumber,
+    testPorEnquanto } = useContext(StarWarsContext);
 
   const valueOfColumns = ({ value }) => {
-    if(value === 'rotation_period') { setChooseColumn(1); }
-    if(value === 'orbital_period') { setChooseColumn(2); }
-    if(value === 'diameter') { setChooseColumn(3); }
-    if(value === 'surface_water') { setChooseColumn(7); }
-    if(value === 'population') { setChooseColumn(8); }
-  }
+    const indexForRotation = 1;
+    const indexForOrbital = 2;
+    const indexForDiameter = 3;
+    const indexForSurface = 7;
+    const indexForPopulation = 8;
+
+    if (value === 'rotation_period') { setChooseColumn(indexForRotation); }
+    if (value === 'orbital_period') { setChooseColumn(indexForOrbital); }
+    if (value === 'diameter') { setChooseColumn(indexForDiameter); }
+    if (value === 'surface_water') { setChooseColumn(indexForSurface); }
+    if (value === 'population') { setChooseColumn(indexForPopulation); }
+  };
 
   return (
     <form>
@@ -20,8 +30,8 @@ function SearchBar() {
         onChange={ (event) => filterNameInput(event) }
       />
       <select
-        data-testid='column-filter'
-        onChange={({ target }) => { valueOfColumns(target) }}
+        data-testid="column-filter"
+        onChange={ ({ target }) => { valueOfColumns(target); } }
       >
         <option>Selecione</option>
         <option>population</option>
@@ -31,8 +41,8 @@ function SearchBar() {
         <option>surface_water</option>
       </select>
       <select
-        data-testid='comparison-filter'
-        onChange={({ target }) => { setComparaNumeros(target.value) }}
+        data-testid="comparison-filter"
+        onChange={ ({ target }) => { setComparaNumeros(target.value); } }
       >
         <option>Selecione</option>
         <option>maior que</option>
@@ -41,12 +51,12 @@ function SearchBar() {
       </select>
       <input
         type="number"
-        data-testid='value-filter'
+        data-testid="value-filter"
         onChange={ ({ target }) => setInputNumber(target.value) }
       />
       <button
-        data-testid='button-filter'
-        onClick={() => testPorEnquanto()}
+        data-testid="button-filter"
+        onClick={ () => testPorEnquanto() }
         type="reset"
       >
         Filtrar
