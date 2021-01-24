@@ -15,7 +15,7 @@ function Provider({ children }) {
     const filteredData = data.results.map((planet) => {
       delete planet.residents;
       return planet;
-    })
+    });
     setApiResults(filteredData);
   };
 
@@ -28,14 +28,14 @@ function Provider({ children }) {
       ...filters,
       filterByName: { name: nameFilter },
     });
-  }
+  };
 
   const filterByNumericValues = (numericFilter) => {
     setFilters({
       ...filters,
-      filterByNumericValues: [ ...filterByNumericValues, { numericFilter }],
+      filterByNumericValues: [...filterByNumericValues, { numericFilter }],
     });
-  }
+  };
 
   const columns = [
     'population',

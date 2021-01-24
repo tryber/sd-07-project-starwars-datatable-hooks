@@ -6,13 +6,6 @@ function FilterByNumericValues() {
 
   const comparisons = ['maior que', 'menor que', 'igual a'];
 
-  // const handleFilter = ({ target: { value, name } }) => {
-  //   setFilters({
-  //     ...filters,
-  //     filterByNumericValues: { [name]: [value] },
-  //   });
-  // };
-
   return (
     <div>
       <select
@@ -48,7 +41,7 @@ function FilterByNumericValues() {
       />
       <button
         type="button"
-        data-testid='button-filter'
+        data-testid="button-filter"
       >
         Filtrar
       </button>
