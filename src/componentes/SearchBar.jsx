@@ -29,24 +29,32 @@ function SearchBar() {
         data-testid="name-filter"
         onChange={ (event) => filterNameInput(event) }
       />
-      <select
-        data-testid="column-filter"
-        onChange={ ({ target }) => { valueOfColumns(target); } }
-      >
-        <option>population</option>
-        <option>orbital_period</option>
-        <option>diameter</option>
-        <option>rotation_period</option>
-        <option>surface_water</option>
-      </select>
-      <select
-        data-testid="comparison-filter"
-        onChange={ ({ target }) => { setComparaNumeros(target.value); } }
-      >
-        <option>maior que</option>
-        <option>menor que</option>
-        <option>igual a</option>
-      </select>
+      <label htmlFor="collumns">
+        Choose a collumn
+        <select
+          name="collumns"
+          data-testid="column-filter"
+          onChange={ ({ target }) => { valueOfColumns(target); } }
+        >
+          <option>population</option>
+          <option>orbital_period</option>
+          <option>diameter</option>
+          <option>rotation_period</option>
+          <option>surface_water</option>
+        </select>
+      </label>
+      <label htmlFor="comparation">
+        Choose a comparation method
+        <select
+        name="comparation"
+          data-testid="comparison-filter"
+          onChange={ ({ target }) => { setComparaNumeros(target.value); } }
+        >
+          <option>maior que</option>
+          <option>menor que</option>
+          <option>igual a</option>
+        </select>
+      </label>
       <input
         type="number"
         data-testid="value-filter"
