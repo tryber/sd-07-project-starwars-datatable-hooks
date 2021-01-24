@@ -6,16 +6,17 @@ const FilterByNumber = () => {
     setFilterColumn,
     setFilterComparison,
     setFilterValue,
-    setFilteredPlanets,
+    // setFilteredPlanets,
     filters,
-    planets,
+    filteredPlanets,
+    setFilteredPlanetNumber,
   } = useContext(StarWarsContext);
 
   // Lógica do aluno Carlos Souza
   // Fonte: https://github.com/tryber/sd-07-project-starwars-datatable-hooks/blob/121ebd0b46568de1adf8921899e95a07e12e2985/src/components/Table/index.js
   const filterNumber = (value) => {
     const { filterByNumericValues } = filters;
-    let results = planets;
+    let results = filteredPlanets;
     filterByNumericValues.forEach((_, index) => {
       results = results.filter((planet) => {
         const { column, comparison } = filterByNumericValues[index];
@@ -31,8 +32,8 @@ const FilterByNumber = () => {
         }
       });
     });
-    setFilteredPlanets(results);
-    return results;
+    setFilteredPlanetNumber(results);
+    // return results;
   };
 
   const handleChangeColumn = ({ target: { value } }) => {
@@ -44,6 +45,8 @@ const FilterByNumber = () => {
   };
 
   const handleChangeValue = ({ target: { value } }) => {
+    const emptyValue = 0;
+    if (value === '') value = emptyValue;
     setFilterValue(value);
     filterNumber(value);
   };

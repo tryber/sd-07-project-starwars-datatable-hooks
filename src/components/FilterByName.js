@@ -6,11 +6,15 @@ const FilterByName = () => {
     planets,
     setFilterPlanetName,
     setFilteredPlanets,
+    setFilteredPlanetNumber,
   } = useContext(StarWarsContext);
 
   const handleChange = ({ target: { value } }) => {
     setFilterPlanetName(value);
     setFilteredPlanets(
+      planets.filter(({ name }) => name.toLowerCase().includes(value.toLowerCase())),
+    );
+    setFilteredPlanetNumber(
       planets.filter(({ name }) => name.toLowerCase().includes(value.toLowerCase())),
     );
   };

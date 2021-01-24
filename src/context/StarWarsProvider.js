@@ -7,6 +7,7 @@ const Provider = ({ children }) => {
   const [planets, setPlanets] = useState([]);
   const [filteredPlanets, setFilteredPlanets] = useState([]);
   const [filterPlanetName, setFilterPlanetName] = useState();
+  const [filteredPlanetNumber, setFilteredPlanetNumber] = useState([]);
   const [filterColumn, setFilterColumn] = useState();
   const [filterComparison, setFilterComparison] = useState();
   const [filterValue, setFilterValue] = useState();
@@ -15,6 +16,7 @@ const Provider = ({ children }) => {
     const planetList = await api.fetchPlanetList();
     setPlanets(planetList);
     setFilteredPlanets(planetList);
+    setFilteredPlanetNumber(planetList);
   };
 
   useEffect(() => {
@@ -26,6 +28,8 @@ const Provider = ({ children }) => {
     setPlanets,
     filteredPlanets,
     setFilteredPlanets,
+    filteredPlanetNumber,
+    setFilteredPlanetNumber,
     setFilterPlanetName,
     setFilterColumn,
     setFilterComparison,
