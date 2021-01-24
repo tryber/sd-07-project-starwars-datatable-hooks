@@ -5,12 +5,19 @@ import StarWarsContext from './StarWarsContext';
 const StarWarsProvider = ({ children }) => {
   const [filter, setFilter] = useState({
     filterByName: '',
+    filterByNumericValues: [{}],
   });
 
   const [data, setData] = useState([]);
+  const [form, setForm] = useState({
+    column: 'population',
+    comparison: 'maior que',
+    value: 0,
+  });
 
   const filterText = (parameter) => {
     setFilter({
+      ...filter,
       filterByName: parameter,
     });
   };
@@ -21,10 +28,52 @@ const StarWarsProvider = ({ children }) => {
       .then((json) => setData(json.results));
   }, []);
 
+  const handleColumnChange = (parameter) => {
+    setForm({
+      ...form,
+      column: parameter,
+    });
+  };
+
+  const handleComparisonChange = (parameter) => {
+    setForm({
+      ...form,
+      comparison: parameter,
+    });
+  };
+
+  const handleValueChange = (parameter) => {
+    setForm({
+      ...form,
+      value: parameter,
+    });
+  };
+
+  const handleClick = () => {
+    setFilter({
+      ...filter,
+      filterByNumericValues: [{
+        column: form.column,
+        comparison: form.comparison,
+        value: form.value,
+      }],
+    });
+    setForm({
+      column: 'population',
+      comparison: 'maior que',
+      value: 0,
+    });
+  };
+
   const context = {
     data,
     filter,
+    form,
     filterText,
+    handleColumnChange,
+    handleComparisonChange,
+    handleValueChange,
+    handleClick,
   };
 
   return (
