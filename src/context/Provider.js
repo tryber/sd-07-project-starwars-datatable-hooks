@@ -4,10 +4,13 @@ import StarWarsContext from './StarWarsContext';
 import Services from '../services/PlanetService';
 
 function Provider({ children }) {
+  const isEmpty = 0;
   const [planets, setPlanets] = useState([]);
   const [filtered, setFiltered] = useState([]);
   const [filterByName, setFilterByName] = useState('');
-  const isEmpty = 0;
+  const [column, setColumn] = useState('');
+  const [comparison, setComparison] = useState('');
+  const [number, setNumber] = useState(isEmpty);
 
   const onFetchPlanets = async () => {
     const planetsRes = await Services.fetchPlanets();
@@ -22,11 +25,39 @@ function Provider({ children }) {
       setFiltered(filteredPlanets);
     }
   };
-  const onHandleChange = (e) => {
-    const { value } = e.target;
-    setFilterByName(value);
-    filterPlanetByName(value);
+
+  const handleFilterByNumericValues = () => {
+    const filterByNumeric = planets.filter((planet) => {
+      if (comparison === 'maior que') {
+        return parseInt(planet[column], 10) > number;
+      } if (comparison === 'menor que') {
+        return parseInt(planet[column], 10) < number;
+      }
+      return parseInt(planet[column], 10) === number;
+    });
+    setFiltered(filterByNumeric);
   };
+
+  const onHandleChange = (e) => {
+    const { name, value } = e.target;
+    switch (name) {
+    case 'filter_name':
+      setFilterByName(value);
+      filterPlanetByName(value);
+      break;
+    case 'column':
+      setColumn(value);
+      break;
+    case 'comparison':
+      setComparison(value);
+      break;
+    case 'value':
+      setNumber(parseInt(value, 10));
+      break;
+    default:
+    }
+  };
+
   useEffect(() => {
     onFetchPlanets();
   }, []);
@@ -38,9 +69,17 @@ function Provider({ children }) {
       filterByName: {
         name: filterByName,
       },
+      filterByNumericValues: [
+        {
+          column,
+          comparison,
+          value: number,
+        },
+      ],
     },
     functions: {
       onHandleChange,
+      handleFilterByNumericValues,
     },
   };
 
