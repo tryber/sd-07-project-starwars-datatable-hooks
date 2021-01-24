@@ -2,7 +2,8 @@ import React, { useContext } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 function Table() {
-  const { line, newRender } = useContext(StarWarsContext);
+  const { line, newRender, filterName } = useContext(StarWarsContext);
+  const { filterByName } = filterName;
 
   return (
     <table>
@@ -24,7 +25,11 @@ function Table() {
       </tr>
       {/* </thead> */}
       {/* // <tbody> */}
-      { newRender ? console.log('vou trabalhar nisso ainda') : line.map((cell) => (
+      { newRender ? Object.values(filterByName).map((cell) => (
+        <tr key={ cell }>
+          {Object.values(cell).map((input) => (<td key={ input }>{input}</td>))}
+        </tr>))
+      : line.map((cell) => (
         <tr key={ cell }>
           {cell.map((info) => (<td key={ info }>{info}</td>))}
         </tr>)) }

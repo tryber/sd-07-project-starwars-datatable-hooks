@@ -18,38 +18,37 @@ const StarWarsProvide = ({ children }) => {
     temp.forEach((linha) => linha.splice(indexOfResidents, 1));
     // console.log(temp);
     setLine(temp);
-      // );
-    };
+  };
 
-    useEffect(() => {
-      async function getApi() {
-        const results = await requestApi();
-        await setData(results);
-        await renderLines(results);
-        // await console.log(results);
-      }
-      getApi();
-    }, []);
-
-    const filterNameInput = ({ target }) => {
-      const { value } = target;
-      const input = data.filter((item) => item.name.includes(value));
-      setNewRender(true);
-      setFilterName({ filterByName: { input } });
+  useEffect(() => {
+    async function getApi() {
+      const results = await requestApi();
+      await setData(results);
+      await renderLines(results);
+      // await console.log(results);
     }
+    getApi();
+  }, []);
 
-    const context = {
-      // valor a ser utilizado,
-      data,
-      line,
-      filterName,
-      newRender,
-      requestApi,
-      filterNameInput,
-    };
+  const filterNameInput = ({ target }) => {
+    const { value } = target;
+    const input = data.filter((item) => item.name.includes(value));
+    setNewRender(true);
+    setFilterName({ filterByName: { input } });
+  }
 
-    return (
-      <StarWarsContext.Provider value={ context }>
+  const context = {
+    // valor a ser utilizado,
+    data,
+    line,
+    filterName,
+    newRender,
+    requestApi,
+    filterNameInput,
+  };
+
+  return (
+    <StarWarsContext.Provider value={ context }>
       {children}
     </StarWarsContext.Provider>
   );
