@@ -9,6 +9,9 @@ const StarWarsProvide = ({ children }) => {
   const [line, setLine] = useState([]);
   const [filterName, setFilterName] = useState({});
   const [newRender, setNewRender] = useState(false);
+  const [comparaNumeros, setComparaNumeros] = useState();
+  const [inputNumber, setInputNumber]  = useState(0);
+  const [chooseColumn, setChooseColumn]  = useState();
 
   const renderLines = (results) => {
     const temp = [];
@@ -37,6 +40,13 @@ const StarWarsProvide = ({ children }) => {
     setFilterName({ filterByName: { input } });
   };
 
+  const testPorEnquanto = () =>{
+    console.log(comparaNumeros);
+    console.log(inputNumber);
+    console.log(chooseColumn);
+    console.log(filterName);
+  }
+
   const context = {
     // valor a ser utilizado,
     data,
@@ -45,6 +55,10 @@ const StarWarsProvide = ({ children }) => {
     newRender,
     requestApi,
     filterNameInput,
+    setComparaNumeros,
+    setChooseColumn,
+    setInputNumber,
+    testPorEnquanto,
   };
 
   return (
