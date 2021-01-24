@@ -6,8 +6,8 @@ import FilterSelected from './FilterSelected';
 function FiltersForm() {
   const {
     filters,
+    results,
     setFilters,
-    data,
     filteredName,
     setFilteredName } = useContext(StarWarsContext);
 
@@ -119,9 +119,8 @@ function FiltersForm() {
             onChange={ orderChange }
           >
             <option>Ordenar por:</option>
-            {Object
-              .keys(data[0])
-              .map((header, index) => (<option key={ index }>{header}</option>))}
+            {Object.keys(results[0]).map((header, index) => (
+              <option key={ index }>{header}</option>))}
           </select>
         </div>
 

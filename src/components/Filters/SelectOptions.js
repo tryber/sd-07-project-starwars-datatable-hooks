@@ -7,16 +7,3 @@ export const planetInfos = [
 ];
 
 export const planetWeight = ['maior que', 'menor que', 'igual a'];
-
-export const planetsName = [
-  'Alderaan',
-  'Bespin',
-  'Coruscant',
-  'Dagobah',
-  'Endor',
-  'Hoth',
-  'Kamino',
-  'Naboo',
-  'Tatooine',
-  'Yavin IV',
-];
