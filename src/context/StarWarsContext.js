@@ -5,6 +5,11 @@ export const StarWarsContext = createContext();
 
 export default function StarWarsProvider({ children }) {
   const [data, setData] = useState([]);
+
+  const [filters, setFilters] = useState({
+    filterByName: {
+      name: '' } });
+
   useEffect(() => {
     async function Api() {
       const endpoint = await fetch('https://swapi-trybe.herokuapp.com/api/planets/?format=json');
@@ -14,12 +19,18 @@ export default function StarWarsProvider({ children }) {
     Api();
   }, []);
 
-  const dataCosumer = {
+  function filterName({ target }) {
+    setFilters({ ...filters, filterByName: { name: target.value } });
+  }
+
+  const dataConsumer = {
     data,
+    filters,
+    filterName,
   };
 
   return (
-    <StarWarsContext.Provider value={ dataCosumer }>
+    <StarWarsContext.Provider value={ dataConsumer }>
       {children}
     </StarWarsContext.Provider>
   );

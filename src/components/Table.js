@@ -1,8 +1,16 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { StarWarsContext } from '../context/StarWarsContext';
 
 const Table = () => {
-  const dataConsumer = useContext(StarWarsContext);
+  const { data, filters } = useContext(StarWarsContext);
+
+  const [dataCopy, setDataCopy] = useState([]);
+
+  useEffect(() => {
+    setDataCopy(data.filter((element) => (
+      element.name.includes(filters.filterByName.name))));
+  }, [data, filters.filterByName.name]);
+
   return (
     <table>
       <thead>
@@ -23,7 +31,7 @@ const Table = () => {
         </tr>
       </thead>
       <tbody>
-        {dataConsumer.data.map((planet) => (
+        {dataCopy.map((planet) => (
           <tr key={ planet.name }>
             <td>{planet.name}</td>
             <td>{planet.rotation_period}</td>
@@ -40,7 +48,6 @@ const Table = () => {
             <td>{planet.url}</td>
           </tr>
         ))}
-
       </tbody>
     </table>
   );
