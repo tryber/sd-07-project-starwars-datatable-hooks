@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import StarWarsContext from '../../context/StarWarsContext';
 
-function InputForm() {
+function InputName() {
   const { handleFilterName } = useContext(StarWarsContext);
   return (
     <div>
@@ -11,7 +11,7 @@ function InputForm() {
           data-testid="name-filter"
           name="filtername"
           type="text"
-          placeholder="tatoo"
+          placeholder="Tatoo"
           onChange={ handleFilterName }
         />
       </label>
@@ -19,4 +19,4 @@ function InputForm() {
   );
 }
 
-export default InputForm;
+export default InputName;

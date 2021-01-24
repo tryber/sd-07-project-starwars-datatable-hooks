@@ -9,10 +9,6 @@ function Provider({ children }) {
       name: '',
     },
     filterByNumericValues: [],
-    order: {
-      column: '',
-      sort: '',
-    },
   };
 
   const [planets, setPlanets] = useState([]);
@@ -24,12 +20,17 @@ function Provider({ children }) {
 
   const handleFilterName = ({ target }) => {
     setFilter(({ ...filters, filterByName: { name: target.value } }));
-    console.log(filters);
   };
+
+  const handleFilterNumericValues = ({ column, comparison, value }) => {
+    setFilter(({ ...filters, filterByNumericValues: [{ column, comparison, value }] }));
+  };
+
   const context = {
     planets,
     filters,
     handleFilterName,
+    handleFilterNumericValues,
   };
 
   return (

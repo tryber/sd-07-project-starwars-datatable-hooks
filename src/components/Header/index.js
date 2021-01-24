@@ -1,10 +1,12 @@
 import React from 'react';
-import InputForm from './InputForm';
+import InputName from './InputName';
+import InputNumber from './InputNumber';
 
 function Header() {
   return (
     <header>
-      <InputForm />
+      <InputName />
+      <InputNumber />
     </header>
   );
 }
