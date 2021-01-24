@@ -7,7 +7,6 @@ function Table() {
 
   return (
     <table>
-      {/* <thead> */}
       <tr>
         <th>Name</th>
         <th>Rotation period</th>
@@ -23,8 +22,6 @@ function Table() {
         <th>Edited</th>
         <th>Url</th>
       </tr>
-      {/* </thead> */}
-      {/* // <tbody> */}
       { newRender ? Object.values(filterByName).map((obj) => (
         obj.map((item) => (
           <tr key={ item }>
@@ -35,7 +32,6 @@ function Table() {
             {cell.map((info) => (<td key={ info }>{info}</td>))}
           </tr>),
       ) }
-      {/* </tbody> */}
     </table>
   );
 }

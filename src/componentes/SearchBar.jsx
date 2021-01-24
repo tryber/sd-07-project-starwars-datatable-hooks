@@ -6,7 +6,7 @@ function SearchBar() {
     setComparaNumeros,
     setChooseColumn,
     setInputNumber,
-    testPorEnquanto } = useContext(StarWarsContext);
+    submitFilters } = useContext(StarWarsContext);
 
   const valueOfColumns = ({ value }) => {
     const indexForRotation = 1;
@@ -33,7 +33,6 @@ function SearchBar() {
         data-testid="column-filter"
         onChange={ ({ target }) => { valueOfColumns(target); } }
       >
-        <option>Selecione</option>
         <option>population</option>
         <option>orbital_period</option>
         <option>diameter</option>
@@ -44,7 +43,6 @@ function SearchBar() {
         data-testid="comparison-filter"
         onChange={ ({ target }) => { setComparaNumeros(target.value); } }
       >
-        <option>Selecione</option>
         <option>maior que</option>
         <option>menor que</option>
         <option>igual a</option>
@@ -56,7 +54,7 @@ function SearchBar() {
       />
       <button
         data-testid="button-filter"
-        onClick={ () => testPorEnquanto() }
+        onClick={ () => submitFilters() }
         type="reset"
       >
         Filtrar

@@ -4,7 +4,6 @@ import StarWarsContext from './StarWarsContext';
 import requestApi from '../services/RequestApi';
 
 const StarWarsProvide = ({ children }) => {
-  // const [valor, setValor] = useState('valor inicial');
   const [data, setData] = useState();
   const [line, setLine] = useState([]);
   const [filters, setFilters] = useState({});
@@ -12,15 +11,12 @@ const StarWarsProvide = ({ children }) => {
   const [comparaNumeros, setComparaNumeros] = useState();
   const [inputNumber, setInputNumber] = useState();
   const [chooseColumn, setChooseColumn] = useState();
-  // const [filterByNumericValues, setFilterByNumericValues] = useState([]);
 
   const renderLines = (results) => {
     const temp = [];
     const indexOfResidents = 9;
     results.map((planeta) => temp.push(Object.values(planeta)));
-    // console.log(temp);
     temp.forEach((linha) => linha.splice(indexOfResidents, 1));
-    // console.log(temp);
     setLine(temp);
   };
 
@@ -29,7 +25,6 @@ const StarWarsProvide = ({ children }) => {
       const results = await requestApi();
       await setData(results);
       await renderLines(results);
-      // await console.log(results);
     }
     getApi();
   }, []);
@@ -49,16 +44,7 @@ const StarWarsProvide = ({ children }) => {
     setFilters({});
   };
 
-  const testPorEnquanto = () => {
-    const { filterByName } = filters;
-
-    console.log(comparaNumeros);
-    console.log(inputNumber);
-    console.log(chooseColumn);
-    console.log(filterByName);
-    console.log(filters);
-    console.log(line);
-
+  const submitFilters = () => {
     if (comparaNumeros === 'maior que') {
       setLine(line.filter((item) => item[chooseColumn] > parseInt(inputNumber, 10)));
       resetInputs();
@@ -73,20 +59,9 @@ const StarWarsProvide = ({ children }) => {
       setLine(line.filter((item) => item[chooseColumn] === inputNumber));
       resetInputs();
     }
-
-    // const currFilter = {
-    //   column: 'population',
-    //   comparison: 'maior que',
-    //   value: '100000',
-    // }
-    // const array = []
-    // array.push(currFilter)
-    // setFilterByNumericValues(array)
-    // setFilters(...filterByNumericValues)
   };
 
   const context = {
-    // valor a ser utilizado,
     data,
     line,
     filters,
@@ -96,7 +71,7 @@ const StarWarsProvide = ({ children }) => {
     setComparaNumeros,
     setChooseColumn,
     setInputNumber,
-    testPorEnquanto,
+    submitFilters,
   };
 
   return (
