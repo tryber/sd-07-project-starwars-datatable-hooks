@@ -5,19 +5,19 @@ import getPlanetsApi from '../services/api';
 
 const { Provider } = StarWarsContext;
 function StarWarsProvider({ children }) {
-  const [data, setData] = useState({});
-  const [filter, setFilter] = useState({
-    filterByName: {
-      name: '',
-    },
-    filterByNumber: [
-      {
-        column: 'diameter',
-        comparation: 'menor que',
-        value: '',
-      },
-    ],
+  const [data, setData] = useState();
+
+  const [nameFilter, setNameFilter] = useState({
+    name: '',
   });
+
+  const [numericFilter, setNumericFilter] = useState([
+    {
+      column: 'diameter',
+      comparation: 'menor que',
+      value: '',
+    },
+  ]);
 
   const fetchPlanets = async () => {
     const planets = await getPlanetsApi();
@@ -25,19 +25,20 @@ function StarWarsProvider({ children }) {
   };
 
   const handleNumericFilter = (name, value) => {
-    setFilter({
-      ...filter,
-      filterByNumber: [
+    setNumericFilter((prevState) => (
+      [
         {
-          ...filter.filterByNumber[0],
+          ...prevState[0],
           [name]: value,
         },
-      ],
-    });
+      ]
+    ));
   };
 
   const handleFilterButton = () => {
-    const { column, comparation, value } = filter.filterByNumber[0];
+    if (!data) return;
+    const lastIndex = numericFilter.length - 1;
+    const { column, comparation, value } = numericFilter[lastIndex];
 
     if (comparation === 'maior que') {
       const filteredPlanets = data.filter((planet) => +value < +planet[column]);
@@ -56,30 +57,30 @@ function StarWarsProvider({ children }) {
   }, []);
 
   const handleChange = (name) => {
-    setFilter({
-      ...filter,
-      filterByName: {
-        name,
-      },
+    setNameFilter({
+      ...filterByName,
+      name,
     });
   };
 
   useEffect(() => {
-    const { filterByName: { name } } = filter;
+    const { name } = nameFilter;
 
-    if (name !== '') {
+    if (data && name !== '') {
       const filteredData = data.filter((planet) => planet.name.includes(name));
       setData(filteredData);
     } else {
       fetchPlanets();
     }
-  }, [filter]);
+  }, [nameFilter]);
 
   const context = { // Just the states and functions listed here will be used by the children
     data, // Iformation used in the component Table
     handleChange, // Function used in the component Filters
     handleNumericFilter, // Function used in the component Filters
     handleFilterButton,
+    nameFilter, // Data used in the component Filters
+    numericFilter,
   };
 
   return (
