@@ -26,9 +26,13 @@ export default function Table({ data }) {
           if (a[order.column].toLowerCase() > b[order.column].toLowerCase()) return pos;
           return ZERO;
         });
-      } else {
+      } else if (neg > 0) {
         copyDataofCopy.sort(
           (a, b) => Number(b[order.column]) - Number(a[order.column]),
+        );
+      } else {
+        copyDataofCopy.sort(
+          (a, b) => -Number(b[order.column]) + Number(a[order.column]),
         );
       }
 
