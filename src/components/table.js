@@ -11,6 +11,8 @@ function Table() {
     filterData,
     setFilterData,
     useFilter,
+    sortedData,
+    useSortedData
   } = useContext(StarWarsContext);
 
   useEffect(() => {
@@ -38,9 +40,9 @@ function Table() {
       }
       return data;
     });
-  }, [filters, data]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [filters, data]);
 
-  const renderTableData = () => filterData.map((planet) => (
+  const renderTableData = (data) => data.map((planet) => (
     <tr key={ planet.name }>
       <td>{planet.climate}</td>
       <td>{planet.created}</td>
@@ -48,7 +50,7 @@ function Table() {
       <td>{planet.edited}</td>
       <td>{planet.films}</td>
       <td>{planet.gravity}</td>
-      <td>{planet.name}</td>
+      <td data-testid="planet-name">{planet.name}</td>
       <td>{planet.orbital_period}</td>
       <td>{planet.population}</td>
       <td>{planet.rotation_period}</td>
@@ -85,7 +87,7 @@ function Table() {
           <table>
             <tbody>
               <tr>{renderTableHeader()}</tr>
-              {renderTableData()}
+              {renderTableData(useSortedData ? sortedData : filterData)}
             </tbody>
           </table>
         </div>

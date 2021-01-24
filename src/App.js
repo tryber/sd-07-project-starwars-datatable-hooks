@@ -2,12 +2,15 @@ import React, { useEffect, useState } from 'react';
 import Table from './components/table';
 import Searcher from './components/searcher';
 import Filters from './components/filters';
+import Sort from './components/sort';
 import StarWarsContext from './context/StarWarsContext';
 import starWarsAPI from './services/starWarsAPI';
 
 function App() {
   const [data, setData] = useState([]);
   const [filterData, setFilterData] = useState([]);
+  const [sortedData, setSortedData] = useState([]);
+  const [useSortedData, setUseSortedData] = useState(false);
   const [selectColumn, setSelectColumn] = useState([]);
   const [column, setColumn] = useState('population');
   const [comparison, setComparison] = useState('maior que');
@@ -19,6 +22,10 @@ function App() {
       name: '',
     },
     filterByNumericValues: [],
+    order: {
+      column: 'name',
+      sort: 'ASC',
+    },
   });
 
   useEffect(() => {
@@ -52,6 +59,10 @@ function App() {
     filterData,
     useFilter,
     selectColumn,
+    sortedData,
+    useSortedData,
+    setUseSortedData,
+    setSortedData,
     setSelectColumn,
     setUseFilter,
     setFilterData,
@@ -65,6 +76,7 @@ function App() {
     <StarWarsContext.Provider value={ context }>
       <Searcher />
       <Filters />
+      <Sort />
       <Table />
     </StarWarsContext.Provider>
   );
