@@ -15,7 +15,7 @@ function AddFilterForm() {
   const [comparisonFilter, setComparison] = useState('maior que');
   const [valueFilter, setValue] = useState(zero);
 
-  // useEffect(() => setColumn(columnNames[0]), [filters]);
+  useEffect(() => setColumn(columnNames[0]), [filters]);
 
   return (
     <form>

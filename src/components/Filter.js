@@ -40,13 +40,13 @@ function Filter() {
             id="ASC"
             value="ASC"
             data-testid="column-sort-input-asc"
-            onClick={ () => setOrd('ASC') }
+            onChange={ () => setOrd('ASC') }
             checked={ order === 'ASC' }
           />
           Ascendent
         </label>
         <label
-          htmlFor="ASC"
+          htmlFor="DESC"
         >
           <input
             type="radio"
@@ -54,7 +54,7 @@ function Filter() {
             id="DESC"
             value="DESC"
             data-testid="column-sort-input-desc"
-            onClick={ () => setOrd('DESC') }
+            onChange={ () => setOrd('DESC') }
             checked={ order === 'DESC' }
           />
           Descendent
