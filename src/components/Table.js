@@ -1,20 +1,9 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import useEvent from '../hooks/useEvent';
-import StarWarsContext from '../context/StarWarsContext';
-import useFilter from '../hooks/useFilter';
 
 function Table() {
-  const { data, title, filter } = useContext(StarWarsContext);
-
-  const zero = 0;
-  const [{ values }, valueName, handlerNameChange,
-    handlerNumberChange] = useEvent();
-
-  const { collumn = '', condition = '', number = zero } = values;
-
-  const [filtered, titles, handlerClick] = useFilter(
-    data, title, collumn, condition, number, valueName, filter,
-  );
+  const [filtered, titles, option, names, filterByNumericValues,
+    handlerNameChange, handlerNumberChange, handlerClick, removeFilter] = useEvent();
 
   return (
     <div className="App">
@@ -35,11 +24,9 @@ function Table() {
             onChange={ handlerNumberChange }
           >
             <option>Selecione</option>
-            <option value="population">population</option>
-            <option value="orbital_period">orbital_period</option>
-            <option value="diameter">diameter</option>
-            <option value="rotation_period">rotation_period</option>
-            <option value="surface_water">surface_water</option>
+            {option.map((op, index) => (
+              <option key={ index } value={ op }>{ op }</option>
+            ))}
           </select>
           <br />
           <br />
@@ -49,9 +36,9 @@ function Table() {
             onChange={ handlerNumberChange }
           >
             <option>Selecione</option>
-            <option value=">">maior que</option>
-            <option value="<">menor que</option>
-            <option value="===">igual a</option>
+            <option value="maior que">maior que</option>
+            <option value="menor que">menor que</option>
+            <option value="igual a">igual a</option>
           </select>
         </div>
         <div>
@@ -72,6 +59,36 @@ function Table() {
             Filtrar
           </button>
         </div>
+        <br />
+        {filterByNumericValues.map(({ collumn, condition, number }, index) => (
+          <div key={ index }>
+            <span>
+              Collumn:
+              {' '}
+              { collumn }
+            </span>
+            {' '}
+            <span>
+              Condition:
+              {' '}
+              { condition }
+            </span>
+            {' '}
+            <span>
+              Number:
+              {' '}
+              { number }
+            </span>
+            {' '}
+            <button
+              type="button"
+              data-testid="filter"
+              onClick={ removeFilter }
+            >
+              X
+            </button>
+          </div>
+        ))}
       </div>
       <br />
       <br />
@@ -87,7 +104,7 @@ function Table() {
         </thead>
         <tbody>
           {
-            filtered.map((planet, index) => (
+            filtered.filter((fil) => fil.name.includes(names)).map((planet, index) => (
               <tr key={ index }>
                 <td data-testid="planet-name">{ planet.name }</td>
                 <td>{planet.rotation_period}</td>
