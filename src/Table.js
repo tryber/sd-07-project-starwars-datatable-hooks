@@ -1,42 +1,68 @@
 import React, { useContext } from 'react';
-import { StarWarsContext } from './context/StarWarsContext';
+import StarWarsContext from './StarWarsContext';
 
 const Table = () => {
   const { data } = useContext(StarWarsContext);
-  console.log(data)
   return (
     <table>
       <thead>
-        <tr>
-          <th>name</th>
-          <th>rotation_period</th>
-          <th>orbital_period</th>
-          <th>diameter</th>
-          <th>climate</th>
-          <th>gravity</th>
-          <th>terrain</th>
-          <th>surface_water</th>
-          <th>population</th>
-          <th>films</th>
-          <th>created</th>
-          <th>edited</th>
-          <th>url</th>
-        </tr>
+        <th>Name</th>
+        <th>Rotation Period</th>
+        <th>Orbital Period</th>
+        <th>Diameter</th>
+        <th>Climate</th>
+        <th>Gravity</th>
+        <th>Terrain</th>
+        <th>Surface Water</th>
+        <th>Population</th>
+        <th>Films</th>
+        <th>Created</th>
+        <th>Edited</th>
+        <th>URL</th>
       </thead>
-      <tbody>
-        {data.map((planet, index) => (
-          <tr key={ index }>
-            {Object.entries(planet).map(([key, value]) => {
-              if (key === 'residents') {
-                return null;
-              }
-              return (
-                <td key={ key }>{value}</td>
-              );
-            })}
-          </tr>
-        ))}
-      </tbody>
+      {data.map((planet, key) => (
+        <tr key={ key }>
+          <td>
+            { planet.name }
+          </td>
+          <td>
+            { planet.rotation_period }
+          </td>
+          <td>
+            { planet.orbital_period }
+          </td>
+          <td>
+            { planet.diameter }
+          </td>
+          <td>
+            { planet.climate }
+          </td>
+          <td>
+            { planet.gravity }
+          </td>
+          <td>
+            { planet.terrain }
+          </td>
+          <td>
+            { planet.surface_water }
+          </td>
+          <td>
+            { planet.population }
+          </td>
+          <td>
+            { planet.films }
+          </td>
+          <td>
+            { planet.created }
+          </td>
+          <td>
+            { planet.edited }
+          </td>
+          <td>
+            { planet.url }
+          </td>
+        </tr>
+      ))}
     </table>
   );
 };

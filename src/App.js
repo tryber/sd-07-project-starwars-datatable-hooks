@@ -1,6 +1,6 @@
 import React from 'react';
 import Table from './Table';
-import { StarWarsProvider } from './context/StarWarsContext';
+import StarWarsProvider from './StarWarsProvider';
 
 function App() {
   return (
