@@ -6,11 +6,20 @@ import RenderTable from './components/RenderTable';
 
 function App() {
   const [state, setState] = useState(data);
+  const [filterName, setFilterName] = useState({ filterByName: { name: '' } });
+  const [filterNumber, setFilterNumber] = useState([]);
+  const allContext = {
+    filterName: filterName.filterByName,
+    setFilterName,
+    filterNumber,
+    setFilterNumber,
+    state,
+    setState,
+  };
   return (
     <StarWarsContext.Provider
       value={ {
-        filtersByName: state.filters.filterByName.name,
-        filtersByNumericValue: state.filters.filterByNumericValues,
+        allContext,
         state,
         setState,
       } }

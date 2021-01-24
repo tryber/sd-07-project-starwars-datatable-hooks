@@ -3,14 +3,33 @@ import StarWarsContext from '../context/StarWarsContext';
 
 function Table() {
   const context = useContext(StarWarsContext); // obj {state: initialState, setState: fn}
-  const { state, filtersByName } = context;
+  const { state, allContext } = context;
+  const { filterName, filterNumber } = allContext;
+  const { name } = filterName;
   const { data } = state;
   const { payload } = data;
 
-  function RenderRows(value, filterName) {
+  function secondFilter(planets, filter) {
+    if (filter.comparison === 'maior que') {
+      return planets
+        .filter((planet) => Number(planet[filter.column]) > Number(filter.value));
+    } if (filter.comparison === 'menor que') {
+      return planets
+        .filter((planet) => Number(planet[filter.column]) < Number(filter.value));
+    } if (filter.comparison === 'igual a') {
+      return planets
+        .filter((planet) => Number(planet[filter.column]) === Number(filter.value));
+    }
+    return planets;
+  }
+
+  function RenderRows(value, nameValue) {
     if (value) {
+      filterNumber.forEach((filter) => {
+        value = secondFilter(value, filter);
+      });
       return value
-        .filter((element) => element.name.includes(filterName))
+        .filter((element) => element.name.includes(nameValue))
         .map((planet) => (
           <tr key={ planet.name }>
             <td>{planet.climate}</td>
@@ -32,10 +51,10 @@ function Table() {
   }
 
   useEffect(() => {
-    RenderRows(payload, filtersByName);
-  }, [payload, filtersByName]);
+    RenderRows(payload, name);
+  }, [payload, name]);
 
-  return <>{RenderRows(payload, filtersByName)}</>;
+  return <>{RenderRows(payload, name)}</>;
 }
 
 export default Table;
