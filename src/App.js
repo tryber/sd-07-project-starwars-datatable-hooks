@@ -5,11 +5,13 @@ import { Header, Filters, Table } from './components';
 
 function App() {
   return (
-    <Provider>
-      <Header />
-      <Filters />
-      <Table />
-    </Provider>
+    <div className="App">
+      <Provider>
+        <Header />
+        <Filters />
+        <Table />
+      </Provider>
+    </div>
   );
 }
 

@@ -1,0 +1,103 @@
+.header {
+  background-color: black;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  height: 25vh;
+  margin-top: 0;
+  padding: 20px;
+}
+
+.logo {
+  border-radius: 5px;
+  height: 110%;
+}
+
+.input-container {
+  align-self: center;
+  display: flex;
+  flex-direction: column;
+  margin-left: 0;
+  padding: 5px;
+}
+
+.input-name {
+  background-color: black;
+  border: solid 1px rgb(39, 39, 39);
+  border-radius: 5px;
+  color: white;
+  font-size: 1em;
+  font-weight: 600;
+  height: 20px;
+  margin: 5px;
+  padding: 5px 10px;
+  width: 500px;
+}
+
+.legend {
+  color: rgb(107, 116, 117);
+  font-size: 1.1em;
+  font-weight: 600;
+}
+
+.input-column {
+  background-color: black;
+  border: solid 1px rgb(39, 39, 39);
+  border-radius: 5px;
+  color: rgb(107, 116, 117);
+  font-size: 0.9em;
+  font-weight: 600;
+  height: 30px;
+  margin: 5px;
+  padding: 5px 10px;
+  width: 130px;
+}
+
+.input-comparison {
+  background-color: black;
+  border: solid 1px rgb(39, 39, 39);
+  border-radius: 5px;
+  color: rgb(107, 116, 117);
+  font-size: 0.9em;
+  font-weight: 600;
+  height: 30px;
+  margin: 5px;
+  padding: 5px 10px;
+  width: 110px;
+}
+
+.input-number {
+  background-color: black;
+  border: solid 1px rgb(39, 39, 39);
+  border-radius: 5px;
+  color: rgb(107, 116, 117);
+  font-size: 1em;
+  font-weight: 600;
+  height: 20px;
+  margin: 5px;
+  padding: 5px 10px;
+  width: 100px;
+}
+
+.fieldset {
+  border: solid 1px rgb(39, 39, 39);
+  border-radius: 5px;
+}
+
+.filter-button {
+  background-color: #63458a;
+  border: solid 1px rgb(39, 39, 39);
+  border-radius: 5px;
+  box-shadow: 1px 1px 1px rgb(39, 39, 39);
+  color: rgb(210, 208, 186);
+  font-size: 1em;
+  font-weight: 600;
+  height: 33px;
+  margin: 5px;
+  padding: 5px 10px;
+  width: 100px;
+}
+
+.filter-button:hover {
+  background-color: #6115c5;
+}
