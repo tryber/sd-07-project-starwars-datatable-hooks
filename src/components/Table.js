@@ -1,15 +1,36 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 function Table() {
+  const arrayOfOptions = [
+    '',
+    'population',
+    'orbital_period',
+    'diameter',
+    'rotation_period',
+    'surface_water',
+  ];
+
   const {
     data,
     filterDataByName,
     filter,
     filterDataByNumericValues,
     changeValuesToState,
-    removeLastFilter,
+    removeFilterDataByNumericValues,
   } = useContext(StarWarsContext);
+
+  const [arrayOfUsedFilters, setFilter] = useState([filter.nFilters]);
+
+  const generateArrayOfOptions = () => {
+    const filtersArray = filter.nFilters.map((fil) => fil.column);
+    setFilter(filtersArray);
+  };
+
+  useEffect(() => {
+    generateArrayOfOptions();
+  }, [filter.nFilters.length]);
+
   const { name } = filter.filterByName;
   const { nFilters } = filter;
 
@@ -23,7 +44,8 @@ function Table() {
               <button
                 type="button"
                 data-testid="filter"
-                onClick={ removeLastFilter }
+                value={ column }
+                onClick={ (event) => removeFilterDataByNumericValues(event) }
               >
                 x
               </button>
@@ -47,11 +69,9 @@ function Table() {
           name="column"
           onChange={ changeValuesToState }
         >
-          <option value="population">population</option>
-          <option value="orbital_period">orbital_period</option>
-          <option value="diameter">diameter</option>
-          <option value="rotation_period">rotation_period</option>
-          <option value="surface_water">surface_water</option>
+          {arrayOfOptions.filter((col) => !arrayOfUsedFilters.includes(col))
+            .map((col) => (<option key={ col } value={ col }>{col}</option>
+            ))}
         </select>
       </label>
       <label htmlFor="comparison-filter">

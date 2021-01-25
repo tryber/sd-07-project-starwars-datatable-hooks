@@ -65,12 +65,12 @@ function StarWarsProvider({ children }) {
 
   const filterDataByName = (event) => {
     const { value } = event.target;
-    setFilter((prevState) => ({
-      ...prevState,
+    setFilter({
+      ...filter,
       filterByName: {
         name: value,
       },
-    }));
+    });
   };
 
   const filterDataByNumericValues = () => {
@@ -80,13 +80,17 @@ function StarWarsProvider({ children }) {
     });
   };
 
+  const removeFilterDataByNumericValues = (e) => {
+    const { nFilters } = filter;
+    setFilter({
+      ...filter,
+      nFilters: [...nFilters.filter((fil) => fil.column !== e.target.value)],
+    });
+  };
+
   const changeValuesToState = (event) => {
     const { value, name } = event.target;
     setFilters({ ...filtersValue, [name]: value });
-  };
-
-  const removeLastFilter = () => {
-    filter.nFilters.pop();
   };
 
   const context = {
@@ -95,7 +99,7 @@ function StarWarsProvider({ children }) {
     filterDataByName,
     filterDataByNumericValues,
     changeValuesToState,
-    removeLastFilter,
+    removeFilterDataByNumericValues,
   };
 
   return (
