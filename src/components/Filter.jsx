@@ -35,7 +35,6 @@ export default function Filter() {
   return (
     <div>
       <select id="column" data-testid="column-filter" onChange={ setFilter }>
-        <option>Column</option>
         {columns && columns.map((column, i) => (<option key={ i }>{column}</option>))}
       </select>
       <select id="comparison" data-testid="comparison-filter" onChange={ setFilter }>
