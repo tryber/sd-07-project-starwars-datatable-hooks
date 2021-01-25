@@ -4,7 +4,7 @@ import Table from '../components/Table';
 
 function StarWarsPlanets() {
   const { data, filter, dispatch } = useContext(StarWarsContext);
-  const { name, column, comparison, value, sortParameter, applyFilter } = filter;
+  const { name, column, comparison, value, sortParameter } = filter;
 
   const handleChange = ({ target }) => {
     dispatch({ type: target.name, value: target.value });
