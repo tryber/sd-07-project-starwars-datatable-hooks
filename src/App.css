@@ -1,38 +1,81 @@
-.App {
-  text-align: center;
+
+.death-star{
+    display: flex;
+    flex-direction: row;
+    margin-top: 50px;
+    margin-left: 15px;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.millenium-falcon {
+    display: flex;
+    flex-direction: row;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
+td {
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.settings {
+    background-color: #869e86;
+    border: 1px solid black;
+    display: flex;
+    flex-direction: column;
+    padding: 30px;
+}
+.sub-settings {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 15px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.select-setting {
+    display: flex;
+    flex-direction: row;
+    margin-top: 30px;
+}
+
+.planet {
+    margin-top: 30px;
+    width: 100%;
+    height: 20%;
+}
+
+.table-control {
+    border: 1px solid black;
+    background-color: rgb(229, 233, 240);
+    margin-left: 10px;
+}
+
+table tr:nth-child(even) /* CSS3 */ {
+    background: #F0FFFF;
+}
+
+tr {
+    font-family: 'Times New Roman', Times, serif;
+    background-color:  #869e86;
+}
+
+th {
+    border: 1px solid black;
+    background-color: rgb(255, 255, 255);
+}
+
+.span-control {
+    margin-right: 798px;
+}
+
+input {
+    height: 20px;
+}
+
+.right-select {
+    margin-left: 40px;
+    width: 150px;
+}
+
+.left-select {
+    width: 150px;
+}
+Button {
+    width: 150px;
 }

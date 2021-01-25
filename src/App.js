@@ -1,14 +1,19 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import Dashboard from './components/Dashboard';
+import Provider from './Provider/Provider';
+import Table from './components/Table';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        
-      </header>
-    </div>
+    <Provider>
+      <section className="death-star">
+        <div className="millenium-falcon">
+          <Dashboard />
+          <Table />
+        </div>
+      </section>
+    </Provider>
   );
 }
 
