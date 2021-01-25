@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import StarWarsContext from './context/StarWarsContext';
-import TablePlanet from './components/Table';
-import FilterByName from './components/FilterByName';
+import TablePlanet from './pages/Table';
+import Filters from './components/Filters';
 
 function App() {
   const url = 'https://swapi-trybe.herokuapp.com/api/planets/';
@@ -9,6 +9,13 @@ function App() {
   const [filters, setFilters] = useState({
     filterByName: {
       name: '' },
+    filterByNumericValues: [
+      {
+        column: '',
+        comparison: '',
+        value: undefined,
+      },
+    ]
   });
 
   const initialState = {
@@ -23,7 +30,6 @@ function App() {
       const { results } = await fetch(url)
         .then((response) => response.json());
       setStarWars(results);
-      console.log(results);
     }
     data();
   }, [url]);
@@ -31,7 +37,7 @@ function App() {
   return (
     <div>
       <StarWarsContext.Provider value={ initialState }>
-        <FilterByName />
+        <Filters />
         <TablePlanet />
       </StarWarsContext.Provider>
     </div>
