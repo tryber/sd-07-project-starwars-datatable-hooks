@@ -8,6 +8,7 @@ function Table() {
     isFetching,
     data,
     getCurrentPlanets,
+    filteredData,
   } = useContext(StarWarsContext);
   // console.log(useContext(StarWarsContext));
 
@@ -40,7 +41,7 @@ function Table() {
             </tr>
           </thead>
           <tbody>
-            {data.map((planets) => (
+            {(filteredData || data).map((planets) => (
               <tr key={ planets.name }>
                 <td>{planets.name}</td>
                 <td>{planets.rotation_period}</td>
