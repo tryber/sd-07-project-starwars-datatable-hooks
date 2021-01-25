@@ -14,9 +14,9 @@ class Table extends React.Component {
     const listOfCells = [];
     cells.forEach((cell, index) => {
       listOfCells.push(
-        <div key={ `cell-${index}` }>
+        <td key={ `cell-${index}` }>
           {cell}
-        </div>,
+        </td>,
       );
     });
     return listOfCells;
