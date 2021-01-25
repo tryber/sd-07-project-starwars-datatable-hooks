@@ -9,6 +9,14 @@ const initialRemoveColumnList = [
 
 const initialFilter = { column: '', comparison: '', value: '' };
 
+const setListToRemove = (callback, filterByNumericValues) => {
+  callback([
+    ...initialRemoveColumnList,
+    ...filterByNumericValues
+      .map(({ column }) => column),
+  ]);
+};
+
 export default function Filter() {
   const {
     dispatchFilter, FILTER_COLUMN, filters: { filterByNumericValues },
@@ -20,18 +28,10 @@ export default function Filter() {
     setNewFilters({ ...newFilters, [id]: value });
   };
 
-  const setListToRemove = () => {
-    removeItem([
-      ...initialRemoveColumnList,
-      ...filterByNumericValues
-        .map(({ column }) => column),
-    ]);
-  };
-
-  useEffect(setListToRemove, [dispatchFilter]);
+  useEffect(() => setListToRemove(removeItem, filterByNumericValues),
+    [filterByNumericValues]);
 
   const columns = useColumnsKeys(removeItemColumn);
-
   return (
     <div>
       <select id="column" data-testid="column-filter" onChange={ setFilter }>
