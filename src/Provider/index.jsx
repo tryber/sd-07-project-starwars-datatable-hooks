@@ -9,9 +9,21 @@ const Provider = ({ children }) => {
       name: '',
     },
     filterByNumericValues: [],
+    order: {
+      column: 'name',
+      sort: 'ASC',
+    },
   };
   const [data, setData] = useState();
   const [filters, setFilters] = useState(filterInitial);
+
+  const changeOrder = (column, sort) => {
+    const newOrder = {
+      ...filters,
+      order: { column, sort },
+    };
+    setFilters(newOrder);
+  };
 
   const changeFiltersName = (name) => {
     const newFilter = {
@@ -92,6 +104,7 @@ const Provider = ({ children }) => {
     changeFiltersName,
     addFiltersNumerics,
     removeFiltersNumerics,
+    changeOrder,
   };
 
   return (

@@ -5,10 +5,39 @@ const Table = () => {
   const firstCaracter = 0;
   const { data, filters } = useContext(context);
   const { name } = filters.filterByName;
+  const { order } = filters;
   if (!data) { // || !filters.filterByNumericValues.length) {
     return (<div>Carregando ...</div>);
   }
   let filtered = [];
+
+  function isNumber(n) {
+    return !Number.isNaN(parseFloat(n)) && Number.isFinite(parseFloat(n));
+  }
+
+  const sortMaker = (array, column, ascDesc) => {
+    // console.log(array)
+    const negat = -1;
+    let positive = 1;
+    let negative = negat;
+    if (ascDesc === 'DESC') {
+      negative = 1;
+      positive = negat;
+    }
+    const zero = 0;
+    array.sort((a, b) => {
+      if (isNumber(a[column]) && isNumber(b[column])) {
+        if (parseFloat(a[column]) < parseFloat(b[column])) return negative;
+        if (parseFloat(a[column]) > parseFloat(b[column])) return positive;
+        return zero;
+      }
+      if (a[column] < b[column]) return negative;
+      if (a[column] > b[column]) return positive;
+      return zero;
+    });
+    return array;
+  };
+
   if (data) {
     filtered = data.filter((planets) => planets.name.includes(name));
 
@@ -29,6 +58,8 @@ const Table = () => {
         }
       });
     });
+
+    filtered = sortMaker(filtered, order.column, order.sort);
   }
 
   // const loading = () => (<div>Carregando ...</div>);
@@ -61,7 +92,14 @@ const Table = () => {
             <tr key={ planet.name }>
               {
                 Object.values(planet)
-                  .map((item, index) => <td key={ index }>{item}</td>)
+                  .map((item, index) => (
+                    <td
+                      key={ index }
+                      data-testid={ (!index) ? 'planet-name' : null }
+                    >
+                      {item}
+                    </td>
+                  ))
               }
             </tr>
           ))
