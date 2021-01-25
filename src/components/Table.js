@@ -1,14 +1,45 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+
 import { StarWarsContext } from '../context/StarWarsContext';
+import getPlanets from '../service/starWarsAPI';
 
 function Table() {
-  const { data, fetchData } = useContext(StarWarsContext);
-  if (fetchData) return <div>Loading</div>;
+  const {
+    data,
+    setData,
+    setFilters,
+  } = useContext(StarWarsContext);
+  const [results, setResults] = useState([]);
 
-  const { results } = data;
+  useEffect(() => {
+    (async () => {
+      const response = await getPlanets();
+      setData(response);
+      setResults(response.results);
+    })();
+  }, [setData]);
+
+  const handleFilters = ({ target }) => {
+    const filter = target.value;
+
+    setFilters({
+      filtersByName: {
+        name: filter,
+      },
+    });
+
+    const filteredPlanets = data.results
+      .filter(({ name }) => name.toLowerCase().includes(filter));
+    setResults(filteredPlanets);
+  };
 
   return (
-    <div>
+    <>
+      <input
+        type="text"
+        data-testid="name-filter"
+        onChange={ handleFilters }
+      />
       <table>
         <thead>
           <tr>
@@ -24,32 +55,47 @@ function Table() {
             <th>Films</th>
             <th>Created</th>
             <th>Edited</th>
-            <th>URL</th>
+            <th>Url</th>
           </tr>
         </thead>
         <tbody>
-          {
-            results && results.map((planet) => (
-              <tr key={ planet.name }>
-                <td>{ planet.name }</td>
-                <td>{ planet.rotation_period }</td>
-                <td>{ planet.orbital_period }</td>
-                <td>{ planet.diameter }</td>
-                <td>{ planet.climate }</td>
-                <td>{ planet.gravity }</td>
-                <td>{ planet.terrain }</td>
-                <td>{ planet.surface_water }</td>
-                <td>{ planet.population }</td>
-                <td>{ planet.films }</td>
-                <td>{ planet.created }</td>
-                <td>{ planet.edited }</td>
-                <td>{ planet.url }</td>
+          {results.map((planet) => {
+            const {
+              name,
+              rotation_period: rotationPeriod,
+              orbital_period: orbitalPeriod,
+              diameter,
+              climate,
+              gravity,
+              terrain,
+              surface_water: surfaceWater,
+              population,
+              films,
+              created,
+              edited,
+              url,
+            } = planet;
+            return (
+              <tr key={ name }>
+                <td>{name}</td>
+                <td>{rotationPeriod}</td>
+                <td>{orbitalPeriod}</td>
+                <td>{diameter}</td>
+                <td>{climate}</td>
+                <td>{gravity}</td>
+                <td>{terrain}</td>
+                <td>{surfaceWater}</td>
+                <td>{population}</td>
+                <td>{films}</td>
+                <td>{created}</td>
+                <td>{edited}</td>
+                <td>{url}</td>
               </tr>
-            ))
-          }
+            );
+          })}
         </tbody>
       </table>
-    </div>
+    </>
   );
 }
 

@@ -1,36 +1,32 @@
-import React, { createContext, useState, useEffect } from 'react';
+import React, { createContext, useState } from 'react';
 import PropTypes from 'prop-types';
-import planetsAPI from '../service/planetsAPI';
 
 const StarWarsContext = createContext();
 
-const StarWarsProvider = ({ children }) => {
-  const [fetchDate, setFetchDate] = useState(true);
-  const [data, setPlanentsData] = useState([]);
-
-  const fetchPlanetsAPI = async () => {
-    setPlanentsData(await planetsAPI());
-    setFetchDate(false);
-  };
+function StarWarsProvider({ children }) {
+  const [data, setData] = useState({});
+  const [filters, setFilters] = useState({
+    filtersByName: {
+      name: '',
+    },
+  });
 
   const context = {
     data,
-    fetchDate,
+    setData,
+    filters,
+    setFilters,
   };
-
-  useEffect(() => {
-    fetchPlanetsAPI();
-  }, []);
 
   return (
     <StarWarsContext.Provider value={ context }>
-      {children}
+      { children }
     </StarWarsContext.Provider>
   );
-};
+}
 
 StarWarsProvider.propTypes = {
-  children: PropTypes.instanceOf(Object).isRequired,
+  children: PropTypes.node.isRequired,
 };
 
-export { StarWarsContext, StarWarsProvider as Provider };
+export { StarWarsContext, StarWarsProvider };
