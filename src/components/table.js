@@ -12,21 +12,31 @@ function Table() {
   const { planetList, filters } = context;
   const { filterByNumericValues } = filters;
 
-  const renderPreviousFilters = () => {
-    return filterByNumericValues.map((item) => {
-      return (
-        <div key={item.column} data-testid='filter' className="filters">
-          <h5> {item.column} {item.comparison} {item.value}</h5>
-          <button className="button" id={item.column} onClick={({target}) => deleteFilter(target)}>X</button>
-        </div>
-      )
-    })
-  }
-
   const deleteFilter = (target) => {
-    const list = filterByNumericValues.filter(item => item.column !==target.id)
-    setContext({...context, filters: {...filters, filterByNumericValues: list}})
-  }
+    const list = filterByNumericValues.filter((item) => item.column !== target.id);
+    setContext({ ...context, filters: { ...filters, filterByNumericValues: list } });
+  };
+
+  const renderPreviousFilters = () => filterByNumericValues.map((item) => (
+    <div key={ item.column } data-testid="filter" className="filters">
+      <h5>
+        {' '}
+        {item.column}
+        {' '}
+        {item.comparison}
+        {' '}
+        {item.value}
+      </h5>
+      <button
+        type="button"
+        className="button"
+        id={ item.column }
+        onClick={ ({ target }) => deleteFilter(target) }
+      >
+        X
+      </button>
+    </div>
+  ));
 
   function renderTable(param) {
     let list = param;
@@ -35,14 +45,14 @@ function Table() {
       filterByNumericValues.forEach((item) => {
         list = list.filter((subItem) => {
           switch (item.comparison) {
-            case 'maior que':
-              return parseInt(subItem[item.column], 10) > parseInt(item.value, 10);
-            case 'menor que':
-              return parseInt(subItem[item.column], 10) < parseInt(item.value, 10);
-            case 'igual a':
-              return parseInt(subItem[item.column], 10) === parseInt(item.value, 10);
-            default:
-              return false;
+          case 'maior que':
+            return parseInt(subItem[item.column], 10) > parseInt(item.value, 10);
+          case 'menor que':
+            return parseInt(subItem[item.column], 10) < parseInt(item.value, 10);
+          case 'igual a':
+            return parseInt(subItem[item.column], 10) === parseInt(item.value, 10);
+          default:
+            return false;
           }
         });
       });
@@ -62,7 +72,7 @@ function Table() {
         population,
       } = planet;
       return (
-        <tr key={name}>
+        <tr key={ name }>
           <td>{name}</td>
           <td>{planet.orbital_period}</td>
           <td>{population}</td>
@@ -80,7 +90,7 @@ function Table() {
       );
     });
     setElements(elementList);
-  };
+  }
 
   useEffect(() => {
     renderTable(planetList);
@@ -110,7 +120,7 @@ function Table() {
       if (index > menosUm) list.splice(index, 1);
     });
     return list.map((item, index) => (
-      <option key={index} name={item} id={item}>{item}</option>
+      <option key={ index } name={ item } id={ item }>{item}</option>
     ));
   };
 
@@ -128,7 +138,7 @@ function Table() {
             name="search"
             data-testid="name-filter"
             placeholder="Digite aqui"
-            onChange={({ target }) => changeHandler(target)}
+            onChange={ ({ target }) => changeHandler(target) }
           />
         </label>
         <label htmlFor="class_selection">
@@ -136,7 +146,7 @@ function Table() {
             id="class_selection"
             name="class_selection"
             data-testid="column-filter"
-            onChange={({ target }) => setColuna(target.value)}
+            onChange={ ({ target }) => setColuna(target.value) }
           >
             {renderOptions(
               ['population',
@@ -153,7 +163,7 @@ function Table() {
             id="comp"
             name="comp"
             data-testid="comparison-filter"
-            onChange={({ target }) => setComparador(target.value)}
+            onChange={ ({ target }) => setComparador(target.value) }
 
           >
             {renderOptions(['maior que', 'menor que', 'igual a'], 'comparison')}
@@ -165,13 +175,13 @@ function Table() {
             id="search_value"
             name="search_value"
             data-testid="value-filter"
-            onChange={({ target }) => setSearchValue(target.value)}
+            onChange={ ({ target }) => setSearchValue(target.value) }
           />
         </label>
         <button
           type="button"
           data-testid="button-filter"
-          onClick={() => handleClick()}
+          onClick={ () => handleClick() }
         >
           Filtrar
         </button>

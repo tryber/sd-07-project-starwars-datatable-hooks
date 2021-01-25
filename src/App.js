@@ -19,13 +19,13 @@ function App() {
 
   useEffect(() => {
     async function fetchPlanet() {
-    console.log('entrou no fetch');
-    const { results } = await fetch(url)
-      .then((response) => response.json());
-    setContext({ ...context, planetList: results });
-  }
+      console.log('entrou no fetch');
+      const { results } = await fetch(url)
+        .then((response) => response.json());
+      setContext({ ...context, planetList: results });
+    }
     fetchPlanet();
-  },[]);
+  }, []);
 
   return (
     <StarWarsContext.Provider value={ { context, setContext } }>
