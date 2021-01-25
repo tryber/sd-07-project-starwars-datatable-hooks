@@ -82,7 +82,6 @@ function App() {
   }
 
   function sortValues() {
-    console.log(column, sort);
     if (sort === 'ASC') {
       const sorted = planets.sort((item1, item2) => item1[column] - item2[column]);
       setSortedPlanets(sorted);
