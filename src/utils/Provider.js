@@ -6,11 +6,18 @@ import StarWarsContext from '../context/StarWarsContext';
 function Provider(props) {
   const [data, setData] = useState([]);
   const [title, setTitle] = useState([]);
+  const names = 'name';
+  const menosUm = -1;
 
   const fetchStarWarsPlanet = async () => {
     const fetchPlanet = await fetch('https://swapi-trybe.herokuapp.com/api/planets/');
     const { results } = await fetchPlanet.json();
-    setData(await results);
+    setData(results.sort((a, b) => {
+      if (a[names] > b[names]) {
+        return 1;
+      }
+      return menosUm;
+    }));
     setTitle(Object.keys(...results));
   };
 
@@ -27,6 +34,7 @@ function Provider(props) {
   const contextStarWars = {
     fetchStarWars: fetchStarWarsPlanet,
     data,
+    setData,
     title,
   };
   const { children } = props;

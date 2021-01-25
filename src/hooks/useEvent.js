@@ -10,6 +10,10 @@ function useEvent() {
         name: '',
       },
       filterByNumericValues: [],
+      order: {
+        collumn: 'name',
+        sort: 'ASC',
+      },
     },
   );
 
@@ -19,6 +23,8 @@ function useEvent() {
 
   const [option, setOption] = useState(['population',
     'orbital_period', 'diameter', 'rotation_period', 'surface_water']);
+
+  const [test, setTest] = useState([]);
 
   const titles = title.filter((res) => res !== 'residents');
 
@@ -40,6 +46,14 @@ function useEvent() {
     const objValues = { ...values };
     objValues[name] = value;
     setValues(objValues);
+  };
+
+  const handlerChangeSorted = ({ target }) => {
+    const { name, value } = target;
+    setFilters({
+      ...filters,
+      order: { ...filters.order, [name]: value },
+    });
   };
 
   const { collumn, condition, number } = values;
@@ -87,12 +101,43 @@ function useEvent() {
     setFilter(false);
   };
 
-  const { filterByNumericValues } = filters;
+  const handlerClickSorted = () => {
+    const zero = 0;
+    const menosUm = -1;
+    const { order } = filters;
+    const { collumn: col, sort } = order;
+    if (sort === 'ASC') {
+      if (col === 'name') {
+        setTest(data.sort((a, b) => {
+          if (a[col] > b[col]) return 1;
+          if (a[col] < b[col]) return menosUm;
+          return zero;
+        }));
+      } else {
+        setTest(data.sort((a, b) => a[col] - b[col]));
+      }
+    } else if (sort === 'DESC') {
+      if (col === 'name') {
+        setTest(data.sort((a, b) => {
+          if (a[col] < b[col]) return 1;
+          if (a[col] > b[col]) return menosUm;
+          return zero;
+        }));
+      } else {
+        setTest(data.sort((a, b) => b[col] - a[col]));
+      }
+    }
+  };
+
+  console.log(test);
 
   const filtered = filter ? filterNumber : filterName;
 
+  const { filterByNumericValues } = filters;
+
   return [filtered, titles, option, names, filterByNumericValues,
-    handlerNameChange, handlerNumberChange, handlerClick, removeFilter];
+    handlerNameChange, handlerNumberChange, handlerClick,
+    removeFilter, handlerChangeSorted, handlerClickSorted];
 }
 
 export default useEvent;

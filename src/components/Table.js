@@ -3,7 +3,8 @@ import useEvent from '../hooks/useEvent';
 
 function Table() {
   const [filtered, titles, option, names, filterByNumericValues,
-    handlerNameChange, handlerNumberChange, handlerClick, removeFilter] = useEvent();
+    handlerNameChange, handlerNumberChange, handlerClick,
+    removeFilter, handlerChangeSorted, handlerClickSorted] = useEvent();
 
   return (
     <div className="App">
@@ -51,7 +52,6 @@ function Table() {
         </div>
         <br />
         <div>
-          <br />
           {filterByNumericValues.map(({ collumn, condition, number }, index) => (
             <div key={ index } data-testid="filter">
               <span>
@@ -76,15 +76,56 @@ function Table() {
               </button>
             </div>
           ))}
+          <br />
+          <button
+            type="button"
+            data-testid="button-filter"
+            onClick={ handlerClick }
+          >
+            Filtrar
+          </button>
         </div>
         <br />
-        <button
-          type="button"
-          data-testid="button-filter"
-          onClick={ handlerClick }
-        >
-          Filtrar
-        </button>
+        <div>
+          <select
+            name="collumn"
+            data-testid="column-sort"
+            onChange={ handlerChangeSorted }
+          >
+            {
+              titles.map((tit, index) => (
+                <option key={ index }>{ tit }</option>
+              ))
+            }
+          </select>
+          <br />
+          <input
+            type="radio"
+            name="sort"
+            value="ASC"
+            data-testid="column-sort-input-asc"
+            onChange={ handlerChangeSorted }
+            defaultChecked
+          />
+          ASC
+          <br />
+          <input
+            type="radio"
+            name="sort"
+            value="DESC"
+            data-testid="column-sort-input-desc"
+            onChange={ handlerChangeSorted }
+          />
+          Desc
+          <br />
+          <button
+            type="button"
+            data-testid="column-sort-button"
+            onClick={ handlerClickSorted }
+          >
+            Order
+          </button>
+        </div>
       </div>
       <br />
       <br />
