@@ -39,20 +39,17 @@ class Table extends React.Component {
   }
 
   getHeaders(value) {
-    const planets = Object
-      .entries(value)
-      .map((each) => each[1]);
-    const headers = [];
-
-    planets.forEach((planet, index) => {
-      const listOfPlanets = Object.keys(planet);
-      headers.push(
-        <th key={ `header-${index}` }>
-          { listOfPlanets[index] }
-        </th>,
-      );
-    });
-    return headers;
+    const listOfHeaders = [];
+    // referência: https://stackoverflow.com/questions/65640323/reactjs-cannot-convert-undefined-or-null-to-object-w-formik
+    if (value !== null && value !== undefined
+      && typeof Object.keys(value) !== 'undefined'
+      && Object.keys(value).length >= 1
+    ) {
+      Object.keys(value).forEach((header, index) => listOfHeaders.push(
+        <th key={ `header-${index}` }>{header}</th>,
+      ));
+    }
+    return listOfHeaders;
   }
 
   render() {
@@ -62,7 +59,7 @@ class Table extends React.Component {
           <table className="table">
             <thead>
               <tr>
-                {this.getHeaders(value)}
+                {this.getHeaders(value[0])}
               </tr>
             </thead>
             <tbody>

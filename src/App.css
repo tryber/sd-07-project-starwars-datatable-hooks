@@ -6,6 +6,6 @@
   background-color: gray;
 }
 
-.table tr {
+.table thead {
   background-color: greenyellow;
 }
