@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 function Table() {
-  const data = useContext(StarWarsContext);
+  const { arrayPlanets } = useContext(StarWarsContext);
   return (
     <div>
       <table border="1">
@@ -26,7 +26,7 @@ function Table() {
         </thead>
 
         {
-          data.map((item) => (
+          arrayPlanets.map((item) => (
             <tbody key={ item.name }>
               <tr>
                 <td>{item.climate}</td>

@@ -5,17 +5,25 @@ import getPlanets from '../services/API';
 
 function StarWarsProvider({ children }) {
   const [data, setData] = useState([]);
+  const [arrayPlanets, setArrayPlanets] = useState([]);
 
   useEffect(() => {
     async function fetchData() {
       const response = await getPlanets();
       setData(response);
+      setArrayPlanets(response);
     }
     fetchData();
   }, []);
 
   return (
-    <StarWarsContext.Provider value={ data }>
+    <StarWarsContext.Provider
+      value={ { data,
+        setData,
+        arrayPlanets,
+        setArrayPlanets,
+      } }
+    >
       {children}
     </StarWarsContext.Provider>
   );
