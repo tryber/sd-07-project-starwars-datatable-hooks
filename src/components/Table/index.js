@@ -4,19 +4,10 @@ import './Table.css';
 
 function Table() {
   const { data: { planets },
-    filteredPlanetsByName,
-    filteredPlanetsByValue } = useContext(StarWarsContext);
+    getToRender,
+  } = useContext(StarWarsContext);
   const noNull = 0;
 
-  function getToRender() {
-    if (filteredPlanetsByValue.length > noNull) {
-      return filteredPlanetsByValue;
-    }
-    if (filteredPlanetsByName.length > noNull) {
-      return filteredPlanetsByName;
-    }
-    return planets;
-  }
   const getHeaders = () => {
     const keys = Object.keys(planets[0]);
     return keys.filter((key) => key !== 'residents');
@@ -40,7 +31,7 @@ function Table() {
             {getToRender().length > noNull
     && getToRender().map((planet) => (
       <tr key={ planet.name }>
-        <td>{planet.name}</td>
+        <td data-testid="planet-name">{planet.name}</td>
         <td>{planet.rotation_period}</td>
         <td>{planet.orbital_period}</td>
         <td>{planet.diameter}</td>

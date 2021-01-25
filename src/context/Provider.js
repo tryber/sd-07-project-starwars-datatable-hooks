@@ -5,6 +5,7 @@ import getStarWarsDataAPI from '../services/contextAPI';
 
 function Provider({ children }) {
   const noNull = 0;
+  const negative = -1;
   const [planets, setPlanets] = useState([]);
   const [name, setSearchByName] = useState('');
   const [filteredPlanetsByName, setFilteredByName] = useState([]);
@@ -13,6 +14,9 @@ function Provider({ children }) {
   const [value, setSearchFilterValue] = useState(noNull);
   const [objectFilter, setObjectFilter] = useState([]);
   const [filteredPlanetsByValue, setFilteredByValue] = useState([]);
+  const [sortOption, setSortOption] = useState('ASC');
+  const [columnToSort, setSearchFilterColumnSort] = useState('population');
+  const [orderedList, setOrderedList] = useState([]);
 
   const [columnFilter, setColumnFilter] = useState(['population',
     'orbital_period',
@@ -25,13 +29,19 @@ function Provider({ children }) {
 
   const fetchPlanets = async () => {
     const response = await getStarWarsDataAPI();
-    const planetsObject = response.results;
-    setPlanets(planetsObject);
+    const planetsObject = await response.results;
+    const orderedplanetsObject = planetsObject.sort((item1, item2) => {
+      if (item1.name > item2.name) return 1;
+      if (item1.name < item2.name) return negative;
+      return noNull;
+    });
+    setPlanets(orderedplanetsObject);
+    return planets;
   };
 
   useEffect(() => {
     fetchPlanets();
-  }, []);
+  });
 
   useEffect(() => {
     setFilteredByName(
@@ -46,6 +56,29 @@ function Provider({ children }) {
     setComparisonFilter([...comparisonFilter, param2]);
     setFilteredByValue([]);
   };
+
+  function getToRender() {
+    if (filteredPlanetsByValue.length > noNull) {
+      return filteredPlanetsByValue;
+    }
+    if (filteredPlanetsByName.length > noNull) {
+      return filteredPlanetsByName.sort((item1, item2) => item1.name - item2.name);
+    }
+    if (orderedList.length > noNull) {
+      return orderedList;
+    }
+    return planets;
+  }
+
+  const orderList = () => {
+    setOrderedList(...getToRender().sort((item1, item2) => {
+      if (sortOption === 'ASC') {
+        return (item1[columnToSort] - item2[columnToSort]);
+      }
+      return (item2[columnToSort] - item1[columnToSort]);
+    }));
+  };
+
   const filterBySetValues = () => {
     if (comparison === 'maior que') {
       setFilteredByValue(
@@ -82,14 +115,22 @@ function Provider({ children }) {
           setSearchFilterValue,
           filterBySetValues,
           filteredPlanetsByValue,
+          getToRender,
           comparisonFilter,
           columnFilter,
           deleteFilter,
+          setSortOption,
+          setSearchFilterColumnSort,
+          orderList,
           filters: {
             filterByName: {
               name,
             },
             filterByNumericValues: objectFilter,
+            order: {
+              column: columnToSort,
+              sort: sortOption,
+            },
           } }
       }
     >

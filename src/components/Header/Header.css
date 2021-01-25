@@ -101,3 +101,9 @@
 .filter-button:hover {
   background-color: #6115c5;
 }
+
+.input-radio {
+  color: rgb(210, 208, 186);
+  font-size: 1em;
+  font-weight: 600;
+}

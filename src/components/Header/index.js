@@ -9,7 +9,11 @@ function Header() {
     setSearchFilterValue,
     filterBySetValues,
     columnFilter,
-    comparisonFilter } = useContext(StarWarsContext);
+    comparisonFilter,
+    setSearchFilterColumnSort,
+    setSortOption,
+    orderList,
+  } = useContext(StarWarsContext);
 
   return (
     <header className="header">
@@ -74,7 +78,49 @@ function Header() {
             >
               Filter
             </button>
+
           </fieldset>
+          <select
+            className="input-column"
+            data-testid="column-sort"
+            name="column-sort"
+            id="column-sort"
+            onChange={ (e) => setSearchFilterColumnSort(e.target.value) }
+          >
+            { columnFilter.map((option) => (
+              <option key={ option } value={ option }>{option}</option>
+            ))}
+          </select>
+          <label className="input-radio" htmlFor="ASC">
+            ASC
+            <input
+              type="radio"
+              data-testid="column-sort-input-asc"
+              id="ASC"
+              name="sort-option"
+              value="ASC"
+              onClick={ () => setSortOption('ASC') }
+            />
+          </label>
+          <label className="input-radio" htmlFor="DESC">
+            DESC
+            <input
+              type="radio"
+              data-testid="column-sort-input-desc"
+              id="DESC"
+              name="sort-option"
+              value="DESC"
+              onClick={ () => setSortOption('DESC') }
+            />
+          </label>
+          <button
+            className="filter-button"
+            type="button"
+            data-testid="column-sort-button"
+            onClick={ orderList }
+          >
+            Sort
+          </button>
         </div>
       </div>
     </header>
