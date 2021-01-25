@@ -49,6 +49,9 @@ const StarWarsProvider = ({ children }) => {
     });
   };
 
+  const [column, setColumn] = useState([
+    'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water']);
+
   const handleClick = () => {
     setFilter({
       ...filter,
@@ -58,8 +61,19 @@ const StarWarsProvider = ({ children }) => {
         value: form.value,
       }],
     });
+
+    let test = [];
+
+    for (let i = 0; i < column.length; i += 1) {
+      if (column[i] !== form.column) {
+        test.push(column[i]);
+      }
+    }
+
+    setColumn(test);
+
     setForm({
-      column: 'population',
+      column: column[0],
       comparison: 'maior que',
       value: 0,
     });
@@ -69,6 +83,7 @@ const StarWarsProvider = ({ children }) => {
     data,
     filter,
     form,
+    column,
     filterText,
     handleColumnChange,
     handleComparisonChange,

@@ -28,6 +28,9 @@ const Table = () => {
         </thead>
         <tbody>
           {data.map((planet, key) => {
+
+            console.log(Object.entries(filter)[1][1])
+
             const { column, comparison, value } = Object.entries(filter)[1][1][0];
 
             let bool;

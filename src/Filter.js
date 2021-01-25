@@ -9,9 +9,11 @@ const Filter = () => {
     handleValueChange,
     form,
     handleClick,
+    column,
   } = useContext(StarWarsContext);
   // console.log(Object.entries(filter)[0][1])
   // console.log(filter)
+  console.log(column);
   return (
     <div>
       <input
@@ -30,11 +32,15 @@ const Filter = () => {
           value={ form.column }
           onChange={ (event) => handleColumnChange(event.target.value) }
         >
-          <option value="population">population</option>
+
+        {column.map((e, k) => (
+          <option key={ k } value={ e }>{ e }</option>
+        ))}
+          {/* <option value="population">population</option>
           <option value="orbital_period">orbital_period</option>
           <option value="diameter">diameter</option>
           <option value="rotation_period">rotation_period</option>
-          <option value="surface_water">surface_water</option>
+          <option value="surface_water">surface_water</option> */}
         </select>
       </label>
       <label htmlFor="comparison-filter">
