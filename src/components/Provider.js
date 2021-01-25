@@ -8,6 +8,7 @@ function Provider({ children }) {
     filterByName: { name: '' },
     filterByNumericValues: [],
   });
+  const [filteredPlanets, setfilteredPlanets] = useState([]);
 
   const fetchApi = async () => {
     const response = await fetch('https://swapi-trybe.herokuapp.com/api/planets/');
@@ -31,9 +32,10 @@ function Provider({ children }) {
   };
 
   const filterByNumericValues = (numericFilter) => {
+    const { filterByNumericValues: numericFilters } = filters;
     setFilters({
       ...filters,
-      filterByNumericValues: [...filterByNumericValues, { numericFilter }],
+      filterByNumericValues: [...numericFilters, numericFilter],
     });
   };
 
@@ -45,16 +47,41 @@ function Provider({ children }) {
     'surface_water',
   ];
 
-  const data = {
-    apiResults,
+  const filterComparison = (planet, filter) => {
+    const { column, comparison, value } = filter;
+    const number = parseInt(value, 10);
+    if (comparison === 'maior que' && !(planet[column] === 'unknown')) {
+      return Number(planet[column]) > number;
+    }
+    if (comparison === 'menor que' && !(planet[column] === 'unknown')) {
+      return Number(planet[column]) < number;
+    }
+    if (comparison === 'igual a' && !(planet[column] === 'unknown')) {
+      return Number(planet[column]) === number;
+    }
+  };
+
+  useEffect(() => {
+    let numericFiltered = Array.from(apiResults);
+    filters.filterByNumericValues.forEach((filter) => {
+      numericFiltered = numericFiltered
+        .filter((planet) => filterComparison(planet, filter));
+    });
+    const filtered = numericFiltered
+      .filter((planet) => planet.name.includes(filters.filterByName.name));
+    setfilteredPlanets(filtered);
+  }, [filters, apiResults]);
+
+  const tableData = {
     filters,
     columns,
     filterByName,
     filterByNumericValues,
+    filteredPlanets,
   };
 
   return (
-    <StarWarsContext.Provider value={ data }>
+    <StarWarsContext.Provider value={ tableData }>
       {children}
     </StarWarsContext.Provider>
   );

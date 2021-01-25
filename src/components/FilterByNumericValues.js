@@ -1,17 +1,25 @@
-import React, { useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 function FilterByNumericValues() {
-  const { filters, columns } = useContext(StarWarsContext);
+  const { filters, columns, filterByNumericValues } = useContext(StarWarsContext);
+
+  const [columnFilter, setColumnFilter] = useState('');
+  const [comparisonFilter, setComparisonFilter] = useState('');
+  const [valueFilter, setValueFilter] = useState('');
 
   const comparisons = ['maior que', 'menor que', 'igual a'];
+
+  const handleClick = () => {
+    filterByNumericValues({ columnFilter, comparisonFilter, valueFilter });
+  };
 
   return (
     <div>
       <select
         data-testid="column-filter"
         name="column"
-        // onChange={ (target) => handleFilter(target) }
+        onChange={ ({ target: { value } }) => setColumnFilter(value) }
       >
         { columns.map((column) => (
           <option key={ column } value={ column }>
@@ -22,7 +30,7 @@ function FilterByNumericValues() {
       <select
         data-testid="comparison-filter"
         name="comparison"
-        // onChange={ (target) => handleFilter(target) }
+        onChange={ ({ target: { value } }) => setComparisonFilter(value) }
       >
         {
           comparisons.map((opt) => (
@@ -37,11 +45,12 @@ function FilterByNumericValues() {
         name="value"
         type="number"
         value={ filters.filterByNumericValues.value }
-        // onChange={ (target) => handleFilter(target) }
+        onChange={ ({ target: { value } }) => setValueFilter(value) }
       />
       <button
         type="button"
         data-testid="button-filter"
+        onClick={ handleClick }
       >
         Filtrar
       </button>
