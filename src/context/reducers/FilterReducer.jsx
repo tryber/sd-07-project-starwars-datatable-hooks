@@ -23,8 +23,7 @@ function FilterReducert(state, action) {
   case FILTER_ORDER:
     return {
       ...state,
-      filterByNumericValues: [...state.filterByNumericValues
-        .filter(({ column }) => column !== action.payload)],
+      order: action.payload,
     };
   default:
     return state;

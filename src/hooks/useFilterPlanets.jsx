@@ -1,18 +1,6 @@
 import { useContext } from 'react';
 import { StarWarsContext } from '../context';
-
-const compare = (a, b, simbol) => {
-  switch (simbol) {
-  case 'maior que':
-    return (+a > +b);
-  case 'menor que':
-    return (+a < +b);
-  case 'igual a':
-    return (+a === +b);
-  default:
-    return null;
-  }
-};
+import { sortPlanets, compare } from '../services';
 
 export default function useFilterPlanets() {
   const {
@@ -20,6 +8,7 @@ export default function useFilterPlanets() {
     filters: {
       filterByName: { name },
       filterByNumericValues,
+      order,
     },
   } = useContext(StarWarsContext);
 
@@ -34,6 +23,20 @@ export default function useFilterPlanets() {
   const newPlanets = planets.filter(
     (planet) => planet.name.includes(name) && filterPlanet(planet),
   );
+
+  if (Object.keys(order).length) {
+    const { column, sort } = order;
+    switch (sort) {
+    case 'DESC':
+      sortPlanets(newPlanets, column, false);
+      break;
+    case 'ASC':
+      sortPlanets(newPlanets, column, true);
+      break;
+    default:
+      return null;
+    }
+  }
 
   return newPlanets;
 }

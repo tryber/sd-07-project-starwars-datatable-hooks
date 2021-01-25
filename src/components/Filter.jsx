@@ -1,6 +1,11 @@
 import React, { useContext, useState } from 'react';
 import { StarWarsContext } from '../context';
-import { useFiltersArr } from '../hooks';
+import { useColumnsKeys } from '../hooks';
+
+const removeColumn = [
+  'created',
+  'edited', 'url', 'films', 'residents', 'name', 'climate', 'gravity', 'terrain',
+];
 
 export default function Filter() {
   const initialState = { column: '', comparison: '', value: '' };
@@ -9,18 +14,12 @@ export default function Filter() {
   const setFilter = ({ target: { id, value } }) => {
     setNewFilters({ ...newFilters, [id]: value });
   };
+  const columns = useColumnsKeys(removeColumn);
   return (
     <div>
-      <div>
-        {useFiltersArr()}
-      </div>
       <select id="column" data-testid="column-filter" onChange={ setFilter }>
         <option>Column</option>
-        <option>population</option>
-        <option>orbital_period</option>
-        <option>diameter</option>
-        <option>rotation_period</option>
-        <option>surface_water</option>
+        {columns && columns.map((column, i) => (<option key={ i }>{column}</option>))}
       </select>
       <select id="comparison" data-testid="comparison-filter" onChange={ setFilter }>
         <option>Comparison</option>

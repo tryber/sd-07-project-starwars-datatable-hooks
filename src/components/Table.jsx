@@ -1,10 +1,11 @@
 import React, { useContext } from 'react';
 import { StarWarsContext } from '../context';
-import { useFilterPlanets } from '../hooks';
+import { useFilterPlanets, useColumnsKeys } from '../hooks';
 
 export default function Table() {
   const { data: { loading } } = useContext(StarWarsContext);
   const planets = useFilterPlanets();
+  const columns = useColumnsKeys(['residents']);
   return (
     loading
       ? (<h1>loading...</h1>)
@@ -12,51 +13,17 @@ export default function Table() {
         <table>
           <thead>
             <tr>
-              <th>name</th>
-              <th>climate</th>
-              <th>diameter</th>
-              <th>gravity</th>
-              <th>orbital_period</th>
-              <th>population</th>
-              <th>terrain</th>
-              <th>rotation_period</th>
-              <th>surface_water</th>
-              <th>url</th>
-              <th>films</th>
-              <th>created</th>
-              <th>edited</th>
+              {columns && columns.map((column, index) => (
+                <th key={ index }>{column}</th>
+              ))}
             </tr>
           </thead>
           <tbody>
-            {planets.map(({
-              name,
-              climate,
-              diameter,
-              gravity,
-              orbital_period: orbital,
-              population,
-              terrain,
-              rotation_period: rotation,
-              surface_water: surface,
-              url,
-              films,
-              created,
-              edited,
-            }, index) => (
+            {planets.map((planet, index) => (
               <tr key={ index }>
-                <td>{name}</td>
-                <td>{climate}</td>
-                <td>{diameter}</td>
-                <td>{gravity}</td>
-                <td>{orbital}</td>
-                <td>{population}</td>
-                <td>{terrain}</td>
-                <td>{rotation}</td>
-                <td>{surface}</td>
-                <td>{url}</td>
-                <td>{films.length}</td>
-                <td>{created}</td>
-                <td>{edited}</td>
+                <td data-testid="planet-name">{planet.name}</td>
+                {columns.filter((key) => key !== 'name')
+                  .map((key, i) => (<td key={ i }>{planet[key]}</td>))}
               </tr>
             ))}
           </tbody>

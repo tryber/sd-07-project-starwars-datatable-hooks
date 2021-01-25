@@ -1,10 +1,10 @@
 import React, { useContext } from 'react';
 import { StarWarsContext, FILTER_REMOVE } from '../context';
 
-export default function useFiltersArr() {
+export default function SetedsFilters() {
   const { filters: { filterByNumericValues }, dispatchFilter,
   } = useContext(StarWarsContext);
-  if (!filterByNumericValues.length) return null;
+  if (!filterByNumericValues.length) return <div />;
   return (
     <ul>
       {filterByNumericValues.map(({ column }, index) => (

@@ -3,10 +3,14 @@ import PropTypes from 'prop-types';
 import {
   FILTER_NAME, FILTER_COLUMN, FilterReducert, FetchPlanetsReducer } from './reducers';
 import StarWarsContext from './StarWarsContext';
-import fetchPlanets from '../services/API';
+import { fetchPlanets } from '../services';
 
 const initialStatePlanets = { planets: [], loading: true };
-const initialStateFilters = { filterByName: { name: '' }, filterByNumericValues: [] };
+const initialStateFilters = {
+  filterByName: { name: '' },
+  filterByNumericValues: [],
+  order: { column: 'name', sort: 'ASC' },
+};
 
 export default function Provider({ children }) {
   const [data, setPlanets] = useReducer(FetchPlanetsReducer, initialStatePlanets);
