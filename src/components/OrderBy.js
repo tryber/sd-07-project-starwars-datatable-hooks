@@ -27,7 +27,7 @@ function OrderBy() {
           name="order"
           data-testid="column-sort-input-asc"
           onChange={ ({ target }) => setSort(target.value) }
-          checked
+          checked={ sort === 'ASC' }
         />
         Ascendente
       </label>
@@ -40,6 +40,7 @@ function OrderBy() {
           name="order"
           data-testid="column-sort-input-desc"
           onChange={ ({ target }) => setSort(target.value) }
+          checked={ sort === 'DESC' }
         />
         Descendente
       </label>

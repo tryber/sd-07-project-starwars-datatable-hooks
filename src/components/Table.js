@@ -11,7 +11,7 @@ function Table() {
   const { order: { sort, column: columnSort } } = filters;
   planets.sort((a, b) => {
     if (sort === 'ASC') {
-      if (!Number.isNaN(a[columnSort]) || !Number.isNaN(b[columnSort])) {
+      if (!Number.isNaN(Number(a[columnSort])) || !Number.isNaN(Number(b[columnSort]))) {
         return a[columnSort] - b[columnSort];
       } if (a[columnSort] < b[columnSort]) {
         return minusOne;
@@ -20,7 +20,7 @@ function Table() {
       }
       return zero;
     } if (sort === 'DESC') {
-      if (!Number.isNaN(a[columnSort]) || !Number.isNaN(b[columnSort])) {
+      if (!Number.isNaN(Number(a[columnSort])) || !Number.isNaN(Number(b[columnSort]))) {
         return b[columnSort] - a[columnSort];
       } if (a[columnSort] > b[columnSort]) {
         return minusOne;

@@ -26,7 +26,7 @@ function FilterByNumericValues() {
         onChange={ ({ target }) => setColumn(target.value) }
         data-testid="column-filter"
       >
-        <option hidden>Selecione</option>
+        {/* <option hidden>Selecione</option> */}
         {columns.map((item) => {
           let isExistColumn = false;
           filterNumerics.forEach((filter) => {
@@ -43,7 +43,7 @@ function FilterByNumericValues() {
         onChange={ ({ target }) => setComparison(target.value) }
         data-testid="comparison-filter"
       >
-        <option hidden>Selecione</option>
+        {/* <option hidden>Selecione</option> */}
         {comparisons.map((operand) => {
           let isExistOperand = false;
           filterNumerics.forEach((filter) => {
