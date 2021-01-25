@@ -24,7 +24,7 @@ function Table() {
             <th>Edited</th>
             <th>Url</th>
           </tr>
-          {filteredPlanets
+          {filteredPlanets.length > 0 && filteredPlanets
             .map((item) => (
               <tr key={ item.name }>
                 <td>{item.name}</td>

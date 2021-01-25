@@ -67,9 +67,15 @@ function Provider({ children }) {
       numericFiltered = numericFiltered
         .filter((planet) => filterComparison(planet, filter));
     });
-    const filtered = numericFiltered
-      .filter((planet) => planet.name.includes(filters.filterByName.name));
-    setfilteredPlanets(filtered);
+    if (filters.filterByName.name !== '') {
+      const filtered = numericFiltered
+        .filter((planet) => planet.name.includes(filters.filterByName.name));
+        setfilteredPlanets(filtered);
+    }
+    else {
+      setfilteredPlanets(numericFiltered);
+    }
+
   }, [filters, apiResults]);
 
   const tableData = {

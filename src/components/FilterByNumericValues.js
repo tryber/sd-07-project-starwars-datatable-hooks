@@ -10,8 +10,9 @@ function FilterByNumericValues() {
 
   const comparisons = ['maior que', 'menor que', 'igual a'];
 
-  const handleClick = () => {
-    filterByNumericValues({ columnFilter, comparisonFilter, valueFilter });
+  function handleClick () {
+    const numericFilter = { columnFilter, comparisonFilter, valueFilter };
+    filterByNumericValues(numericFilter);
   };
 
   return (
