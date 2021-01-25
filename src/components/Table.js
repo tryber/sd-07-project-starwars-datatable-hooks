@@ -3,7 +3,6 @@ import StarWarsContext from '../context/StarWarsContext';
 
 function Table() {
   const arrayOfOptions = [
-    '',
     'population',
     'orbital_period',
     'diameter',
