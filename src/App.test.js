@@ -219,7 +219,7 @@ describe('Crie um filtro para valores numéricos', () => {
     fireEvent.change(await screen.findByTestId(VALUE_FILTER_SELECTOR), { target: { value: '40' }});
     fireEvent.click(await screen.findByTestId(BUTTON_FILTER_SELECTOR));
 
-    expect(await screen.findAllByRole(ROW_ROLE_SELECTOR)).toHaveLength(8);
+    expect(await screen.findAllByRole(ROW_ROLE_SELECTOR)).toHaveLength(7);
   });
 
   it('Filtra utilizando a comparação "maior que"', async () => {
