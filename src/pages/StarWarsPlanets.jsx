@@ -4,7 +4,7 @@ import Table from '../components/Table';
 
 function StarWarsPlanets() {
   const { data, filter, dispatch } = useContext(StarWarsContext);
-  const { name, column, comparison, value, sortParameter } = filter;
+  const { name, column, comparison, value, sortParameter, applyFilter } = filter;
 
   const handleChange = ({ target }) => {
     dispatch({ type: target.name, value: target.value });
@@ -65,6 +65,16 @@ function StarWarsPlanets() {
       </button>
       <br />
       <br />
+      <div data-testid="filter">
+        Remove filter
+        <button
+          name="reset"
+          type="button"
+          onClick={ handleChange }
+        >
+          X
+        </button>
+      </div>
       Sort:
       <select
         name="ordenation"

@@ -59,15 +59,26 @@ const StarWarsProvider = ({ children }) => {
         applySort: false,
       };
     case 'apply-filter':
-      if (state.applyFilter) {
+      /* if (state.applyFilter) {
         return {
           ...state,
           applyFilter: false,
         };
-      }
+      } */
       return {
         ...state,
         applyFilter: true,
+      };
+    case 'reset':
+      return {
+        name: '',
+        column: 'population',
+        comparison: 'maior que',
+        value: 0,
+        applyFilter: false,
+        sort: 'asc',
+        sortParameter: 'name',
+        applySort: true,
       };
     default:
       return state;
