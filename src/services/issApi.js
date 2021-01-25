@@ -1,4 +1,4 @@
-const PLANETS_API = "https://swapi-trybe.herokuapp.com/api/planets/";
+const PLANETS_API = 'https://swapi-trybe.herokuapp.com/api/planets/';
 // Alexandre Faustino
 
 const planets = async () => {
