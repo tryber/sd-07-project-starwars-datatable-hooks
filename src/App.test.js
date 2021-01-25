@@ -240,7 +240,7 @@ describe('Crie um filtro para valores numéricos', () => {
       render(<App />);
     });
 
-    fireEvent.change(await screen.findByTestId(COLUMN_FILTER_SELECTOR), { target: { value: 'population' }});
+    fireEvent.change(await screen.findByTestId(COLUMN_FILTER_SELECTOR), { target: { value: 'population' }});  
     fireEvent.change(await screen.findByTestId(COMPARISON_FILTER_SELECTOR), { target: { value: 'igual a' }});
     fireEvent.change(await screen.findByTestId(VALUE_FILTER_SELECTOR), { target: { value: '200000' }});
     fireEvent.click(await screen.findByTestId(BUTTON_FILTER_SELECTOR));
@@ -285,7 +285,7 @@ describe('Não utilize filtros repetidos', () => {
   });
 });
 
-describe('Apague o filtro de valores numéricos e desfaça as filtragens dos dados da tabela ao clicar no ícone de `X` de um dos filtro', () => {
+describe.only('Apague o filtro de valores numéricos e desfaça as filtragens dos dados da tabela ao clicar no ícone de `X` de um dos filtro', () => {
   beforeAll(mockFetch);
   beforeEach(cleanup);
 

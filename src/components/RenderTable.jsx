@@ -1,11 +1,12 @@
 import React from 'react';
 import Table from './Table';
+import './RenderTable.css';
 
 const RenderTable = () => (
   <div>
     <table>
       <thead>
-        <tr>
+        <tr className="cabecalho">
           <th>Climate</th>
           <th>Created</th>
           <th>Diameter</th>

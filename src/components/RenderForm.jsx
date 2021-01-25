@@ -3,6 +3,7 @@ import StarWarsContext from '../context/StarWarsContext';
 import useFetch from '../hook/useFetch';
 import FilterByName from './FilterByName';
 import FilterNumeric from './FilterNumeric';
+import HeaderFilter from './HeaderFilter';
 
 const RenderForm = () => {
   const context = useContext(StarWarsContext);
@@ -24,6 +25,7 @@ const RenderForm = () => {
       <FilterByName />
       <div>
         <FilterNumeric />
+        <HeaderFilter />
       </div>
     </div>
   );

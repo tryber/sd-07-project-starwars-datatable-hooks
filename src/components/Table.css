@@ -1,0 +1,12 @@
+.tabela {
+    text-align: center;
+    width: 100%;
+}
+
+.tabela td {
+    background-color: rgb(75, 75, 85);
+}
+
+.tabela .Par {
+    background-color: silver;
+}
