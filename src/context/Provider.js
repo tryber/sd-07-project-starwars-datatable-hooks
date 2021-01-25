@@ -6,14 +6,13 @@ function Provider({ children }) {
   const [data, setData] = useState([]);
   const url = 'https://swapi-trybe.herokuapp.com/api/planets/';
 
-  const fetchData = async () => {
-    const request = await fetch(url);
-    const response = await request.json();
-    delete response.results.residents;
-    setData(response.results);
-  };
-
   useEffect(() => {
+    const fetchData = async () => {
+      const request = await fetch(url);
+      const response = await request.json();
+      delete response.results.residents;
+      setData(response.results);
+    };
     fetchData();
   }, []);
 
