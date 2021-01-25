@@ -1,9 +1,9 @@
 
-.death-star{
+.death-star {
     display: flex;
     flex-direction: row;
-    margin-top: 50px;
     margin-left: 15px;
+    margin-top: 50px;
 }
 
 .millenium-falcon {
@@ -36,28 +36,28 @@ td {
 
 .planet {
     margin-top: 30px;
-    width: 100%;
     height: 20%;
+    width: 100%;
 }
 
 .table-control {
-    border: 1px solid black;
     background-color: rgb(229, 233, 240);
+    border: 1px solid black;
     margin-left: 10px;
 }
 
-table tr:nth-child(even) /* CSS3 */ {
+table tr:nth-child(even) {
     background: #F0FFFF;
 }
 
 tr {
-    font-family: 'Times New Roman', Times, serif;
     background-color:  #869e86;
+    font-family: 'Times New Roman', Times, serif;
 }
 
 th {
-    border: 1px solid black;
     background-color: rgb(255, 255, 255);
+    border: 1px solid black;
 }
 
 .span-control {
