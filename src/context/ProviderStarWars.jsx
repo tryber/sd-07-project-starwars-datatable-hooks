@@ -5,11 +5,18 @@ import StarWarsContext from './StarWarsContext';
 
 function Provider({ children }) {
   const [data, setData] = useState([]);
+  const [planets, setPlanets] = useState([]);
+  const [filterNumber, setFilterNumber] = useState(false);
   const [filters, setFilters] = useState({
     filters: {
       filterByName: {
         name: '',
       },
+      filterByNumericValues: [{
+        column: '',
+        comparison: '',
+        value: 0,
+      }],
     },
   });
 
@@ -20,6 +27,7 @@ function Provider({ children }) {
       const request = await fetch(endPoint);
       const response = await request.json();
       setData(response.results);
+      setPlanets(response.results);
     } catch (err) {
       console.log(err);
     }
@@ -30,7 +38,17 @@ function Provider({ children }) {
   }, []);
 
   return (
-    <StarWarsContext.Provider value={ { data, setFilters, filters } }>
+    <StarWarsContext.Provider
+      value={ {
+        data,
+        planets,
+        setPlanets,
+        filters,
+        setFilters,
+        filterNumber,
+        setFilterNumber,
+      } }
+    >
       {children}
     </StarWarsContext.Provider>
   );

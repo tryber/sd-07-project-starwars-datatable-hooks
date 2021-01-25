@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 
 import StarWarsContext from '../../context/StarWarsContext';
 
-function Filters() {
+function FilterName() {
   const { filters, setFilters } = useContext(StarWarsContext);
   const { filters: { filterByName: { name } } } = filters;
 
@@ -20,4 +20,4 @@ function Filters() {
   );
 }
 
-export default Filters;
+export default FilterName;
