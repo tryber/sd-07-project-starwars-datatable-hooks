@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 
 import { StarWarsContext } from '../context/Provider';
 
@@ -27,10 +27,13 @@ export default function NumericFilter() {
       .filter((column) => {
         if (usedFilters.includes(column)) return false;
         return true;
-      })[1];
-    console.log(columns, usedFilters);
+      })[0];
     setChosenFilters({ ...chosenFilters, column: newColumn });
   };
+
+  useEffect(() => {
+    updateChosenColumn();
+  }, [usedFilters]);
 
   return (
     <div>
@@ -59,6 +62,7 @@ export default function NumericFilter() {
         ))}
       </section>
       <select
+        value={ chosenFilters.column }
         data-testid="column-filter"
         onChange={
           ({ target }) => setChosenFilters({ ...chosenFilters, column: target.value })
@@ -93,7 +97,6 @@ export default function NumericFilter() {
         type="button"
         onClick={ () => {
           filterByValues(chosenFilters);
-          updateChosenColumn();
         } }
       >
         filtrar

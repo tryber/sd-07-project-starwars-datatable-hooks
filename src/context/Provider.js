@@ -34,10 +34,10 @@ const StarWarsProvider = ({ children }) => {
     const newFilters = filters.filterByNumericValues
       .filter((filter) => filter.column !== column);
 
-    const newUsedFilters = usedFilters.filter((usedFilter) => usedFilter === column);
+    const newUsedFilters = usedFilters.filter((usedFilter) => usedFilter !== column);
 
-    setFilters({ ...filters, filterByNumericValues: newFilters });
     setUsedFilters(newUsedFilters);
+    setFilters({ ...filters, filterByNumericValues: newFilters });
   };
 
   const context = {
