@@ -4,6 +4,7 @@ import StarWarsContext from './StarWarsContext';
 import getPlanetsList from '../services/callAPI';
 
 function Provider({ children }) {
+  const zero = 0;
   const [isFetching, setIsFetching] = useState(false);
   const [data, setData] = useState({});
   const [headers, setHeaders] = useState([]);
@@ -12,7 +13,7 @@ function Provider({ children }) {
   const [clickFilter, setClickFilter] = useState(false);
   const [columnValue, setColumnValue] = useState('population');
   const [arithmeticLogic, setArithmeticLogic] = useState('maior que');
-  const [numberValue, setNumberValue] = useState(0);
+  const [numberValue, setNumberValue] = useState(zero);
 
   useEffect(() => {
     const callAPI = async () => {
@@ -38,18 +39,24 @@ function Provider({ children }) {
       setTBodyList(data.results);
       if (arithmeticLogic === 'maior que') {
         setTBodyList(tBodyList
-          .filter((currentObject) => Number(currentObject[columnValue]) > Number(numberValue)));
+          .filter((currentObject) => (
+            Number(currentObject[columnValue]) > Number(numberValue)
+          )));
       }
 
       if (arithmeticLogic === 'menor que') {
         setTBodyList(tBodyList
-          .filter((currentObject) => Number(currentObject[columnValue]) < Number(numberValue)));
+          .filter((currentObject) => (
+            Number(currentObject[columnValue]) < Number(numberValue)
+          )));
       }
 
       if (arithmeticLogic === 'igual a') {
         setTBodyList(tBodyList
-          .filter((currentObject) => Number(currentObject[columnValue]) === Number(numberValue)));
-        }
+          .filter((currentObject) => (
+            Number(currentObject[columnValue]) === Number(numberValue)
+          )));
+      }
       setClickFilter(false);
     }
   }, [clickFilter]);
