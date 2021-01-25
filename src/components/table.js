@@ -12,7 +12,7 @@ function Table() {
     setFilterData,
     useFilter,
     sortedData,
-    useSortedData
+    useSortedData,
   } = useContext(StarWarsContext);
 
   useEffect(() => {
@@ -42,7 +42,7 @@ function Table() {
     });
   }, [filters, data]);
 
-  const renderTableData = (data) => data.map((planet) => (
+  const renderTableData = (dataState) => dataState.map((planet) => (
     <tr key={ planet.name }>
       <td>{planet.climate}</td>
       <td>{planet.created}</td>
