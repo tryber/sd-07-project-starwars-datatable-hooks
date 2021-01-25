@@ -3,9 +3,9 @@ import StarWarsContext from '../context/StarWarsContext';
 
 function Table() {
   const { data, filters, setFilters } = useContext(StarWarsContext);
-  const zero = 0;
+  const numberMagic = 0;
   const filterPlanetsByName = (info) => (
-    info.filter((planet) => planet.name.includes(filters.filterByName.name))
+    info.filter((planet) => planet.name.toLowerCase().includes(filters.filterByName.name))
   );
 
   const biggerThen = (planerColumn, number) => (
@@ -30,7 +30,7 @@ function Table() {
   const filterPlanetsByNumericValues = (_data) => {
     const { filterByNumericValues } = filters;
 
-    if (filterByNumericValues.length === zero) {
+    if (filterByNumericValues.length === numberMagic) {
       return _data;
     }
 
@@ -48,10 +48,11 @@ function Table() {
 
   const [column, setColumn] = useState('population');
   const [comparison, setComparison] = useState('maior que');
-  const [value, setValue] = useState(zero);
+  const [value, setValue] = useState(numberMagic);
 
   const handleName = ({ target }) => {
-    setFilters({ ...filters, filterByName: { name: target.value } });
+    const namePlanet = target.value;
+    setFilters({ ...filters, filterByName: { name: namePlanet.toLowerCase() } });
   };
 
   const handleColumn = ({ target }) => {
@@ -67,8 +68,8 @@ function Table() {
   };
 
   useEffect(() => {
-    if (filters.availableColumns.length > zero) {
-      setColumn(filters.availableColumns[zero]);
+    if (filters.availableColumns.length > numberMagic) {
+      setColumn(filters.availableColumns[numberMagic]);
     }
   }, [filters.availableColumns]);
 

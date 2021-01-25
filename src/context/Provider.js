@@ -23,7 +23,7 @@ function StarWarsProvider({ children }) {
       setData(response);
     }
     getPlanet();
-  }, [setData]);
+  }, []);
 
   const context = {
     data,
