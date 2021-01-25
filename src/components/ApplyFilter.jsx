@@ -11,7 +11,6 @@ function ApplyFilter() {
   }
   const { column, comparison, value } = filters.filterByNumericValues[0];
   let filteredByNumeric = filteredByName;
-  console.log('compara: ', comparison);
   const excludeUnknown = filteredByName.filter((planet) => planet[column] !== 'unknow');
   switch (comparison) {
   case 'maior que':
@@ -29,8 +28,6 @@ function ApplyFilter() {
   default:
     break;
   }
-  console.log('ApplyFilter');
-  console.log(filteredByNumeric);
 
   return filteredByNumeric;
 }

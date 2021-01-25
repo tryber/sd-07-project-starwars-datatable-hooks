@@ -21,6 +21,7 @@ const NumericFilter = () => {
   const filtersValues = filters.filterByNumericValues;
 
   function handleChange({ target: { id, value } }) {
+    setCustomFilter(false);
     filtersValues[0][id] = value;
     dispatch({ type: 'FILTER_BY_COLUMN', payload: filtersValues });
   }
@@ -32,14 +33,14 @@ const NumericFilter = () => {
         id="column"
         dataTest="column-filter"
         options={ columnOptions }
-        selectValue={ filters.filterByNumericValues.column }
+        selectValue={ filters.filterByNumericValues[0].column }
         handleChange={ handleChange }
       />
       <DropDown
         id="comparison"
         dataTest="comparison-filter"
         options={ comparisonOptions }
-        selectValue={ filters.filterByNumericValues.comparison }
+        selectValue={ filters.filterByNumericValues[0].comparison }
         handleChange={ handleChange }
       />
       <label htmlFor="value">
@@ -48,7 +49,7 @@ const NumericFilter = () => {
           id="value"
           type="number"
           data-testid="value-filter"
-          value={ filters.filterByNumericValues.value }
+          value={ filters.filterByNumericValues[0].value }
           onChange={ handleChange }
         />
       </label>

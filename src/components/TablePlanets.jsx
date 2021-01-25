@@ -6,8 +6,6 @@ const TablePlanets = () => {
   const { data } = useContext(StarWarsContext);
   if (!data) return null;
   const filteredData = ApplyFilter();
-  console.log('API DATA:');
-  console.log(filteredData);
 
   return (
     <div>
