@@ -2,33 +2,33 @@ import React, { useContext, useState, useEffect } from 'react';
 import { StarWarsContext } from '../context';
 import { useColumnsKeys } from '../hooks';
 
-const removeColumn = [
+const initialRemoveColumnList = [
   'created',
   'edited', 'url', 'films', 'residents', 'name', 'climate', 'gravity', 'terrain',
 ];
 
-export default function Filter() {
-  const initialState = { column: '', comparison: '', value: '' };
-  const { dispatchFilter, FILTER_COLUMN } = useContext(StarWarsContext);
-  const [newFilters, setNewFilters] = useState(initialState);
-  const [removeItemColumn, removeItem] = useState(removeColumn);
+const initialFilter = { column: '', comparison: '', value: '' };
 
-  const { filters: { filterByNumericValues } } = useContext(StarWarsContext);
+export default function Filter() {
+  const {
+    dispatchFilter, FILTER_COLUMN, filters: { filterByNumericValues },
+  } = useContext(StarWarsContext);
+  const [newFilters, setNewFilters] = useState(initialFilter);
+  const [removeItemColumn, removeItem] = useState(initialRemoveColumnList);
+
   const setFilter = ({ target: { id, value } }) => {
     setNewFilters({ ...newFilters, [id]: value });
   };
 
   const setListToRemove = () => {
-    if (filterByNumericValues.length) {
-      removeItem([
-        ...removeColumn,
-        ...filterByNumericValues
-          .map(({ column }) => column),
-      ]);
-    }
+    removeItem([
+      ...initialRemoveColumnList,
+      ...filterByNumericValues
+        .map(({ column }) => column),
+    ]);
   };
 
-  useEffect(setListToRemove, [filterByNumericValues]);
+  useEffect(setListToRemove, [dispatchFilter]);
 
   const columns = useColumnsKeys(removeItemColumn);
 
