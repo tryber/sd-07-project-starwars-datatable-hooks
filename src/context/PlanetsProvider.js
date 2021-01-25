@@ -10,17 +10,29 @@ function PlanetsProvider({ children }) {
     filterByName: {
       name: '',
     },
+    filterByNumericValues: [],
   });
   useEffect(() => {
     fetchPlanets(setPlanets);
   }, [setPlanets]);
 
   const handleChangeName = (value) => {
-    setFilters({
-      filterByName: {
-        name: value,
-      },
-    });
+    setFilters((current) => (
+      { ...current,
+        filterByName: {
+          name: value,
+        },
+      }
+    ));
+  };
+
+  const addFilter = (filter) => {
+    setFilters((current) => (
+      {
+        ...current,
+        filterByNumericValues: [...current.filterByNumericValues, filter],
+      }
+    ));
   };
   return (
     <main>
@@ -33,6 +45,7 @@ function PlanetsProvider({ children }) {
           filters,
           setFilters,
           handleChangeName,
+          addFilter,
         } }
       >
         { children }
