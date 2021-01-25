@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import StartWarsContext from '../context/StarWarsContext';
 import TableHeader from './TableHeader';
 import TableBody from './TableBody';
+import SearchBar from './SearchBar';
 
 function Home() {
   const { isFetching } = useContext(StartWarsContext);
@@ -10,10 +11,13 @@ function Home() {
       <h1>May the force be with you</h1>
       {isFetching ? <h1>Loading...</h1>
         : (
-          <table border="1">
-            <TableHeader />
-            <TableBody />
-          </table>
+          <div>
+            <SearchBar />
+            <table border="1">
+              <TableHeader />
+              <TableBody />
+            </table>
+          </div>
         )}
     </main>
 

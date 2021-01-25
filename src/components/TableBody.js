@@ -2,11 +2,20 @@ import React, { useContext } from 'react';
 import StartWarsContext from '../context/StarWarsContext';
 
 export default function TableBody() {
-  const { planetsProvider } = useContext(StartWarsContext);
+  const { planetsProvider, searchedName } = useContext(StartWarsContext);
+  console.log(searchedName);
+  const getNull = 0;
+  const renderByName = () => {
+    if (searchedName.length > getNull) {
+      return searchedName;
+    }
+    return planetsProvider;
+  };
+
   return (
     <tbody>
       {
-        planetsProvider.map((planetData) => (
+        renderByName().map((planetData) => (
           <tr key={ planetData.name }>
             <td>{planetData.name}</td>
             <td>{planetData.rotation_period}</td>
