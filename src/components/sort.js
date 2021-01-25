@@ -98,7 +98,6 @@ function Sort() {
     } else {
       cloneFilterData.sort(compareDESC);
     }
-    // sort === 'ASC' ? cloneFilterData.sort(compareASC) : cloneFilterData.sort(compareDESC);
     setSortedData(cloneFilterData);
     setUseSortedData(true);
   };
@@ -133,7 +132,7 @@ function Sort() {
             <select
               data-testid="column-sort"
               id="columns"
-              onClick={ (event) => sortColumn(event.target.value) }
+              onChange={ (event) => sortColumn(event.target.value) }
             >
               {columns.map((item) => (
                 <option key={ item }>{ item }</option>

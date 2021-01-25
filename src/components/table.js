@@ -44,13 +44,13 @@ function Table() {
 
   const renderTableData = (dataState) => dataState.map((planet) => (
     <tr key={ planet.name }>
+      <td data-testid="planet-name">{planet.name}</td>
       <td>{planet.climate}</td>
       <td>{planet.created}</td>
       <td>{planet.diameter}</td>
       <td>{planet.edited}</td>
       <td>{planet.films}</td>
       <td>{planet.gravity}</td>
-      <td data-testid="planet-name">{planet.name}</td>
       <td>{planet.orbital_period}</td>
       <td>{planet.population}</td>
       <td>{planet.rotation_period}</td>
@@ -62,13 +62,13 @@ function Table() {
 
   const renderTableHeader = () => {
     const header = [
+      'name',
       'climate',
       'created',
       'diameter',
       'edited',
       'films',
       'gravity',
-      'name',
       'orbital_period',
       'population',
       'rotation_period',
