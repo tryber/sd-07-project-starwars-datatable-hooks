@@ -19,24 +19,32 @@ export default function OrderColumn() {
         {columns
           && columns.map((column, index) => (<option key={ index }>{column}</option>))}
       </select>
-      <input
-        name="sort"
-        onChange={ () => setValues('sort', 'ASC') }
-        type="radio"
-        data-testid="column-sort-input-asc"
-      />
-      <input
-        name="sort"
-        onChange={ () => setValues('sort', 'DESC') }
-        type="radio"
-        data-testid="column-sort-input-desc"
-      />
+      <label htmlFor="ASC">
+        <input
+          id="ASC"
+          name="sort"
+          onChange={ () => setValues('sort', 'ASC') }
+          type="radio"
+          data-testid="column-sort-input-asc"
+        />
+        Crescente
+      </label>
+      <label htmlFor="DESC">
+        <input
+          id="DESC"
+          name="sort"
+          onChange={ () => setValues('sort', 'DESC') }
+          type="radio"
+          data-testid="column-sort-input-desc"
+        />
+        Decrescente
+      </label>
       <button
         data-testid="column-sort-button"
         type="button"
         onClick={ () => dispatchFilter({ type: 'FILTER_ORDER', payload: filter }) }
       >
-        s
+        Ordene
       </button>
     </div>
   );

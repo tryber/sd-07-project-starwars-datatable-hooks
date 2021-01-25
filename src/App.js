@@ -5,10 +5,10 @@ import { Table, InputSearch, Filter, OrderColumn, SetedsFilters } from './compon
 function App() {
   return (
     <Provider>
-      <InputSearch />
       <SetedsFilters />
       <Filter />
       <OrderColumn />
+      <InputSearch />
       <Table />
     </Provider>
   );
