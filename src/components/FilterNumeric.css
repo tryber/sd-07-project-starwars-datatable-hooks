@@ -1,16 +1,8 @@
-.form {
+.form_numeric {
     width: 100%;
     padding: 10px;
     display: flex;
     flex-direction: row;
     background-color: silver;
-    margin: 10px;
-}
-
-.form label {
-    color: black;
-}
-
-.form input {
-    margin-left: 10px;
+    margin: 0px 10px;
 }

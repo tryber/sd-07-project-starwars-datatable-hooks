@@ -1,5 +1,6 @@
 import React, { useState, useContext } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
+import './FilterNumeric.css';
 
 const dropdown = [
   '',
@@ -30,47 +31,45 @@ function FilterNumeric() {
   );
 
   return (
-    <div>
-      <div>
-        <select
-          data-testid="column-filter"
-          onChange={ (event) => setLocalFilter({
-            ...localFilter,
-            column: event.target.value }) }
-        >
-          { dropNotFilter.map((column) => (
-            <option key={ column } value={ column }>
-              { column }
-            </option>
-          ))}
-        </select>
-        <select
-          data-testid="comparison-filter"
-          onChange={ (event) => setLocalFilter({
-            ...localFilter,
-            comparison: event.target.value }) }
-        >
-          {relationalOperator.map((comparacao, index) => (
-            <option key={ index } value={ comparacao }>
-              { comparacao }
-            </option>
-          ))}
-        </select>
-        <input
-          data-testid="value-filter"
-          type="number"
-          onChange={ (event) => setLocalFilter({
-            ...localFilter,
-            value: event.target.value }) }
-        />
-        <button
-          type="button"
-          data-testid="button-filter"
-          onClick={ () => setFilterNumber([...filterNumber, localFilter]) }
-        >
-          Filtrar
-        </button>
-      </div>
+    <div className="form_numeric">
+      <select
+        data-testid="column-filter"
+        onChange={ (event) => setLocalFilter({
+          ...localFilter,
+          column: event.target.value }) }
+      >
+        { dropNotFilter.map((column) => (
+          <option key={ column } value={ column }>
+            { column }
+          </option>
+        ))}
+      </select>
+      <select
+        data-testid="comparison-filter"
+        onChange={ (event) => setLocalFilter({
+          ...localFilter,
+          comparison: event.target.value }) }
+      >
+        {relationalOperator.map((comparacao, index) => (
+          <option key={ index } value={ comparacao }>
+            { comparacao }
+          </option>
+        ))}
+      </select>
+      <input
+        data-testid="value-filter"
+        type="number"
+        onChange={ (event) => setLocalFilter({
+          ...localFilter,
+          value: event.target.value }) }
+      />
+      <button
+        type="button"
+        data-testid="button-filter"
+        onClick={ () => setFilterNumber([...filterNumber, localFilter]) }
+      >
+        Filtrar
+      </button>
     </div>
   );
 }
