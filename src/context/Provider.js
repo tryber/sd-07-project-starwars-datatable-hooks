@@ -20,6 +20,7 @@ function Provider({ children }) {
       const planetsList = await getPlanetsList();
       setData(planetsList);
       setIsFetching(false);
+      setTBodyList(planetsList.results);
     };
     callAPI();
   }, []);
@@ -30,14 +31,28 @@ function Provider({ children }) {
       const currentList = results.filter(({ name }) => name.includes(searchBarValue));
       setTBodyList(currentList);
     }
-  }, [searchBarValue, data]);
+  }, [searchBarValue]);
 
-  // useEffect(() => {
-  //   if (data.results) {
-  //     c
-  //     currentList.filter(({}) => );
-  //   }
-  // }, [clickFilter, data]);
+  useEffect(() => {
+    if (data.results) {
+      setTBodyList(data.results);
+      if (arithmeticLogic === 'maior que') {
+        setTBodyList(tBodyList
+          .filter((currentObject) => Number(currentObject[columnValue]) > Number(numberValue)));
+      }
+
+      if (arithmeticLogic === 'menor que') {
+        setTBodyList(tBodyList
+          .filter((currentObject) => Number(currentObject[columnValue]) < Number(numberValue)));
+      }
+
+      if (arithmeticLogic === 'igual a') {
+        setTBodyList(tBodyList
+          .filter((currentObject) => Number(currentObject[columnValue]) === Number(numberValue)));
+        }
+      setClickFilter(false);
+    }
+  }, [clickFilter]);
 
   const contextValue = {
     isFetching,

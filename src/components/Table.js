@@ -3,6 +3,7 @@ import StarWarsContext from '../context/StarWarsContext';
 
 function Table() {
   const contextValue = useContext(StarWarsContext);
+  const { data } = contextValue;
 
   useEffect(() => {
     const { data: { results }, setHeaders } = contextValue;
@@ -11,7 +12,7 @@ function Table() {
         .filter((header) => header !== 'residents');
       setHeaders(getHeaders);
     }
-  }, [contextValue]);
+  }, [data]);
 
   return (
     <table>
