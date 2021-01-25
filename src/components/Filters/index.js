@@ -1,15 +1,21 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useState, useContext } from 'react';
 import StarWarsContext from '../../context/StarWarsContext';
 
-export default function Filters() {
+export default function Filter() {
   const {
-    handleChange,
-    handleNumericFilter,
-    handleFilterButton,
-    numericFilter,
-  } = useContext(StarWarsContext); // Defining wich resources from the Provider I`m using in this component
+    removeFilter,
+    filterNameOnchange,
+    setFilterByNumericValues,
+  } = useContext(StarWarsContext);
 
-  const [optionsColumn, setOptionsColumn] = useState([
+  const [newFilter, setNewFilter] = useState([]);
+  const [filterValues, setFilterValues] = useState({
+    column: '',
+    comparison: '',
+    value: '',
+  });
+
+  const [columnOptions, setColumnsOptions] = useState([
     'population',
     'diameter',
     'orbital_period',
@@ -17,73 +23,125 @@ export default function Filters() {
     'surface_water',
   ]);
 
-  const handleClick = () => {
-    if (!optionsColumn.length) return;
-    const lastIndex = numericFilter.length - 1;
-    const { column } = numericFilter[lastIndex];
+  const createNewfilter = (column, comparison, value) => (
+    <div
+      key={ column }
+      className="filter-column"
+      data-testid="filter"
+    >
+      <p>
+        Coluna
+        {column}
+      </p>
+      <p>
+        Comparção
+        {comparison}
+      </p>
+      <p>
+        Valor
+        {value}
+      </p>
+      <button
+        onClick={ () => removeFilter(column) }
+        type="button"
+      >
+        X
+      </button>
+    </div>
+  );
 
-    setOptionsColumn(
+  const handleClick = () => {
+    if (!columnOptions.length) return;
+
+    const { column, comparison, value } = filterValues;
+    const filtered = createNewfilter(column, comparison, value);
+
+    setColumnsOptions(
       (prevOptions) => prevOptions.filter((option) => option !== column),
+    );
+
+    setNewFilter(
+      (prevFilters) => [...prevFilters, filtered],
+    );
+
+    setFilterByNumericValues(
+      (prevValues) => [...prevValues, { column, comparison, value }],
     );
   };
 
-  useEffect(() => {
-    handleFilterButton();
-  }, [optionsColumn]);
+  const handleNumericValues = (name, value) => {
+    setFilterValues((prevState) => (
+      {
+        ...prevState,
+        [name]: value,
+      }
+    ));
+  };
 
   return (
     <section>
       <label htmlFor="name">
-        Filter by name
+        Filtrar por nome
         <input
           data-testid="name-filter"
           type="text"
           id="name"
-          onChange={ ({ target }) => handleChange(target.value) }
+          onChange={ ({ target }) => filterNameOnchange(target.value) }
         />
       </label>
       <label htmlFor="column">
-        Filter by:
+        Filtrar por coluna
+
         <select
           data-testid="column-filter"
-          onChange={ ({ target }) => handleNumericFilter(target.name, target.value) }
+          onChange={ ({ target }) => handleNumericValues(target.name, target.value) }
           name="column"
           id="column"
         >
+          <option>chose one column</option>
           {
-            optionsColumn.map((column, index) => (
+            columnOptions.map((column, index) => (
               <option key={ index }>{column}</option>
             ))
           }
         </select>
       </label>
-      <label htmlFor="comparation">
+      <label htmlFor="comparison">
+        comparacao
         <select
           data-testid="comparison-filter"
-          onChange={ ({ target }) => handleNumericFilter(target.name, target.value) }
-          name="comparation"
-          id="comparation"
+          onChange={ ({ target }) => handleNumericValues(target.name, target.value) }
+          name="comparison"
+          id="comparison"
         >
+          <option>chose a comparison</option>
           <option>maior que</option>
           <option>menor que</option>
           <option>igual a</option>
         </select>
       </label>
       <label htmlFor="name">
+        valor
         <input
           data-testid="value-filter"
           type="number"
           id="value"
-          onChange={ ({ target }) => handleNumericFilter(target.name, target.value) }
+          onChange={ ({ target }) => handleNumericValues(target.name, target.value) }
           name="value"
         />
       </label>
+      <div>
+        <p>Filtros</p>
+        {
+          newFilter && newFilter.map((filter) => filter)
+        }
+      </div>
       <button
         data-testid="button-filter"
         type="button"
         onClick={ handleClick }
       >
-        Add filter
+        Aplicar filtro
       </button>
     </section>
   );

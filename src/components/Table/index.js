@@ -2,31 +2,31 @@ import React, { useContext } from 'react';
 import StarWarsContext from '../../context/StarWarsContext';
 
 export default function Table() {
-  const { data } = useContext(StarWarsContext); // Defining wich resources from the Provider I`m using in this component
+  const { filteredPlanets } = useContext(StarWarsContext);
 
   return (
     <table>
       <thead>
         <tr>
-          <th>Name</th>
-          <th>Rotation Period</th>
-          <th>Orbital Period</th>
-          <th>Diameter</th>
-          <th>Climate</th>
-          <th>Gravity</th>
-          <th>Terrain</th>
-          <th>Surface Water</th>
-          <th>Population</th>
-          <th>Films</th>
-          <th>Created</th>
-          <th>Edited</th>
-          <th>Url</th>
+          <th>Nome</th>
+          <th>Periodo de rotação</th>
+          <th>Período de órbita</th>
+          <th>Diâmetro</th>
+          <th>Clima</th>
+          <th>Gravidade</th>
+          <th>Terreno</th>
+          <th>Água da superfície</th>
+          <th>População</th>
+          <th>Residentes</th>
+          <th>Filmes</th>
+          <th>Criado em</th>
+          <th>Editado em</th>
         </tr>
       </thead>
       <tbody>
 
         {
-          data ? data.map((planet) => {
+          filteredPlanets ? filteredPlanets.map((planet) => {
             const {
               name,
               rotation_period: rotationPeriod,
@@ -37,12 +37,11 @@ export default function Table() {
               terrain,
               surface_water: surfaceWater,
               population,
+              residents,
               films,
               created,
               edited,
-              url,
             } = planet;
-
             return (
               <tr key={ name }>
                 <td>{name}</td>
@@ -54,13 +53,13 @@ export default function Table() {
                 <td>{terrain}</td>
                 <td>{surfaceWater}</td>
                 <td>{population}</td>
+                <td>{residents}</td>
                 <td>{films}</td>
                 <td>{created}</td>
                 <td>{edited}</td>
-                <td>{url}</td>
               </tr>
             );
-          }) : <tr><td>Ops! Looks like we couldn`t find a planet :/</td></tr>
+          }) : <tr><td>Nenhum planeta encontrado</td></tr>
         }
       </tbody>
     </table>
