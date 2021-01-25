@@ -61,7 +61,7 @@ function StarWarsProvider({ children }) {
   useEffect(() => {
     getPlanetsAPI();
     filterDataButton();
-  }, [filter.nFilters.length, filterDataButton]);
+  }, [filter.nFilters.length]);
 
   const filterDataByName = (event) => {
     const { value } = event.target;
