@@ -40,7 +40,7 @@ class Table extends React.Component {
 
   getHeaders(value) {
     const listOfHeaders = [];
-    // referência: https://stackoverflow.com/questions/65640323/reactjs-cannot-convert-undefined-or-null-to-object-w-formik
+    // referência:  https://stackoverflow.com/questions/65640323/reactjs-cannot-convert-undefined-or-null-to-object-w-formik
     if (value !== null && value !== undefined
       && typeof Object.keys(value) !== 'undefined'
       && Object.keys(value).length >= 1
