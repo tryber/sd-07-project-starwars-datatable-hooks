@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 function FilterByNumericValues() {
-  const { filters, columns, filterByNumericValues } = useContext(StarWarsContext);
+  const { columns, setFilterByNumericValues } = useContext(StarWarsContext);
 
   const [columnFilter, setColumnFilter] = useState('');
   const [comparisonFilter, setComparisonFilter] = useState('');
@@ -12,7 +12,7 @@ function FilterByNumericValues() {
 
   function handleClick () {
     const numericFilter = { columnFilter, comparisonFilter, valueFilter };
-    filterByNumericValues(numericFilter);
+    setFilterByNumericValues(numericFilter);
   };
 
   return (
@@ -45,7 +45,6 @@ function FilterByNumericValues() {
         data-testid="value-filter"
         name="value"
         type="number"
-        value={ filters.filterByNumericValues.value }
         onChange={ ({ target: { value } }) => setValueFilter(value) }
       />
       <button

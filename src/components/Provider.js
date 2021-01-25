@@ -31,7 +31,7 @@ function Provider({ children }) {
     });
   };
 
-  const filterByNumericValues = (numericFilter) => {
+  const setFilterByNumericValues = (numericFilter) => {
     const { filterByNumericValues: numericFilters } = filters;
     setFilters({
       ...filters,
@@ -82,7 +82,7 @@ function Provider({ children }) {
     filters,
     columns,
     filterByName,
-    filterByNumericValues,
+    setFilterByNumericValues,
     filteredPlanets,
   };
 
