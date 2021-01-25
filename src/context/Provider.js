@@ -27,17 +27,16 @@ function Provider({ children }) {
     'menor que',
     'igual a']);
 
-  const fetchPlanets = async () => {
+  async function fetchPlanets() {
     const response = await getStarWarsDataAPI();
-    const planetsObject = await response.results;
+    const planetsObject = response.results;
     const orderedplanetsObject = planetsObject.sort((item1, item2) => {
       if (item1.name > item2.name) return 1;
       if (item1.name < item2.name) return negative;
       return noNull;
     });
     setPlanets(orderedplanetsObject);
-    return planets;
-  };
+  }
 
   useEffect(() => {
     fetchPlanets();
