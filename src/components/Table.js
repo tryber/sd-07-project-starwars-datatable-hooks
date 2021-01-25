@@ -3,6 +3,7 @@ import StarWarsContext from '../context/StarWarsContext';
 
 function Table() {
   const { filteredPlanets } = useContext(StarWarsContext);
+  const zero = 0;
   console.log(filteredPlanets);
 
   return (
@@ -24,7 +25,7 @@ function Table() {
             <th>Edited</th>
             <th>Url</th>
           </tr>
-          {filteredPlanets.length > 0 && filteredPlanets
+          {filteredPlanets.length > zero && filteredPlanets
             .map((item) => (
               <tr key={ item.name }>
                 <td>{item.name}</td>

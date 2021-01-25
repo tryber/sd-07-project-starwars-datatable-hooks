@@ -48,25 +48,31 @@ function Provider({ children }) {
   ];
 
   const filterComparison = (planet, filter) => {
-    const { column, comparison, value } = filter;
-    const number = parseInt(value, 10);
-    if (comparison === 'maior que' && !(planet[column] === 'unknown')) {
-      return Number(planet[column]) > number;
+    const { columnFilter, comparisonFilter, valueFilter } = filter;
+    console.log(filter);
+    const number = parseInt(valueFilter, 10);
+    if (comparisonFilter === 'maior que') {
+      console.log('maiorQue', Number(planet[columnFilter]));
+      return Number(planet[columnFilter]) > number;
     }
-    if (comparison === 'menor que' && !(planet[column] === 'unknown')) {
-      return Number(planet[column]) < number;
+    if (comparisonFilter === 'menor que') {
+      console.log('menorQue', Number(planet[columnFilter]));
+      return Number(planet[columnFilter]) < number;
     }
-    if (comparison === 'igual a' && !(planet[column] === 'unknown')) {
-      return Number(planet[column]) === number;
+    if (comparisonFilter === 'igual a') {
+      console.log('igualA', Number(planet[columnFilter]));
+      return Number(planet[columnFilter]) === number;
     }
   };
 
   useEffect(() => {
     let numericFiltered = Array.from(apiResults);
+    console.log(numericFiltered);
     filters.filterByNumericValues.forEach((filter) => {
       numericFiltered = numericFiltered
         .filter((planet) => filterComparison(planet, filter));
     });
+    console.log(numericFiltered);
     if (filters.filterByName.name !== '') {
       const filtered = numericFiltered
         .filter((planet) => planet.name.includes(filters.filterByName.name));
