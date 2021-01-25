@@ -30,8 +30,16 @@ function SearchForm() {
       'igual',
     ],
   };
-  const { filterByName: { name: nameValue } } = filters;
-  const { column: columnValue, comparsion: comparsionValue, value: numericValue } = currentFilter;
+  const {
+    filterByName: {
+      name: nameValue,
+    },
+    // filterByNumericValues,
+  } = filters;
+  const {
+    column: columnValue,
+    comparsion: comparsionValue,
+    value: numericValue } = currentFilter;
   const handleCurrentFilter = (name, value) => {
     setCurrentFilter((current) => (
       {
@@ -51,6 +59,15 @@ function SearchForm() {
           setFilteredPlanets(planets.results);
         }
       };
+      /*  const filterPlanetsByNumericValues = async () => {
+        if (filterByNumericValues !== undefined) {
+          setFilteredPlanets(
+            planets.results.filter((planet) => planet.name.includes(nameValue)),
+          );
+        } else {
+          setFilteredPlanets(planets.results);
+        }
+      };  */
       filterPlanetsByName();
     }
   }, [setFilteredPlanets, nameValue, planets]);

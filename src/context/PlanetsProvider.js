@@ -27,12 +27,16 @@ function PlanetsProvider({ children }) {
   };
 
   const addFilter = (filter) => {
-    setFilters((current) => (
-      {
-        ...current,
-        filterByNumericValues: [...current.filterByNumericValues, filter],
-      }
-    ));
+    const { filterByNumericValues } = filters;
+    const isRepeated = ({ column }) => filterByNumericValues.some((f) => f.column === column);
+    if (!isRepeated(filter)) {
+      setFilters((current) => (
+        {
+          ...current,
+          filterByNumericValues: [...current.filterByNumericValues, filter],
+        }
+      ));
+    }
   };
   return (
     <main>
