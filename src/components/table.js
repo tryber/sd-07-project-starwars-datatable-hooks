@@ -3,6 +3,7 @@ import StarWarsContext from '../context/StarWarsContext';
 
 function Table() {
   const zero = 0;
+  const menosUm = -1;
   const [elements, setElements] = useState([]);
   const [coluna, setColuna] = useState('');
   const [comp, setComparador] = useState('');
@@ -10,17 +11,30 @@ function Table() {
   const { context, setContext } = useContext(StarWarsContext);
   const { planetList, filters } = context;
   const { filterByNumericValues } = filters;
-  const menosUm = -1;
 
-  const renderTable = ((param) => { // esse callback tá aparecendo sozinho porque?!!
+  const renderPreviousFilters = () => {
+    return filterByNumericValues.map((item) => {
+      return (
+        <div key={item.column} data-testid='filter' className="filters">
+          <h5> {item.column} {item.comparison} {item.value}</h5>
+          <button className="button" id={item.column} onClick={({target}) => deleteFilter(target)}>X</button>
+        </div>
+      )
+    })
+  }
+
+  const deleteFilter = (target) => {
+    const list = filterByNumericValues.filter(item => item.column !==target.id)
+    setContext({...context, filters: {...filters, filterByNumericValues: list}})
+  }
+
+  function renderTable(param) {
     let list = param;
     console.log(filterByNumericValues.length);
-    if (filterByNumericValues.length > 1) {
-      filterByNumericValues.forEach((item, index) => {
-        if (index !== zero) {
-          list = list.filter((subItem) => {
-            // item.column, item.comparison e item.value
-            switch (item.comparison) {
+    if (filterByNumericValues.length > zero) {
+      filterByNumericValues.forEach((item) => {
+        list = list.filter((subItem) => {
+          switch (item.comparison) {
             case 'maior que':
               return parseInt(subItem[item.column], 10) > parseInt(item.value, 10);
             case 'menor que':
@@ -29,9 +43,8 @@ function Table() {
               return parseInt(subItem[item.column], 10) === parseInt(item.value, 10);
             default:
               return false;
-            }
-          });
-        }
+          }
+        });
       });
     }
 
@@ -49,7 +62,7 @@ function Table() {
         population,
       } = planet;
       return (
-        <tr key={ name }>
+        <tr key={name}>
           <td>{name}</td>
           <td>{planet.orbital_period}</td>
           <td>{population}</td>
@@ -67,11 +80,11 @@ function Table() {
       );
     });
     setElements(elementList);
-  });
+  };
 
   useEffect(() => {
     renderTable(planetList);
-  }, [context]);
+  }, [planetList, filterByNumericValues]);
 
   const handleClick = () => {
     setContext({
@@ -91,19 +104,22 @@ function Table() {
     renderTable(filtered);
   };
 
-  const renderColumnOptions = (list, whichOne) => {
-    // let list = ["population", "orbital_period", "diameter", "rotation_period", "surface_water"]
+  const renderOptions = (list, whichOne) => {
     filterByNumericValues.forEach((item) => {
       const index = list.indexOf(item[whichOne]);
       if (index > menosUm) list.splice(index, 1);
     });
     return list.map((item, index) => (
-      <option key={ index } name={ item } id={ item }>{item}</option>
+      <option key={index} name={item} id={item}>{item}</option>
     ));
   };
 
   return (
     <div>
+      <div>
+        Previous Filters:
+        {renderPreviousFilters()}
+      </div>
       <div>
         <label htmlFor="search">
           <input
@@ -112,7 +128,7 @@ function Table() {
             name="search"
             data-testid="name-filter"
             placeholder="Digite aqui"
-            onChange={ ({ target }) => changeHandler(target) }
+            onChange={({ target }) => changeHandler(target)}
           />
         </label>
         <label htmlFor="class_selection">
@@ -120,9 +136,9 @@ function Table() {
             id="class_selection"
             name="class_selection"
             data-testid="column-filter"
-            onChange={ ({ target }) => setColuna(target.value) }
+            onChange={({ target }) => setColuna(target.value)}
           >
-            {renderColumnOptions(
+            {renderOptions(
               ['population',
                 'orbital_period',
                 'diameter',
@@ -137,10 +153,10 @@ function Table() {
             id="comp"
             name="comp"
             data-testid="comparison-filter"
-            onChange={ ({ target }) => setComparador(target.value) }
+            onChange={({ target }) => setComparador(target.value)}
 
           >
-            {renderColumnOptions(['maior que', 'menor que', 'igual a'], 'comparison')}
+            {renderOptions(['maior que', 'menor que', 'igual a'], 'comparison')}
           </select>
         </label>
         <label htmlFor="search_value">
@@ -149,13 +165,13 @@ function Table() {
             id="search_value"
             name="search_value"
             data-testid="value-filter"
-            onChange={ ({ target }) => setSearchValue(target.value) }
+            onChange={({ target }) => setSearchValue(target.value)}
           />
         </label>
         <button
           type="button"
           data-testid="button-filter"
-          onClick={ () => handleClick() }
+          onClick={() => handleClick()}
         >
           Filtrar
         </button>

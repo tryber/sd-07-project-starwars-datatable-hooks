@@ -5,33 +5,27 @@ import StarWarsContext from './context/StarWarsContext';
 
 function App() {
   const url = 'https://swapi-trybe.herokuapp.com/api/planets/';
-  // const [planetList, setPlanetList] = useState([]);
+
   const [context, setContext] = useState({
     filters:
     {
       filterByName: {
         name: '',
       },
-      filterByNumericValues: [
-        {
-          // column: '',
-          // comparison: '',
-          // value: '',
-        },
-      ],
+      filterByNumericValues: [],
     },
     planetList: [],
   });
 
   useEffect(() => {
-    console.log('entrou no fetch');
     async function fetchPlanet() {
-      const { results } = await fetch(url)
-        .then((response) => response.json());
-      setContext({ ...context, planetList: results });
-    }
+    console.log('entrou no fetch');
+    const { results } = await fetch(url)
+      .then((response) => response.json());
+    setContext({ ...context, planetList: results });
+  }
     fetchPlanet();
-  }, []);
+  },[]);
 
   return (
     <StarWarsContext.Provider value={ { context, setContext } }>
