@@ -27,20 +27,19 @@ function Provider({ children }) {
     'menor que',
     'igual a']);
 
-  async function fetchPlanets() {
-    const response = await getStarWarsDataAPI();
-    const planetsObject = response.results;
-    const orderedplanetsObject = planetsObject.sort((item1, item2) => {
-      if (item1.name > item2.name) return 1;
-      if (item1.name < item2.name) return negative;
-      return noNull;
-    });
-    setPlanets(orderedplanetsObject);
-  }
-
   useEffect(() => {
+    async function fetchPlanets() {
+      const response = await getStarWarsDataAPI();
+      const planetsObject = response.results;
+      const orderedplanetsObject = planetsObject.sort((item1, item2) => {
+        if (item1.name > item2.name) return 1;
+        if (item1.name < item2.name) return negative;
+        return noNull;
+      });
+      return setPlanets(orderedplanetsObject);
+    }
     fetchPlanets();
-  });
+  }, [negative]);
 
   useEffect(() => {
     setFilteredByName(
