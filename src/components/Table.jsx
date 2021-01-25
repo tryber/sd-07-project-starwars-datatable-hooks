@@ -14,9 +14,9 @@ class Table extends React.Component {
     const listOfCells = [];
     cells.forEach((cell, index) => {
       listOfCells.push(
-        <th key={ `cell-${index}` }>
+        <td key={ `cell-${index}` }>
           {cell}
-        </th>,
+        </td>,
       );
     });
     return listOfCells;
@@ -26,16 +26,16 @@ class Table extends React.Component {
     const planets = Object
       .entries(value)
       .map((each) => each[1]);
-    const headers = [];
+    const listOfRows = [];
 
     planets.forEach((planet, index) => {
-      headers.push(
+      listOfRows.push(
         <tr key={ `row-${index}` }>
           {this.getCells(Object.values(planet))}
         </tr>,
       );
     });
-    return headers;
+    return listOfRows;
   }
 
   getHeaders(value) {

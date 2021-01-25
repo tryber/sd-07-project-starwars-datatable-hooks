@@ -9,11 +9,12 @@ class App extends React.Component {
     super();
 
     this.state = {
-      data: getPlanets().then((data) => this.setState({ data })),
+      data: '',
     };
   }
 
   render() {
+    getPlanets().then((data) => this.setState({ data }));
     const { data } = this.state;
     return (
       <MyContext.Provider value={ data }>
