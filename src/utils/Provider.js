@@ -14,7 +14,7 @@ function Provider(props) {
     setTitle(Object.keys(...results));
   };
 
-  /*   const fetchStarWarsPlanet = async () => {
+  /*     const fetchStarWarsPlanet = async () => {
     const { results } = mockData;
     setData(results);
     setTitle(Object.keys(...results));

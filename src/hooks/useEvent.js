@@ -84,6 +84,7 @@ function useEvent() {
       ],
     });
     setOption([...option, value]);
+    setFilter(false);
   };
 
   const { filterByNumericValues } = filters;

@@ -52,10 +52,18 @@ function Table() {
         <br />
         <div>
           <br />
-          {filterByNumericValues.map(({ collumn/* , condition, number */ }, index) => (
-            <div key={ index }>
-              <span data-testid="filter">
+          {filterByNumericValues.map(({ collumn, condition, number }, index) => (
+            <div key={ index } data-testid="filter">
+              <span>
                 { collumn }
+              </span>
+              {' '}
+              <span>
+                { condition }
+              </span>
+              {' '}
+              <span>
+                { number }
               </span>
               {' '}
               <button
