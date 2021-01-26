@@ -2,14 +2,49 @@ import React, { useContext } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 function Table() {
-  const { filters, handleName } = useContext(StarWarsContext);
+  const { filters, handleName, handleForm, filterOptions } = useContext(
+    StarWarsContext,
+  );
 
   return (
     <div>
       <div>
         <input data-testid="name-filter" onChange={ handleName } type="text" />
       </div>
-
+      <div>
+        <select data-testid="column-filter" name="column" onChange={ handleForm }>
+          <option value="">Column</option>
+          <option value="population">population</option>
+          <option value="orbital_period">orbital_period</option>
+          <option value="diameter">diameter</option>
+          <option value="rotation_period">rotation_period</option>
+          <option value="surface_water">surface_water</option>
+        </select>
+      </div>
+      <div>
+        <select
+          data-testid="comparison-filter"
+          name="comparison"
+          onChange={ handleForm }
+        >
+          <option value="">Comparison</option>
+          <option value="maior que">maior que</option>
+          <option value="menor que">menor que</option>
+          <option value="igual a">igual a</option>
+        </select>
+      </div>
+      <div>
+        <input
+          type="number"
+          name="number"
+          data-testid="value-filter"
+          onChange={ handleForm }
+          required
+        />
+      </div>
+      <button type="button" data-testid="button-filter" onClick={ filterOptions }>
+        Adicionar Filtro
+      </button>
       <table>
         <thead>
           <tr>
