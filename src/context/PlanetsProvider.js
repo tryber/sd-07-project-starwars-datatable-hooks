@@ -4,7 +4,21 @@ import React, { useState, useEffect } from 'react';
 import PlanetsContext from './PlanetsContext';
 
 function PlanetsProvider({ children }) {
+  const initialFilterState = {
+    filters: {
+      filterByName: {
+        name: '',
+      },
+      filterByNumericValue: [],
+      order: {
+        column: '',
+        sort: '',
+      },
+    },
+  };
+
   const [planetsData, updatePlanets] = useState({});
+  const [filter, updateFilter] = useState(initialFilterState);
   const url = 'https://swapi-trybe.herokuapp.com/api/planets/';
 
   async function fetchPlanets(urlFetch) {
@@ -21,8 +35,42 @@ function PlanetsProvider({ children }) {
     initialFetch();
   }, [url]);
 
+  const updateFilterByName = ({ target }) => {
+    const { value } = target;
+    updateFilter({
+      ...filter,
+      filters: {
+        ...filter.filters, filterByName: { name: value },
+      },
+    });
+  };
+
+  const removefilterByNumericValue = (columnValue) => {
+    updateFilter({
+      ...filter,
+      filters: {
+        ...filter.filters,
+        filterByNumericValue: filter.filters.filterByNumericValue
+          .filter(({ column }) => column !== columnValue) },
+    });
+  };
+
+  const updateByNumericValue = (object) => {
+    updateFilter({
+      ...filter,
+      filters: {
+        ...filter.filters,
+        filterByNumericValue: [
+          ...filter.filters.filterByNumericValue, object] },
+    });
+  };
+
   const planetContext = {
+    filter,
     planetsData,
+    removefilterByNumericValue,
+    updateFilterByName,
+    updateByNumericValue,
   };
 
   return (
