@@ -5,18 +5,30 @@ import RequestApi from '../services/RequestApi';
 
 const StarWarsProvider = ({ children }) => {
   const [data, setData] = useState();
-  const [filters, setFilter] = useState();
+  const [filter, setFilter] = useState({
+    filters: {
+      filterByName: { name: undefined },
+      filterByNumericValues: {
+        column: null,
+        comparison: 'maior que',
+        value: undefined,
+      },
+    } });
 
-  function filterByName({ target: { value } }) {
-    const name = data.filter((item) => item.name.includes(value));
-    if (data.includes(name)) return name;
-    setFilter({ ...filters, filterByName: { name } });
+  function filterByNames({ target: { value, name } }) {
+    setFilter({
+      ...filter,
+      filters: {
+        ...filter.filters,
+        filterByName: { [name]: value,
+        },
+      },
+    });
   }
 
   useEffect(() => {
     async function callApi() {
       const { results } = await RequestApi();
-      console.log(results);
       setData(results);
     }
     callApi();
@@ -24,9 +36,10 @@ const StarWarsProvider = ({ children }) => {
 
   const context = {
     data,
-    filters,
+    filter,
     setData,
-    filterByName,
+    setFilter,
+    filterByNames,
   };
   return (
     <StarWarsContext.Provider value={ context }>

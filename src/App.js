@@ -1,8 +1,8 @@
 import React from 'react';
-import Table from './components/Table';
 import './App.css';
-import StarWarsProvider from './context/StartWarsProvider';
 import SearchBar from './components/SearchBar';
+import Table from './components/Table';
+import StarWarsProvider from './context/StartWarsProvider';
 
 function App() {
   return (
