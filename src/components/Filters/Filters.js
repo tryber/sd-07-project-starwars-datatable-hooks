@@ -3,15 +3,22 @@ import StarWarsContext from '../../context/StarWarsContext';
 import './style.css';
 
 function Filters() {
-  const { setState } = useContext(StarWarsContext);
+  const { setFilter } = useContext(StarWarsContext);
 
   function handleChange({ target: { value } }) {
-    setState(value);
+    const nameFilter = {
+      filters: {
+        filterByName: {
+          name: value,
+        },
+      },
+    };
+    setFilter(nameFilter);
   }
 
-  // function handleClick(event) {
-  //   event.preventDefault();
-  // }
+  function handleClick(event) {
+    event.preventDefault();
+  }
 
   function renderValueInput() {
     return (
@@ -30,12 +37,20 @@ function Filters() {
   }
 
   function renderColumnSelector() {
-    const columnFilter = ['population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water'];
+    const columnFilter = [
+      'population',
+      'orbital_period',
+      'diameter',
+      'rotation_period',
+      'surface_water',
+    ];
     return (
       <label htmlFor="column-filter">
         Coluna:
-        <select data-testid="column-filter"  className="input">
-          {columnFilter.map((filter, index) => <option key={index}>{filter}</option>)}
+        <select data-testid="column-filter" className="input">
+          {columnFilter.map((filter, index) => (
+            <option key={ index }>{filter}</option>
+          ))}
         </select>
       </label>
     );
@@ -47,7 +62,9 @@ function Filters() {
       <label htmlFor="comparison-filter">
         Comparação:
         <select data-testid="comparison-filter" className="input">
-          {comparisonFilter.map((filter, index) => <option key={index}>{filter}</option>)}
+          {comparisonFilter.map((filter, index) => (
+            <option key={ index }>{filter}</option>
+          ))}
         </select>
       </label>
     );
@@ -69,13 +86,13 @@ function Filters() {
     );
   }
 
-  // function renderButton() {
-  //   return (
-  //     <button className="button" type="button" onClick={ handleClick }>
-  //       Add Filter
-  //     </button>
-  //   );
-  // }
+  function renderButton() {
+    return (
+      <button className="button" type="button" onClick={ (e) => handleClick(e) }>
+        Add Filter
+      </button>
+    );
+  }
 
   return (
     <section className="form">
@@ -86,7 +103,7 @@ function Filters() {
           {renderColumnSelector()}
           {renderComparisonSelector()}
           {renderValueInput()}
-          {/* {renderButton()} */}
+          {renderButton()}
         </form>
       </div>
     </section>

@@ -1,16 +1,32 @@
-import { useState, useEffect } from 'react';
-// import getApi from '../Services/SWPlanetsAPI';
+import { useState, useEffect, useContext } from 'react';
+import StarWarsContext from '../context/StarWarsContext';
+// import getApi from '../Services/useApi';
 
-useFilter = () => {
-  const [planets, setPlanets] = useState({});
+const useFilter = () => {
+  const { planets } = useContext(StarWarsContext);
+  const [filteredPlanets, setFilteredPlanets] = useState({});
+  const [filter, setFilter] = useState({
+    filters: {
+      filterByName: {
+        name: '',
+      },
+    },
+  });
+  // const [active, setActive] = useState([]);
 
-  useEffect( async () => {
-    const results = await fetch('https://swapi-trybe.herokuapp.com/api/planets/')
-      .then((response) => response.json())
-      .then(planApi => planApi.results)
-  }, []);
+  useEffect(() => {
+    const { name } = filter.filters.filterByName;
+    if (name) {
+      const nameFilter = new RegExp(`\\w*${name}\\w*`, 'i');
+      const fPlanets = planets.filter((planet) => nameFilter.test(planet.name));
+      setFilteredPlanets(fPlanets);
+    }
+  }, [filter]);
 
-  return [];
-}
+  // useEffect(() => {}, [filters]);
+  // useEffect(() => {}, [filters]);
+
+  return [filteredPlanets, setFilter];
+};
 
 export default useFilter;

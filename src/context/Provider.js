@@ -1,45 +1,50 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 // import StarWars from '../pages/StarWars';
-// import useApi from '../Services/useApi';
+import { getApi } from '../Services/useApi';
 import StarWarsContext from './StarWarsContext';
 
 function Provider({ children }) {
-  const [state, setState] = useState('');
-  // { filters: { filterByName: { name: '' } } }
+  // const [state, setState] = useState();
   const [planets, setPlanets] = useState([]);
-  // const [filter, setFilter] = useState([]);
-
+  const [filteredPlanets, setFilteredPlanets] = useState([]);
+  const [filter, setFilter] = useState({
+    filters: {
+      filterByName: {
+        name: '',
+      },
+    },
+  });
   useEffect(() => {
-    fetch('https://swapi-trybe.herokuapp.com/api/planets/')
-      .then((response) => response.json())
-      .then((response) => {
-        const filteredPlanet = response.results.map((fplanet) => {
-          delete fplanet.residents;
-          return fplanet;
-        });
-        setPlanets(filteredPlanet);
-      })
-      .catch((error) => console.log(error));
+    getApi('https://swapi-trybe.herokuapp.com/api/planets/').then((response) => {
+      const requiredPlanets = response.results.map((rplanet) => {
+        delete rplanet.residents;
+        return rplanet;
+      });
+      setPlanets(requiredPlanets);
+      setFilteredPlanets(requiredPlanets);
+    });
   }, []);
 
   useEffect(() => {
-    const nameFilter = new RegExp(`\\w*${state}\\w*`);
-    if (nameFilter) {
-      const filteredPlanets = planets.filter((planet) => nameFilter.test(planet.name));
-      setPlanets(filteredPlanets);
+    const { name } = filter.filters.filterByName;
+    if (name) {
+      const nameFilter = new RegExp(`\\w*${name}\\w*`, 'i');
+      const fPlanets = planets.filter((planet) => nameFilter.test(planet.name));
+      setFilteredPlanets(fPlanets);
     }
-  }, [state]);
+    if (!name) setFilteredPlanets(planets);
+  }, [filter]);
 
   const context = {
     planets,
-    state,
-    setState,
+    setFilter,
+    filteredPlanets,
   };
 
   return (
     <StarWarsContext.Provider value={ context }>
-      { children }
+      {children}
     </StarWarsContext.Provider>
   );
 }

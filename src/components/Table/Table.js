@@ -3,8 +3,8 @@ import StarWarsContext from '../../context/StarWarsContext';
 import './style.css';
 
 function Table() {
-  const { planets } = useContext(StarWarsContext);
-  const thead = planets[0] || [];
+  const { filteredPlanets } = useContext(StarWarsContext);
+  const thead = filteredPlanets[0] || [];
   return (
     <table>
       <thead>
@@ -13,7 +13,7 @@ function Table() {
         </tr>
       </thead>
       <tbody>
-        {planets
+        {filteredPlanets
           .map((planet, index) => (
             <tr key={ index }>
               {Object.entries(planet).map((pl) => <td key={ pl[0] }>{pl[1]}</td>)}
