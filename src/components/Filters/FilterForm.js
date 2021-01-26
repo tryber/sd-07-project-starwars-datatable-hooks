@@ -11,7 +11,7 @@ function FiltersForm() {
     filteredName,
     setFilteredName } = useContext(StarWarsContext);
 
-  // solução desenvolvida a partir do plantão de dúvidas;
+  // solução desenvolvida a partir do PR do Ilan Ribeiro - T06;
   const [filterSet, setFilterSet] = useState({ column: '', comparison: '', value: '' });
   const filterSetChange = (event) => {
     setFilterSet({
@@ -74,7 +74,7 @@ function FiltersForm() {
             value={ filterSet.column }
             onChange={ filterSetChange }
           >
-            <option>Filtrar coluna</option>
+            <option>Selecionar Coluna</option>
             {selectColumn.map((item) => (<option key={ item }>{item}</option>))}
           </select>
         </div>
@@ -86,7 +86,7 @@ function FiltersForm() {
             value={ filterSet.comparison }
             onChange={ filterSetChange }
           >
-            <option>Escolha opção</option>
+            <option>Selecionar</option>
             {planetWeight.map((item) => (<option key={ item }>{item}</option>))}
           </select>
         </div>
