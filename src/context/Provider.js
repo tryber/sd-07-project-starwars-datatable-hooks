@@ -7,9 +7,11 @@ function MyProvider({ children }) {
   const { Provider } = StarWarsContext;
   const [isFetching, setFetching] = useState(true);
   const [planets, setPlanets] = useState([]);
+  const [keysPlanets, setkeysPlanets] = useState([]);
   const [filters, setFilters] = useState({
     filterByName: { name: '' },
     filterByNumericValues: [],
+    order: { column: 'name', sort: 'ASC' },
   });
 
   const stateValues = {
@@ -17,6 +19,8 @@ function MyProvider({ children }) {
     setFetching,
     planets,
     setPlanets,
+    keysPlanets,
+    setkeysPlanets,
     filters,
     setFilters,
   };

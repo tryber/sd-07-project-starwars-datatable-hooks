@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext, useEffect, useCallback } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 import '../css/Table.css';
 
@@ -6,15 +6,17 @@ function Table() {
   const {
     isFetching,
     planets,
+    keysPlanets,
+    setkeysPlanets,
     filters,
     filters: {
       filterByName: { name },
       filterByNumericValues,
+      order: { column, sort },
     },
   } = useContext(StarWarsContext);
 
   const [filterPlanets, setfilterPlanets] = useState(planets);
-  const [keysPlanets, setkeysPlanets] = useState([]);
 
   const keysTable = () => {
     if (!isFetching) {
@@ -27,23 +29,70 @@ function Table() {
 
   useEffect(keysTable, []);
 
+  const sortFilterPlanets = useCallback((sortPlanets) => {
+    const defaultNumber = 0;
+    const orderNumber = 1;
+    const optionsNumericDefault = [
+      'population',
+      'orbital_period',
+      'diameter',
+      'rotation_period',
+      'surface_water',
+    ];
+
+    if (optionsNumericDefault.some((number) => column === number)) {
+      if (sort === 'ASC') {
+        return sortPlanets.sort((a, b) => {
+          if (parseInt(a[column], 10) > parseInt(b[column], 10)) return orderNumber;
+          if (parseInt(a[column], 10) < parseInt(b[column], 10)) return -orderNumber;
+          return defaultNumber;
+        });
+      }
+      if (sort === 'DESC') {
+        return sortPlanets.sort((a, b) => {
+          if (parseInt(a[column], 10) > parseInt(b[column], 10)) return -orderNumber;
+          if (parseInt(a[column], 10) < parseInt(b[column], 10)) return orderNumber;
+          return defaultNumber;
+        });
+      }
+    } else {
+      if (sort === 'ASC') {
+        return sortPlanets.sort((a, b) => {
+          if (a[column] > b[column]) return orderNumber;
+          if (a[column] < b[column]) return -orderNumber;
+          return defaultNumber;
+        });
+      }
+      if (sort === 'DESC') {
+        return sortPlanets.sort((a, b) => {
+          if (a[column] > b[column]) return -orderNumber;
+          if (a[column] < b[column]) return orderNumber;
+          return defaultNumber;
+        });
+      }
+    }
+  }, [column, sort]);
+
   useEffect(() => {
     let newPlanets = planets.filter((planet) => planet.name.includes(name));
-    filterByNumericValues.forEach(({ comparison, column, value }) => {
-      switch (comparison) {
+    filterByNumericValues.forEach((filterNumerics) => {
+      switch (filterNumerics.comparison) {
       case 'maior que':
         (newPlanets = newPlanets.filter(
-          (planet) => parseInt(planet[column], 10) > parseInt(value, 10),
+          (planet) => parseInt(planet[filterNumerics.column], 10)
+            > parseInt(filterNumerics.value, 10),
         ));
         break;
       case 'menor que':
         (newPlanets = newPlanets.filter(
-          (planet) => parseInt(planet[column], 10) < parseInt(value, 10),
+          (planet) => parseInt(planet[filterNumerics.column], 10)
+            < parseInt(filterNumerics.value, 10),
         ));
         break;
       case 'igual a':
         (newPlanets = newPlanets.filter(
-          (planet) => parseInt(planet[column], 10) === parseInt(value, 10),
+          (planet) => parseInt(planet[filterNumerics.column], 10)
+            === parseInt(filterNumerics.value, 10),
         ));
         break;
       default:
@@ -51,8 +100,9 @@ function Table() {
       }
     });
     // console.log(newPlanets);
-    setfilterPlanets(newPlanets);
-  }, [filterByNumericValues, filters, name, planets]);
+    const newPlanetsSort = sortFilterPlanets(newPlanets);
+    setfilterPlanets(newPlanetsSort);
+  }, [filterByNumericValues, filters, name, planets, sortFilterPlanets]);
 
   return (
     <table>
@@ -66,9 +116,18 @@ function Table() {
       <tbody>
         {filterPlanets.map((rowTable) => (
           <tr key={ rowTable.name }>
-            {keysPlanets.map((infoRow) => (
-              <td key={ infoRow }>{rowTable[infoRow].toString()}</td>
-            ))}
+            {keysPlanets.map((infoRow) => {
+              if (infoRow === 'name') {
+                return (
+                  <td key={ infoRow } data-testid="planet-name">
+                    {rowTable[infoRow].toString()}
+                  </td>
+                );
+              }
+              return (
+                <td key={ infoRow }>{rowTable[infoRow].toString()}</td>
+              );
+            })}
           </tr>
         ))}
       </tbody>

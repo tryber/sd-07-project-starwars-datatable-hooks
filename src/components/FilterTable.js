@@ -4,6 +4,7 @@ import '../css/Form.css';
 
 function FilterTable() {
   const {
+    keysPlanets,
     filters,
     setFilters,
     filters: { filterByNumericValues },
@@ -14,6 +15,8 @@ function FilterTable() {
   const [column, setColumn] = useState('population');
   const [comparison, setComparison] = useState('maior que');
   const [value, setValue] = useState('100000');
+  const [columnSort, setColumnSort] = useState('name');
+  const [radioSort, setRadioSort] = useState('ASC');
 
   const filterOptions = () => {
     let optionsNumericDefault = [
@@ -49,26 +52,6 @@ function FilterTable() {
     callback(target.value);
   };
 
-  // const saveName = ({ target }) => {
-  //   const { value } = target;
-  //   setName(value);
-  // };
-
-  // const saveColumn = ({ target }) => {
-  //   const { value } = target;
-  //   setColumn(value);
-  // };
-
-  // const saveComparison = ({ target }) => {
-  //   const { value } = target;
-  //   setComparison(value);
-  // };
-
-  // const saveValue = ({ target }) => {
-  //   const { value } = target;
-  //   setValue(value);
-  // };
-
   const updateFilterName = () => {
     const newFilter = { ...filters, filterByName: { name } };
     setFilters(newFilter);
@@ -85,6 +68,17 @@ function FilterTable() {
       ],
     };
     setFilters(newFilter);
+  };
+
+  const updateSortInformations = () => {
+    const newSort = {
+      ...filters,
+      order: {
+        column: columnSort,
+        sort: radioSort,
+      },
+    };
+    setFilters(newSort);
   };
 
   const removeFilter = (filterToRemove) => {
@@ -163,6 +157,65 @@ function FilterTable() {
             />
           </label>
         </div>
+        <button
+          type="button"
+          data-testid="button-filter"
+          onClick={ sendNewInformations }
+        >
+          FILTER
+        </button>
+      </fieldset>
+      <fieldset>
+        <legend>SORT INFORMATIONS</legend>
+        <div className="column-sort">
+          <label htmlFor="column-sort">
+            COLUMN SORT
+            <select
+              name="column-sort"
+              id="column-sort"
+              data-testid="column-sort"
+              value={ columnSort }
+              onChange={ (e) => saveValues(e, setColumnSort) }
+            >
+              {keysPlanets.map((option) => (
+                <option key={ option }>{option}</option>
+              ))}
+            </select>
+          </label>
+        </div>
+        <div>
+          <label htmlFor="radioSortASC">
+            ASC
+            <input
+              type="radio"
+              name="radioSort"
+              id="radioSortASC"
+              data-testid="column-sort-input-asc"
+              value="ASC"
+              onClick={ (e) => saveValues(e, setRadioSort) }
+              checked={ radioSort === 'ASC' }
+            />
+          </label>
+          <label htmlFor="radioSortDESC">
+            DESC
+            <input
+              type="radio"
+              name="radioSort"
+              id="radioSortDESC"
+              data-testid="column-sort-input-desc"
+              value="DESC"
+              onClick={ (e) => saveValues(e, setRadioSort) }
+              checked={ radioSort === 'DESC' }
+            />
+          </label>
+        </div>
+        <button
+          type="button"
+          data-testid="column-sort-button"
+          onClick={ updateSortInformations }
+        >
+          SORT
+        </button>
       </fieldset>
       <fieldset>
         <legend>Filters</legend>
@@ -181,13 +234,6 @@ function FilterTable() {
           ))}
         </div>
       </fieldset>
-      <button
-        type="button"
-        data-testid="button-filter"
-        onClick={ sendNewInformations }
-      >
-        FILTER
-      </button>
     </form>
   );
 }
