@@ -3,7 +3,7 @@ import StarWarsContext from './StarWarsContext';
 import SearchBar from './SearchBar';
 
 function Table() {
-  const { data, newNameData } = useContext(StarWarsContext);
+  const { data, filterData } = useContext(StarWarsContext);
   const ZERO = 0;
   const tableHeade = (property) => {
     for (let i = ZERO; i <= property.length; i += 1) {
@@ -12,8 +12,8 @@ function Table() {
   };
 
   const tableBody = () => { // referência Carol Andrade
-    if (newNameData.length > ZERO) {
-      return newNameData;
+    if (filterData.length > ZERO) {
+      return filterData;
     }
     return data;
   };

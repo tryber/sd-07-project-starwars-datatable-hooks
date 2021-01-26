@@ -16,17 +16,59 @@ function Provider({ children }) {
     fetchData();
   }, []);
 
-  const [name, setFilterText] = useState('');
-  const [newNameData, setNewNameData] = useState([]);
+  const [filters, setFilters] = useState({
+    filterByName: { name: '' },
+    filterByNumericValues: [],
+  });
 
+  const setFilterName = (name) => {
+    setFilters({
+      ...filters,
+      filterByName: { name },
+    });
+  };
+
+  const setSelect = (column, comparison, value) => {
+    const selects = [{
+      column,
+      comparison,
+      value,
+    }];
+    setFilters({
+      ...filters,
+      filterByNumericValues: selects,
+    });
+  };
+
+  const [filterData, setFilterData] = useState([]);
+  const { name } = filters.filterByName;
   useEffect(() => {
-    setNewNameData(data.filter((value) => value.name.includes(name)));
-  }, [name, data]); // referência Carol Andrade
+    let filteredByName = data
+      .filter((valueInputText) => valueInputText.name.includes(name));
+    filters.filterByNumericValues.forEach((element) => {
+      const { column, value, comparison } = element;
+      filteredByName = filteredByName.filter((item) => {
+        switch (comparison) {
+        case 'maior que':
+          return parseInt(item[column], 10) > parseInt(value, 10);
+        case 'menor que':
+          return parseInt(item[column], 10) < parseInt(value, 10);
+        case 'igual a':
+          return parseInt(item[column], 10) === parseInt(value, 10);
+        default:
+          return true;
+        }
+      });
+    });
+    setFilterData(filteredByName);
+  }, [name, data, filters.filterByNumericValues]); // referência Carol Andrade
 
   const contextValue = {
     data,
-    setFilterText,
-    newNameData,
+    setFilters,
+    filterData,
+    setSelect,
+    setFilterName,
   };
 
   return (
