@@ -49,8 +49,8 @@ function Table() {
 
     if (active) {
       const numberList = [
-        'orbital_period',
         'rotation_period',
+        'orbital_period',
         'surface_water',
         'created',
         'diameter',
