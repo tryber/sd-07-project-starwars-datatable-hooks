@@ -22,6 +22,7 @@ td {
     flex-direction: column;
     padding: 30px;
 }
+
 .sub-settings {
     display: flex;
     flex-direction: row;
@@ -69,13 +70,43 @@ input {
 }
 
 .right-select {
-    margin-left: 40px;
     width: 150px;
 }
 
 .left-select {
+    margin-left: 40px;
     width: 150px;
 }
-Button {
-    width: 150px;
+
+.input-filter {
+    padding-right: 31px;
+    margin: 10px;
+}
+
+.button-fetch {
+    margin-left: 100px;
+}
+
+a {
+    text-decoration: none;
+}
+
+.namePlanet {
+    color: rgb(7, 27, 3);
+    font-weight: bolder;
+    font-size: large;
+}
+
+td {
+    text-align: center;
+}
+
+.head {
+    font-weight: bolder;
+    font-size: larger;
+}
+
+button {
+    width: 100px;
+
 }

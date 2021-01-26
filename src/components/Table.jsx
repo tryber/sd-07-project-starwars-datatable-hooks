@@ -3,27 +3,28 @@ import { Table, TableCell, TableHead, TableRow } from '@material-ui/core';
 import context from '../contextAPI/Context';
 
 function MyTable() {
-  const { data } = useContext(context);
+  const { data, filters } = useContext(context);
+  const objContext = Object.values(filters).map((el) => el.filterByName);
+  const objName = objContext.map((item) => item.name);
+  console.log(data);
   const empty = 0;
   if (data.length === empty) return <span className="span-control">carregando...</span>;
-  const final = Object.keys(data[0]).filter((el) => el !== 'residents');
+  const titles = Object.keys(data[0]).filter((el) => el !== 'residents');
   return (
     <section className="table-control">
       <Table>
         <TableHead>
           <TableRow>
             {
-              final.map((items) => <TableCell key={ items }>{items}</TableCell>)
+              titles.map((items) => <TableCell key={ items }>{items}</TableCell>)
             }
           </TableRow>
         </TableHead>
         <tbody>
           {
-            data.map((planet, index) => (
+            data.filter((el) => el.name.includes(objName[0])).map((planet, index) => (
               <tr key={ index }>
-                <td key={ planet.name }>
-                  { planet.name }
-                </td>
+                <td className="namePlanet" key={ planet.name }>{ planet.name }</td>
                 <td key={ planet.rotation_period }>{ planet.rotation_period }</td>
                 <td key={ planet.orbital_period }>{ planet.orbital_period }</td>
                 <td key={ planet.diameter }>{ planet.diameter }</td>
@@ -32,10 +33,10 @@ function MyTable() {
                 <td key={ planet.terrain }>{ planet.terrain }</td>
                 <td key={ planet.surface_water }>{ planet.surface_water }</td>
                 <td key={ planet.population }>{ planet.population }</td>
-                <td key={ planet.films }>{ planet.films }</td>
+                <td key={ planet.films }><a href={ planet.films }>{planet.films}</a></td>
                 <td key={ planet.created }>{ planet.created }</td>
                 <td key={ planet.edited }>{ planet.edited }</td>
-                <td key={ planet.url }>{ planet.url }</td>
+                <td key={ planet.url }><a href={ planet.url }>{planet.url}</a></td>
               </tr>
             ))
           }
