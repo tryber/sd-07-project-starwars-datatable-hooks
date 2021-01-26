@@ -78,7 +78,6 @@ function FiltersForm() {
             value={ filterSet.column }
             onChange={ filterSetChange }
           >
-            <option value="">Selecionar Coluna</option>
             {selectColumn.map((item) => (<option key={ item }>{item}</option>))}
           </select>
         </div>
@@ -90,7 +89,6 @@ function FiltersForm() {
             value={ filterSet.comparison }
             onChange={ filterSetChange }
           >
-            <option value="">Selecionar</option>
             {planetsWeight.map((item) => (<option key={ item }>{item}</option>))}
           </select>
         </div>
