@@ -6,9 +6,11 @@ function NumericFilter() {
     handleFilterByNumericValues,
     handleInputFilterByNumericValues,
     handleButton,
-    filterOption,
+    handleButtonTwo,
+    options,
   } = useContext(StarWarsContext);
   const { column, comparison, value } = filters.filterByNumericValues[0];
+
   return (
     <div>
       <div>
@@ -25,7 +27,7 @@ function NumericFilter() {
             <option value="diameter">diameter</option>
             <option value="rotation_period">rotation_period</option>
             <option value="surface_water">surface_water</option> */}
-            {filterOption.map((item) => (
+            {options.map((item) => (
               <option key={ item } value={ item }>{ item }</option>
             ))}
           </select>
@@ -66,6 +68,15 @@ function NumericFilter() {
           onClick={ handleButton }
         >
           Filtrar
+        </button>
+      </div>
+      <div data-testid="filter">
+        <button
+          type="button"
+          data-testid="filter"
+          onClick={ handleButtonTwo }
+        >
+          X
         </button>
       </div>
     </div>

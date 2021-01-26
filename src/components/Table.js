@@ -7,8 +7,6 @@ function Table() {
   // console.log(data);
   // console.log(filters)
 
-  // const filtersChanges = activateFilters();
-
   return (
     <div>
       <h2>Table</h2>

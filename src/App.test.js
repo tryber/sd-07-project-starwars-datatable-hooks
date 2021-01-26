@@ -294,7 +294,7 @@ describe('Apague o filtro de valores numéricos e desfaça as filtragens dos dad
     fireEvent.click(filters[0].querySelector('button'));
   };
 
-  it.skip('Adiciona um filtro e verifica se a tabela foi atualizada com as informações filtradas, depois remove o filtro e verifica se os valores da tabela voltaram ao original', async () => {
+  it('Adiciona um filtro e verifica se a tabela foi atualizada com as informações filtradas, depois remove o filtro e verifica se os valores da tabela voltaram ao original', async () => {
     await act(async () => {
       render(<App />);
     });
@@ -311,7 +311,7 @@ describe('Apague o filtro de valores numéricos e desfaça as filtragens dos dad
     expect(await screen.findAllByRole(ROW_ROLE_SELECTOR)).toHaveLength(11);
   });
 
-  it.skip('Adiciona dois filtros e verifica se a tabela foi atualizada com as informações filtradas, depois remove os filtros e verifica se os valores da tabela voltaram ao original', async () => {
+  it('Adiciona dois filtros e verifica se a tabela foi atualizada com as informações filtradas, depois remove os filtros e verifica se os valores da tabela voltaram ao original', async () => {
     await act(async () => {
       render(<App />);
     });

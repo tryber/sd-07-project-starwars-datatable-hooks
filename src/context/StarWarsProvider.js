@@ -17,7 +17,7 @@ function StarWarsProvider({ children }) {
   });
   const [startFilters, setStartFilters] = useState({});
 
-  const [filterOption] = useState([
+  const [options] = useState([
     'population',
     'orbital_period',
     'diameter',
@@ -39,10 +39,9 @@ function StarWarsProvider({ children }) {
   }, []);
 
   const handleFilterChange = (e) => {
-    const inputValue = e.target.value;
     setFilters({
       ...filters,
-      filterByName: { name: inputValue },
+      filterByName: { name: e.target.value },
       ...filterByNumericValues,
     });
   };
@@ -98,14 +97,21 @@ function StarWarsProvider({ children }) {
     return starPlanets;
   };
 
-  const context = { data,
+  const handleButtonTwo = () => {
+    setStartFilters({
+      ...filters,
+    });
+  };
+
+  const context = {
     handleFilterChange,
     filters,
     handleFilterByNumericValues,
     handleInputFilterByNumericValues,
     handleButton,
     activateFilters,
-    filterOption,
+    handleButtonTwo,
+    options,
   };
 
   return (
