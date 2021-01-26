@@ -33,10 +33,15 @@ function Provider({ children }) {
 
   const setFilterByNumericValues = (numericFilter) => {
     const { filterByNumericValues: numericFilters } = filters;
-    setFilters({
-      ...filters,
-      filterByNumericValues: [...numericFilters, numericFilter],
-    });
+    const zero = 0;
+    const filterColumnComparion = numericFilters
+      .filter((filter) => filter.columnFilter === numericFilter.columnFilter);
+    if (filterColumnComparion.length === zero) {
+      setFilters({
+        ...filters,
+        filterByNumericValues: [...numericFilters, numericFilter],
+      });
+    }
   };
 
   const columns = [
