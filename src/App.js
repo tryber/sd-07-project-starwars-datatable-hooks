@@ -1,12 +1,14 @@
 import React from 'react';
-import SearchBar from './components/SearchBar';
+import NameFilter from './components/NameFilter';
+import NumericFilter from './components/NumericFilter';
 import Table from './components/Table';
 import StarWarsProvider from './provider/StarWarsProvider';
 
 function App() {
   return (
     <StarWarsProvider>
-      <SearchBar />
+      <NameFilter />
+      <NumericFilter />
       <Table />
     </StarWarsProvider>
   );
