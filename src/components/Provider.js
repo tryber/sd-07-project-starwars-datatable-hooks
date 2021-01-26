@@ -33,15 +33,10 @@ function Provider({ children }) {
 
   const setFilterByNumericValues = (numericFilter) => {
     const { filterByNumericValues: numericFilters } = filters;
-    const zero = 0;
-    const filterColumnComparion = numericFilters
-      .filter((filter) => filter.columnFilter === numericFilter.columnFilter);
-    if (filterColumnComparion.length === zero) {
-      setFilters({
-        ...filters,
-        filterByNumericValues: [...numericFilters, numericFilter],
-      });
-    }
+    setFilters({
+      ...filters,
+      filterByNumericValues: [...numericFilters, numericFilter],
+    });
   };
 
   const columns = [
@@ -51,6 +46,15 @@ function Provider({ children }) {
     'rotation_period',
     'surface_water',
   ];
+
+  const filteredColumns = () => {
+    const { filterByNumericValues: numericFilters } = filters;
+    const filterColumnComparion = columns
+      .filter((column) => !numericFilters
+        .find((filter) => filter.columnFilter === column));
+    console.log(filterColumnComparion);
+    return filterColumnComparion;
+  };
 
   const filterComparison = (planet, filter) => {
     const { columnFilter, comparisonFilter, valueFilter } = filter;
@@ -83,7 +87,7 @@ function Provider({ children }) {
 
   const tableData = {
     filters,
-    columns,
+    filteredColumns,
     filterByName,
     setFilterByNumericValues,
     filteredPlanets,

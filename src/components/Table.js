@@ -4,7 +4,6 @@ import StarWarsContext from '../context/StarWarsContext';
 function Table() {
   const { filteredPlanets } = useContext(StarWarsContext);
   const zero = 0;
-  console.log(filteredPlanets);
 
   return (
     <div>

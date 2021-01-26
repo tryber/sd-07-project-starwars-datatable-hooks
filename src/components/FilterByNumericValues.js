@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 function FilterByNumericValues() {
-  const { columns, setFilterByNumericValues } = useContext(StarWarsContext);
+  const { filteredColumns, setFilterByNumericValues } = useContext(StarWarsContext);
 
   const [columnFilter, setColumnFilter] = useState('');
   const [comparisonFilter, setComparisonFilter] = useState('');
@@ -22,7 +22,7 @@ function FilterByNumericValues() {
         name="column"
         onChange={ ({ target: { value } }) => setColumnFilter(value) }
       >
-        { columns.map((column) => (
+        { filteredColumns().map((column) => (
           <option key={ column } value={ column }>
             {column}
           </option>
