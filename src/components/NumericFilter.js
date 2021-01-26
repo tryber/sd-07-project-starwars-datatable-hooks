@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 function NumericFilter() {
@@ -15,32 +15,33 @@ function NumericFilter() {
     setFilteredData,
   } = useContext(StarWarsContext);
 
+  const columnOptions = [
+    'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water'];
+
   const addFilterByNumericValue = () => {
     filterByNumericValues.forEach((filter) => {
       switch (filter.comparison) {
       case 'maior que':
         setFilteredData(filteredData
           .filter((planet) => Number(planet[filter.column]) > filter.value));
-        console.log(filteredData
-          .filter((planet) => Number(planet[filter.column]) > filter.value));
         break;
       case 'menor que':
         setFilteredData(filteredData
           .filter((planet) => Number(planet[filter.column]) < filter.value));
-        console.log(filteredData
-          .filter((planet) => Number(planet[filter.column]) < filter.value));
         break;
       case 'igual a':
         setFilteredData(filteredData
-          .filter((planet) => Number(planet[filter.column]) === filter.value));
-        console.log(filteredData
-          .filter((planet) => Number(planet[filter.column]) === filter.value));
+          .filter((planet) => Number(planet[filter.column]) === Number(filter.value)));
         break;
       default:
         return filteredData;
       }
     });
   };
+
+  useEffect(() => {
+    addFilterByNumericValue();
+  }, [filterByNumericValues]);
 
   const addNewFilter = () => {
     const newFilter = [...filterByNumericValues, { column, comparison, value }];
@@ -49,7 +50,6 @@ function NumericFilter() {
 
   const handleClick = () => {
     addNewFilter();
-    addFilterByNumericValue();
   };
 
   return (
@@ -61,11 +61,9 @@ function NumericFilter() {
           data-testid="column-filter"
           onChange={ ({ target }) => setColumn(target.value) }
         >
-          <option>population</option>
-          <option>orbital_period</option>
-          <option>diameter</option>
-          <option>rotation_period</option>
-          <option>surface_water</option>
+          { columnOptions.map((element) => (
+            <option key={ element }>{ element }</option>
+          )) }
         </select>
       </label>
       <label htmlFor="comparison-filter">
@@ -83,11 +81,13 @@ function NumericFilter() {
         Número de comparação
         <input
           type="number"
+          data-testid="value-filter"
           onChange={ ({ target }) => setValue(target.value) }
         />
       </label>
       <button
         type="button"
+        data-testid="button-filter"
         onClick={ handleClick }
       >
         Adicionar filtro
