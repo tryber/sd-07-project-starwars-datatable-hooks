@@ -13,6 +13,10 @@ function App() {
         name: '',
       },
       filterByNumericValues: [],
+      order: {
+        column: 'name',
+        sort: 'ASC',
+      },
     },
     planetList: [],
   });
@@ -25,7 +29,7 @@ function App() {
       setContext({ ...context, planetList: results });
     }
     fetchPlanet();
-  }, []);
+  }, [context]);
 
   return (
     <StarWarsContext.Provider value={ { context, setContext } }>

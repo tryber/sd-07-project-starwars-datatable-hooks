@@ -1,5 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
+// import * as _ from 'underscore';
 
 function Table() {
   const zero = 0;
@@ -8,9 +9,13 @@ function Table() {
   const [coluna, setColuna] = useState('');
   const [comp, setComparador] = useState('');
   const [num, setSearchValue] = useState(zero);
+  const [ordemColumn, setOrderColumn] = useState('name');
+  const [ascDesc, setAscDesc] = useState('');
+  const [active, setActive] = useState(true);
   const { context, setContext } = useContext(StarWarsContext);
   const { planetList, filters } = context;
-  const { filterByNumericValues } = filters;
+  const { filterByNumericValues, order } = filters;
+  const { column, sort } = order;
 
   const deleteFilter = (target) => {
     const list = filterByNumericValues.filter((item) => item.column !== target.id);
@@ -39,8 +44,44 @@ function Table() {
   ));
 
   function renderTable(param) {
+    console.log('rodou a render');
     let list = param;
-    console.log(filterByNumericValues.length);
+
+    if (active) {
+      const numberList = [
+        'orbital_period',
+        'rotation_period',
+        'surface_water',
+        'created',
+        'diameter',
+        'edited',
+        'gravity',
+        'population',
+      ];
+      if (numberList.includes(column)) {
+        console.log('entrou no includes');
+        list = list.sort((a, b) => {
+          if (sort === 'ASC') return (a[column] - b[column]);
+          return (b[column] - a[column]);
+        });
+      } else {
+        console.log('entrou no else');
+        if (sort === 'ASC') {
+          list = list.sort((a, b) => {
+            if (a[column] > b[column]) return 1;
+            return menosUm;
+          });
+        }
+        if (sort === 'DESC') {
+          list = list.sort((a, b) => {
+            if (a[column] > b[column]) return menosUm;
+            return 1;
+          });
+        }
+      }
+      if (list.length > zero) setActive(false);
+    }
+
     if (filterByNumericValues.length > zero) {
       filterByNumericValues.forEach((item) => {
         list = list.filter((subItem) => {
@@ -73,7 +114,7 @@ function Table() {
       } = planet;
       return (
         <tr key={ name }>
-          <td>{name}</td>
+          <td data-testid="planet-name">{name}</td>
           <td>{planet.orbital_period}</td>
           <td>{population}</td>
           <td>{planet.rotation_period}</td>
@@ -94,7 +135,7 @@ function Table() {
 
   useEffect(() => {
     renderTable(planetList);
-  }, [planetList, filterByNumericValues]);
+  }, [planetList, filterByNumericValues, active, renderTable]);
 
   const handleClick = () => {
     setContext({
@@ -112,6 +153,27 @@ function Table() {
   const changeHandler = (target) => {
     const filtered = planetList.filter((item) => item.name.includes(target.value));
     renderTable(filtered);
+  };
+
+  const renderOrderOptions = () => {
+    const list = [
+      'name',
+      'climate',
+      'orbital_period',
+      'rotation_period',
+      'surface_water',
+      'created',
+      'diameter',
+      'edited',
+      'films',
+      'gravity',
+      'terrain',
+      'population',
+      'url',
+    ];
+    return list.map((item) => (
+      <option key={ item } value={ item }>{item}</option>
+    ));
   };
 
   const renderOptions = (list, whichOne) => {
@@ -186,6 +248,57 @@ function Table() {
           Filtrar
         </button>
       </div>
+      <label htmlFor="column-sort">
+        Ordenar por:
+        <select
+          data-testid="column-sort"
+          onChange={ ({ target }) => setOrderColumn(target.value) }
+          id="column-sort"
+        >
+          {renderOrderOptions()}
+        </select>
+      </label>
+      <label htmlFor="asc">
+        {' '}
+        Crescente
+        <input
+          type="radio"
+          onChange={ () => setAscDesc('ASC') }
+          name="asc/desc"
+          value="asc/desc"
+          data-testid="column-sort-input-asc"
+          id="asc"
+        />
+      </label>
+      <label htmlFor="desc">
+        Decrescente
+        <input
+          type="radio"
+          onChange={ () => setAscDesc('DESC') }
+          name="asc/desc"
+          value="asc/desc"
+          data-testid="column-sort-input-desc"
+          id="desc"
+        />
+      </label>
+      <button
+        type="button"
+        data-testid="column-sort-button"
+        onClick={ () => {
+          setContext({
+            ...context,
+            filters: {
+              ...filters,
+              order: {
+                column: ordemColumn, sort: ascDesc,
+              },
+            },
+          });
+          setActive(true);
+        } }
+      >
+        Ordenar
+      </button>
       <table>
         <thead>
           <tr>
