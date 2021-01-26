@@ -35,6 +35,39 @@ function Table() {
     });
   }
 
+  function renderOptions() {
+    const { filterByNumericValues } = filters;
+    const createdFilters = [];
+    filterByNumericValues.map((filter) => createdFilters.push(filter.column));
+    const arrayComparison = [
+      'population',
+      'orbital_period',
+      'diameter',
+      'rotation_period',
+      'surface_water',
+    ];
+    const arrayRendered = arrayComparison.filter((comparison) => (
+      createdFilters.every((filter) => filter !== comparison)
+    ));
+
+    return (
+      <label htmlFor="column">
+        <select
+          name="column"
+          data-testid="column-filter"
+          value={ filters.filterByNumericValues.column }
+          onChange={ handleChangeSelected }
+        >
+          {arrayRendered.map((comparison, index) => (
+            <option key={ index } value={ comparison }>
+              { comparison }
+            </option>
+          ))}
+        </select>
+      </label>
+    );
+  }
+
   return (
     <div>
       <div>
@@ -48,20 +81,7 @@ function Table() {
             onChange={ handleChangeName }
           />
         </label>
-        <label htmlFor="column">
-          <select
-            name="column"
-            data-testid="column-filter"
-            value={ filters.filterByNumericValues.column }
-            onChange={ handleChangeSelected }
-          >
-            <option value="population">population</option>
-            <option value="orbital_period">orbital_period</option>
-            <option value="diameter">diameter</option>
-            <option value="rotation_period">rotation_period</option>
-            <option value="surface_water">surface_water</option>
-          </select>
-        </label>
+        {renderOptions()}
         <label htmlFor="comparison">
           <select
             name="comparison"
