@@ -29,14 +29,14 @@ function Provider({ children }) {
   };
 
   const setSelect = (column, comparison, value) => {
-    const selects = [{
+    const selects = {
       column,
       comparison,
       value,
-    }];
+    };
     setFilters({
       ...filters,
-      filterByNumericValues: selects,
+      filterByNumericValues: [...filters.filterByNumericValues, selects],
     });
   };
 
