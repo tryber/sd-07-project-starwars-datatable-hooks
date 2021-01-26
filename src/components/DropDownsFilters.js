@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 function DropDownsFilters() {
@@ -9,10 +9,11 @@ function DropDownsFilters() {
     setArithmeticLogic,
     numberValue,
     setNumberValue,
-    setClickFilter,
     setClickRemoveFilter,
     columnArray,
     setColumnArray,
+    filtersArray,
+    setFiltersArray,
   } = useContext(StarWarsContext);
 
   const handleChange = ({ target }) => {
@@ -23,7 +24,7 @@ function DropDownsFilters() {
   };
 
   const filterClick = () => {
-    setClickFilter(true)
+    setFiltersArray([...filtersArray, { columnValue, arithmeticLogic, numberValue }]);
     const currentColumnArray = columnArray.filter((column) => column !== columnValue);
     setColumnArray(currentColumnArray);
     setColumnValue(currentColumnArray[0]);
@@ -80,13 +81,21 @@ function DropDownsFilters() {
       >
         FILTER
       </button>
-      <button
-        type="button"
-        data-testid="filter"
-      onClick={ () => setClickRemoveFilter(true) }
-      >
-        X
-      </button>
+
+      {filtersArray.map((currentObject) => (
+        <div key={ currentObject.columnValue }>
+          <span>{ currentObject.columnValue }</span>
+          <span>{ currentObject.arithmeticLogic }</span>
+          <span>{ currentObject.numberValue }</span>
+          <button
+            type="button"
+            data-testid="filter"
+            onClick={ () => setClickRemoveFilter(true) }
+          >
+            X
+          </button>
+        </div>
+      ))}
     </div>
   );
 }

@@ -10,7 +10,6 @@ function Provider({ children }) {
   const [headers, setHeaders] = useState([]);
   const [searchBarValue, setSearchBarValue] = useState('');
   const [tBodyList, setTBodyList] = useState([]);
-  const [clickFilter, setClickFilter] = useState(false);
   const [columnValue, setColumnValue] = useState('population');
   const [arithmeticLogic, setArithmeticLogic] = useState('maior que');
   const [numberValue, setNumberValue] = useState(zero);
@@ -20,8 +19,9 @@ function Provider({ children }) {
     'orbital_period',
     'diameter',
     'rotation_period',
-    'surface_water'
+    'surface_water',
   ]);
+  const [filtersArray, setFiltersArray] = useState([]);
 
   useEffect(() => {
     const callAPI = async () => {
@@ -44,29 +44,30 @@ function Provider({ children }) {
 
   useEffect(() => {
     if (data.results) {
+      let currentColumnValue = filtersArray[filtersArray.length - 1];
+      currentColumnValue = currentColumnValue.columnValue;
       if (arithmeticLogic === 'maior que') {
         setTBodyList(tBodyList
           .filter((currentObject) => (
-            Number(currentObject[columnValue]) > Number(numberValue)
+            Number(currentObject[currentColumnValue]) > Number(numberValue)
           )));
       }
 
       if (arithmeticLogic === 'menor que') {
         setTBodyList(tBodyList
           .filter((currentObject) => (
-            Number(currentObject[columnValue]) < Number(numberValue)
+            Number(currentObject[currentColumnValue]) < Number(numberValue)
           )));
       }
 
       if (arithmeticLogic === 'igual a') {
         setTBodyList(tBodyList
           .filter((currentObject) => (
-            Number(currentObject[columnValue]) === Number(numberValue)
+            Number(currentObject[currentColumnValue]) === Number(numberValue)
           )));
       }
-      setClickFilter(false);
     }
-  }, [clickFilter]);
+  }, [filtersArray]);
 
   useEffect(() => {
     setTBodyList(data.results);
@@ -79,7 +80,6 @@ function Provider({ children }) {
     searchBarValue,
     setSearchBarValue,
     tBodyList,
-    setClickFilter,
     setColumnValue,
     columnValue,
     setArithmeticLogic,
@@ -91,6 +91,8 @@ function Provider({ children }) {
     setClickRemoveFilter,
     columnArray,
     setColumnArray,
+    filtersArray,
+    setFiltersArray,
   };
 
   return (
