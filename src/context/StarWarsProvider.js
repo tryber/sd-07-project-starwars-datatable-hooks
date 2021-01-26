@@ -16,11 +16,29 @@ function StarWarsProvider({ children }) {
     filterByName: {
       name: '',
     },
+    order: {
+      column: 'name',
+      sort: 'ASC',
+    },
     nFilters: [],
   });
 
   const getPlanetsAPI = async () => {
     const newData = await starWarsApi();
+    const zero = 0;
+    const one = 1;
+    const negative = -1;
+
+    newData.sort((a, b) => {
+      if (a.name > b.name) {
+        return one;
+      }
+      if (a.name < b.name) {
+        return negative;
+      }
+      return zero;
+    });
+
     setData(newData);
   };
 
@@ -93,6 +111,28 @@ function StarWarsProvider({ children }) {
     setFilters({ ...filtersValue, [name]: value });
   };
 
+  const changeSortValuesToState = (event) => {
+    const { value, name } = event.target;
+    setFilter({
+      ...filter,
+      order: { ...filter.order, [name]: value },
+    });
+  };
+
+  const setOrder = (firstElement, secondElement) => {
+    const { column, sort } = filter.order;
+    function desc(a, b) {
+      return parseFloat(b) - parseFloat(a);
+    }
+    function asc(a, b) {
+      return parseFloat(a) - parseFloat(b);
+    }
+    if (sort === 'ASC') {
+      return asc(firstElement[column], secondElement[column]);
+    }
+    return desc(firstElement[column], secondElement[column]);
+  };
+
   const context = {
     data,
     filter,
@@ -100,6 +140,8 @@ function StarWarsProvider({ children }) {
     filterDataByNumericValues,
     changeValuesToState,
     removeFilterDataByNumericValues,
+    changeSortValuesToState,
+    setOrder,
   };
 
   return (

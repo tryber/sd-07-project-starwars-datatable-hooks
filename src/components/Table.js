@@ -17,6 +17,8 @@ function Table() {
     filterDataByNumericValues,
     changeValuesToState,
     removeFilterDataByNumericValues,
+    changeSortValuesToState,
+    setOrder,
   } = useContext(StarWarsContext);
 
   const [arrayOfUsedFilters, setFilter] = useState([filter.nFilters]);
@@ -39,7 +41,7 @@ function Table() {
         <div>
           { nFilters.map(({ column, comparison, value }, index) => (
             <div key={ index } data-testid="filter">
-              { `Fitro: ${column} | ${comparison} | ${value}` }
+              { `Fitro: ${column} | ${comparison} | ${value}`}
               <button
                 type="button"
                 data-testid="filter"
@@ -49,7 +51,7 @@ function Table() {
                 x
               </button>
             </div>
-          )) }
+          ))}
         </div>
       );
     }
@@ -69,7 +71,7 @@ function Table() {
           onChange={ changeValuesToState }
         >
           {arrayOfOptions.filter((col) => !arrayOfUsedFilters.includes(col))
-            .map((col) => (<option key={ col } value={ col }>{col}</option>
+            .map((col) => (<option key={ col } value={ col }>{ col }</option>
             ))}
         </select>
       </label>
@@ -97,8 +99,56 @@ function Table() {
       >
         Filtrar
       </button>
+      <label htmlFor="column-sort">
+        Ordenar por
+        <select
+          data-testid="column-sort"
+          name="column"
+          onChange={ (e) => changeSortValuesToState(e) }
+        >
+          {arrayOfOptions
+            .map((option) => (
+              <option
+                key={ option }
+                value={ option }
+                name="column"
+              >
+                { option }
+              </option>))}
+        </select>
+      </label>
+      <label htmlFor="asc">
+        ASC
+        <input
+          required
+          data-testid="column-sort-input-asc"
+          type="radio"
+          id="asc"
+          name="sort"
+          value="ASC"
+          onChange={ (e) => changeSortValuesToState(e) }
+        />
+      </label>
+      <label htmlFor="desc">
+        DESC
+        <input
+          required
+          data-testid="column-sort-input-desc"
+          type="radio"
+          id="desc"
+          name="sort"
+          value="DESC"
+          onChange={ (e) => changeSortValuesToState(e) }
+        />
+      </label>
+      <button
+        type="button"
+        data-testid="column-sort-button"
+      >
+        Ordenar
+      </button>
       <div>
-        {nFilters ? renderRemovesButtons() : null}
+        { nFilters ? renderRemovesButtons() : null }
       </div>
       <table>
         <thead>
@@ -121,9 +171,10 @@ function Table() {
         <tbody>
           {data
             .filter((planet) => planet.name.includes(name))
+            .sort(setOrder)
             .map((planet) => (
               <tr key={ planet.name }>
-                <td>{ planet.name }</td>
+                <td data-testid="planet-name">{ planet.name }</td>
                 <td>{ planet.rotation_period }</td>
                 <td>{ planet.orbital_period }</td>
                 <td>{ planet.diameter }</td>
