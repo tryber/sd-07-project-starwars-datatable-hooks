@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 function DropDownsFilters() {
@@ -11,6 +11,8 @@ function DropDownsFilters() {
     setNumberValue,
     setClickFilter,
     setClickRemoveFilter,
+    columnArray,
+    setColumnArray,
   } = useContext(StarWarsContext);
 
   const handleChange = ({ target }) => {
@@ -18,6 +20,12 @@ function DropDownsFilters() {
     if (name === 'filterColumn') setColumnValue(value);
     if (name === 'arithmeticLogic') setArithmeticLogic(value);
     if (name === 'expectedNumber') setNumberValue(value);
+  };
+
+  const filterClick = () => {
+    setClickFilter(true)
+    setColumnArray(columnArray.filter((column) => column !== columnValue));
+    console.log(columnArray)
   };
 
   return (
@@ -30,11 +38,19 @@ function DropDownsFilters() {
           value={ columnValue }
           onChange={ handleChange }
         >
-          <option value="population">population</option>
+          {columnArray.map((column) => (
+            <option
+              value={ column }
+              key={ column }
+            >
+              { column }
+            </option>
+          ))}
+          {/* <option value="population">population</option>
           <option value="orbital_period">orbital_period</option>
           <option value="diameter">diameter</option>
           <option value="rotation_period">rotation_period</option>
-          <option value="surface_water">surface_water</option>
+          <option value="surface_water">surface_water</option> */}
         </select>
       </label>
 
@@ -64,14 +80,14 @@ function DropDownsFilters() {
       <button
         type="button"
         data-testid="button-filter"
-        onClick={ () => setClickFilter(true) }
+        onClick={ filterClick }
       >
         FILTER
       </button>
       <button
         type="button"
         data-testid="filter"
-        onClick={ () => setClickRemoveFilter(true) }
+      onClick={ () => setClickRemoveFilter(true) }
       >
         X
       </button>

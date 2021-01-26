@@ -15,6 +15,13 @@ function Provider({ children }) {
   const [arithmeticLogic, setArithmeticLogic] = useState('maior que');
   const [numberValue, setNumberValue] = useState(zero);
   const [clickRemoveFilter, setClickRemoveFilter] = useState(false);
+  const [columnArray, setColumnArray] = useState([
+    'population',
+    'orbital_period',
+    'diameter',
+    'rotation_period',
+    'surface_water'
+  ]);
 
   useEffect(() => {
     const callAPI = async () => {
@@ -82,6 +89,8 @@ function Provider({ children }) {
     setHeaders,
     headers,
     setClickRemoveFilter,
+    columnArray,
+    setColumnArray,
   };
 
   return (
