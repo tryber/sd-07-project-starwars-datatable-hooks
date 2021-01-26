@@ -69,6 +69,7 @@ function Provider({ children }) {
     filterData,
     setSelect,
     setFilterName,
+    filters,
   };
 
   return (

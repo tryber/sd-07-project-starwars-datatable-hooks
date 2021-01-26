@@ -1,11 +1,21 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import StarWarsContext from './StarWarsContext';
 
 function SearchBar() {
-  const { setSelect, setFilterName } = useContext(StarWarsContext);
+  const { setSelect, setFilterName, filters } = useContext(StarWarsContext);
   const [column, setColumn] = useState('population');
   const [comparison, setComparison] = useState('maior que');
   const [value, setValue] = useState('0');
+  const optionColumn = [
+    'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water',
+  ];
+  // console.log(filters.filterByNumericValues[0].column);
+  const inclusos = filters.filterByNumericValues.map((item) => item.column);
+  const select = optionColumn.filter((item) => !inclusos.includes(item));
+
+  useEffect(() => {
+    setColumn(select[0]);
+  }, [select]);
 
   return (
     <div>
@@ -16,11 +26,7 @@ function SearchBar() {
         data-testid="name-filter"
       />
       <select data-testid="column-filter" onChange={ (e) => setColumn(e.target.value) }>
-        <option value="population">population</option>
-        <option value="orbital_period">orbital_period</option>
-        <option value="diameter">diameter</option>
-        <option value="rotation_period">rotation_period</option>
-        <option value="surface_water">surface_water</option>
+        {select.map((item) => <option value={ item } key={ item }>{item}</option>)}
       </select>
       <select
         data-testid="comparison-filter"
