@@ -52,19 +52,23 @@ const StarWarsProvider = ({ children }) => {
   const [column, setColumn] = useState([
     'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water']);
 
+  const zero = 0;
+
+  const [filterQ, setFilterQ] = useState(zero);
+
   const handleClick = () => {
     setFilter({
       ...filter,
-      filterByNumericValues: [{
+      filterByNumericValues: [...filter.filterByNumericValues, {
         column: form.column,
         comparison: form.comparison,
         value: form.value,
       }],
     });
 
-    let test = [];
+    const test = [];
 
-    for (let i = 0; i < column.length; i += 1) {
+    for (let i = zero; i < column.length; i += 1) {
       if (column[i] !== form.column) {
         test.push(column[i]);
       }
@@ -77,6 +81,8 @@ const StarWarsProvider = ({ children }) => {
       comparison: 'maior que',
       value: 0,
     });
+
+    setFilterQ(filterQ + 1);
   };
 
   const context = {
@@ -84,6 +90,7 @@ const StarWarsProvider = ({ children }) => {
     filter,
     form,
     column,
+    filterQ,
     filterText,
     handleColumnChange,
     handleComparisonChange,

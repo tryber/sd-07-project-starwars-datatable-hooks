@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import StarWarsContext from './StarWarsContext';
 
 const Table = () => {
-  const { data, filter } = useContext(StarWarsContext);
+  const { data, filter, filterQ } = useContext(StarWarsContext);
   // console.log(Object.entries(filter)[0][1]);
   // console.log(data.filter((e) => (e.name === Object.entries(filter)[0][1])));
   return (
@@ -28,27 +28,37 @@ const Table = () => {
         </thead>
         <tbody>
           {data.map((planet, key) => {
+            let bool = false;
+            let boolT = false;
+            if (filterQ >= 1) {
+              for (let i = 1; i <= filterQ; i += 1) {
+                const { column, comparison, value } = Object.entries(filter)[1][1][i];
 
-            console.log(Object.entries(filter)[1][1])
+                if (comparison === 'igual a') {
+                  bool = parseInt(planet[column], 10) !== parseInt(value, 10);
+                }
 
-            const { column, comparison, value } = Object.entries(filter)[1][1][0];
+                if (comparison === 'maior que') {
+                  bool = parseInt(planet[column], 10) <= parseInt(value, 10)
+                  || planet[column] === 'unknown';
+                }
 
-            let bool;
+                if (comparison === 'menor que') {
+                  bool = (parseInt(planet[column], 10) >= parseInt(value, 10))
+                  || planet[column] === 'unknown';
+                }
 
-            if (comparison === 'igual a') {
-              bool = parseInt(planet[column], 10) !== parseInt(value, 10);
+                console.log(bool);
+                console.log(column);
+                console.log(comparison);
+                console.log(value);
+                console.log(Object.entries(filter));
+
+                boolT = boolT || bool;
+              }
             }
 
-            if (comparison === 'maior que') {
-              bool = parseInt(planet[column], 10) <= parseInt(value, 10);
-            }
-
-            if (comparison === 'menor que') {
-              bool = (parseInt(planet[column], 10) >= parseInt(value, 10))
-              || planet[column] === 'unknown';
-            }
-
-            if (bool || !planet.name.includes(Object.entries(filter)[0][1])) return null;
+            if (boolT || !planet.name.includes(Object.entries(filter)[0][1])) return null;
             // !planet.name.includes(Object.entries(filter)[0][1])
             return (
               <tr key={ key }>

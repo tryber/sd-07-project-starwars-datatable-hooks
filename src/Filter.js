@@ -13,7 +13,7 @@ const Filter = () => {
   } = useContext(StarWarsContext);
   // console.log(Object.entries(filter)[0][1])
   // console.log(filter)
-  console.log(column);
+  // console.log(column);
   return (
     <div>
       <input
@@ -33,9 +33,7 @@ const Filter = () => {
           onChange={ (event) => handleColumnChange(event.target.value) }
         >
 
-        {column.map((e, k) => (
-          <option key={ k } value={ e }>{ e }</option>
-        ))}
+          {column.map((e, k) => (<option key={ k } value={ e }>{ e }</option>))}
           {/* <option value="population">population</option>
           <option value="orbital_period">orbital_period</option>
           <option value="diameter">diameter</option>
