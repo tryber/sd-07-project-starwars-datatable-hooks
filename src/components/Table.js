@@ -7,7 +7,7 @@ function Table() {
   // console.log(data);
   // console.log(filters)
 
-  const filtersChanges = activateFilters();
+  // const filtersChanges = activateFilters();
 
   return (
     <div>
@@ -31,7 +31,7 @@ function Table() {
           </tr>
         </thead>
         <tbody>
-          {filtersChanges.filter((item) => item.name.toLowerCase()
+          {activateFilters().filter((item) => item.name.toLowerCase()
             .includes(name.toLowerCase()))
             .map((item, index) => (
               <tr key={ index }>

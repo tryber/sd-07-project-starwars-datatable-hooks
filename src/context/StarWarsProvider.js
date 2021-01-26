@@ -17,6 +17,14 @@ function StarWarsProvider({ children }) {
   });
   const [startFilters, setStartFilters] = useState({});
 
+  const [filterOption] = useState([
+    'population',
+    'orbital_period',
+    'diameter',
+    'rotation_period',
+    'surface_water',
+  ]);
+
   const { filterByNumericValues } = filters;
   // const { column, comparison, value } = filters.filterByNumericValues[0]
   // console.log('filters:', filters.filterByNumericValues)
@@ -97,6 +105,7 @@ function StarWarsProvider({ children }) {
     handleInputFilterByNumericValues,
     handleButton,
     activateFilters,
+    filterOption,
   };
 
   return (
