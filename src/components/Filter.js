@@ -8,33 +8,50 @@ function Filter() {
     value: '',
   };
 
-  const [numericFilters, setNumericFilters] = useState({ ...INITIAL_STATE });
-
+  const [numericFilters, setNumericFilters] = useState(INITIAL_STATE);
   const { column, comparison, value } = numericFilters;
-
   const {
     filters,
     handleChangeValue,
-    handleChangeFilterByNumericValue } = useContext(StarWarsContext);
+    handleChangeFilterByNumericValue,
+    removeFilterByNumericValues } = useContext(StarWarsContext);
+
+  const activeFilters = filters.filterByNumericValues;
+  const filterColumns = [
+    'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water'];
 
   const handleChangeNumericFilters = (field, fieldValue) => {
     setNumericFilters({ ...numericFilters, [field]: fieldValue });
   };
+
+  const renderActiveFilters = () => {
+    activeFilters.map(({ column, comparison, value }) => (
+      <div key={column} data-testid="filter">
+        {`${column} ${comparison} ${value}`}
+        <button
+          type="button"
+          onClick={() => removeFilterByNumericValues(column)}
+        >
+          x
+        </button>
+      </div>
+    ))
+  }
 
   return (
     <div>
       <input
         type="text"
         data-testid="name-filter"
-        value={ filters.filterByName.name }
-        onChange={ (e) => handleChangeValue(e.target.value) }
+        value={filters.filterByName.name}
+        onChange={(e) => handleChangeValue(e.target.value)}
       />
 
       <select
         className="input-form"
         data-testid="column-filter"
-        value={ column === '' ? 'noSelect' : column }
-        onChange={ (e) => handleChangeNumericFilters('column', e.target.value) }
+        value={column === '' ? 'noSelect' : column}
+        onChange={(e) => handleChangeNumericFilters('column', e.target.value)}
       >
         <option disabled selected value="noSelect">-- Selecione uma opção --</option>
         <option value="population">population</option>
@@ -46,8 +63,8 @@ function Filter() {
       <select
         className="input-form"
         data-testid="comparison-filter"
-        value={ comparison === '' ? 'noSelect' : comparison }
-        onChange={ (e) => handleChangeNumericFilters('comparison', e.target.value) }
+        value={comparison === '' ? 'noSelect' : comparison}
+        onChange={(e) => handleChangeNumericFilters('comparison', e.target.value)}
       >
         <option disabled selected value="noSelect">-- Selecione uma opção --</option>
         <option value="maior que">maior que</option>
@@ -60,18 +77,22 @@ function Filter() {
         data-testid="value-filter"
         placeholder="Informe o valor"
         type="text"
-        value={ value }
-        onChange={ (e) => handleChangeNumericFilters('value', e.target.value) }
+        value={value}
+        onChange={(e) => handleChangeNumericFilters('value', e.target.value)}
       />
 
       <button
         className="button-form"
         data-testid="button-filter"
         type="button"
-        onClick={ () => handleChangeFilterByNumericValue(numericFilters) }
+        onClick={() => handleChangeFilterByNumericValue(numericFilters)}
       >
         Filtrar
       </button>
+      <div>
+        <h3>Filtros selecionados:</h3>
+        {activeFilters && renderActiveFilters()}
+      </div>
     </div>
   );
 }
