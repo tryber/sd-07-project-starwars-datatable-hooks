@@ -95,7 +95,7 @@ describe('Filtre a tabela através de um texto, inserido num *campo de texto*, e
     expect(await screen.findByTestId(INPUT_FILTER_NAME_SELECTOR)).toBeInTheDocument();
   });
 
-  it.only ('Filtra planetas que possuem a letra "o" no nome', async () => {
+  it('Filtra planetas que possuem a letra "o" no nome', async () => {
     await act(async () => {
       render(<App />);
     });

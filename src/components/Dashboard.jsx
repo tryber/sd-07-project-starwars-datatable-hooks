@@ -25,19 +25,31 @@ function Dashboard() {
         </Button>
       </div>
       <input
-        type="string"
+        type="text"
         color="secondary"
         data-testid="name-filter"
         name="string"
         onChange={ onHandleChange }
       />
       <div className="select-setting">
-        <Select name="comparison" defaultValue="" className="right-select" data-testid="comparison-filter" onChange={ onHandleChangeSelect }>
+        <Select
+          name="comparison"
+          defaultValue=""
+          className="right-select"
+          data-testid="comparison-filter"
+          onChange={ onHandleChangeSelect }
+        >
           <option value="maior que">Maior que</option>
           <option value="menor que">Menor que</option>
           <option selected value="igual a">Igual a</option>
         </Select>
-        <Select name="column" defaultValue="" className="left-select" data-testid="column-filter" onChange={ onHandleChangeSelect }>
+        <Select
+          name="column"
+          defaultValue=""
+          className="left-select"
+          data-testid="column-filter"
+          onChange={ onHandleChangeSelect }
+        >
           <option value="population">Population</option>
           <option value="orbital_period">Orbital_period</option>
           <option selected value="diameter">Diameter</option>

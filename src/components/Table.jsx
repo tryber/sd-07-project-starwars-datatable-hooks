@@ -11,7 +11,7 @@ function MyTable() {
 
   useEffect(() => {
     setFilteredData(data);
-  }, []);
+  }, [data]);
 
   useEffect(() => {
     if (name) {
@@ -38,7 +38,7 @@ function MyTable() {
         <tbody>
           {
             filteredData.map((planet, index) => (
-              <tr role='row' key={ index }>
+              <tr key={ index }>
                 <td className="namePlanet" key={ planet.name }>{ planet.name }</td>
                 <td key={ planet.rotation_period }>{ planet.rotation_period }</td>
                 <td key={ planet.orbital_period }>{ planet.orbital_period }</td>
