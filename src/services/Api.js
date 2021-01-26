@@ -1,4 +1,4 @@
-const getPlanets = () => {
+const getPlanets = async () => {
   const URL = 'https://swapi-trybe.herokuapp.com/api/planets/';
   return fetch(URL)
     .then((response) => response.json())

@@ -1,27 +1,24 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './App.css';
 import Table from './components/Table';
 import MyContext from './context/MyContext';
 import getPlanets from './services/Api';
 
-class App extends React.Component {
-  constructor() {
-    super();
+function App() {
+  const [state, setData] = useState({});
 
-    this.state = {
-      data: '',
-    };
-  }
+  useEffect(() => {
+    getPlanets()
+      .then((response) => setData(response));
+  });
 
-  render() {
-    getPlanets().then((data) => this.setState({ data }));
-    const { data } = this.state;
-    return (
-      <MyContext.Provider value={ data }>
+  return (
+    <MyContext.Provider value={ state }>
+      <div className="App">
         <Table />
-      </MyContext.Provider>
-    );
-  }
+      </div>
+    </MyContext.Provider>
+  );
 }
 
 export default App;
