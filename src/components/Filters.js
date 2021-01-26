@@ -17,20 +17,17 @@ const Filters = () => {
   // https://stackabuse.com/javascript-convert-string-to-number/
 
   const handleFilterButton = () => {
-    const { column, comparison, value } = filters.filterByNumericValues[0];
+    filters.filterByNumericValues.forEach((filterByNumericValues) => {
+      const { column, comparison, value } = filterByNumericValues;
 
-    console.log(value);
-
-    if (comparison === 'maior que') {
-      const results = starWars.filter((item) => +value < item[column]);
-      return setStarWars(results);
-    } if (comparison === 'menor que') {
-      const results = starWars.filter((item) => +value > item[column]);
-      return setStarWars(results);
-    } if (comparison === 'igual a') {
-      const results = starWars.filter((item) => value === item[column]);
-      return setStarWars(results);
-    }
+      if (comparison === 'maior que') {
+        setStarWars(starWars.filter((item) => +value < item[column]));
+      } if (comparison === 'menor que') {
+        setStarWars(starWars.filter((item) => +value > item[column]));
+      } if (comparison === 'igual a') {
+        setStarWars(starWars.filter((item) => value === item[column]));
+      }
+    });
   };
 
   const handleFilterNumeric = ({ target }) => {
@@ -44,6 +41,13 @@ const Filters = () => {
     });
   };
 
+  const removeFilter = () => {
+    setFilters({
+      ...filters,
+      removeFilter: true,
+    });
+  };
+
   const onlyNumber = (event) => {
     const theEvent = event || window.event;
     let key = theEvent.keyCode || theEvent.which;
@@ -54,6 +58,10 @@ const Filters = () => {
       if (theEvent.preventDefault) theEvent.preventDefault();
     }
   };
+
+  const columns = [
+    '', 'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water',
+  ];
 
   return (
     <div>
@@ -73,12 +81,9 @@ const Filters = () => {
           data-testid="column-filter"
           onChange={ handleFilterNumeric }
         >
-          <option value="">Selecione um filtro</option>
-          <option value="population">population</option>
-          <option value="orbital_period">orbital_period</option>
-          <option value="diameter">diameter</option>
-          <option value="rotation_period">rotation_period</option>
-          <option value="surface_water">surface_water</option>
+          {columns.map((item) => (
+            <option value={ item } key={ item }>{ item }</option>
+          ))}
         </select>
         <select
           name="comparison"
@@ -104,6 +109,13 @@ const Filters = () => {
         onClick={ handleFilterButton }
       >
         Filtrar
+      </button>
+      <button
+        type="button"
+        onClick={ removeFilter }
+        data-testid="filter"
+      >
+        Remover Filtro
       </button>
     </div>
   );
