@@ -21,14 +21,14 @@ const Filters = () => {
 
     console.log(value);
 
-    if (comparison === 'maior_que') {
+    if (comparison === 'maior que') {
       const results = starWars.filter((item) => +value < item[column]);
       return setStarWars(results);
-    } if (comparison === 'menor_que') {
+    } if (comparison === 'menor que') {
       const results = starWars.filter((item) => +value > item[column]);
       return setStarWars(results);
-    } if (comparison === 'igual_a') {
-      const results = starWars.filter((item) => +value === item[column]);
+    } if (comparison === 'igual a') {
+      const results = starWars.filter((item) => value === item[column]);
       return setStarWars(results);
     }
   };
@@ -86,9 +86,9 @@ const Filters = () => {
           onChange={ handleFilterNumeric }
         >
           <option value="">Selecione um filtro</option>
-          <option value="maior_que">Maior que</option>
-          <option value="menor_que">Menor que</option>
-          <option value="igual_a">Igual a</option>
+          <option value="maior que">maior que</option>
+          <option value="menor que">menor que</option>
+          <option value="igual a">igual a</option>
         </select>
         <input
           data-testid="value-filter"

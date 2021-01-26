@@ -13,7 +13,7 @@ function App() {
       {
         column: '',
         comparison: '',
-        value: 0,
+        value: '',
       },
     ],
   });
