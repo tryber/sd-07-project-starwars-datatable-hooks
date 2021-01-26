@@ -11,3 +11,7 @@ table, th, td {
 table {
   border-collapse: collapse;
 }
+
+label {
+  padding: 10px,
+}
