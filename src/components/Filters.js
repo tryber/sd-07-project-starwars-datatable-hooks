@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 const Filters = () => {
-  const { filters, setFilters } = useContext(StarWarsContext);
+  const { filters, setFilters, starWars, setStarWars } = useContext(StarWarsContext);
 
   const handleFilter = (({ target }) => {
     setFilters({
@@ -12,7 +12,27 @@ const Filters = () => {
       },
     });
   });
-  
+
+  // pesquisa feita para converter string em number
+  // https://stackabuse.com/javascript-convert-string-to-number/
+
+  const handleFilterButton = () => {
+    const { column, comparison, value } = filters.filterByNumericValues[0];
+
+    console.log(value);
+
+    if (comparison === 'maior_que') {
+      const results = starWars.filter((item) => +value < item[column]);
+      return setStarWars(results);
+    } if (comparison === 'menor_que') {
+      const results = starWars.filter((item) => +value > item[column]);
+      return setStarWars(results);
+    } if (comparison === 'igual_a') {
+      const results = starWars.filter((item) => +value === item[column]);
+      return setStarWars(results);
+    }
+  };
+
   const handleFilterNumeric = ({ target }) => {
     const { name, value } = target;
     setFilters({
@@ -21,8 +41,8 @@ const Filters = () => {
         ...filters.filterByNumericValues[0],
         [name]: value,
       }],
-    })
-  }
+    });
+  };
 
   const onlyNumber = (event) => {
     const theEvent = event || window.event;
@@ -81,6 +101,7 @@ const Filters = () => {
       <button
         type="button"
         data-testid="button-filter"
+        onClick={ handleFilterButton }
       >
         Filtrar
       </button>

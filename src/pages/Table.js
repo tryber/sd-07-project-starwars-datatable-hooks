@@ -13,17 +13,15 @@ const TablePlanet = () => {
     }
   }
 
-  const tableBody = () => {
-    return starWars.filter(({ name }) => name.toLowerCase()
-      .includes(filters.filterByName.name.toLowerCase()))
-      .map((item, key) => (
-        <tr key={ key }>
-          {Object.keys(item)
-            .filter((index) => index !== 'residents')
-            .map((index) => (<td key={ index }>{item[index]}</td>))}
-        </tr>
-    ))
-  }
+  const tableBody = () => starWars.filter(({ name }) => name.toLowerCase()
+    .includes(filters.filterByName.name.toLowerCase()))
+    .map((item, key) => (
+      <tr key={ key }>
+        {Object.keys(item)
+          .filter((index) => index !== 'residents')
+          .map((index) => (<td key={ index }>{item[index]}</td>))}
+      </tr>
+    ));
 
   return (
     <table>

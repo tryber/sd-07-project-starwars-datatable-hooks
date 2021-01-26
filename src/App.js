@@ -13,9 +13,9 @@ function App() {
       {
         column: '',
         comparison: '',
-        value: undefined,
+        value: 0,
       },
-    ]
+    ],
   });
 
   const initialState = {
