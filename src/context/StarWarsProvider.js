@@ -8,6 +8,14 @@ function Provider({ children }) {
   const [column, setColumn] = useState('');
   const [comparison, setComparison] = useState('');
   const [number, setNumber] = useState('');
+  const [columns, setColumns] = useState([
+    'population',
+    'orbital_period',
+    'diameter',
+    'rotation_period',
+    'surface_water',
+  ]);
+  const [availableColumns, setAvailableColumns] = useState(columns);
 
   const url = 'https://swapi-trybe.herokuapp.com/api/planets/';
 
@@ -49,7 +57,9 @@ function Provider({ children }) {
   };
 
   const filterOptions = () => {
+    setColumns();
     let planetFiltred = null;
+    let optionsColumns = null;
 
     if (column !== '' && comparison !== '' && number !== '') {
       switch (column) {
@@ -69,7 +79,12 @@ function Provider({ children }) {
             (planet) => planet.population === number,
           );
         }
+
         setFilters(planetFiltred);
+        optionsColumns = columns.filter(
+          (option) => option !== 'population',
+        );
+        setAvailableColumns(optionsColumns);
         break;
 
       case 'orbital_period':
@@ -89,6 +104,12 @@ function Provider({ children }) {
           );
         }
         setFilters(planetFiltred);
+
+        optionsColumns = columns.filter(
+          (option) => option !== 'porbital_period',
+        );
+        setAvailableColumns(optionsColumns);
+
         break;
 
       case 'diameter':
@@ -106,6 +127,10 @@ function Provider({ children }) {
           planetFiltred = data.filter((planet) => planet.diameter === number);
         }
         setFilters(planetFiltred);
+        optionsColumns = columns.filter(
+          (option) => option !== 'diameter',
+        );
+        setAvailableColumns(optionsColumns);
         break;
 
       case 'rotation_period':
@@ -125,6 +150,10 @@ function Provider({ children }) {
           );
         }
         setFilters(planetFiltred);
+        optionsColumns = columns.filter(
+          (option) => option !== 'rotation_period',
+        );
+        setAvailableColumns(optionsColumns);
         break;
 
       case 'surface_water':
@@ -144,6 +173,10 @@ function Provider({ children }) {
           );
         }
         setFilters(planetFiltred);
+        optionsColumns = columns.filter(
+          (option) => option !== 'surface_water',
+        );
+        setAvailableColumns(optionsColumns);
         break;
 
       default:
@@ -154,7 +187,7 @@ function Provider({ children }) {
 
   return (
     <StarWarsContext.Provider
-      value={ { filters, handleName, handleForm, filterOptions } }
+      value={ { filters, availableColumns, handleName, handleForm, filterOptions } }
     >
       {children}
     </StarWarsContext.Provider>

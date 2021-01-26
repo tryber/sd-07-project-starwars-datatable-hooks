@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 function Table() {
-  const { filters, handleName, handleForm, filterOptions } = useContext(
+  const { filters, availableColumns, handleName, handleForm, filterOptions } = useContext(
     StarWarsContext,
   );
 
@@ -14,11 +14,10 @@ function Table() {
       <div>
         <select data-testid="column-filter" name="column" onChange={ handleForm }>
           <option value="">Column</option>
-          <option value="population">population</option>
-          <option value="orbital_period">orbital_period</option>
-          <option value="diameter">diameter</option>
-          <option value="rotation_period">rotation_period</option>
-          <option value="surface_water">surface_water</option>
+          {availableColumns.map((column, index) => (
+            <option key={ index } value={ column }>
+              { column }
+            </option>))}
         </select>
       </div>
       <div>
