@@ -98,7 +98,6 @@ export default function Filter() {
           name="column"
           id="column"
         >
-          <option>chose one column</option>
           {
             columnOptions.map((column, index) => (
               <option key={ index }>{column}</option>
@@ -114,7 +113,6 @@ export default function Filter() {
           name="comparison"
           id="comparison"
         >
-          <option>chose a comparison</option>
           <option>maior que</option>
           <option>menor que</option>
           <option>igual a</option>
