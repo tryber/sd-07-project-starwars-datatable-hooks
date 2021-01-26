@@ -135,7 +135,7 @@ function Table() {
 
   useEffect(() => {
     renderTable(planetList);
-  }, [planetList, filterByNumericValues, active, renderTable]);
+  }, [planetList, filterByNumericValues, active]);
 
   const handleClick = () => {
     setContext({
