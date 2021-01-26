@@ -54,6 +54,10 @@ function FiltersForm() {
     .filter((column) => !filters.filterByNumericValues
       .some((item) => item.column === column));
 
+  const planetsWeight = planetWeight
+    .filter((comparison) => !filters.filterByNumericValues
+      .some((item) => item.comparison === comparison));
+
   return (
     <form>
       <div>
@@ -87,7 +91,7 @@ function FiltersForm() {
             onChange={ filterSetChange }
           >
             <option>Selecionar</option>
-            {planetWeight.map((item) => (<option key={ item }>{item}</option>))}
+            {planetsWeight.map((item) => (<option key={ item }>{item}</option>))}
           </select>
         </div>
 
