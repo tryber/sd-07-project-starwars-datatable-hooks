@@ -24,7 +24,7 @@ function useEvent() {
   const [option, setOption] = useState(['population',
     'orbital_period', 'diameter', 'rotation_period', 'surface_water']);
 
-  const [test, setTest] = useState([]);
+  const [sorted, setSorted] = useState([]);
 
   const titles = title.filter((res) => res !== 'residents');
 
@@ -37,9 +37,7 @@ function useEvent() {
 
   const { name: names } = filterByName;
 
-  const filterName = data.filter(
-    ({ name: nameFilter }) => nameFilter.includes(names),
-  );
+  const filterName = data.filter(({ name }) => name.includes(names));
 
   const handlerNumberChange = async ({ target }) => {
     const { name, value } = target;
@@ -102,34 +100,35 @@ function useEvent() {
   };
 
   const handlerClickSorted = () => {
+    setFilter(false);
     const zero = 0;
     const menosUm = -1;
     const { order } = filters;
     const { collumn: col, sort } = order;
     if (sort === 'ASC') {
       if (col === 'name') {
-        setTest(data.sort((a, b) => {
+        setSorted(data.sort((a, b) => {
           if (a[col] > b[col]) return 1;
           if (a[col] < b[col]) return menosUm;
           return zero;
         }));
       } else {
-        setTest(data.sort((a, b) => a[col] - b[col]));
+        setSorted(data.sort((a, b) => a[col] - b[col]));
       }
     } else if (sort === 'DESC') {
       if (col === 'name') {
-        setTest(data.sort((a, b) => {
+        setSorted(data.sort((a, b) => {
           if (a[col] < b[col]) return 1;
           if (a[col] > b[col]) return menosUm;
           return zero;
         }));
       } else {
-        setTest(data.sort((a, b) => b[col] - a[col]));
+        setSorted(data.sort((a, b) => b[col] - a[col]));
       }
     }
   };
 
-  console.log(test);
+  console.log(sorted);
 
   const filtered = filter ? filterNumber : filterName;
 

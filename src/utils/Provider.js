@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import StarWarsContext from '../context/StarWarsContext';
+import fetchStarWarsPlanet from '../service/StarWarsApi';
 // import mockData from '../testData';
 
 function Provider(props) {
@@ -9,15 +10,15 @@ function Provider(props) {
   const names = 'name';
   const menosUm = -1;
 
-  const fetchStarWarsPlanet = async () => {
-    const fetchPlanet = await fetch('https://swapi-trybe.herokuapp.com/api/planets/');
-    const { results } = await fetchPlanet.json();
-    setData(results.sort((a, b) => {
+  const fetchStarWars = async () => {
+    const { results } = await fetchStarWarsPlanet();
+    const response = results.sort((a, b) => {
       if (a[names] > b[names]) {
         return 1;
       }
       return menosUm;
-    }));
+    });
+    setData(response);
     setTitle(Object.keys(...results));
   };
 
@@ -28,13 +29,11 @@ function Provider(props) {
   }; */
 
   useEffect(() => {
-    fetchStarWarsPlanet();
+    fetchStarWars();
   }, []);
 
   const contextStarWars = {
-    fetchStarWars: fetchStarWarsPlanet,
     data,
-    setData,
     title,
   };
   const { children } = props;
