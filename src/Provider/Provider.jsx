@@ -4,12 +4,8 @@ import Context from '../contextAPI/Context';
 import planetsApi from '../services/getAPI';
 
 function Provider(props) {
-  const initial = {
-
-    filters: { filterByName: { name: '' } } };
-
   const [data, setData] = useState([]);
-  const [filters, setFilters] = useState(initial);
+  const [filters, setFilters] = useState({ filterByName: { name: '' } });
 
   const getPlanet = async () => {
     const { results } = await planetsApi();
@@ -18,7 +14,7 @@ function Provider(props) {
 
   const onHandleChange = (event) => {
     const { value } = event.target;
-    setFilters({ filters: { filterByName: { name: value } } });
+    setFilters({ ...filters, filterByName: { name: value } });
   };
 
   useEffect(() => {

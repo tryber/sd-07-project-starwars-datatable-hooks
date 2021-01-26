@@ -1,12 +1,27 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { Table, TableCell, TableHead, TableRow } from '@material-ui/core';
 import context from '../contextAPI/Context';
 
 function MyTable() {
+  const [filteredData, setFilteredData] = useState([]);
   const { data, filters } = useContext(context);
-  const objContext = Object.values(filters).map((el) => el.filterByName);
-  const objName = objContext.map((item) => item.name);
-  console.log(data);
+  const { filterByName } = filters;
+
+  const { name } = filterByName;
+
+  useEffect(() => {
+    setFilteredData(data);
+  }, []);
+
+  useEffect(() => {
+    if (name) {
+      const itemFiltered = data.filter((el) => el.name.toLowerCase().includes(name));
+      setFilteredData(itemFiltered);
+    } else {
+      setFilteredData(data);
+    }
+  }, [name, data]);
+
   const empty = 0;
   if (data.length === empty) return <span className="span-control">carregando...</span>;
   const titles = Object.keys(data[0]).filter((el) => el !== 'residents');
@@ -22,8 +37,8 @@ function MyTable() {
         </TableHead>
         <tbody>
           {
-            data.filter((el) => el.name.includes(objName[0])).map((planet, index) => (
-              <tr key={ index }>
+            filteredData.map((planet, index) => (
+              <tr role='row' key={ index }>
                 <td className="namePlanet" key={ planet.name }>{ planet.name }</td>
                 <td key={ planet.rotation_period }>{ planet.rotation_period }</td>
                 <td key={ planet.orbital_period }>{ planet.orbital_period }</td>

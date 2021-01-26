@@ -4,7 +4,7 @@ import imagePlanet from '../image/imperio.jpg';
 import context from '../contextAPI/Context';
 
 function Dashboard() {
-  const { onHandleChange } = useContext(context);
+  const { onHandleChange, onHandleChangeSelect } = useContext(context);
   return (
     <section className="settings">
       <div className="sub-settings">
@@ -12,9 +12,8 @@ function Dashboard() {
           className="input-filter"
           type="number"
           color="primary"
-          name="filterByNumericValues"
           data-testid="value-filter"
-          onChange={ (event) => onHandleChange(event) }
+          onChange={ onHandleChangeSelect }
         />
         <Button
           className="button-fetch"
@@ -25,20 +24,20 @@ function Dashboard() {
           Buscar
         </Button>
       </div>
-      <Input
+      <input
         type="string"
         color="secondary"
-        name="filterByName"
         data-testid="name-filter"
-        onChange={ (event) => onHandleChange(event) }
+        name="string"
+        onChange={ onHandleChange }
       />
       <div className="select-setting">
-        <Select defaultValue="" className="right-select" data-testid="comparison-filter">
+        <Select name="comparison" defaultValue="" className="right-select" data-testid="comparison-filter" onChange={ onHandleChangeSelect }>
           <option value="maior que">Maior que</option>
           <option value="menor que">Menor que</option>
           <option selected value="igual a">Igual a</option>
         </Select>
-        <Select defaultValue="" className="left-select" data-testid="column-filter">
+        <Select name="column" defaultValue="" className="left-select" data-testid="column-filter" onChange={ onHandleChangeSelect }>
           <option value="population">Population</option>
           <option value="orbital_period">Orbital_period</option>
           <option selected value="diameter">Diameter</option>
