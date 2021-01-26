@@ -7,26 +7,36 @@ function Provider({ children }) {
   const [data, setData] = useState([]);
   const [dataSave, setDataSave] = useState([]);
   const [filterName, setFilterName] = useState('');
+  const [filterColumn, setFilterColumn] = useState('');
 
-  const handleChange = () => {
-    const negNumber = -1;
-    const input = document.querySelector('#name-filter').value;
-    setFilterName(input);
-    const searchData = dataSave.filter((item) => item.name.indexOf(input) > negNumber);
-    setData(searchData);
+  const handleChangeFilterName = ({ target: { value } }) => {
+    setFilterName(value);
+  };
+
+  const handleChangeColumnFilter = ({ target: { value } }) => {
+    setFilterColumn(value);
+  };
+
+  const handleChangeComparisonFilter = ({ target: { value } }) => {
+    setFilterColumn(value);
   };
 
   const contextValue = {
-    handleChange,
-    setFilterName,
-    setData,
-    setDataSave,
+    handleChangeColumnFilter,
+    handleChangeFilterName,
+    handleChangeComparisonFilter,
     data,
-    dataSave,
     filters: {
       filterByName: {
         name: filterName,
       },
+      filterByNumericValues: [
+        {
+          column: filterColumn,
+          comparison: '',
+          value: '',
+        },
+      ],
     },
   };
 
@@ -38,6 +48,11 @@ function Provider({ children }) {
     }
     fetchData();
   }, []);
+
+  useEffect(() => {
+    const negNumber = -1;
+    setData(dataSave.filter((item) => item.name.indexOf(filterName) > negNumber));
+  }, [dataSave, filterName]);
 
   return (
     <StarWarsContext.Provider value={ contextValue }>
