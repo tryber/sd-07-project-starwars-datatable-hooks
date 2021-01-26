@@ -17,20 +17,20 @@ function Filter() {
     removeFilterByNumericValues } = useContext(StarWarsContext);
 
   const activeFilters = filters.filterByNumericValues;
-  const filterColumns = [
-    'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water'];
+  // const filterColumns = [
+  //   'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water'];
 
   const handleChangeNumericFilters = (field, fieldValue) => {
     setNumericFilters({ ...numericFilters, [field]: fieldValue });
   };
 
   const renderActiveFilters = () => {
-    activeFilters.map(({ column, comparison, value }) => (
-      <div key={ column } data-testid="filter">
-        {`${column} ${comparison} ${value}`}
+    activeFilters.map((filterColumn, filterComparison, filterValue) => (
+      <div key={ filterColumn } data-testid="filter">
+        {`${filterColumn} ${filterComparison} ${filterValue}`}
         <button
           type="button"
-          onClick={ () => removeFilterByNumericValues(column) }
+          onClick={ () => removeFilterByNumericValues(filterColumn) }
         >
           x
         </button>
