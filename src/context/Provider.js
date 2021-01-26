@@ -30,7 +30,7 @@ function Provider({ children }) {
   const handleChangeFilterByNumericValue = (field) => {
     setFilters({
       ...filters,
-      filterByNumericValues: filters.filterByNumericValues.concat(value),
+      filterByNumericValues: filters.filterByNumericValues.concat(field),
     });
   };
 
@@ -51,7 +51,7 @@ function Provider({ children }) {
   };
 
   return (
-    <StarWarsContext.Provider value={ contextValue }>
+    <StarWarsContext.Provider value={contextValue}>
       {children}
     </StarWarsContext.Provider>
   );
