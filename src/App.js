@@ -29,7 +29,7 @@ function App() {
       setContext({ ...context, planetList: results });
     }
     fetchPlanet();
-  }, [context]);
+  }, []);
 
   return (
     <StarWarsContext.Provider value={ { context, setContext } }>
