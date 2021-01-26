@@ -50,7 +50,7 @@ function Provider({ children }) {
 
         case 'igual a':
           if (
-            result[numericFilter.column]
+            parseInt(result[numericFilter.column], 10)
             === parseInt(numericFilter.value, 10)
             && parseInt(numericFilter.value, 10) !== 'unknown'
           ) {

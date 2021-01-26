@@ -69,9 +69,9 @@ function Table() {
             value={ filters.filterByNumericValues.comparison }
             onChange={ handleChangeSelected }
           >
-            <option value="maior que">bigger then</option>
-            <option value="menor que">less than</option>
-            <option value="igual a">equal to</option>
+            <option value="maior que">maior que</option>
+            <option value="igual a">igual a</option>
+            <option value="menor que">menor que</option>
           </select>
         </label>
         <label htmlFor="value">
