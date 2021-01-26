@@ -10,6 +10,7 @@ function DropDownsFilters() {
     numberValue,
     setNumberValue,
     setClickFilter,
+    setClickRemoveFilter,
   } = useContext(StarWarsContext);
 
   const handleChange = ({ target }) => {
@@ -66,6 +67,13 @@ function DropDownsFilters() {
         onClick={ () => setClickFilter(true) }
       >
         FILTER
+      </button>
+      <button
+        type="button"
+        data-testid="filter"
+        onClick={ () => setClickRemoveFilter(true) }
+      >
+        X
       </button>
     </div>
   );

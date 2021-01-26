@@ -14,6 +14,7 @@ function Provider({ children }) {
   const [columnValue, setColumnValue] = useState('population');
   const [arithmeticLogic, setArithmeticLogic] = useState('maior que');
   const [numberValue, setNumberValue] = useState(zero);
+  const [clickRemoveFilter, setClickRemoveFilter] = useState(false);
 
   useEffect(() => {
     const callAPI = async () => {
@@ -36,7 +37,6 @@ function Provider({ children }) {
 
   useEffect(() => {
     if (data.results) {
-      setTBodyList(data.results);
       if (arithmeticLogic === 'maior que') {
         setTBodyList(tBodyList
           .filter((currentObject) => (
@@ -61,6 +61,11 @@ function Provider({ children }) {
     }
   }, [clickFilter]);
 
+  useEffect(() => {
+    setTBodyList(data.results);
+    setClickRemoveFilter(false);
+  }, [clickRemoveFilter]);
+
   const contextValue = {
     isFetching,
     data,
@@ -76,6 +81,7 @@ function Provider({ children }) {
     numberValue,
     setHeaders,
     headers,
+    setClickRemoveFilter,
   };
 
   return (
