@@ -38,7 +38,7 @@ function Provider({ children }) {
       ...filters,
       filterByNumericValues: [...filters.filterByNumericValues, selects],
     });
-  };
+  }; // referência: Luciano Berchon
 
   const [filterData, setFilterData] = useState([]);
   const { name } = filters.filterByName;
@@ -59,7 +59,7 @@ function Provider({ children }) {
           return true;
         }
       });
-    });
+    }); // referência: Luciano Berchon
     setFilterData(filteredByName);
   }, [name, data, filters.filterByNumericValues]); // referência Carol Andrade
 

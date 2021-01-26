@@ -9,13 +9,12 @@ function SearchBar() {
   const optionColumn = [
     'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water',
   ];
-  // console.log(filters.filterByNumericValues[0].column);
   const inclusos = filters.filterByNumericValues.map((item) => item.column);
   const select = optionColumn.filter((item) => !inclusos.includes(item));
-
+  // referência: Luciano Berchon
   useEffect(() => {
     setColumn(select[0]);
-  }, [select]);
+  }, [filters]);
 
   return (
     <div>
