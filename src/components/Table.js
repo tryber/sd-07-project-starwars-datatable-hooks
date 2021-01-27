@@ -3,7 +3,7 @@ import StarWarsContext from '../context/StarWarsContext';
 import './table.css';
 
 function Table() {
-  const { data } = useContext(StarWarsContext);
+  const { responseFilter } = useContext(StarWarsContext);
   const cabecalho = [
     'Nome',
     'Rotação',
@@ -34,7 +34,7 @@ function Table() {
           </tr>
         </thead>
         <tbody>
-          {data.map((planet) => (
+          { responseFilter.map((planet) => (
             <tr key={ planet.name }>
               <td>{planet.name}</td>
               <td>{planet.rotation_period}</td>
