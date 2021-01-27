@@ -7,7 +7,13 @@ function Provider({ children }) {
   const [data, setPlanets] = useState([]);
   const [valueFilter, setValueFilter] = useState('');
   const [responseFilter, setRequestFilter] = useState([]);
-  const [columns, setColumns] = useState(['population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water']);
+  const [columns, setColumns] = useState([
+    'population',
+    'orbital_period',
+    'diameter',
+    'rotation_period',
+    'surface_water',
+  ]);
   const [isFetching, setIsFetching] = useState(true);
 
   const [filters, setFilters] = useState({
