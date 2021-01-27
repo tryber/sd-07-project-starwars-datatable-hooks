@@ -160,7 +160,9 @@ function SearchForm() {
                 setFilters((prev) => (
                   {
                     ...prev,
-                    filterByNumericValues: filterByNumericValues.filter((filt) => filt !== f),
+                    filterByNumericValues: filterByNumericValues.filter(
+                      (filt) => filt !== f,
+                    ),
                   }
 
                 ));
