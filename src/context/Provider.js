@@ -10,18 +10,10 @@ function Provider({ children }) {
       name: '',
     },
     filterByNumericValues: [],
-    // filterByNumericValues: [
-    //   {
-    //     column: 'population',
-    //     comparison: 'maior que',
-    //     value: '10000',
-    //   },
-    // ],
   };
   const customFilterInitialState = false;
 
   const [data, setData] = useState(dataInitialState);
-  // const [filters, setFilter] = useState(filterInitialState);
   const [filters, dispatch] = useReducer(reducer, filterInitialState);
   const [customFilter, setCustomFilter] = useState(customFilterInitialState);
 
@@ -29,7 +21,6 @@ function Provider({ children }) {
     data,
     setData,
     filters,
-    // setFilter,
     dispatch,
     customFilter,
     setCustomFilter,

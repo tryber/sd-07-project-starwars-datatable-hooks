@@ -33,7 +33,6 @@ function ApplyFilter() {
       break;
     }
   });
-  console.log(filteredByNumeric);
   return filteredByNumeric;
 }
 

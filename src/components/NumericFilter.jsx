@@ -26,9 +26,6 @@ const NumericFilter = () => {
   const [selectValues, setSelectValues] = useState(selectInitial);
   const [filteredColumnOptions, setFilteredColumnOptions] = useState(columnOptions);
   const { filters, dispatch, setCustomFilter } = useContext(StarWarsContext);
-  // const filtersValues = filters.filterByNumericValues;
-  // const filtersValues = Object.create(filters.filterByNumericValues[0]);
-  // let filtersValues = {};
 
   function handleChange({ target: { id, value } }) {
     setCustomFilter(false);
@@ -36,40 +33,29 @@ const NumericFilter = () => {
       ...selectValues,
       [id]: value,
     });
-    // setCustomFilter(false);
-    // console.log('context:', filters.filterByNumericValues)
-    // console.log('filtersValue:', filtersValues)
-
-    // filtersValues = { ...filtersValues, [id]: value };
-    // const newFilter = filters.filterByNumericValues.concat(filtersValues);
-    // console.log('newFilter: ', newFilter)
-
-    // // console.log(filtersValues)
-    // // dispatch({ type: 'FILTER_BY_COLUMN', payload: filtersValues });
-    // dispatch({ type: 'FILTER_BY_COLUMN', payload: newFilter });
   }
 
   function addFilter() {
     setCustomFilter(true);
-    // console.log('Filtro Numerico: ', filters.filterByNumericValues);
     const newFilter = filters.filterByNumericValues.concat(selectValues);
-    // console.log('newFilter');
-    // console.log(newFilter);
     dispatch({ type: 'FILTER_BY_COLUMN', payload: newFilter });
   }
 
   useEffect(() => {
     function filterColumnOptions() {
+      const minOption = 1;
       let filteredColumns = columnOptions;
       const activeFilters = filters.filterByNumericValues.map((filter) => filter.column);
-      if (activeFilters.length > 1) {
+      if (activeFilters.length >= minOption) {
         activeFilters.forEach((option) => {
           filteredColumns = filteredColumns.filter((e) => option !== e);
         });
       }
-      // console.log('Colunas ativas: ', activeFilters);
-      // console.log('filteredColumns: ', filteredColumns);
       setFilteredColumnOptions(filteredColumns);
+      setSelectValues((sV) => ({
+        ...sV,
+        column: filteredColumns[0],
+      }));
     }
     filterColumnOptions();
   }, [filters.filterByNumericValues]);
@@ -104,7 +90,6 @@ const NumericFilter = () => {
       <button
         type="button"
         data-testid="button-filter"
-        // onClick={ () => setCustomFilter(true) }
         onClick={ () => addFilter() }
       >
         Filtrar
