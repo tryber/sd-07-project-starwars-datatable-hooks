@@ -57,7 +57,7 @@ const PlanetsList = () => {
           <td>{+item.diameter}</td>
           <td>{splitElements(item.climate)}</td>
           <td>{splitElements(item.gravity)}</td>
-          <td>{splitElements(item.terrain)}</td>
+          <td>{item.terrain}</td>
           <td>{item.surface_water}</td>
           <td>{item.population}</td>
           <td>{mapParagrafElement(item.films)}</td>
