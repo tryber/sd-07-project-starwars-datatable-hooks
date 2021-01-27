@@ -16,7 +16,7 @@ function SearchForm() {
     comparison: 'maior que',
     value: 0,
   });
-  const numericFiltersOptions = {
+  const [numericFiltersOptions, setNumericFiltersOptions] = useState({
     column: [
       'population',
       'orbital_period',
@@ -29,7 +29,7 @@ function SearchForm() {
       'menor que',
       'igual a',
     ],
-  };
+  });
   const {
     filterByName: {
       name: nameValue,
@@ -40,6 +40,7 @@ function SearchForm() {
     column: columnValue,
     comparison: comparisonValue,
     value: numericValue } = currentFilter;
+  const { column } = numericFiltersOptions;
   const handleCurrentFilter = (name, value) => {
     setCurrentFilter((current) => (
       {
@@ -144,7 +145,15 @@ function SearchForm() {
               <button
                 data-testid="button-filter"
                 type="button"
-                onClick={ () => addFilter(currentFilter) }
+                onClick={ () => {
+                  addFilter(currentFilter);
+                  setNumericFiltersOptions((prev) => (
+                    {
+                      column: column.filter((opt) => opt !== columnValue),
+                      comparison: prev.comparison,
+                    }
+                  ));
+                } }
               >
                 Adicionar Filtro
               </button>
