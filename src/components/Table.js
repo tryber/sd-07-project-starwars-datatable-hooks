@@ -1,16 +1,16 @@
-import React, { useContext, useEffect, useState } from "react";
-import { StarWarsContext } from "../providers/StarWarsProviders";
+import React, { useContext, useEffect, useState } from 'react';
+import { StarWarsContext } from '../providers/StarWarsProviders';
 
 const Table = () => {
   const {
     data,
-    filters: { filterByName }
+    filters: { filterByName },
   } = useContext(StarWarsContext);
   const [dataFiltered, setDataFiltered] = useState([data]);
 
   useEffect(() => {
     setDataFiltered(
-      data.filter(({ name }) => name.includes(filterByName.name))
+      data.filter(({ name }) => name.includes(filterByName.name)),
     );
   }, [data, filterByName.name]);
 
@@ -36,7 +36,7 @@ const Table = () => {
         </thead>
         <tbody>
           {dataFiltered.map((planet) => (
-            <tr key={planet.name}>
+            <tr key={ planet.name }>
               <td>{planet.name}</td>
               <td>{planet.rotation_period}</td>
               <td>{planet.orbital_period}</td>
