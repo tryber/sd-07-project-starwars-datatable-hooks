@@ -10,14 +10,14 @@ class Table extends React.Component {
           const { data } = value;
           return (
             <table className="table">
+              <tbody>
+                {tableCells.getRows(data)}
+              </tbody>
               <thead>
                 <tr>
                   {tableCells.getHeaders(data[0])}
                 </tr>
               </thead>
-              <tbody>
-                {tableCells.getRows(data)}
-              </tbody>
             </table>
           );
         }}
