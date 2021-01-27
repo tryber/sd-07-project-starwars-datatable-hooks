@@ -3,7 +3,8 @@ import StarWarsContext from '../context/StarWarsContext';
 
 function Table() {
   const { data } = useContext(StarWarsContext);
-  if (data[0]) {
+  if (data.length >= 1) {
+    console.log(data);
     const dataOneElemnet = data[0];
     const dataHead = Object.keys(dataOneElemnet).filter((item) => item !== 'residents');
     return (
@@ -42,7 +43,11 @@ function Table() {
     );
   }
   return (
-    <div>LOADING....</div>
+
+    <div>
+      LOADING....
+      {console.log('dsd') }
+    </div>
   );
 }
 
