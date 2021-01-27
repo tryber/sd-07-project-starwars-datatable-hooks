@@ -1,19 +1,29 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import fetchApi from '../services/fetchApi';
 import StarWarsContext from './StarWarsContext';
 
 function Provider({ children }) {
-  const [data, setData] = React.useState(null);
-  const [headers, setHeaders] = React.useState(null);
-  const contextValue = {
-    data,
-    setData,
-    headers,
-    setHeaders,
+  const [data, setData] = React.useState();
+  const [filters, setFilters] = React.useState({ filterByName: { name: '' } });
+
+  const getFetch = async () => {
+    setData(await fetchApi());
   };
+
+  React.useEffect(() => {
+    getFetch();
+  }, []);
+
+  const value = {
+    data,
+    filters,
+    setFilters,
+  };
+
   return (
-    <StarWarsContext.Provider value={ contextValue }>
-      {children}
+    <StarWarsContext.Provider value={ value }>
+      { children }
     </StarWarsContext.Provider>
   );
 }
