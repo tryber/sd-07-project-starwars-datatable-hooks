@@ -45,27 +45,34 @@ function Provider({ children }) {
     if (data.results) {
       // Ygor - Provider Linha 82: https://github.com/tryber/sd-07-project-starwars-datatable-hooks/pull/39/files
       setTBodyList(data.results);
-      filtersArray.forEach(({ columnValue, arithmeticLogic, numberValue }) => {
+      filtersArray.forEach(({
+        columnValue: currentColumnValue,
+        arithmeticLogic: currentArithmeticLogic,
+        numberValue: currentNumberValue,
+      }) => {
         setTBodyList(data.results);
-        if (arithmeticLogic === 'maior que') {
+        if (currentArithmeticLogic === 'maior que') {
           setTBodyList(
             (previousTBodyList) => previousTBodyList.filter((currentObject) => (
-              Number(currentObject[columnValue]) > Number(numberValue)
-            )));
+              Number(currentObject[currentColumnValue]) > Number(currentNumberValue)
+            )),
+          );
         }
-  
-        if (arithmeticLogic === 'menor que') {
+
+        if (currentArithmeticLogic === 'menor que') {
           setTBodyList(
             (previousTBodyList) => previousTBodyList.filter((currentObject) => (
-              Number(currentObject[columnValue]) < Number(numberValue)
-            )));
+              Number(currentObject[currentColumnValue]) < Number(currentNumberValue)
+            )),
+          );
         }
-  
-        if (arithmeticLogic === 'igual a') {
+
+        if (currentArithmeticLogic === 'igual a') {
           setTBodyList(
             (previousTBodyList) => previousTBodyList.filter((currentObject) => (
-              Number(currentObject[columnValue]) === Number(numberValue)
-            )));
+              Number(currentObject[currentColumnValue]) === Number(currentNumberValue)
+            )),
+          );
         }
       });
     }

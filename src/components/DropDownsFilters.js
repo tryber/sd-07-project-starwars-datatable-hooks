@@ -3,7 +3,6 @@ import StarWarsContext from '../context/StarWarsContext';
 
 function DropDownsFilters() {
   const {
-    data,
     columnValue,
     setColumnValue,
     arithmeticLogic,
@@ -14,8 +13,6 @@ function DropDownsFilters() {
     setColumnArray,
     filtersArray,
     setFiltersArray,
-    setTBodyList,
-    tBodyList,
   } = useContext(StarWarsContext);
 
   const handleChange = ({ target }) => {
@@ -33,10 +30,11 @@ function DropDownsFilters() {
   };
 
   const removeFilter = (column) => {
-    const currentColumnArray = [...columnArray, column]
+    const currentColumnArray = [...columnArray, column];
     setColumnArray(currentColumnArray);
 
-    const currentFiltersArray = filtersArray.filter(({ columnValue }) => columnValue !== column);
+    const currentFiltersArray = filtersArray
+      .filter(({ columnValue: currentColumnValue }) => currentColumnValue !== column);
     setFiltersArray(currentFiltersArray);
   };
 
@@ -95,7 +93,9 @@ function DropDownsFilters() {
       {filtersArray.map((currentObject, index) => (
         <div key={ currentObject.columnValue }>
           <p>
-            { currentObject.columnValue } { currentObject.arithmeticLogic } { currentObject.numberValue }
+            { currentObject.columnValue }
+            { currentObject.arithmeticLogic }
+            { currentObject.numberValue }
           </p>
           <button
             type="button"
