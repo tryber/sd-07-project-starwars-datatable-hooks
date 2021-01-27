@@ -13,9 +13,9 @@ function App() {
       },
     },
     handleChange: (value) => {
-      const copyState = { ...state };
-      copyState.filters.filterByName.name = value;
-      setData(copyState);
+      const newState = { ...state };
+      newState.filters.filterByName.name = value;
+      setData(newState);
     },
   });
 
@@ -27,9 +27,9 @@ function App() {
           if (resp.name.includes(name)) return resp;
           return '';
         });
-        const copyState = { ...state };
-        copyState.data = filtered;
-        setData(copyState);
+        const newState = { ...state };
+        newState.data = filtered;
+        setData(newState);
       });
   });
 
