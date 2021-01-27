@@ -13,7 +13,6 @@ function Table() {
       </div>
       <div>
         <select data-testid="column-filter" name="column" onChange={ handleForm }>
-          <option value="">Column</option>
           {availableColumns.map((column, index) => (
             <option key={ index } value={ column }>
               { column }
