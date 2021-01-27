@@ -13,7 +13,6 @@ function Provider({ children }) {
   const [columnValue, setColumnValue] = useState('population');
   const [arithmeticLogic, setArithmeticLogic] = useState('maior que');
   const [numberValue, setNumberValue] = useState(zero);
-  const [clickRemoveFilter, setClickRemoveFilter] = useState(false);
   const [columnArray, setColumnArray] = useState([
     'population',
     'orbital_period',
@@ -44,35 +43,33 @@ function Provider({ children }) {
 
   useEffect(() => {
     if (data.results) {
-      let currentColumnValue = filtersArray[filtersArray.length - 1];
-      currentColumnValue = currentColumnValue.columnValue;
-      if (arithmeticLogic === 'maior que') {
-        setTBodyList(tBodyList
-          .filter((currentObject) => (
-            Number(currentObject[currentColumnValue]) > Number(numberValue)
-          )));
-      }
-
-      if (arithmeticLogic === 'menor que') {
-        setTBodyList(tBodyList
-          .filter((currentObject) => (
-            Number(currentObject[currentColumnValue]) < Number(numberValue)
-          )));
-      }
-
-      if (arithmeticLogic === 'igual a') {
-        setTBodyList(tBodyList
-          .filter((currentObject) => (
-            Number(currentObject[currentColumnValue]) === Number(numberValue)
-          )));
-      }
+      // Ygor - Provider Linha 82: https://github.com/tryber/sd-07-project-starwars-datatable-hooks/pull/39/files
+      setTBodyList(data.results);
+      filtersArray.forEach(({ columnValue, arithmeticLogic, numberValue }) => {
+        setTBodyList(data.results);
+        if (arithmeticLogic === 'maior que') {
+          setTBodyList(
+            (previousTBodyList) => previousTBodyList.filter((currentObject) => (
+              Number(currentObject[columnValue]) > Number(numberValue)
+            )));
+        }
+  
+        if (arithmeticLogic === 'menor que') {
+          setTBodyList(
+            (previousTBodyList) => previousTBodyList.filter((currentObject) => (
+              Number(currentObject[columnValue]) < Number(numberValue)
+            )));
+        }
+  
+        if (arithmeticLogic === 'igual a') {
+          setTBodyList(
+            (previousTBodyList) => previousTBodyList.filter((currentObject) => (
+              Number(currentObject[columnValue]) === Number(numberValue)
+            )));
+        }
+      });
     }
   }, [filtersArray]);
-
-  useEffect(() => {
-    setTBodyList(data.results);
-    setClickRemoveFilter(false);
-  }, [clickRemoveFilter]);
 
   const contextValue = {
     isFetching,
@@ -80,6 +77,7 @@ function Provider({ children }) {
     searchBarValue,
     setSearchBarValue,
     tBodyList,
+    setTBodyList,
     setColumnValue,
     columnValue,
     setArithmeticLogic,
@@ -88,7 +86,6 @@ function Provider({ children }) {
     numberValue,
     setHeaders,
     headers,
-    setClickRemoveFilter,
     columnArray,
     setColumnArray,
     filtersArray,

@@ -3,17 +3,19 @@ import StarWarsContext from '../context/StarWarsContext';
 
 function DropDownsFilters() {
   const {
+    data,
     columnValue,
     setColumnValue,
     arithmeticLogic,
     setArithmeticLogic,
     numberValue,
     setNumberValue,
-    setClickRemoveFilter,
     columnArray,
     setColumnArray,
     filtersArray,
     setFiltersArray,
+    setTBodyList,
+    tBodyList,
   } = useContext(StarWarsContext);
 
   const handleChange = ({ target }) => {
@@ -28,6 +30,14 @@ function DropDownsFilters() {
     const currentColumnArray = columnArray.filter((column) => column !== columnValue);
     setColumnArray(currentColumnArray);
     setColumnValue(currentColumnArray[0]);
+  };
+
+  const removeFilter = (column) => {
+    const currentColumnArray = [...columnArray, column]
+    setColumnArray(currentColumnArray);
+
+    const currentFiltersArray = filtersArray.filter(({ columnValue }) => columnValue !== column);
+    setFiltersArray(currentFiltersArray);
   };
 
   return (
@@ -82,15 +92,15 @@ function DropDownsFilters() {
         FILTER
       </button>
 
-      {filtersArray.map((currentObject) => (
+      {filtersArray.map((currentObject, index) => (
         <div key={ currentObject.columnValue }>
-          <span>{ currentObject.columnValue }</span>
-          <span>{ currentObject.arithmeticLogic }</span>
-          <span>{ currentObject.numberValue }</span>
+          <p>
+            { currentObject.columnValue } { currentObject.arithmeticLogic } { currentObject.numberValue }
+          </p>
           <button
             type="button"
             data-testid="filter"
-            onClick={ () => setClickRemoveFilter(true) }
+            onClick={ () => removeFilter(currentObject.columnValue, index) }
           >
             X
           </button>
