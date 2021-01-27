@@ -1,17 +1,19 @@
 import React from 'react';
 import MyContext from '../../context/MyContext';
 
-function Inputs(name) {
+function Inputs(key) {
   return (
     <MyContext.Consumer>
       {(value) => {
-        const { handleChange } = value;
+        const { filters: { filterByName: { name } }, handleChange } = value;
         return (
-          <label htmlFor={ `input-${name}` }>
+          <label htmlFor={ `input-${key}` }>
             <input
-              name={ `input-${name}` }
-              id={ `input-${name}` }
-              data-testid={ name }
+              key={ `input-${key}` }
+              name={ `input-${key}` }
+              id={ `input-${key}` }
+              data-testid={ key }
+              value={ name }
               onChange={ ({ target }) => handleChange(target.value) }
             />
           </label>
