@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Loading, Table, Search } from '../components';
+import { Loading, Table, Search, SearchText } from '../components';
 import StarWarsContext from '../context/StarWarsContext';
 
 function Planets() {
@@ -8,6 +8,7 @@ function Planets() {
     <div>
       {' '}
       <Search />
+      <SearchText />
       {isFetching ? <Loading /> : <Table />}
     </div>
   );
