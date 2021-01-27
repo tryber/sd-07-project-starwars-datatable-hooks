@@ -6,6 +6,20 @@ import fetchPlanets from '../services';
 function PlanetsProvider({ children }) {
   const [planets, setPlanets] = useState({});
   const [filteredPlanets, setFilteredPlanets] = useState([]);
+  const [numericFiltersOptions, setNumericFiltersOptions] = useState({
+    column: [
+      'population',
+      'orbital_period',
+      'diameter',
+      'rotation_period',
+      'surface_water',
+    ],
+    comparison: [
+      'maior que',
+      'menor que',
+      'igual a',
+    ],
+  });
   const [filters, setFilters] = useState({
     filterByName: {
       name: '',
@@ -46,6 +60,8 @@ function PlanetsProvider({ children }) {
           setFilters,
           handleChangeName,
           addFilter,
+          numericFiltersOptions,
+          setNumericFiltersOptions,
         } }
       >
         { children }

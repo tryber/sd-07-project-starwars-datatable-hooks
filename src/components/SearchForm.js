@@ -7,7 +7,10 @@ function SearchForm() {
     filters,
     addFilter,
     handleChangeName,
-    setFilteredPlanets } = useContext(PlanetsContext);
+    setFilteredPlanets,
+    setFilters,
+    numericFiltersOptions,
+    setNumericFiltersOptions } = useContext(PlanetsContext);
   const [
     currentFilter,
     setCurrentFilter,
@@ -15,20 +18,6 @@ function SearchForm() {
     column: 'population',
     comparison: 'maior que',
     value: 0,
-  });
-  const [numericFiltersOptions, setNumericFiltersOptions] = useState({
-    column: [
-      'population',
-      'orbital_period',
-      'diameter',
-      'rotation_period',
-      'surface_water',
-    ],
-    comparison: [
-      'maior que',
-      'menor que',
-      'igual a',
-    ],
   });
   const {
     filterByName: {
@@ -161,6 +150,33 @@ function SearchForm() {
           )
           : 'Loading...'
       }
+      {filterByNumericValues
+        ? filterByNumericValues.map((f) => (
+          <div key={ f.column } data-testid="filter">
+            {f.column}
+            <button
+              type="button"
+              onClick={ () => {
+                setFilters((prev) => (
+                  {
+                    ...prev,
+                    filterByNumericValues: filterByNumericValues.filter((filt) => filt !== f),
+                  }
+
+                ));
+                setNumericFiltersOptions((prev) => (
+                  {
+                    ...prev,
+                    column: [...prev.column, f.column],
+                  }
+                ));
+              } }
+            >
+              x
+            </button>
+          </div>
+        ))
+        : null }
     </div>
   );
 }
