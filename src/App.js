@@ -13,9 +13,9 @@ function App() {
       },
     },
     handleChange: (value) => {
-      const newState = { ...state };
-      newState.filters.filterByName.name = value;
-      setData(newState);
+      const changeState = { ...state };
+      changeState.filters.filterByName.name = value;
+      setData(changeState);
     },
   });
 
@@ -27,9 +27,9 @@ function App() {
           if (resp.name.includes(name)) return resp;
           return '';
         });
-        const newState = { ...state };
-        newState.data = filtered;
-        setData(newState);
+        const changeState = { ...state };
+        changeState.data = filtered;
+        setData(changeState);
       });
   });
 
