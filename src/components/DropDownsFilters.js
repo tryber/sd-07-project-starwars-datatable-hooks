@@ -91,7 +91,7 @@ function DropDownsFilters() {
       </button>
 
       {filtersArray.map((currentObject, index) => (
-        <div key={ currentObject.columnValue }>
+        <div data-testid="filter" key={ currentObject.columnValue }>
           <p>
             { currentObject.columnValue }
             { currentObject.arithmeticLogic }
@@ -99,7 +99,6 @@ function DropDownsFilters() {
           </p>
           <button
             type="button"
-            data-testid="filter"
             onClick={ () => removeFilter(currentObject.columnValue, index) }
           >
             X
