@@ -15,7 +15,6 @@ function Table() {
   useEffect(() => {
     getCurrentPlanets();
   }, [getCurrentPlanets]);
-  console.table(data);
 
   return (
     <div>
