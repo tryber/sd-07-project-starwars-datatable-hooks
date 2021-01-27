@@ -9,7 +9,7 @@ function App() {
     data: {},
     filters: {
       filterByName: {
-        name: '',
+        name: ' ',
       },
     },
     handleChange: (value) => {
