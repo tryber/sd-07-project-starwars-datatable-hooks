@@ -6,6 +6,7 @@ import TableView from './view/TableView';
 
 function App() {
   const [state, setData] = useState({
+    requested: false,
     data: {},
     filters: {
       filterByName: {
@@ -23,13 +24,16 @@ function App() {
     getPlanets()
       .then((response) => {
         const { name } = state.filters.filterByName;
-        const filtered = response.map((resp) => {
-          if (resp.name.includes(name)) return resp;
-          return '';
-        });
         const changeState = { ...state };
-        changeState.data = filtered;
-        setData(changeState);
+        if (!state.requested) {
+          const filtered = response.map((resp) => {
+            if (resp.name.includes(name)) return resp;
+            return '';
+          });
+          changeState.data = filtered;
+          setData(changeState);
+        }
+        changeState.requested = true;
       });
   });
 
