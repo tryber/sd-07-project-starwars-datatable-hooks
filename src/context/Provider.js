@@ -8,6 +8,13 @@ class Provider extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      columnOptions: {
+        population: 'population',
+        orbital_period: 'orbital_period',
+        diameter: 'diameter',
+        rotation_period: 'rotation_period',
+        surface_water: 'surface_water',
+      },
       error: null,
       isFetching: false,
       data: [],

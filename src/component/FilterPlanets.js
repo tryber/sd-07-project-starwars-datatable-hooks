@@ -3,7 +3,12 @@ import React, { useContext } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 function FilterPlanets() {
-  const { handleFilterName, handleFilter, sendFilter } = useContext(StarWarsContext);
+  const {
+    handleFilterName,
+    handleFilter,
+    sendFilter,
+    columnOptions,
+  } = useContext(StarWarsContext);
   return (
     <form>
       <input
@@ -19,12 +24,9 @@ function FilterPlanets() {
         onChange={ handleFilter }
         data-testid="column-filter"
       >
-        <option selected disabled value="">Selecionar</option>
-        <option value="population">População</option>
-        <option value="orbital_period">Periodo Orbital</option>
-        <option value="diameter">Diâmetro</option>
-        <option value="rotation_period">Periodo de Rotação</option>
-        <option value="surface_water">Superfície da água</option>
+        {Object.keys(columnOptions).map((column) => (
+          <option key={ column } value={ column }>{columnOptions[column]}</option>
+        ))}
       </select>
       <select
         required
