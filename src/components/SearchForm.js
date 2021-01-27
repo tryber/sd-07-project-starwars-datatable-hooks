@@ -13,7 +13,7 @@ function SearchForm() {
     setCurrentFilter,
   ] = useState({
     column: 'population',
-    comparsion: 'maior que',
+    comparison: 'maior que',
     value: 0,
   });
   const numericFiltersOptions = {
@@ -24,21 +24,21 @@ function SearchForm() {
       'rotation_period',
       'surface_water',
     ],
-    comparsion: [
+    comparison: [
       'maior que',
       'menor que',
-      'igual',
+      'igual a',
     ],
   };
   const {
     filterByName: {
       name: nameValue,
     },
-    // filterByNumericValues,
+    filterByNumericValues,
   } = filters;
   const {
     column: columnValue,
-    comparsion: comparsionValue,
+    comparison: comparisonValue,
     value: numericValue } = currentFilter;
   const handleCurrentFilter = (name, value) => {
     setCurrentFilter((current) => (
@@ -48,29 +48,40 @@ function SearchForm() {
       }
     ));
   };
+
+  const comparisonConverter = (planet, filter) => {
+    const value = parseInt(filter.value, 10);
+    if (filter.comparison === 'maior que') {
+      return planet[filter.column] > value;
+    }
+    if (filter.comparison === 'menor que') {
+      return planet[filter.column] < value;
+    }
+    return planet[filter.column] === filter.value;
+  };
+
   useEffect(() => {
     if (planets.results !== undefined) {
-      const filterPlanetsByName = async () => {
+      let filtered = planets.results;
+      const filterPlanets = () => {
+        if (filterByNumericValues.length) {
+          filterByNumericValues.forEach((f) => {
+            filtered = filtered.filter((planet) => comparisonConverter(planet, f));
+            setFilteredPlanets(filtered);
+          });
+        }
         if (nameValue !== '') {
           setFilteredPlanets(
-            planets.results.filter((planet) => planet.name.includes(nameValue)),
+            filtered.filter((planet) => planet.name.includes(nameValue)),
           );
-        } else {
-          setFilteredPlanets(planets.results);
+        }
+        if (nameValue === '' && !filterByNumericValues.length) {
+          setFilteredPlanets(filtered);
         }
       };
-      /*  const filterPlanetsByNumericValues = async () => {
-        if (filterByNumericValues !== undefined) {
-          setFilteredPlanets(
-            planets.results.filter((planet) => planet.name.includes(nameValue)),
-          );
-        } else {
-          setFilteredPlanets(planets.results);
-        }
-      };  */
-      filterPlanetsByName();
+      filterPlanets();
     }
-  }, [setFilteredPlanets, nameValue, planets]);
+  }, [setFilteredPlanets, filterByNumericValues, nameValue, planets]);
   return (
     <div>
       {
@@ -104,14 +115,14 @@ function SearchForm() {
                 ))}
               </select>
               <select
-                name="comparsion"
-                data-testid="comparsion-filter"
+                name="comparison"
+                data-testid="comparison-filter"
                 onChange={ ({ target: { name, value } }) => {
                   handleCurrentFilter(name, value);
                 } }
-                value={ comparsionValue }
+                value={ comparisonValue }
               >
-                {numericFiltersOptions.comparsion.map((option) => (
+                {numericFiltersOptions.comparison.map((option) => (
                   <option
                     key={ option }
                     value={ option }
