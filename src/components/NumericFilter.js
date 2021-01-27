@@ -13,10 +13,9 @@ function NumericFilter() {
     setFilterByNumericValues,
     filteredData,
     setFilteredData,
+    columnOptions,
+    setColumnOptions,
   } = useContext(StarWarsContext);
-
-  const columnOptions = [
-    'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water'];
 
   const addFilterByNumericValue = () => {
     filterByNumericValues.forEach((filter) => {
@@ -37,6 +36,9 @@ function NumericFilter() {
         return filteredData;
       }
     });
+    const toRemoveArray = filterByNumericValues.map((filter) => filter.column);
+    setColumnOptions(columnOptions
+      .filter((columnOption) => !toRemoveArray.includes(columnOption)));
   };
 
   useEffect(() => {

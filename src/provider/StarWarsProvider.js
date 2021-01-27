@@ -13,6 +13,8 @@ function StarWarsProvider({ children }) {
   const [value, setValue] = useState(zero);
   const [filterByNumericValues, setFilterByNumericValues] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
+  const [columnOptions, setColumnOptions] = useState([
+    'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water']);
 
   useEffect(() => {
     async function updatePlanets() {
@@ -45,6 +47,8 @@ function StarWarsProvider({ children }) {
     setFilterByNumericValues,
     filteredData,
     setFilteredData,
+    columnOptions,
+    setColumnOptions,
   };
 
   return (
