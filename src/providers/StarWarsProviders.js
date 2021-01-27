@@ -4,8 +4,19 @@ import PropTypes from 'prop-types';
 export const StarWarsContext = createContext();
 
 const StarWarsProviders = ({ children }) => {
+  const objctInitial = {
+    filterByName: { name: '' },
+    filterByNumericValue: [{ column: 'population', comparison: 'maior que', value: 0 }],
+  };
+  const [options, setOptions] = useState([
+    'population',
+    'orbital_period',
+    'diameter',
+    'surface_water',
+    'rotation_period',
+  ]);
   const [data, setData] = useState([]);
-  const [filters, setFilters] = useState({ filterByName: { name: '' } });
+  const [filters, setFilters] = useState(objctInitial);
 
   useEffect(() => {
     async function fetchAPI() {
@@ -22,10 +33,20 @@ const StarWarsProviders = ({ children }) => {
     setFilters({ ...filters, filterByName: { name } });
   }
 
+  function filterNumberFunc(id, value) {
+    setFilters({
+      ...filters,
+      filterByNumericValue: [{ ...filters.filterByNumericValue[0], [id]: value }],
+    });
+  }
+
   const valuesProvider = {
     data,
     filters,
     filterNameFunc,
+    filterNumberFunc,
+    options,
+    setOptions,
   };
 
   return (

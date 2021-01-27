@@ -4,18 +4,42 @@ import { StarWarsContext } from '../providers/StarWarsProviders';
 const Table = () => {
   const {
     data,
-    filters: { filterByName },
+    filters: { filterByName, filterByNumericValue },
+    setOptions,
   } = useContext(StarWarsContext);
-  const [dataFiltered, setDataFiltered] = useState([data]);
+  const [backupData, setBackupData] = useState([data]);
 
   useEffect(() => {
-    setDataFiltered(
-      data.filter(({ name }) => name.includes(filterByName.name)),
-    );
+    setBackupData(data.filter(({ name }) => name.includes(filterByName.name)));
   }, [data, filterByName.name]);
+
+  function filterTable() {
+    setBackupData(
+      backupData.filter((planet) => {
+        const { comparison, column, value } = filterByNumericValue[0];
+        setOptions((currData) => currData.filter((option) => column !== option));
+
+        switch (comparison) {
+        case 'maior que':
+          if (planet[column] === 'unknown') return false;
+          return +(planet[column]) > (value);
+        case 'menor que':
+          if (planet[column] === 'unknown') return false;
+          return +(planet[column]) < (value);
+        case 'igual a':
+          return (planet[column] === value);
+        default:
+          return planet;
+        }
+      }),
+    );
+  }
 
   return (
     <div>
+      <button data-testid="button-filter" type="button" onClick={ filterTable }>
+        Filtrar
+      </button>
       <table>
         <thead>
           <tr>
@@ -35,8 +59,8 @@ const Table = () => {
           </tr>
         </thead>
         <tbody>
-          {dataFiltered.map((planet) => (
-            <tr key={ planet.name }>
+          {backupData.map((planet, index) => (
+            <tr key={ index }>
               <td>{planet.name}</td>
               <td>{planet.rotation_period}</td>
               <td>{planet.orbital_period}</td>
