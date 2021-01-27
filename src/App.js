@@ -7,12 +7,12 @@ function App() {
   return (
     <div>
       <ProviderStarWars>
-      <Filter/>
-      <PlanetsList />
+        <Filter />
+        <PlanetsList />
       </ProviderStarWars>
     </div>
   );
 }
 
 export default App;
-//{showMap && <ISSLocation />}
+// {showMap && <ISSLocation />}

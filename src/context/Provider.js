@@ -1,38 +1,64 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import StarWarsContext from './StarWarsContext';
-import { getPlanet } from '../services/planetAPI';
+import getPlanet from '../services/planetAPI';
 
 const { Provider } = StarWarsContext;
 const ProviderStarWars = ({ children }) => {
   const [data, setData] = useState([]);
-  const [inputText, setInputText] = useState('');
-  const[filters, setFilters] = useState({ 
-    filterByName: { name: '' }, 
-    filterByNumericValues: [{ 
-      column: 'population',
-      comparison: 'maior que',
-      value: '100000' }] })
+  const [filters, setFilters] = useState({
+    filterByName: { name: '' },
+    filterByNumericValues: [],
+  });
+
+  const [tempFilter, setTemp] = useState({
+    column: '',
+    comparison: 'maior que',
+    value: '100000',
+  });
 
   const fetchdata = async () => {
     const results = await getPlanet();
     setData([...results]);
   };
 
+  const tags = ['population',
+    'orbital_period',
+    'diameter',
+    'rotation_period',
+    'surface_water'];
+
   useEffect(() => {
     fetchdata();
   }, []);
 
-//filters { filterByName: { name }, filterByNumericValues: [{ column, comparison, value }] }
+  const handleInput = ({ target }) => {
+    setFilters({ ...filters,
+      filterByName: {
+        ...filters.filterByName,
+        name: target.value } });
+  };
 
- const handleInput = ({target}) => {
-  setInputText(target.value);
-  setFilters({...filters, filterByName: {...filters.filterByName, name:inputText }})
- }
+  const handleInputNumbers = (input, { target }) => {
+    setTemp({ ...tempFilter, [input]: target.value });
+    console.log({ tempFilter, target: target.value });
+  };
+
+  const addFilter = () => {
+    setFilters({ ...filters,
+      filterByNumericValues: [
+        ...filters.filterByNumericValues,
+        tempFilter] });
+  };
+
   const context = {
     data,
-    inputText,
+    filters,
     handleInput,
+    handleInputNumbers,
+    tags,
+    addFilter,
+    tempFilter,
   };
 
   return (
