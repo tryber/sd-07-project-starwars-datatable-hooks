@@ -9,13 +9,14 @@ function Provider({ children }) {
     filterByName: {
       name: '',
     },
-    filterByNumericValues: [
-      {
-        column: 'population',
-        comparison: 'maior que',
-        value: '100000',
-      },
-    ],
+    filterByNumericValues: [],
+    // filterByNumericValues: [
+    //   {
+    //     column: 'population',
+    //     comparison: 'maior que',
+    //     value: '10000',
+    //   },
+    // ],
   };
   const customFilterInitialState = false;
 

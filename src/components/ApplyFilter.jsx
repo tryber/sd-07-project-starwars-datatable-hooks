@@ -9,26 +9,31 @@ function ApplyFilter() {
   if (!customFilter) {
     return filteredByName;
   }
-  const { column, comparison, value } = filters.filterByNumericValues[0];
   let filteredByNumeric = filteredByName;
-  const excludeUnknown = filteredByName.filter((planet) => planet[column] !== 'unknow');
-  switch (comparison) {
-  case 'maior que':
-    filteredByNumeric = excludeUnknown
-      .filter((planet) => planet[column] > parseInt(value, 10));
-    break;
-  case 'menor que':
-    filteredByNumeric = excludeUnknown
-      .filter((planet) => planet[column] < parseInt(value, 10));
-    break;
-  case 'igual a':
-    filteredByNumeric = excludeUnknown
-      .filter((planet) => planet[column] === value);
-    break;
-  default:
-    break;
-  }
 
+  filters.filterByNumericValues.forEach((filter) => {
+    const { column, comparison, value } = filter;
+    filteredByNumeric = filteredByNumeric
+      .filter((planet) => planet[column] !== 'unknow');
+
+    switch (comparison) {
+    case 'maior que':
+      filteredByNumeric = filteredByNumeric
+        .filter((planet) => planet[column] > parseInt(value, 10));
+      break;
+    case 'menor que':
+      filteredByNumeric = filteredByNumeric
+        .filter((planet) => planet[column] < parseInt(value, 10));
+      break;
+    case 'igual a':
+      filteredByNumeric = filteredByNumeric
+        .filter((planet) => planet[column] === value);
+      break;
+    default:
+      break;
+    }
+  });
+  console.log(filteredByNumeric);
   return filteredByNumeric;
 }
 

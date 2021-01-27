@@ -12,6 +12,7 @@ function reducer(state, action) {
     return {
       ...state,
       ...state.filters,
+      // ...state.filters.filterByNumericValues: action.payload,
       filterByNumericValues: action.payload,
     };
   default:
