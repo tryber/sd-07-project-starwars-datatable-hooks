@@ -12,7 +12,7 @@ function Provider({ children }) {
   };
 
   const [data, setData] = useState([]);
-  const [filters, setFilters] = useState(INITIAL_STATE);
+  const [filters, setFilters] = useState({ ...INITIAL_STATE });
 
   const fetchPlanets = async () => {
     const planets = await StarWarsAPI();
@@ -30,15 +30,7 @@ function Provider({ children }) {
   const handleChangeFilterByNumericValue = (field) => {
     setFilters({
       ...filters,
-      filterByNumericValues: filters.filterByNumericValues.concat(field),
-    });
-  };
-
-  const removeFilterByNumericValues = (value) => {
-    setFilters({
-      ...filters,
-      filterByNumericValues: filters.filterByNumericValues
-        .filter((filter) => filter.column !== value),
+      filterByNumericValues: [...filters.filterByNumericValues, field],
     });
   };
 
@@ -47,7 +39,6 @@ function Provider({ children }) {
     filters,
     handleChangeValue,
     handleChangeFilterByNumericValue,
-    removeFilterByNumericValues,
   };
 
   return (

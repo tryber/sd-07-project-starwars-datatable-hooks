@@ -8,34 +8,17 @@ function Filter() {
     value: '',
   };
 
-  const [numericFilters, setNumericFilters] = useState(INITIAL_STATE);
+  const [numericFilters, setNumericFilters] = useState({ ...INITIAL_STATE });
+
   const { column, comparison, value } = numericFilters;
+
   const {
     filters,
     handleChangeValue,
-    handleChangeFilterByNumericValue,
-    removeFilterByNumericValues } = useContext(StarWarsContext);
-
-  const activeFilters = filters.filterByNumericValues;
-  // const filterColumns = [
-  //   'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water'];
+    handleChangeFilterByNumericValue } = useContext(StarWarsContext);
 
   const handleChangeNumericFilters = (field, fieldValue) => {
     setNumericFilters({ ...numericFilters, [field]: fieldValue });
-  };
-
-  const renderActiveFilters = () => {
-    activeFilters.map((filterColumn, filterComparison, filterValue) => (
-      <div key={ filterColumn } data-testid="filter">
-        {`${filterColumn} ${filterComparison} ${filterValue}`}
-        <button
-          type="button"
-          onClick={ () => removeFilterByNumericValues(filterColumn) }
-        >
-          x
-        </button>
-      </div>
-    ));
   };
 
   return (
@@ -89,10 +72,6 @@ function Filter() {
       >
         Filtrar
       </button>
-      <div>
-        <h3>Filtros selecionados:</h3>
-        {activeFilters && renderActiveFilters()}
-      </div>
     </div>
   );
 }
