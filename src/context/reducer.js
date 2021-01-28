@@ -15,6 +15,12 @@ function reducer(state, action) {
       // ...state.filters.filterByNumericValues: action.payload,
       filterByNumericValues: action.payload,
     };
+  case 'ORDER_COLUMN':
+    return {
+      ...state,
+      ...state.filters,
+      order: action.payload,
+    };
   default:
     return state;
   }
