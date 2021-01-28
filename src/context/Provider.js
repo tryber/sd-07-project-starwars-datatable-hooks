@@ -30,7 +30,7 @@ function Provider({ children }) {
         switch (numericFilter.comparison) {
         case 'maior que':
           if (
-            result[numericFilter.column]
+            Number(result[numericFilter.column])
             > parseInt(numericFilter.value, 10)
             && parseInt(numericFilter.value, 10) !== 'unknown'
           ) {
@@ -40,7 +40,7 @@ function Provider({ children }) {
 
         case 'menor que':
           if (
-            result[numericFilter.column]
+            Number(result[numericFilter.column])
             < parseInt(numericFilter.value, 10)
             && parseInt(numericFilter.value, 10) !== 'unknown'
           ) {

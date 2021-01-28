@@ -68,6 +68,28 @@ function Table() {
     );
   }
 
+  function deleteFilter(column) {
+    const { filterByNumericValues } = filters;
+    const delFilters = filterByNumericValues.filter((filter) => (
+      filter.column !== column
+    ));
+    setFilters({
+      ...filters,
+      filterByNumericValues: delFilters,
+    });
+  }
+
+  function renderFilters() {
+    const { filterByNumericValues } = filters;
+    const renderedFilters = filterByNumericValues.map((filter, index) => (
+      <div data-testid="filter" key={ index }>
+        { `${filter.column} ${filter.comparison} ${filter.value}  `}
+        <button type="button" onClick={ () => deleteFilter(filter.column) }>x</button>
+      </div>
+    ));
+    return renderedFilters;
+  }
+
   return (
     <div>
       <div>
@@ -105,6 +127,9 @@ function Table() {
         <button type="button" data-testid="button-filter" onClick={ addFilter }>
           Add Filters
         </button>
+        <div>
+          { renderFilters() }
+        </div>
       </div>
       {!data.length ? (
         <div>Loading...</div>
@@ -112,7 +137,7 @@ function Table() {
         <table>
           <thead>
             <tr>
-              {Object.keys(data[0]).map((element, index) => (
+              { Object.keys(data[0]).map((element, index) => (
                 <th key={ index }>{ element }</th>
               ))}
             </tr>
