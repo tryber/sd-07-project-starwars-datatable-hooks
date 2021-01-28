@@ -45,7 +45,9 @@ function Provider({ children }) {
         setData(filterColumn);
       } else if (comparison === 'igual-a') {
         console.log('igual');
-        const filterColumn = dataSave.filter((item) => Number(item[column]) == value);
+        const filterColumn = dataSave
+          .filter((item) => Number(item[column]) === Number(value));
+        console.log(filterColumn);
         setData(filterColumn);
       }
     }
