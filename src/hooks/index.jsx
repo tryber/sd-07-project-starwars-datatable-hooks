@@ -33,7 +33,7 @@ const useEvent = () => {
     }
     default:
       setFilteredData(data);
-    }
+    }// eslint-disable-next-line
   }, [getEvent]);
   return [setGetEvent];
 };

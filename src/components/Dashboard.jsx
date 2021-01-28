@@ -24,7 +24,6 @@ function Dashboard() {
       <div className="select-setting">
         <select
           name="column"
-          // value="population"
           className="left-select"
           data-testid="column-filter"
           onChange={ onHandlecolumn }
@@ -37,7 +36,6 @@ function Dashboard() {
         </select>
         <select
           name="comparison"
-          // value="maior que"
           className="right-select"
           data-testid="comparison-filter"
           onChange={ onHandleComparison }

@@ -16,19 +16,6 @@ function Provider(props) {
     setFilters({ ...filters, filterByName: { [name]: value } });
   };
 
-  /* Preciso recuperar o evento de click do botão para avisar
-  meu hook que ele so vai enviar o objeto quando houver mudança nesse botão
-  para enviar tudo de uma vez.
-  -criar um hook
-  hook terá um estado para recuperar o evento,
-  e avisar ao Effect que minha mudança aconteceu, 
-  assim posso usar o evento nas dependencias para enviar o objeto num unico momento.  */
-
-  // const onHandleSendObj = (obj) => {
-  //   setFilters({ ...filters,
-  //     filterByNumericValues: [...filters.filterByNumericValues, obj] });
-  // };
-
   const onHandlecolumn = (event) => {
     const columnChoice = event.target.value;
     setColumn({ column: columnChoice });
@@ -48,7 +35,7 @@ function Provider(props) {
   const { name } = filterByName;
 
   useEffect(() => {
-    setFilteredData(data);
+    setFilteredData(data);// eslint-disable-next-line
   }, []);
 
   useEffect(() => {
