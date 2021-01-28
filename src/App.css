@@ -7,6 +7,44 @@
   pointer-events: none;
 }
 
+table {
+  border: 2px solid black;
+}
+
+tr {
+  border: 2px solid black;
+}
+
+td {
+  border: 2px solid black;
+}
+
+th {
+  border: 2px solid black;
+}
+
+.input-filtrar input {
+  font-size: 15pt;
+  margin: 10px 5px;
+  width: 400px;
+}
+
+.input-filtrar {
+  font-size: 20pt;
+  margin: 20px 5px;
+}
+
+.select-filter {
+  font-size: 15pt;
+  margin-left: 140px;
+  margin-bottom: 15px;
+  width: 400px;
+}
+
+.option-table {
+  display: none;
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
