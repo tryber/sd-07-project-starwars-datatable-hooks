@@ -4,7 +4,6 @@ import NumericFilter from './numericFilter';
 
 function Table() {
   const { data, setSearch, search } = useContext(StarWarsContext);
-
   return (
     <div>
       <NumericFilter />
@@ -12,6 +11,7 @@ function Table() {
         type="text"
         placeholder="Search Planets"
         data-testid="name-filter"
+        onChange={ (e)=> setSearch(e.target.value)  }
       />
       <table>
 

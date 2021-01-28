@@ -2,11 +2,12 @@ import React, { useContext, useState } from 'react';
 import { StarWarsContext } from '../context/StarWarsContext';
 
 function NumericFilter() {
-  const { } = useContext(StarWarsContext);
+  const { filter, numericFilter } = useContext(StarWarsContext);
 
   const [columnFilter, setColumnFilter] = useState('');
   const [comparisonFilter, setComparisonFilter] = useState('');
   const [valueFilter, setValueFilter] = useState('');
+
   const columns = [
     'population',
     'orbital_period',
@@ -28,7 +29,7 @@ function NumericFilter() {
     <div>
       <select
         data-testid="column-filter"
-        onChange={ (e) => setColumnFilter(e.target.value) }
+        onChange={ ({ target: { value } }) => setColumnFilter(value) }
       >
         { columns.map((column) => (
           <option key={ column } value={ column }>
@@ -38,14 +39,14 @@ function NumericFilter() {
       </select>
       <select
         data-testid="comparison-filter"
-        onChange={ (e) => setComparisonFilter(e.target.value) }
+        onChange={ ({ target: { value } }) => setComparisonFilter(value) }
       >
-        {comparison.map((item) => <option key="item">{item}</option>)}
+        {comparison.map((items) => <option key="items">{items}</option>)}
       </select>
       <input
         type="number"
         data-testid="value-filter"
-        onChange={ (e) => setValueFilter(e.target.value) }
+        onChange={ ({ target: { value } }) => setValueFilter(value) }
       />
       <button
         type="submit"

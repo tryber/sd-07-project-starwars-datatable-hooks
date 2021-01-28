@@ -4,6 +4,8 @@ const StarWarsContext = createContext();
 const StarWarsProvider = ({ children }) => {
   const [data, setData] = useState([]);
   const [search, setSearch] = useState('');
+  const [numeric, setNumeric] = useState([]);
+
   const [filter, setFilter] = useState({ filterByName: { name: '' },
     filterByNumericValues: [] });
 
@@ -23,12 +25,12 @@ const StarWarsProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    setFilter({ ...filter, filterByNumericValues: filter });
-  }, [filter]);
+    setFilter({ ...filter, filterByNumericValues: numeric });
+  }, [numeric]);
 
   useEffect(() => {
     setFilter({ ...filter, filterByName: { name: search } });
-  }, [filter, search]);
+  },[search]);
 
   return (
     <StarWarsContext.Provider value={ context }>
