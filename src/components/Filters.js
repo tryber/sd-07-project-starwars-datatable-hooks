@@ -1,8 +1,11 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 const Filters = () => {
   const { filters, setFilters, starWars, setStarWars } = useContext(StarWarsContext);
+  const [column, setColumn] = useState('population');
+  const [comparison, setComparison] = useState('maior que');
+  const [value, setValue] = useState('');
 
   const handleFilter = (({ target }) => {
     setFilters({
@@ -13,40 +16,38 @@ const Filters = () => {
     });
   });
 
-  // pesquisa feita para converter string em number
-  // https://stackabuse.com/javascript-convert-string-to-number/
+  // const handleClick = () => {
+  //   handleFilterButton({ column, comparison, value })
+  // }
 
   const handleFilterButton = () => {
-    filters.filterByNumericValues.forEach((filterByNumericValues) => {
-      const { column, comparison, value } = filterByNumericValues;
-
-      if (comparison === 'maior que') {
-        setStarWars(starWars.filter((item) => +value < item[column]));
-      } if (comparison === 'menor que') {
-        setStarWars(starWars.filter((item) => +value > item[column]));
-      } if (comparison === 'igual a') {
-        setStarWars(starWars.filter((item) => value === item[column]));
-      }
-    });
-  };
-
-  const handleFilterNumeric = ({ target }) => {
-    const { name, value } = target;
+    // const index = filters.filterByNumericValues.length;
+    // console.log(index)
+    const newValues = { column, comparison, value };
+    const { filterByNumericValues: filter } = filters;
+    console.log(filter);
     setFilters({
       ...filters,
-      filterByNumericValues: [{
-        ...filters.filterByNumericValues[0],
-        [name]: value,
-      }],
+      filterByNumericValues: [...filter, newValues],
     });
+    if (comparison === 'maior que') {
+      setStarWars(starWars.filter((item) => +value < item[column]));
+    } if (comparison === 'menor que') {
+      setStarWars(starWars.filter((item) => +value > item[column]));
+    } if (comparison === 'igual a') {
+      setStarWars(starWars.filter((item) => value === item[column]));
+    }
   };
 
-  const removeFilter = () => {
-    setFilters({
-      ...filters,
-      removeFilter: true,
-    });
-  };
+  // const handleFilterNumeric = ({ target }) => {
+  //   const { name, value } = target;
+  //   setFilterValue({
+  //     ...filterValue,
+  //     [name]: value,
+  //   });
+  // };
+  // pesquisa feita para converter string em number
+  // https://stackabuse.com/javascript-convert-string-to-number/
 
   const onlyNumber = (event) => {
     const theEvent = event || window.event;
@@ -59,8 +60,9 @@ const Filters = () => {
     }
   };
 
+  console.log(filters.filterByNumericValues);
   const columns = [
-    '', 'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water',
+    'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water',
   ];
 
   return (
@@ -79,18 +81,24 @@ const Filters = () => {
         <select
           name="column"
           data-testid="column-filter"
-          onChange={ handleFilterNumeric }
+          onChange={ ({ target }) => setColumn(target.value) }
         >
-          {columns.map((item) => (
-            <option value={ item } key={ item }>{ item }</option>
-          ))}
+          {columns.map((item) => {
+            let deleteOption = false;
+            if (filters.filterByNumericValues !== []) {
+              filters.filterByNumericValues.forEach((itemFilter) => {
+                if (item === itemFilter.column) deleteOption = true;
+              });
+            }
+            if (deleteOption) deleteOption = false;
+            return (<option value={ item } key={ item }>{ item }</option>);
+          })}
         </select>
         <select
           name="comparison"
           data-testid="comparison-filter"
-          onChange={ handleFilterNumeric }
+          onChange={ ({ target }) => setComparison(target.value) }
         >
-          <option value="">Selecione um filtro</option>
           <option value="maior que">maior que</option>
           <option value="menor que">menor que</option>
           <option value="igual a">igual a</option>
@@ -100,7 +108,7 @@ const Filters = () => {
           type="text"
           name="value"
           onKeyPress={ onlyNumber }
-          onChange={ handleFilterNumeric }
+          onChange={ ({ target }) => setValue(target.value) }
         />
       </label>
       <button
@@ -109,13 +117,6 @@ const Filters = () => {
         onClick={ handleFilterButton }
       >
         Filtrar
-      </button>
-      <button
-        type="button"
-        onClick={ removeFilter }
-        data-testid="filter"
-      >
-        Remover Filtro
       </button>
     </div>
   );
