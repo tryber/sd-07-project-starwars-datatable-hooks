@@ -87,10 +87,16 @@ const Filters = () => {
             let deleteOption = false;
             if (filters.filterByNumericValues !== []) {
               filters.filterByNumericValues.forEach((itemFilter) => {
-                if (item === itemFilter.column) deleteOption = true;
+                if (item === itemFilter.column) {
+                  deleteOption = true;
+                  return undefined;
+                }
               });
             }
-            if (deleteOption) deleteOption = false;
+            if (deleteOption) {
+              deleteOption = false;
+              return undefined;
+            }
             return (<option value={ item } key={ item }>{ item }</option>);
           })}
         </select>
