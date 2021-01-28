@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 const Filters = () => {
@@ -16,6 +16,10 @@ const Filters = () => {
     });
   });
 
+  useEffect(() => {
+    setColumn(document.getElementsByTagName('option')[0].value);
+  }, [filters]);
+
   // const handleClick = () => {
   //   handleFilterButton({ column, comparison, value })
   // }
@@ -26,7 +30,6 @@ const Filters = () => {
     const newValues = { column, comparison, value };
     const { filterByNumericValues: filter } = filters;
     console.log(document.getElementsByTagName('option')[0].value);
-    setColumn(document.getElementsByTagName('option')[0].value);
     setFilters({
       ...filters,
       filterByNumericValues: [...filter, newValues],
