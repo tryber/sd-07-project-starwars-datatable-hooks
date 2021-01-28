@@ -7,30 +7,6 @@ const PlanetsList = () => {
   const { filterByName, filterByNumericValues } = filters;
   const { name } = filterByName;
 
-  const splitElements = (element) => {
-    const arrayElement = element.split(',');
-    return arrayElement.map((unity) => (
-      <p key={ unity }>
-        { unity }
-      </p>));
-  };
-  const mapParagrafElement = (element) => element.map((unity) => (
-    <p key={ unity }>
-      { unity }
-    </p>));
-  const splitAndOrganize = (day) => {
-    const dayItem = day.split('T');
-    const dayItemZ = dayItem[1].split('Z');
-    return (
-      <p>
-        Dia:
-        {dayItem[0]}
-        <br />
-        Hora:
-        {dayItemZ[0]}
-      </p>);
-  };
-
   const updatedData = filterByTag(data, name, filterByNumericValues);
   return (
     <table>
@@ -55,14 +31,14 @@ const PlanetsList = () => {
           <td>{+item.rotation_period}</td>
           <td>{+item.orbital_period}</td>
           <td>{+item.diameter}</td>
-          <td>{splitElements(item.climate)}</td>
-          <td>{splitElements(item.gravity)}</td>
+          <td>{item.climate}</td>
+          <td>{item.gravity}</td>
           <td>{item.terrain}</td>
           <td>{item.surface_water}</td>
           <td>{item.population}</td>
-          <td>{mapParagrafElement(item.films)}</td>
-          <td>{splitAndOrganize(item.created)}</td>
-          <td>{splitAndOrganize(item.edited)}</td>
+          <td>{item.films}</td>
+          <td>{item.created}</td>
+          <td>{item.edited}</td>
           <td>{item.url}</td>
         </tr>))}
     </table>
