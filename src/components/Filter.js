@@ -1,15 +1,37 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 import fetchApi from '../services/starWarsApi';
 
 function Filter() {
+  const [filterNumber, setFilterNumber] = useState({
+    column: 'population',
+    comparison: 'maior que',
+    value: '',
+  });
+
   const {
     filters,
     handleChangeName,
+    dataSave,
     setFilters,
     setData,
     setDataSave,
   } = useContext(StarWarsContext);
+
+  const onClick = () => {
+    if (filterNumber.column && filterNumber.comparison && filterNumber.value) {
+      setFilters(
+        { ...filters,
+          filterByNumericValues:
+        [...filters.filterByNumericValues, filterNumber],
+        },
+      );
+    }
+  };
+
+  const handleChange = ({ target: { value } }, key) => {
+    setFilterNumber((state) => ({ ...state, [key]: value }));
+  };
 
   useEffect(() => {
     async function fetchData() {
@@ -20,24 +42,22 @@ function Filter() {
     fetchData();
   }, [setData, setDataSave]);
 
-  const filterNumber = {
-    column: '',
-    comparison: '',
-    value: '',
-  };
-
-  const onClick = () => {
-    setFilters(
-      { ...filters,
-        filterByNumericValues:
-        [...filters.filterByNumericValues, filterNumber],
-      },
-    );
-  };
-
-  const handleChange = ({ target: { value } }, key) => {
-    filterNumber[key] = value;
-  };
+  useEffect(() => {
+    if (filters.filterByNumericValues.length >= 1) {
+      const counter = filters.filterByNumericValues.length - 1;
+      const { column, comparison, value } = filters.filterByNumericValues[counter];
+      if (comparison === 'menor-que') {
+        setData(dataSave
+          .filter((item) => Number(item[column]) < Number(value)));
+      } else if (comparison === 'maior-que') {
+        setData(dataSave
+          .filter((item) => Number(item[column]) > Number(value)));
+      } else if (comparison === 'igual-a') {
+        setData(dataSave
+          .filter((item) => Number(item[column]) === Number(value)));
+      }
+    }
+  }, [dataSave, setData, filters.filterByNumericValues]);
 
   return (
     <div>

@@ -2,12 +2,12 @@ import React, { useContext } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 function Table() {
-  const { data } = useContext(StarWarsContext);
-  if (!data.length >= 1) {
-    return null;
+  const { data, dataSave } = useContext(StarWarsContext);
+  if (!dataSave.length >= 1 || !data.length >= 1) {
+    return <div>Loading...</div>;
   }
-  const dataOneElemnet = data[0];
-  const dataHead = Object.keys(dataOneElemnet).filter((item) => item !== 'residents');
+  const dataHead = Object.keys(dataSave[0]).filter((item) => item !== 'residents');
+  console.log(data);
   return (
     <div>
       <table border="1">
