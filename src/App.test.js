@@ -159,7 +159,7 @@ describe.only('Filtre a tabela através de um texto, inserido num *campo de text
   });
 });
 
-describe('Crie um filtro para valores numéricos', () => {
+describe.only('Crie um filtro para valores numéricos', () => {
   beforeAll(mockFetch);
   beforeEach(cleanup);
 

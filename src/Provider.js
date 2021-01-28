@@ -3,33 +3,16 @@ import PropTypes from 'prop-types';
 import StarWarsContext from './context/StarWarsContext';
 
 function Provider({ children }) {
-  const [planets, setPlanets] = useState([
-    {
-      climate: 'Arid',
-      diameter: '10465',
-      gravity: '1 standard',
-      name: 'Tatooine',
-      orbital_period: '304',
-      population: '200000',
-      rotation_period: '23',
-      surface_water: '1',
-      films: [],
-      created: '',
-      edited: '',
-      terrain: 'Dessert',
-      url: 'https://swapi-trybe.herokuapp.com/api/planets/1/',
-    },
-  ]);
+  const [planets, setPlanets] = useState([]);
 
   const [filters, setFilters] = useState({
-    filters: {
-      filterByName: {
-        name: 'Ari',
-      },
+    filterByName: {
+      name: '',
     },
+    filterByNumericValues: [],
   });
 
-  const [listNamesfilters, setListeNameFilters] = useState([]);
+  const [listPlanetsFilters, setListePlanetsFilters] = useState([]);
 
   const url = 'https://swapi-trybe.herokuapp.com/api/planets/';
   async function user() {
@@ -37,14 +20,54 @@ function Provider({ children }) {
       .then((response) => response.json());
     results.map((item) => delete item.residents);
     setPlanets(results);
-    setListeNameFilters(results);
+    setListePlanetsFilters(results);
+  }
+
+  function filteredName() {
+    if (!filters.filterByName) return undefined;
+    return (planets
+      .filter((planet) => planet.name.toLowerCase()
+        .includes(filters.filterByName.name.toLowerCase())));
+  }
+
+  function filteredNumbers(filtradosPorNomes) {
+    if (!filters.filterByNumericValues.length) {
+      return setListePlanetsFilters(filtradosPorNomes);
+    }
+    let resultadoFiltrado = filtradosPorNomes;
+    filters.filterByNumericValues.forEach((filteredNumeric) => {
+      resultadoFiltrado = resultadoFiltrado.filter((filtrado) => {
+        switch (filteredNumeric.comparison) {
+        case 'maior que':
+          if (
+            parseInt(filtrado[filteredNumeric.column], 10)
+            > parseInt(filteredNumeric.value, 10)
+          ) return true;
+          break;
+        case 'menor que':
+          if (
+            parseInt(filtrado[filteredNumeric.column], 10)
+            < parseInt(filteredNumeric.value, 10)
+          ) return true;
+          break;
+        case 'igual a':
+          if (
+            parseInt(filtrado[filteredNumeric.column], 10)
+            === parseInt(filteredNumeric.value, 10)
+          ) return true;
+          break;
+        default:
+          return false;
+        }
+        return false;
+      });
+    });
+    setListePlanetsFilters(resultadoFiltrado);
   }
 
   useEffect(() => {
-    if (!filters.filterByName) return undefined;
-    setListeNameFilters([...planets]
-      .filter((planet) => planet.name.toLowerCase()
-        .includes(filters.filterByName.name.toLowerCase())));
+    const filtradosPorNomes = filteredName();
+    filteredNumbers(filtradosPorNomes);
   }, [filters]);
 
   useEffect(() => {
@@ -56,7 +79,7 @@ function Provider({ children }) {
     setPlanets,
     filters,
     setFilters,
-    listNamesfilters,
+    listPlanetsFilters,
   };
 
   return (
