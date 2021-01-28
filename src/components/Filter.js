@@ -35,7 +35,6 @@ function Filter() {
   };
 
   const rendersClearNumericFiltersButton = () => {
-    console.log(filterByNumericValues);
     if (filterByNumericValues) {
       return (
         <div>

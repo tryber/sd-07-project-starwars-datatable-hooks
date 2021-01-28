@@ -30,22 +30,23 @@ function Provider({ children }) {
   const handleChangeFilterByNumericValue = (field) => {
     const { filterByNumericValues } = filters;
     const magic = 0;
+    let isRepetead = false;
     if (filterByNumericValues.length > magic) {
-      for (let i = magic; i < filterByNumericValues.length; i += 1) {
-        console.log(JSON.stringify(filterByNumericValues[i]));
-        if (JSON
-          .stringify(filterByNumericValues[i]) === JSON
-          .stringify(filterByNumericValues[i + 1])
+      filterByNumericValues.find((filter) => {
+        if (filter.column === field.column
+          && filter.comparison === field.comparison
+          && filter.value === field.value
         ) {
-          return;
+          isRepetead = true;
         }
-      }
-    } else {
-      setFilters({
-        ...filters,
-        filterByNumericValues: [...filters.filterByNumericValues, field],
+        return isRepetead;
       });
     }
+    if (isRepetead) return;
+    setFilters({
+      ...filters,
+      filterByNumericValues: [...filters.filterByNumericValues, field],
+    });
   };
 
   const contextValue = {
