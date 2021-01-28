@@ -14,11 +14,48 @@ function Filter() {
 
   const {
     filters,
+    setFilters,
     handleChangeValue,
     handleChangeFilterByNumericValue } = useContext(StarWarsContext);
 
   const handleChangeNumericFilters = (field, fieldValue) => {
     setNumericFilters({ ...numericFilters, [field]: fieldValue });
+  };
+
+  const { filterByNumericValues } = filters;
+
+  const removeNumericFilter = (e) => {
+    setFilters({
+      ...filters,
+      filterByNumericValues: [
+        ...filterByNumericValues.filter(
+          (filteredValue) => filteredValue.column !== e.target.value,
+        )],
+    });
+  };
+
+  const rendersClearNumericFiltersButton = () => {
+    console.log(filterByNumericValues);
+    if (filterByNumericValues) {
+      return (
+        <div>
+          { filterByNumericValues.map((filtered, index) => (
+            <div key={ index } data-testid="filter">
+              { `Filtros ativos:
+                 ${filtered.column}, ${filtered.comparison}, ${filtered.value}`}
+              <button
+                type="button"
+                data-testid="filter"
+                value={ filtered.column }
+                onClick={ (e) => removeNumericFilter(e) }
+              >
+                x
+              </button>
+            </div>
+          ))}
+        </div>
+      );
+    }
   };
 
   return (
@@ -72,6 +109,7 @@ function Filter() {
       >
         Filtrar
       </button>
+      { filterByNumericValues && rendersClearNumericFiltersButton() }
     </div>
   );
 }
