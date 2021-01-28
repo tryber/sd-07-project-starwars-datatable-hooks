@@ -1,17 +1,33 @@
 import React, { useContext } from 'react';
 import GlobalContext from '../../context/GlobalContext';
 
-function Inputs(key) {
-  const { name, changeName } = useContext(GlobalContext);
+function Inputs(key, func) {
+  const { name, value, changeName, changeNumbers } = useContext(GlobalContext);
+  let setType = 'text';
+  let setValue;
+  let setChange;
+  if (func === 'name') {
+    setValue = name;
+    setChange = changeName;
+  }
+  if (func === 'numbers') {
+    setType = 'number';
+    setValue = value;
+    setChange = changeNumbers;
+  }
+
   return (
-    <label htmlFor={ `input-${key}` }>
+    <label htmlFor={ key }>
       <input
-        key={ `input-${key}` }
-        name={ `input-${key}` }
-        id={ `input-${key}` }
+        type={ setType }
+        key={ key }
+        name={ key }
+        id={ key }
         data-testid={ key }
-        value={ name }
-        onChange={ ({ target }) => changeName(target.value) }
+        value={ setValue }
+        onChange={ ({ target }) => {
+          setChange(target.value, 'value');
+        } }
       />
     </label>
   );

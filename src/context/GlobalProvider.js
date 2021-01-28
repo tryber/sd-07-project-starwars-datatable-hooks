@@ -8,8 +8,16 @@ function Provider({ children }) {
   const [state, setState] = useState([]);
   const [filters, setFilters] = useState({
     filterByName: { name: '' },
+    filterByNumericValues: [
+      {
+        column: 'population',
+        comparison: 'maior que',
+        value: '100000',
+      },
+    ],
   });
   const { name } = filters.filterByName;
+  const { column, comparison, value: getValue } = filters.filterByNumericValues[0];
 
   function updateFilters(key, value) {
     setFilters({
@@ -29,10 +37,31 @@ function Provider({ children }) {
       value={ {
         data: state,
         name,
+        value: getValue,
+        comparison,
+        column,
         changeName: (value) => {
           const newFilterByName = filters.filterByName;
           newFilterByName.name = value;
           updateFilters('filterByName', newFilterByName);
+        },
+        changeNumbers: (value, key) => {
+          const newNumericFilter = filters.filterByNumericValues;
+          newNumericFilter[0][key] = value;
+          updateFilters('filterByNumericValues', newNumericFilter);
+        },
+        filterBtn: () => {
+          const filteredPlanets = [];
+          state.forEach((planet) => {
+            if (comparison === 'maior que') {
+              if (planet[column] > getValue) filteredPlanets.push(planet);
+            } else if (comparison === 'menor que') {
+              if (planet[column] < getValue) filteredPlanets.push(planet);
+            } else if (comparison === 'igual a') {
+              if (planet[column] === getValue) filteredPlanets.push(planet);
+            }
+          });
+          setState(filteredPlanets);
         },
       } }
     >
