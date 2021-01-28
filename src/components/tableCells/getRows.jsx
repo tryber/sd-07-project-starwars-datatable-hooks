@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import GlobalContext from '../../context/GlobalContext';
 import getCells from './getCells';
 
-function getRows(value) {
+function GetRows(value) {
+  const { name } = useContext(GlobalContext);
   const planets = Object
     .entries(value)
-    .map((each) => each[1]);
+    .map((each) => (each[1].name.includes(name) ? each[1] : ''));
   const listOfRows = [];
 
   planets.forEach((planet, index) => {
@@ -17,4 +19,4 @@ function getRows(value) {
   return listOfRows;
 }
 
-export default getRows;
+export default GetRows;

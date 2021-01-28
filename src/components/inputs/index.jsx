@@ -1,25 +1,19 @@
-import React from 'react';
-import MyContext from '../../context/MyContext';
+import React, { useContext } from 'react';
+import GlobalContext from '../../context/GlobalContext';
 
 function Inputs(key) {
+  const { name, changeName } = useContext(GlobalContext);
   return (
-    <MyContext.Consumer>
-      {(value) => {
-        const { filters: { filterByName: { name } }, handleChange } = value;
-        return (
-          <label htmlFor={ `input-${key}` }>
-            <input
-              key={ `input-${key}` }
-              name={ `input-${key}` }
-              id={ `input-${key}` }
-              data-testid={ key }
-              value={ name }
-              onChange={ ({ target }) => handleChange(target.value) }
-            />
-          </label>
-        );
-      }}
-    </MyContext.Consumer>
+    <label htmlFor={ `input-${key}` }>
+      <input
+        key={ `input-${key}` }
+        name={ `input-${key}` }
+        id={ `input-${key}` }
+        data-testid={ key }
+        value={ name }
+        onChange={ ({ target }) => changeName(target.value) }
+      />
+    </label>
   );
 }
 
