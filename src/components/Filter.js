@@ -4,8 +4,8 @@ import fetchApi from '../services/starWarsApi';
 
 function Filter() {
   const [filterNumber, setFilterNumber] = useState({
-    column: 'population',
-    comparison: 'maior que',
+    column: '',
+    comparison: '',
     value: '',
   });
 
@@ -19,7 +19,9 @@ function Filter() {
   } = useContext(StarWarsContext);
 
   const onClick = () => {
+    console.log(filterNumber);
     if (filterNumber.column && filterNumber.comparison && filterNumber.value) {
+      console.log(filterNumber);
       setFilters(
         { ...filters,
           filterByNumericValues:
@@ -36,17 +38,18 @@ function Filter() {
   useEffect(() => {
     async function fetchData() {
       const results = await fetchApi();
-      setData(results);
       setDataSave(results);
     }
     fetchData();
-  }, [setData, setDataSave]);
+  }, [setDataSave]);
 
   useEffect(() => {
     if (filters.filterByNumericValues.length >= 1) {
       const counter = filters.filterByNumericValues.length - 1;
       const { column, comparison, value } = filters.filterByNumericValues[counter];
+      console.log(column, comparison, value);
       if (comparison === 'menor-que') {
+        console.log();
         setData(dataSave
           .filter((item) => Number(item[column]) < Number(value)));
       } else if (comparison === 'maior-que') {
@@ -57,7 +60,7 @@ function Filter() {
           .filter((item) => Number(item[column]) === Number(value)));
       }
     }
-  }, [dataSave, setData, filters.filterByNumericValues]);
+  }, [setData, filters.filterByNumericValues, dataSave]);
 
   return (
     <div>
@@ -71,7 +74,7 @@ function Filter() {
       <select
         data-testid="column-filter"
         name="column-filter"
-        onClick={ (event) => handleChange(event, 'column') }
+        onChange={ (event) => handleChange(event, 'column') }
       >
         <option value="population">population</option>
         <option value="orbital_period">orbital_period</option>
@@ -96,7 +99,7 @@ function Filter() {
       <button
         type="button"
         data-testid="button-filter"
-        onClick={ () => onClick(filterNumber) }
+        onClick={ () => onClick() }
       >
         Adicionar Filtro
       </button>

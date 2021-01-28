@@ -7,7 +7,7 @@ function Table() {
     return <div>Loading...</div>;
   }
   const dataHead = Object.keys(dataSave[0]).filter((item) => item !== 'residents');
-  console.log(data);
+  // console.log(data);
   return (
     <div>
       <table border="1">
