@@ -1,10 +1,12 @@
 import React, { createContext, useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
+
 
 const StarWarsContext = createContext();
 const StarWarsProvider = ({ children }) => {
   const [data, setData] = useState([]);
   const [search, setSearch] = useState('');
-  const [numeric, setNumeric] = useState([]);
+  const [numeric] = useState([]);
 
   const [filter, setFilter] = useState({ filterByName: { name: '' },
     filterByNumericValues: [] });
@@ -30,7 +32,7 @@ const StarWarsProvider = ({ children }) => {
 
   useEffect(() => {
     setFilter({ ...filter, filterByName: { name: search } });
-  },[search]);
+  }, [search]);
 
   return (
     <StarWarsContext.Provider value={ context }>
@@ -38,5 +40,8 @@ const StarWarsProvider = ({ children }) => {
     </StarWarsContext.Provider>
   );
 };
-
 export { StarWarsContext, StarWarsProvider as Provider };
+
+StarWarsProvider.propTypes = {
+  children: PropTypes.element.isRequired,
+};
