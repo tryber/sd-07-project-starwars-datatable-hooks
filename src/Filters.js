@@ -60,6 +60,13 @@ const Filters = () => {
         <option value="menor que">menor que</option>
         <option value="igual a">igual a</option>
       </select>
+      <button
+        type="button"
+        data-testid="filter"
+        onClick={ reset }
+      >
+        X
+      </button>
 
       <input
         type="number"
@@ -68,6 +75,13 @@ const Filters = () => {
         name="value"
         onChange={ (e) => setValue(e.target.value) }
       />
+      <button
+        type="button"
+        data-testid="filter"
+        onClick={ reset }
+      >
+        X
+      </button>
 
       <button
         type="button"

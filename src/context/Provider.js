@@ -39,6 +39,9 @@ function Provider({ children }) {
   };
 
   const reset = () => {
+    setFilters({ filterByName: { name: '' } });
+    setOptions([
+      'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water']);
     setColumn('population');
     setComparison('maior que');
     getFetch();
