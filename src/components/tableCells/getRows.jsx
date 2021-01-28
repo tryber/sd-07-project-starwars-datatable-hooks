@@ -10,11 +10,13 @@ function GetRows(value) {
   const listOfRows = [];
 
   planets.forEach((planet, index) => {
-    listOfRows.push(
-      <tr key={ `row-${index}` }>
-        {getCells(Object.values(planet))}
-      </tr>,
-    );
+    if (planet !== '') {
+      listOfRows.push(
+        <tr key={ `row-${index}` }>
+          {getCells(Object.values(planet))}
+        </tr>,
+      );
+    }
   });
   return listOfRows;
 }
