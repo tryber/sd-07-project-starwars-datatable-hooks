@@ -9,6 +9,14 @@ function Filter() {
     value: '',
   });
 
+  const [columnFilter, setColumnFilter] = useState([
+    'population',
+    'orbital_period',
+    'diameter',
+    'rotation_period',
+    'surface_water',
+  ]);
+
   const {
     filters,
     handleChangeName,
@@ -19,15 +27,16 @@ function Filter() {
   } = useContext(StarWarsContext);
 
   const onClick = () => {
-    console.log(filterNumber);
     if (filterNumber.column && filterNumber.comparison && filterNumber.value) {
-      console.log(filterNumber);
       setFilters(
         { ...filters,
           filterByNumericValues:
         [...filters.filterByNumericValues, filterNumber],
         },
       );
+      setColumnFilter(columnFilter
+        .filter((item) => item !== (filterNumber.column)));
+      console.log(columnFilter);
     }
   };
 
@@ -47,9 +56,7 @@ function Filter() {
     if (filters.filterByNumericValues.length >= 1) {
       const counter = filters.filterByNumericValues.length - 1;
       const { column, comparison, value } = filters.filterByNumericValues[counter];
-      console.log(column, comparison, value);
       if (comparison === 'menor que') {
-        console.log();
         setData(dataSave
           .filter((item) => Number(item[column]) < Number(value)));
       } else if (comparison === 'maior que') {
@@ -76,11 +83,14 @@ function Filter() {
         name="column-filter"
         onChange={ (event) => handleChange(event, 'column') }
       >
-        <option value="population">population</option>
-        <option value="orbital_period">orbital_period</option>
-        <option value="diameter">diameter</option>
-        <option value="rotation_period">rotation_period</option>
-        <option value="surface_water">surface_water</option>
+        {columnFilter.map((element) => (
+          <option
+            key={ element }
+            value={ element }
+          >
+            {element}
+          </option>
+        ))}
       </select>
       <select
         data-testid="comparison-filter"
