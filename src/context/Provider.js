@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import StarWarsContext from './StarWarsContext';
 import getPlanet from '../services/planetAPI';
+import filterByTag from '../services/funcions';
 
 const { Provider } = StarWarsContext;
 const ProviderStarWars = ({ children }) => {
@@ -19,7 +20,10 @@ const ProviderStarWars = ({ children }) => {
 
   const fetchdata = async () => {
     const results = await getPlanet();
-    setData([...results]);
+    const { filterByName, filterByNumericValues } = filters;
+    const { name } = filterByName;
+    const planetList = await filterByTag([...results], name, filterByNumericValues);
+    setData(planetList);
   };
 
   const tags = ['population',
