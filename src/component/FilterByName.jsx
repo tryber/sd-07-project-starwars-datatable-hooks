@@ -1,14 +1,12 @@
 import React, { useState, useContext, useEffect } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
-function Filter() {
+function FilterByName() {
   const { setArrayPlanets, data } = useContext(StarWarsContext);
 
   const FILTERS = {
-    filters: {
-      filterByName: {
-        name: '',
-      },
+    filterByName: {
+      name: '',
     },
   };
 
@@ -26,9 +24,7 @@ function Filter() {
 
   const handleChange = (value) => {
     setFilter({
-      ...filter,
-      ...filter.filterByName,
-      name: value,
+      ...filter, name: value,
     });
   };
 
@@ -40,6 +36,7 @@ function Filter() {
           id="filter"
           type="text"
           data-testid="name-filter"
+          placeholder="Nome do planeta"
           onChange={ (event) => handleChange(event.target.value) }
         />
       </label>
@@ -47,4 +44,4 @@ function Filter() {
   );
 }
 
-export default Filter;
+export default FilterByName;
