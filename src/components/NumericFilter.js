@@ -106,7 +106,7 @@ function NumericFilter() {
       </form>
       <div data-testid="filter">
         Remover todos os filtros
-        <button type="button" onClick={ () => {} }>X</button>
+        <button type="button" onClick={ () => removeAllFilters() }>X</button>
       </div>
       { filterByNumericValues
         .map((filter, index) => (
