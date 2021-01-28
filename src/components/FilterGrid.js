@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
+import FilterRow from './FilterRow';
 
 function FilterGrid() {
   const { updateFilterByName, filter, updateByNumericValue } = useContext(PlanetsContext);
@@ -14,8 +15,8 @@ function FilterGrid() {
     const comparisonFilter = document.getElementById('comparison-filter').value;
     const valueFilter = document.getElementById('value-filter').value;
 
-    if (valueFilter === '') {
-      return console.alert('Please inform Value on Filter!');
+    if (columnFilter === '' || valueFilter === '') {
+      return null;
     }
 
     const object = {
@@ -51,7 +52,7 @@ function FilterGrid() {
                 key={ `option-${index}` }
                 value={ columnValue }
               >
-                { columnValue.toUpperCase() }
+                { columnValue }
               </option>);
           })}
         </select>
@@ -61,13 +62,13 @@ function FilterGrid() {
           id="comparison-filter"
           name="comparison-filter"
         >
-          <option value="maior que">MAIOR QUE</option>
-          <option value="menor que">MENOR QUE</option>
-          <option value="igual a">IGUAL A</option>
+          <option value="maior que">maior que</option>
+          <option value="igual a">igual a</option>
+          <option value="menor que">menor que</option>
         </select>
         <label htmlFor="value-filter">
           value
-          <input type="number" id="value-filter" data-testid="value-filter" min="0" />
+          <input type="text" id="value-filter" data-testid="value-filter" />
         </label>
         <button
           type="button"
@@ -76,6 +77,7 @@ function FilterGrid() {
         >
           Filter
         </button>
+        <FilterRow />
       </div>
     </div>
   );

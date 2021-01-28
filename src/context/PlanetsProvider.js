@@ -45,13 +45,12 @@ function PlanetsProvider({ children }) {
     });
   };
 
-  const removefilterByNumericValue = (columnValue) => {
+  const removeFilterByNumericValue = (newFilterByNumericValue) => {
     updateFilter({
       ...filter,
       filters: {
         ...filter.filters,
-        filterByNumericValue: filter.filters.filterByNumericValue
-          .filter(({ column }) => column !== columnValue) },
+        filterByNumericValue: newFilterByNumericValue },
     });
   };
 
@@ -68,7 +67,7 @@ function PlanetsProvider({ children }) {
   const planetContext = {
     filter,
     planetsData,
-    removefilterByNumericValue,
+    removeFilterByNumericValue,
     updateFilterByName,
     updateByNumericValue,
   };
