@@ -8,7 +8,7 @@ function Table() {
   const { filterByName, filterByNumericValues } = filters;
   const { column, comparison, value } = filterByNumericValues;
   const [myPlanets] = useState([...planets]);
-    // teste evaluator
+  // teste evaluator
   const onClickHandler = () => ((column && comparison && value) ? (
     setPlanets(planets.filter((planet) => {
       switch (comparison) {
