@@ -4,8 +4,8 @@ import fetchApi from '../services/starWarsApi';
 
 function Filter() {
   const [filterNumber, setFilterNumber] = useState({
-    column: '',
-    comparison: '',
+    column: 'population',
+    comparison: 'maior que',
     value: '',
   });
 
@@ -48,14 +48,14 @@ function Filter() {
       const counter = filters.filterByNumericValues.length - 1;
       const { column, comparison, value } = filters.filterByNumericValues[counter];
       console.log(column, comparison, value);
-      if (comparison === 'menor-que') {
+      if (comparison === 'menor que') {
         console.log();
         setData(dataSave
           .filter((item) => Number(item[column]) < Number(value)));
-      } else if (comparison === 'maior-que') {
+      } else if (comparison === 'maior que') {
         setData(dataSave
           .filter((item) => Number(item[column]) > Number(value)));
-      } else if (comparison === 'igual-a') {
+      } else if (comparison === 'igual a') {
         setData(dataSave
           .filter((item) => Number(item[column]) === Number(value)));
       }
@@ -87,9 +87,9 @@ function Filter() {
         name="comparison-filter"
         onChange={ (event) => handleChange(event, 'comparison') }
       >
-        <option value="maior-que">maior que</option>
-        <option value="menor-que">menor que</option>
-        <option value="igual-a">igual a</option>
+        <option value="maior que">maior que</option>
+        <option value="menor que">menor que</option>
+        <option value="igual a">igual a</option>
       </select>
       <input
         type="number"
