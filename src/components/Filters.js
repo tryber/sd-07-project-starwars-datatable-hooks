@@ -25,7 +25,8 @@ const Filters = () => {
     // console.log(index)
     const newValues = { column, comparison, value };
     const { filterByNumericValues: filter } = filters;
-    console.log(filter);
+    console.log(document.getElementsByTagName('option')[0].value);
+    setColumn(document.getElementsByTagName('option')[0].value);
     setFilters({
       ...filters,
       filterByNumericValues: [...filter, newValues],
