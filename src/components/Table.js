@@ -34,7 +34,8 @@ function Table() {
           </tr>
         </thead>
         <tbody>
-          { data.filter((planet) => planet.name.toLowerCase().includes(search.toLowerCase()))
+          { data.filter((planet) => planet.name.toLowerCase()
+            .includes(search.toLowerCase()))
             .map((planet) => (
               <tr key={ planet.name }>
                 <td>{planet.name}</td>

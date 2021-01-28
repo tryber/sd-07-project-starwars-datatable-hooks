@@ -1,7 +1,6 @@
 import React, { createContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
-
 const StarWarsContext = createContext();
 const StarWarsProvider = ({ children }) => {
   const [data, setData] = useState([]);

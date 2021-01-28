@@ -1,12 +1,12 @@
-import React, { useContext, useState } from 'react';
-import { StarWarsContext } from '../context/StarWarsContext';
+import React from 'react';
+// import { StarWarsContext } from '../context/StarWarsContext';
 
 function NumericFilter() {
-  const { filter, numericFilter } = useContext(StarWarsContext);
+  // const { filter, numericFilter } = useContext(StarWarsContext);
 
-  const [columnFilter, setColumnFilter] = useState('');
-  const [comparisonFilter, setComparisonFilter] = useState('');
-  const [valueFilter, setValueFilter] = useState('');
+  // const [columnFilter, setColumnFilter] = useState('');
+  // const [comparisonFilter, setComparisonFilter] = useState('');
+  // const [valueFilter, setValueFilter] = useState('');
 
   const columns = [
     'population',
