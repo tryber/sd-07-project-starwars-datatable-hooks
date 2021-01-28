@@ -3,6 +3,7 @@ import StarWarsContext from '../context/StarWarsContext';
 
 function NumericFilter() {
   const {
+    data,
     column,
     setColumn,
     comparison,
@@ -11,11 +12,20 @@ function NumericFilter() {
     setValue,
     filterByNumericValues,
     setFilterByNumericValues,
-    filteredData,
-    setFilteredData,
     columnOptions,
     setColumnOptions,
+    filteredData,
+    setFilteredData,
   } = useContext(StarWarsContext);
+
+  const addNewFilter = () => {
+    const newFilter = [...filterByNumericValues, { column, comparison, value }];
+    setFilterByNumericValues(newFilter);
+  };
+
+  const handleClick = () => {
+    addNewFilter();
+  };
 
   const addFilterByNumericValue = () => {
     filterByNumericValues.forEach((filter) => {
@@ -45,56 +55,72 @@ function NumericFilter() {
     addFilterByNumericValue();
   }, [filterByNumericValues]);
 
-  const addNewFilter = () => {
-    const newFilter = [...filterByNumericValues, { column, comparison, value }];
-    setFilterByNumericValues(newFilter);
-  };
-
-  const handleClick = () => {
-    addNewFilter();
+  const removeAllFilters = () => {
+    setFilteredData(data);
+    setColumnOptions([
+      'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water']);
+    setFilterByNumericValues([]);
   };
 
   return (
-    <form>
-      Filtrar por número:
-      <label htmlFor="column-filter">
-        Tag de comparação
-        <select
-          data-testid="column-filter"
-          onChange={ ({ target }) => setColumn(target.value) }
+    <div>
+      <form>
+        Filtrar por número:
+        <label htmlFor="column-filter">
+          Tag de comparação
+          <select
+            data-testid="column-filter"
+            onChange={ ({ target }) => setColumn(target.value) }
+          >
+            { columnOptions.map((element) => (
+              <option key={ element }>{ element }</option>
+            )) }
+          </select>
+        </label>
+        <label htmlFor="comparison-filter">
+          Filtro de comparação
+          <select
+            data-testid="comparison-filter"
+            onChange={ ({ target }) => setComparison(target.value) }
+          >
+            <option>maior que</option>
+            <option>menor que</option>
+            <option>igual a</option>
+          </select>
+        </label>
+        <label htmlFor="value-filter">
+          Número de comparação
+          <input
+            type="number"
+            data-testid="value-filter"
+            onChange={ ({ target }) => setValue(target.value) }
+          />
+        </label>
+        <button
+          type="button"
+          data-testid="button-filter"
+          onClick={ handleClick }
         >
-          { columnOptions.map((element) => (
-            <option key={ element }>{ element }</option>
-          )) }
-        </select>
-      </label>
-      <label htmlFor="comparison-filter">
-        Filtro de comparação
-        <select
-          data-testid="comparison-filter"
-          onChange={ ({ target }) => setComparison(target.value) }
-        >
-          <option>maior que</option>
-          <option>menor que</option>
-          <option>igual a</option>
-        </select>
-      </label>
-      <label htmlFor="value-filter">
-        Número de comparação
-        <input
-          type="number"
-          data-testid="value-filter"
-          onChange={ ({ target }) => setValue(target.value) }
-        />
-      </label>
-      <button
-        type="button"
-        data-testid="button-filter"
-        onClick={ handleClick }
-      >
-        Adicionar filtro
-      </button>
-    </form>
+          Adicionar filtro
+        </button>
+      </form>
+      <div>
+        { filterByNumericValues.length ? filterByNumericValues.map((filter, index) => (
+          <div
+            key={ index }
+            data-testid="filter"
+          >
+            { `${filter.column} ${filter.comparison} ${filter.value}`}
+            <button
+              type="button"
+              onClick={ () => removeAllFilters() }
+            >
+              X
+            </button>
+          </div>
+        )) : <div /> }
+      </div>
+    </div>
   );
 }
 
