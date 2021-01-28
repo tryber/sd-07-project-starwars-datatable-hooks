@@ -25,7 +25,7 @@ function Table() {
           </tr>
         </thead>
         <tbody>
-          { filteredPlanets.map((planet, index) => (
+          { filteredPlanets.planets.map((planet, index) => (
             <tr key={ `${index}-${planet.name}` }>
               <td>{ planet.name }</td>
               <td>{ planet.rotation_period }</td>
