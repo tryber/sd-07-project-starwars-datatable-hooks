@@ -9,8 +9,10 @@ function Filter() {
   };
 
   const [numericFilters, setNumericFilters] = useState({ ...INITIAL_STATE });
-
-  const { column, comparison, value } = numericFilters;
+  const { comparison, value } = numericFilters;
+  const filterOptionsValue = [
+    'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water',
+  ];
 
   const {
     filters,
@@ -23,6 +25,18 @@ function Filter() {
   };
 
   const { filterByNumericValues } = filters;
+
+  const rendersOptions = () => (
+    // const magic = 0;
+    filterOptionsValue.filter((column) => {
+      if (filterByNumericValues[0]) {
+        const columnsToRemove = filterByNumericValues
+          .map((filter) => filter.column);
+        return (!columnsToRemove.includes(column));
+      }
+      return true;
+    }).map((column) => <option key={ column } value={ column }>{column}</option>)
+  );
 
   const removeNumericFilter = (e) => {
     setFilters({
@@ -69,15 +83,16 @@ function Filter() {
       <select
         className="input-form"
         data-testid="column-filter"
-        value={ column === '' ? 'noSelect' : column }
+        // value={ column === '' ? 'noSelect' : column }
         onChange={ (e) => handleChangeNumericFilters('column', e.target.value) }
       >
-        <option disabled selected value="noSelect">-- Selecione uma opção --</option>
+        {rendersOptions()}
+        {/* <option disabled selected value="noSelect">-- Selecione uma opção --</option>
         <option value="population">population</option>
         <option value="orbital_period">orbital_period</option>
         <option value="diameter">diameter</option>
         <option value="rotation_period">rotation_period</option>
-        <option value="surface_water">surface_water</option>
+        <option value="surface_water">surface_water</option> */}
       </select>
       <select
         className="input-form"
