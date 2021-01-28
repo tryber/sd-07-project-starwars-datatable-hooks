@@ -9,9 +9,9 @@ function Form() {
     comparison: 'maior que',
     value: '',
   });
+  const [columnOptions, setColumnOptions] = useState(['population',
+    'orbital_period', 'diameter', 'rotation_period', 'surface_water']);
 
-  const options = ['population', 'orbital_period', 'diameter',
-    'rotation_period', 'surface_water'];
   const valueRange = ['maior que', 'menor que', 'igual a'];
 
   const handleChange = ({ target }) => {
@@ -35,6 +35,11 @@ function Form() {
   }, [keyWord]);
 
   const handleClick = () => {
+    const copyColumnOptions = [...columnOptions];
+    const optionToBeRemoved = preference.column;
+    const indexOfOption = copyColumnOptions.indexOf(optionToBeRemoved);
+    copyColumnOptions.splice(indexOfOption, 1);
+    setColumnOptions(copyColumnOptions);
     filterSelectedPreferences(preference);
   };
 
@@ -50,7 +55,7 @@ function Form() {
           data-testid="column-filter"
           onChange={ filterPreferences }
         >
-          { options.map((element) => <option key={ element }>{ element }</option>) }
+          { columnOptions.map((element) => <option key={ element }>{ element }</option>) }
         </select>
         <select
           data-testid="comparison-filter"
