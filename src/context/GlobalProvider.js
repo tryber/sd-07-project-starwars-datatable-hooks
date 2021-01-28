@@ -54,12 +54,16 @@ function Provider({ children }) {
           const filteredPlanets = [];
           state.forEach((planet) => {
             const number = parseInt(planet[column], 10);
+            const value = parseInt(getValue, 10);
             if (comparison === 'maior que') {
-              if (number > getValue) filteredPlanets.push(planet);
+              if (number > value) filteredPlanets.push(planet);
             } else if (comparison === 'menor que') {
-              if (number < getValue) filteredPlanets.push(planet);
+              if (number < value) filteredPlanets.push(planet);
             } else if (comparison === 'igual a') {
-              if (number === getValue) filteredPlanets.push(planet);
+              if (number === value) {
+                console.log(`${number} é igual a ${value}`);
+                filteredPlanets.push(planet);
+              }
             }
           });
           setState(filteredPlanets);
