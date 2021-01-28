@@ -5,6 +5,9 @@ import fetchAPI from '../services/StarWarsPlanetsAPI';
 
 function StarWarsProvider({ children }) {
   const [data, setData] = useState([]);
+  const [filterData, setFilterData] = useState([]);
+  const [searchInput, setSearchInput] = useState('');
+  const [filteredPlanets, setFilteredPlanets] = useState([]);
 
   const dataUpdate = async () => {
     setData(await fetchAPI());
@@ -17,6 +20,12 @@ function StarWarsProvider({ children }) {
   const context = {
     data,
     setData,
+    filterData,
+    setFilterData,
+    searchInput,
+    setSearchInput,
+    filteredPlanets,
+    setFilteredPlanets,
   };
 
   return (

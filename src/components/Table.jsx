@@ -1,8 +1,21 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 function Table() {
-  const { data } = useContext(StarWarsContext);
+  const {
+    data,
+    filterData,
+    filteredPlanets,
+    setFilteredPlanets } = useContext(StarWarsContext);
+
+  useEffect(() => {
+    setFilteredPlanets(data);
+  }, [data]);
+
+  useEffect(() => {
+    setFilteredPlanets(filterData);
+  }, [filterData]);
+
   return (
     <div>
       <table className="table">
@@ -24,21 +37,21 @@ function Table() {
           </tr>
         </thead>
         <tbody>
-          { data.map((planet) => (
+          { filteredPlanets.map((planet) => (
             <tr key={ planet.name }>
-              <td>{planet.name}</td>
-              <td>{planet.rotation_period}</td>
-              <td>{planet.orbital_period}</td>
-              <td>{planet.diameter}</td>
-              <td>{planet.climate}</td>
-              <td>{planet.gravity}</td>
-              <td>{planet.terrain}</td>
-              <td>{planet.surface_water}</td>
-              <td>{planet.population}</td>
-              <td>{planet.films}</td>
-              <td>{planet.created}</td>
-              <td>{planet.edited}</td>
-              <td>{planet.url}</td>
+              <td>{ planet.name }</td>
+              <td>{ planet.rotation_period }</td>
+              <td>{ planet.orbital_period }</td>
+              <td>{ planet.diameter }</td>
+              <td>{ planet.climate }</td>
+              <td>{ planet.gravity }</td>
+              <td>{ planet.terrain }</td>
+              <td>{ planet.surface_water }</td>
+              <td>{ planet.population }</td>
+              <td>{ planet.films }</td>
+              <td>{ planet.created }</td>
+              <td>{ planet.edited }</td>
+              <td>{ planet.url }</td>
             </tr>
           ))}
         </tbody>
