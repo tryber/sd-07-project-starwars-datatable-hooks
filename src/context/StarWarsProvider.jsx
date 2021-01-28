@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import StarWarsContext from './StarWarsContext';
 import StarWarsAPI from '../services/StarWarsAPI';
@@ -8,9 +8,12 @@ const StarWarsProvider = ({ children }) => {
 
   const fetchData = async () => {
     const getPlanets = await StarWarsAPI();
-    console.log(getPlanets);
     setData(getPlanets);
   };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   const tablePlanets = (planet) => {
     const { name, diameter, climate,

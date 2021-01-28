@@ -3,7 +3,13 @@ import StarWarsContext from '../context/StarWarsContext';
 
 export default function Table() {
   const { data } = useContext(StarWarsContext);
-  console.log(data);
+
+  const zero = 0;
+
+  if (data.length === zero) {
+    return <p>Waiting...</p>;
+  }
+
   return (
     <table>
       <thead>
@@ -24,7 +30,7 @@ export default function Table() {
         </tr>
       </thead>
       <tbody>
-        {/* { data.map((planet) => {
+        { data.map((planet) => {
           const { name, diameter, climate,
             gravity, terrain, population, created, edited, films, url } = planet;
 
@@ -45,7 +51,7 @@ export default function Table() {
               <td>{ url }</td>
             </tr>
           );
-        })} */}
+        })}
       </tbody>
     </table>
   );
