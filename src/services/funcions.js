@@ -7,7 +7,7 @@ const comparisonTerm = (acc, column, comparison, value) => {
     acc = acc.filter((item) => item[column] < +value);
     return acc;
   case 'igual a':
-    acc = acc.filter((item) => item[column] == +value);
+    acc = acc.filter((item) => item[column] === value);
     return acc;
   default:
     break;
