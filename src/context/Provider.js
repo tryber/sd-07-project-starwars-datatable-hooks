@@ -9,6 +9,8 @@ function Provider({ children }) {
   const [column, setColumn] = React.useState('population');
   const [comparison, setComparison] = React.useState('maior que');
   const [value, setValue] = React.useState();
+  const [options, setOptions] = React.useState([
+    'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water']);
 
   const getFetch = async () => {
     setData(await fetchApi());
@@ -33,6 +35,7 @@ function Provider({ children }) {
         data.filter((item) => Number(item[column]) === Number(value)),
       );
     }
+    setOptions(options.filter((item) => item !== column));
   };
 
   const state = {
@@ -43,6 +46,7 @@ function Provider({ children }) {
     setColumn,
     setComparison,
     setValue,
+    options,
   };
 
   return (
