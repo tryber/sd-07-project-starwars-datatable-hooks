@@ -1,58 +1,84 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
-const Table = () => {
-  const { data } = useContext(StarWarsContext);
-  console.log(data);
+function Table() {
+  const {
+    data,
+    getApi,
+    searchName,
+    filterByNumericValues,
+    filterByFilter,
+  } = useContext(StarWarsContext);
+
+  useEffect(() => {
+    getApi();
+  }, []);
+
+  const handleFilter = () => {
+    let check = data;
+    filterByNumericValues.forEach(({ column, comparison, value }) => {
+      if (comparison === 'maior que') {
+        check = data.filter((el) => parseInt(el[column], 10) > parseInt(value, 10));
+      }
+      if (comparison === 'menor que') {
+        check = data.filter((el) => parseInt(el[column], 10) < parseInt(value, 10));
+      }
+      if (comparison === 'igual a') {
+        check = data.filter((el) => parseInt(el[column], 10) === parseInt(value, 10));
+      }
+    });
+
+    return check;
+  };
+
+  useEffect(() => {
+    handleFilter();
+    filterByFilter();
+  }, [filterByNumericValues]);
+
   return (
     <table>
       <thead>
         <tr>
+          <th>name</th>
           <th>climate</th>
           <th>created</th>
           <th>diameter</th>
           <th>edited</th>
+          <th>films</th>
           <th>gravity</th>
-          <th>name</th>
           <th>orbital_period</th>
           <th>population</th>
           <th>rotation_period</th>
           <th>surface_water</th>
           <th>terrain</th>
           <th>url</th>
-          <th>films</th>
         </tr>
       </thead>
       <tbody>
-        {
-          data.map((name, index) => (
-            <tr key={ index }>
-              <td>{name.climate}</td>
-              <td>{name.created}</td>
-              <td>{name.diameter}</td>
-              <td>{name.edited}</td>
-              <td>{name.gravity}</td>
-              <td>{name.name}</td>
-              <td>{name.orbital_period}</td>
-              <td>{name.population}</td>
-              <td>{name.rotation_period}</td>
-              <td>{name.surface_water}</td>
-              <td>{name.terrain}</td>
-              <td>{name.url}</td>
-              <td>
-                {
-                  name.films.map((films, i) => (
-                    <td key={ i }>{ films }</td>
-                  ))
-                }
-              </td>
+        {handleFilter()
+          .filter((planet) => planet.name.toLowerCase()
+            .includes(searchName))
+          .map((planet, i) => (
+            <tr key={ i }>
+              <td>{ planet.name }</td>
+              <td>{ planet.climate }</td>
+              <td>{ planet.created }</td>
+              <td>{ planet.diameter }</td>
+              <td>{ planet.edited }</td>
+              <td>{ planet.films }</td>
+              <td>{ planet.gravity }</td>
+              <td>{ planet.orbital_period }</td>
+              <td>{ planet.population }</td>
+              <td>{ planet.rotation_period }</td>
+              <td>{ planet.surface_water }</td>
+              <td>{ planet.terrain }</td>
+              <td>{ planet.url }</td>
             </tr>
-          ))
-        }
+          ))}
       </tbody>
     </table>
-
   );
-};
+}
 
 export default Table;

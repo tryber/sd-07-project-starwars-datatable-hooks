@@ -1,14 +1,15 @@
 import React from 'react';
 import Table from './components/Table';
-import StarWarsProvider from './context/StarWarsProvider';
+import WarsProvider from './context/WarsProvider';
+import SearchByName from './components/SearchByName';
 
 function App() {
   return (
-    <div>
-      <StarWarsProvider>
-        <Table />
-      </StarWarsProvider>
-    </div>
+    <WarsProvider>
+      <SearchByName />
+
+      <Table />
+    </WarsProvider>
   );
 }
 
