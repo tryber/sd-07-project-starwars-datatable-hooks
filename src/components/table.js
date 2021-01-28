@@ -11,6 +11,37 @@ function Table() {
   const [coluna, setColuna] = useState();
   const [comparativo, setComparativo] = useState();
   const [valor, setValor] = useState();
+
+  const options = () => {
+    const { filterByNumericValues } = filters;
+    const newFilters = [];
+    filterByNumericValues.map((filter) => newFilters.push[filter.column]);
+    const columnsAll = [
+      'population',
+      'orbital_period',
+      'diameter',
+      'rotation_period',
+      'surface_water',
+    ];
+    const columnsForRender = columnsAll.filter((compar) => (
+      newFilters.every((item) => item !== compar)
+    ));
+
+    return (
+      <select
+        data-testid="column-filter"
+        onChange={ ({ target }) => setColuna(target.value) }
+        name="coluna"
+      >
+        {columnsForRender.map((i, index) => (
+          <option key={ index } value={ i }>
+            { i }
+          </option>
+        ))}
+      </select>
+    );
+  };
+
   const filterNamePlanets = ({ target }) => {
     const { value } = target;
     setFilters(
@@ -46,17 +77,7 @@ function Table() {
         name="name"
         onChange={ filterNamePlanets }
       />
-      <select
-        data-testid="column-filter"
-        onChange={ ({ target }) => setColuna(target.value) }
-        name="coluna"
-      >
-        <option>population</option>
-        <option>orbital_period</option>
-        <option>diameter</option>
-        <option>rotation_period</option>
-        <option>surface_water</option>
-      </select>
+      { options() }
       <select
         data-testid="comparison-filter"
         name="comparativo"
