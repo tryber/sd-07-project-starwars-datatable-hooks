@@ -1,27 +1,9 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext } from 'react';
 import { Table, TableCell, TableHead, TableRow } from '@material-ui/core';
 import context from '../contextAPI/Context';
 
 function MyTable() {
-  const [filteredData, setFilteredData] = useState([]);
-  const { data, filters } = useContext(context);
-  const { filterByName } = filters;
-
-  const { name } = filterByName;
-
-  useEffect(() => {
-    setFilteredData(data);
-  }, [data]);
-
-  useEffect(() => {
-    if (name) {
-      const itemFiltered = data.filter((el) => el.name.toLowerCase().includes(name));
-      setFilteredData(itemFiltered);
-    } else {
-      setFilteredData(data);
-    }
-  }, [name, data]);
-
+  const { data, filteredData } = useContext(context);
   const empty = 0;
   if (data.length === empty) return <span className="span-control">carregando...</span>;
   const titles = Object.keys(data[0]).filter((el) => el !== 'residents');

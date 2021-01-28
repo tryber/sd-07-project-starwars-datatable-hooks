@@ -27,12 +27,17 @@ td {
     display: flex;
     flex-direction: row;
     margin-bottom: 15px;
+    margin-top: 50px;
+}
+
+.name-search {
+    margin-top: 25px;
 }
 
 .select-setting {
     display: flex;
     flex-direction: row;
-    margin-top: 30px;
+    margin-top: 50px;
 }
 
 .planet {
@@ -70,11 +75,11 @@ input {
 }
 
 .right-select {
+    margin-left: 40px;
     width: 150px;
 }
 
 .left-select {
-    margin-left: 40px;
     width: 150px;
 }
 
