@@ -1,9 +1,12 @@
 import React, { useContext } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
+import filterByTag from '../services/funcions';
 
 const PlanetsList = () => {
-  const { data } = useContext(StarWarsContext);
-
+  const { data, filters } = useContext(StarWarsContext);
+  const { filterByName, filterByNumericValues } = filters;
+  const { name } = filterByName;
+  const planetList = filterByTag(data, name, filterByNumericValues);
   return (
     <table>
       <tr>
@@ -21,7 +24,7 @@ const PlanetsList = () => {
         <th>Data de Edição</th>
         <th>URL</th>
       </tr>
-      { data.map((item) => (
+      { planetList.map((item) => (
         <tr key={ item.name }>
           <td>{item.name}</td>
           <td>{+item.rotation_period}</td>

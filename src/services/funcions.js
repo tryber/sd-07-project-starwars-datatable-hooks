@@ -23,6 +23,7 @@ const filterByTag = (data, name, filterByNumericValues) => {
     filteredList = data.filter((item) => (
       item.name.toUpperCase()
         .includes(name.toUpperCase())));
+    return filteredList;
   }
   let result;
   if (filterByNumericValues.length) {
@@ -30,8 +31,8 @@ const filterByTag = (data, name, filterByNumericValues) => {
       const { column, comparison, value } = item;
       return comparisonTerm(acc, column, comparison, value);
     }, filteredList);
+    return result;
   }
-  return result;
 };
 
 export default filterByTag;
