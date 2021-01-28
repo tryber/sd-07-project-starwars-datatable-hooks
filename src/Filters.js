@@ -11,6 +11,7 @@ const Filters = () => {
     setValue,
     allFilters,
     options,
+    reset,
   } = React.useContext(StarWarsContext);
 
   const handleChange = ({ value }) => {
@@ -42,6 +43,13 @@ const Filters = () => {
           ))
         }
       </select>
+      <button
+        type="button"
+        data-testid="filter"
+        onClick={ reset }
+      >
+        X
+      </button>
 
       <select
         data-testid="comparison-filter"

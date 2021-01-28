@@ -38,6 +38,12 @@ function Provider({ children }) {
     setOptions(options.filter((item) => item !== column));
   };
 
+  const reset = () => {
+    setColumn('population');
+    setComparison('maior que');
+    getFetch();
+  };
+
   const state = {
     data,
     filters,
@@ -47,6 +53,7 @@ function Provider({ children }) {
     setComparison,
     setValue,
     options,
+    reset,
   };
 
   return (
