@@ -104,8 +104,12 @@ function NumericFilter() {
           Adicionar filtro
         </button>
       </form>
-      <div>
-        { filterByNumericValues.length ? filterByNumericValues.map((filter, index) => (
+      <div data-testid="filter">
+        Remover todos os filtros
+        <button type="button" onClick={() => {} }>X</button>
+      </div>
+      { filterByNumericValues
+        .map((filter, index) => (
           <div
             key={ index }
             data-testid="filter"
@@ -118,8 +122,7 @@ function NumericFilter() {
               X
             </button>
           </div>
-        )) : <div /> }
-      </div>
+        )) }
     </div>
   );
 }
