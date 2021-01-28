@@ -64,9 +64,9 @@ function Filter() {
         name="comparison-filter"
         onChange={ (event) => handleChange(event, 'comparison') }
       >
-        <option value="maior que">maior que</option>
-        <option value="menor que">menor que</option>
-        <option value="igual">igual a</option>
+        <option value="maior-que">maior que</option>
+        <option value="menor-que">menor que</option>
+        <option value="igual-a">igual a</option>
       </select>
       <input
         type="number"

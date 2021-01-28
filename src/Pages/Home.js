@@ -1,6 +1,6 @@
 import React from 'react';
-import Table from '../components/Table';
 import Filter from '../components/Filter';
+import Table from '../components/Table';
 
 function Home() {
   return (

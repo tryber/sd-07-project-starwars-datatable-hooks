@@ -36,19 +36,18 @@ function Provider({ children }) {
     if (filters.filterByNumericValues.length >= 1) {
       const counter = filters.filterByNumericValues.length - 1;
       const { column, comparison, value } = filters.filterByNumericValues[counter];
-      if (comparison === 'menor que') {
-        const FilterColumn = dataSave.filter((item) => Number(item[column]) < value);
-        setData(FilterColumn);
+      if (comparison === 'menor-que') {
+        const filterColumn = dataSave.filter((item) => Number(item[column]) < value);
+        setData(filterColumn);
+      } else if (comparison === 'maior-que') {
+        console.log('maior');
+        const filterColumn = dataSave.filter((item) => Number(item[column]) > value);
+        setData(filterColumn);
+      } else if (comparison === 'igual-a') {
+        console.log('igual');
+        const filterColumn = dataSave.filter((item) => Number(item[column]) == value);
+        setData(filterColumn);
       }
-      // else if (comparison === 'maior que') {
-      //  console.log('maior');
-      //  const FilterColumn = dataSave.filter((item) => Number(item[column]) > value);
-      //  setData(FilterColumn);
-      // } else if (comparison === 'igual a') {
-      //  console.log('igual');
-      //  const FilterColumn = dataSave.filter((item) => Number(item[column]) === value);
-      //  setData(FilterColumn);
-      // }
     }
   }, [dataSave, filters.filterByNumericValues]);
 
