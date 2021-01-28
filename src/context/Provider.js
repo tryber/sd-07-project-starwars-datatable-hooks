@@ -6,10 +6,23 @@ import getPlanetsData from '../services';
 function Provider({ children }) {
   const [isFetching, setIsFetching] = useState(true);
   const [planetsProvider, setPlanetsProvider] = useState([]);
-  // const [filters, setFilters] = useState({  filterByName: { name: '' },});
   const [name, setNameSearchBar] = useState('');
-  const [searchedName, setSearchName] = useState([]);
+  const [filteredName, setFilteredName] = useState([]);
 
+  const filters = {
+    filterByName: {
+      name: '',
+    },
+    filterByNumericValues: [
+      {
+        column: 'population',
+        comparison: 'maior que',
+        value: '100000',
+      },
+    ],
+  };
+
+  // Faz a requisição:
   const fetchPlanets = async () => {
     const { results } = await getPlanetsData();
     const expected = results.filter((result) => delete result.residents);
@@ -21,13 +34,14 @@ function Provider({ children }) {
     fetchPlanets();
   }, []);
 
+  // Atualiza o estado do nome a partir do filtro de busca:
   useEffect(() => {
-    console.log('teste', planetsProvider.filter((planetName) => {
-      console.log('planet name', planetName.name);
-      console.log('name', name);
-      return planetName.name.toLowerCase().includes(name);
-    }));
-    setSearchName(
+    // console.log('teste', planetsProvider.filter((planetName) => {
+    //   console.log('planet name', planetName.name);
+    //   console.log('name', name);
+    //   return planetName.name.toLowerCase().includes(name);
+    // }));
+    setFilteredName(
       [...planetsProvider]
         .filter((planetName) => planetName.name.toLowerCase()
           .includes(name)),
@@ -53,9 +67,10 @@ function Provider({ children }) {
   // }
 
   const context = {
+    filters,
     isFetching,
     planetsProvider,
-    searchedName,
+    filteredName,
     handleChanges,
     // useFilter,
   };

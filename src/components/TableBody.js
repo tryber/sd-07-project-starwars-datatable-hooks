@@ -2,12 +2,12 @@ import React, { useContext } from 'react';
 import StartWarsContext from '../context/StarWarsContext';
 
 export default function TableBody() {
-  const { planetsProvider, searchedName } = useContext(StartWarsContext);
-  console.log(searchedName);
+  const { planetsProvider, filteredName } = useContext(StartWarsContext);
+  console.log(filteredName);
   const getNull = 0;
   const renderByName = () => {
-    if (searchedName.length > getNull) {
-      return searchedName;
+    if (filteredName.length > getNull) {
+      return filteredName;
     }
     return planetsProvider;
   };
