@@ -3,8 +3,10 @@ import { StarWarsContext } from '../Context';
 
 function Table() {
   const context = useContext(StarWarsContext);
-  const { data, search, filter, setFilter } = useContext(StarWarsContext);
+  const { filters, setFilters } = context;
+  const { search } = useContext(StarWarsContext);
   const [planetList, setPlanetList] = useState([]);
+  const { filterByName } = filters;
 
   useEffect(() => {
     setPlanetList(context.data);
@@ -13,13 +15,12 @@ function Table() {
   [context]);
 
   // useEffect(() => {
-  //   setFilter({ ...filter,
+  //   setFilters({ ...filters,
   //     filterByName: {
   //       name: search } });
-  // }, [filter, search]);
+  // }, [filters, search, setFilters]);
 
-  // const planetListName = data.filter((planet) => planet.name
-  //   .toLowerCase().includes(search.toLowerCase()));
+  // const planetListName = {};
   return planetList.length ? (
     <table>
       <thead>
@@ -40,23 +41,27 @@ function Table() {
         </tr>
       </thead>
       <tbody>
-        {planetList.map((planet) => (
-          <tr key={ planet.name }>
-            <td>{planet.name}</td>
-            <td>{planet.rotation_period}</td>
-            <td>{planet.orbital_period}</td>
-            <td>{planet.diameter}</td>
-            <td>{planet.climate}</td>
-            <td>{planet.gravity}</td>
-            <td>{planet.terrain}</td>
-            <td>{planet.surface_water}</td>
-            <td>{planet.population}</td>
-            <td>{planet.films[0]}</td>
-            <td>{planet.created}</td>
-            <td>{planet.edited}</td>
-            <td>{planet.url}</td>
-          </tr>
-        ))}
+        {context
+          .filter((planet) => planet.name
+            .includes(filterByName.name
+              .toLowerCase()))
+          .map((planet) => (
+            <tr key={ planet.name }>
+              <td>{planet.name}</td>
+              <td>{planet.rotation_period}</td>
+              <td>{planet.orbital_period}</td>
+              <td>{planet.diameter}</td>
+              <td>{planet.climate}</td>
+              <td>{planet.gravity}</td>
+              <td>{planet.terrain}</td>
+              <td>{planet.surface_water}</td>
+              <td>{planet.population}</td>
+              <td>{planet.films[0]}</td>
+              <td>{planet.created}</td>
+              <td>{planet.edited}</td>
+              <td>{planet.url}</td>
+            </tr>
+          ))}
       </tbody>
     </table>
   )
