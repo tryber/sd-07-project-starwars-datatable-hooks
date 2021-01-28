@@ -8,9 +8,10 @@ const Provider = ({ children }) => {
   const [filteredPlanets, setFilteredPlanets] = useState([]);
   const [filterPlanetName, setFilterPlanetName] = useState();
   const [filteredPlanetNumber, setFilteredPlanetNumber] = useState([]);
-  const [filterColumn, setFilterColumn] = useState();
-  const [filterComparison, setFilterComparison] = useState();
+  const [filterColumn, setFilterColumn] = useState('population');
+  const [filterComparison, setFilterComparison] = useState('maior que');
   const [filterValue, setFilterValue] = useState();
+  const [filtersArray, setFiltersArray] = useState([]);
 
   const populatePlanetsOnState = async () => {
     const planetList = await api.fetchPlanetList();
@@ -31,20 +32,18 @@ const Provider = ({ children }) => {
     filteredPlanetNumber,
     setFilteredPlanetNumber,
     setFilterPlanetName,
+    filterColumn,
     setFilterColumn,
+    filterComparison,
     setFilterComparison,
+    filterValue,
     setFilterValue,
+    setFiltersArray,
     filters: {
       filterByName: {
         name: filterPlanetName,
       },
-      filterByNumericValues: [
-        {
-          column: filterColumn,
-          comparison: filterComparison,
-          value: filterValue,
-        },
-      ],
+      filterByNumericValues: filtersArray,
     },
   };
 

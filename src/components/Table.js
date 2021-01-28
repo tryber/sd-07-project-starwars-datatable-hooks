@@ -5,6 +5,7 @@ import FilterByNumber from './FilterByNumber';
 
 const Table = () => {
   const { filteredPlanetNumber } = useContext(StarWarsContext);
+  // const { filteredPlanets } = useContext(StarWarsContext);
   return (
     <div>
       <h1>Planets of Star Wars</h1>
@@ -31,6 +32,7 @@ const Table = () => {
         <tbody>
           {
             filteredPlanetNumber.map((planet) => (
+            // filteredPlanets.map((planet) => (
               <tr key={ planet.name }>
                 <td data-testid="planet-name">{planet.name}</td>
                 <td>{planet.rotation_period}</td>

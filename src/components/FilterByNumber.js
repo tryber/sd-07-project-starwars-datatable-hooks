@@ -3,37 +3,56 @@ import StarWarsContext from '../context/StarWarsContext';
 
 const FilterByNumber = () => {
   const {
+    filterColumn,
     setFilterColumn,
+    filterComparison,
     setFilterComparison,
+    filterValue,
     setFilterValue,
     // setFilteredPlanets,
     filters,
-    filteredPlanets,
+    // filteredPlanets,
     setFilteredPlanetNumber,
+    filteredPlanetNumber,
+    // filtersArray,
+    setFiltersArray,
   } = useContext(StarWarsContext);
 
-  // Lógica do aluno Carlos Souza
-  // Fonte: https://github.com/tryber/sd-07-project-starwars-datatable-hooks/blob/121ebd0b46568de1adf8921899e95a07e12e2985/src/components/Table/index.js
   const filterNumber = () => {
-    const { filterByNumericValues } = filters;
-    let results = filteredPlanets;
-    filterByNumericValues.forEach((_, index) => {
-      results = results.filter((planet) => {
-        const { column, comparison, value } = filterByNumericValues[index];
-        switch (comparison) {
-        case 'maior que':
-          return parseFloat(planet[column]) > parseFloat(value);
-        case 'igual a':
-          return parseFloat(planet[column]) === parseFloat(value);
-        case 'menor que':
-          return parseFloat(planet[column]) < parseFloat(value);
-        default:
-          return planet;
-        }
-      });
-    });
-    setFilteredPlanetNumber(results);
-    // return results;
+    const data = filteredPlanetNumber;
+    if (
+      filterColumn !== undefined
+      && filterComparison !== undefined
+      && filterValue !== undefined) {
+      setFiltersArray([...filters.filterByNumericValues, {
+        column: filterColumn,
+        comparison: filterComparison,
+        value: filterValue,
+      }]);
+
+      // Lógica da estudante Emanuelle
+      // Fonte: https://github.com/tryber/sd-07-project-starwars-datatable-hooks/pull/48/files
+
+      switch (filterComparison) {
+      case 'maior que':
+        setFilteredPlanetNumber(data
+          .filter((planet) => (
+            parseFloat(planet[filterColumn]) > parseFloat(filterValue))));
+        break;
+      case 'menor que':
+        setFilteredPlanetNumber(data
+          .filter((planet) => (
+            parseFloat(planet[filterColumn]) < parseFloat(filterValue))));
+        break;
+      case 'igual a':
+        setFilteredPlanetNumber(data
+          .filter((planet) => (
+            parseFloat(planet[filterColumn]) === parseFloat(filterValue))));
+        break;
+      default:
+        setFilteredPlanetNumber(data);
+      }
+    } else setFilteredPlanetNumber(data);
   };
 
   const handleChangeColumn = ({ target: { value } }) => {
