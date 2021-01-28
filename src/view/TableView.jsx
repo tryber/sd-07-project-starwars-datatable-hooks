@@ -16,7 +16,7 @@ function TableView() {
   return (
     <div>
       <div>
-        {Inputs('input-name-filter', 'name')}
+        {Inputs('name-filter', 'name')}
         {Dropdowns('column', firstDropdown)}
         {Dropdowns('comparison', secondDropdown)}
         {Inputs('value-filter', 'numbers')}

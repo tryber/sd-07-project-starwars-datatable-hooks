@@ -55,13 +55,15 @@ function Provider({ children }) {
           state.forEach((planet) => {
             if (comparison === 'maior que') {
               if (planet[column] > getValue) filteredPlanets.push(planet);
+              setState(filteredPlanets);
             } else if (comparison === 'menor que') {
               if (planet[column] < getValue) filteredPlanets.push(planet);
+              setState(filteredPlanets);
             } else if (comparison === 'igual a') {
               if (planet[column] === getValue) filteredPlanets.push(planet);
+              setState(filteredPlanets);
             }
           });
-          setState(filteredPlanets);
         },
       } }
     >
