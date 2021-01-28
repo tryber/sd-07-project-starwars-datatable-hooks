@@ -53,17 +53,22 @@ function Provider({ children }) {
         filterBtn: () => {
           const filteredPlanets = [];
           state.forEach((planet) => {
+            // eslint-disable-next-line radix
+            const number = parseInt(planet[column]);
             if (comparison === 'maior que') {
-              if (planet[column] > getValue) filteredPlanets.push(planet);
-              setState(filteredPlanets);
+              if (number > getValue) {
+                filteredPlanets.push(planet);
+                console.log(`${number} é maior que ${getValue}`);
+              } else {
+                console.log(`${number} é menor que ${getValue}`);
+              }
             } else if (comparison === 'menor que') {
-              if (planet[column] < getValue) filteredPlanets.push(planet);
-              setState(filteredPlanets);
+              if (number < getValue) filteredPlanets.push(planet);
             } else if (comparison === 'igual a') {
-              if (planet[column] === getValue) filteredPlanets.push(planet);
-              setState(filteredPlanets);
+              if (number === getValue) filteredPlanets.push(planet);
             }
           });
+          setState(filteredPlanets);
         },
       } }
     >
