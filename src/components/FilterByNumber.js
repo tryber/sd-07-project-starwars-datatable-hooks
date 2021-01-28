@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 const FilterByNumber = () => {
@@ -16,9 +16,18 @@ const FilterByNumber = () => {
     filteredPlanetNumber,
     // filtersArray,
     setFiltersArray,
+    // filterByNumericValues,
   } = useContext(StarWarsContext);
 
-  const filterNumber = () => {
+  const [columns, setColumns] = useState([
+    'population',
+    'orbital_period',
+    'diameter',
+    'rotation_period',
+    'surface_water',
+  ]);
+
+  const handleClick = () => {
     const data = filteredPlanetNumber;
     if (
       filterColumn !== undefined
@@ -53,6 +62,7 @@ const FilterByNumber = () => {
         setFilteredPlanetNumber(data);
       }
     } else setFilteredPlanetNumber(data);
+    setColumns(columns.filter((element) => element !== filterColumn));
   };
 
   const handleChangeColumn = ({ target: { value } }) => {
@@ -75,11 +85,9 @@ const FilterByNumber = () => {
         data-testid="column-filter"
         onChange={ handleChangeColumn }
       >
-        <option value="population">population</option>
-        <option value="orbital_period">orbital_period</option>
-        <option value="diameter">diameter</option>
-        <option value="rotation_period">rotation_period</option>
-        <option value="surface_water">surface_water</option>
+        {columns.map((element) => (
+          <option key={ element }>{element}</option>
+        ))}
       </select>
       <select
         data-testid="comparison-filter"
@@ -97,7 +105,7 @@ const FilterByNumber = () => {
       <button
         type="button"
         data-testid="button-filter"
-        onClick={ filterNumber }
+        onClick={ handleClick }
       >
         Filtrar
       </button>

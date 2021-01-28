@@ -8,8 +8,8 @@ const Provider = ({ children }) => {
   const [filteredPlanets, setFilteredPlanets] = useState([]);
   const [filterPlanetName, setFilterPlanetName] = useState();
   const [filteredPlanetNumber, setFilteredPlanetNumber] = useState([]);
-  const [filterColumn, setFilterColumn] = useState('population');
-  const [filterComparison, setFilterComparison] = useState('maior que');
+  const [filterColumn, setFilterColumn] = useState();
+  const [filterComparison, setFilterComparison] = useState();
   const [filterValue, setFilterValue] = useState();
   const [filtersArray, setFiltersArray] = useState([]);
 
