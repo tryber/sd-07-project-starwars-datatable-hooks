@@ -4,6 +4,7 @@ import Provider from './context/Provider';
 import RequestData from './components/RequestData';
 import TablePlanets from './components/TablePlanets';
 import FiltersHeader from './components/FiltersHeader';
+import FiltersList from './components/FiltersLista';
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
       <div>
         <FiltersHeader />
         <RequestData />
+        <FiltersList />
         <TablePlanets />
       </div>
     </Provider>
