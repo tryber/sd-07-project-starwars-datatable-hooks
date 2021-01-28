@@ -15,18 +15,17 @@ function Table() {
   const options = () => {
     const { filterByNumericValues } = filters;
     const newFilters = [];
-    filterByNumericValues.map((filter) => newFilters.push[filter.column]);
+    filterByNumericValues.map((filter) => newFilters.push(filter.column));
     const columnsAll = [
-      'population',
-      'orbital_period',
       'diameter',
+      'orbital_period',
+      'population',
       'rotation_period',
       'surface_water',
     ];
     const columnsForRender = columnsAll.filter((compar) => (
       newFilters.every((item) => item !== compar)
     ));
-
     return (
       <select
         data-testid="column-filter"
