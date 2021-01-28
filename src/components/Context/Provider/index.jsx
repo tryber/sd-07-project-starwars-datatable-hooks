@@ -5,6 +5,12 @@ import StarWarsContext from '../StarWarsContext';
 
 function Provider({ children }) {
   const [data, setData] = useState([]);
+  const [filter, setFilter] = useState({
+    filterByName: {
+      name: '',
+    },
+  });
+  const [search, setSearch] = useState('');
 
   useEffect(() => {
     const dataAPI = async () => {
@@ -12,10 +18,18 @@ function Provider({ children }) {
       setData(results);
     };
     dataAPI();
-  });
+  }, []);
+
+  const handleFilterPlanets = ({ target: { value } }) => {
+    setFilter({ filterByName: { name: value } });
+  };
 
   const context = {
     data,
+    filter,
+    handleFilterPlanets,
+    search,
+    setSearch,
   };
 
   return (

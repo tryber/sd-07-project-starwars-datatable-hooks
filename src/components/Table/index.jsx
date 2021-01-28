@@ -3,6 +3,7 @@ import { StarWarsContext } from '../Context';
 
 function Table() {
   const context = useContext(StarWarsContext);
+  const { data, search, filter, setFilter } = useContext(StarWarsContext);
   const [planetList, setPlanetList] = useState([]);
 
   useEffect(() => {
@@ -10,6 +11,15 @@ function Table() {
     console.log(context);
   },
   [context]);
+
+  // useEffect(() => {
+  //   setFilter({ ...filter,
+  //     filterByName: {
+  //       name: search } });
+  // }, [filter, search]);
+
+  // const planetListName = data.filter((planet) => planet.name
+  //   .toLowerCase().includes(search.toLowerCase()));
   return planetList.length ? (
     <table>
       <thead>
