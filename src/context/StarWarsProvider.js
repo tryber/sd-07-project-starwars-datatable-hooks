@@ -28,7 +28,6 @@ function StarWarsProvider({ children }) {
       ...filters,
       filterByName: { name: value },
     });
-    console.log(filters);
   };
 
   const filteringByNumericValues = ({ target }) => {

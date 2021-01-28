@@ -40,22 +40,20 @@ function Table() {
           data-testid="column-filter"
           onChange={ filteringByNumericValues }
         >
-          <option value={ null }>Coluna</option>
-          <option value="population">Population</option>
-          <option value="orbital_period">Orbital Period</option>
-          <option value="diameter">Diameter</option>
-          <option value="rotation_period">Rotation Period</option>
-          <option value="surface_water">Surface Water</option>
+          <option value="population">population</option>
+          <option value="orbital_period">orbital_period</option>
+          <option value="diameter">diameter</option>
+          <option value="rotation_period">rotation_period</option>
+          <option value="surface_water">surface_water</option>
         </select>
         <select
           name="comparison"
           data-testid="comparison-filter"
           onChange={ filteringByNumericValues }
         >
-          <option value={ null }>Comparação</option>
-          <option value="biggerThen">Maior que</option>
-          <option value="smalThat">Menor que</option>
-          <option value="equal">Igual a</option>
+          <option value="biggerThen">maior que</option>
+          <option value="smalThat">menor que</option>
+          <option value="equal">igual a</option>
         </select>
         <input
           name="value"
