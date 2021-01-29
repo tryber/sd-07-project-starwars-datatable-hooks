@@ -91,7 +91,7 @@ SelectComponent.propTypes = {
   setObjectFilter: PropTypes.func.isRequired,
   selectFilter: PropTypes.func.isRequired,
   updateListFunc: PropTypes.func.isRequired,
-  object: PropTypes.shapeOf({}).isRequired,
+  object: PropTypes.objectOf(PropTypes.string).isRequired,
 };
 
 export default SelectComponent;

@@ -57,7 +57,7 @@ function Provider({ children }) {
 }
 
 Provider.propTypes = {
-  children: PropTypes.shapeOf({}).isRequired,
+  children: PropTypes.objectOf(PropTypes.string).isRequired,
 };
 
 export default Provider;
