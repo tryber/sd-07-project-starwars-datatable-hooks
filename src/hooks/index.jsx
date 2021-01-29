@@ -20,9 +20,6 @@ const useEvent = () => {
   const myNumber = parseInt(number, 10);
 
   useEffect(() => {
-    if (planetThings) {
-      console.log('ola');
-    }
     const obj = {
       column: planetThings,
       comparison: parameter,

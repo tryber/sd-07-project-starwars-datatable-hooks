@@ -23,7 +23,6 @@ function Dashboard() {
   const { disabled4 } = disable4;
   const { disabled5 } = disable5;
 
-  console.log(disable1);
   return (
     <section className="settings">
       <input
