@@ -5,13 +5,24 @@ const useEvent = () => {
   const randon = 0;
   const [getEvent, setGetEvent] = useState(randon);
 
-  const { column, comparison, values, data, setFilteredData, setFilters, filters } = useContext(context);
+  const { column,
+    comparison,
+    values,
+    data,
+    setFilteredData,
+    setFilters,
+    filters,
+  } = useContext(context);
+
   const { number } = values;
   const { column: planetThings } = column;
   const { comparison: parameter } = comparison;
   const myNumber = parseInt(number, 10);
 
   useEffect(() => {
+    if (planetThings) {
+      console.log('ola');
+    }
     const obj = {
       column: planetThings,
       comparison: parameter,

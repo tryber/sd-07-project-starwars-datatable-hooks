@@ -9,8 +9,21 @@ function Dashboard() {
     onHandleChange,
     onHandlecolumn,
     onHandleComparison,
-    onHandleNumber } = useContext(context);
+    onHandleNumber,
+    onGetEvent,
+    disable1,
+    disable2,
+    disable3,
+    disable4,
+    disable5 } = useContext(context);
   const [setGetEvent] = useEvent();
+  const { disabled1 } = disable1;
+  const { disabled2 } = disable2;
+  const { disabled3 } = disable3;
+  const { disabled4 } = disable4;
+  const { disabled5 } = disable5;
+
+  console.log(disable1);
   return (
     <section className="settings">
       <input
@@ -27,13 +40,15 @@ function Dashboard() {
           className="left-select"
           data-testid="column-filter"
           onChange={ onHandlecolumn }
+          onClick={ (event) => onGetEvent(event) }
         >
-          <option value="population">population</option>
-          <option value="orbital_period">orbital_period</option>
-          <option value="diameter">diameter</option>
-          <option value="rotation_period">rotation_period</option>
-          <option value="surface_water">surface_water</option>
+          <option disabled={ disabled1 } value="population">population</option>
+          <option disabled={ disabled2 } value="orbital_period">orbital_period</option>
+          <option disabled={ disabled3 } value="diameter">diameter</option>
+          <option disabled={ disabled4 } value="rotation_period">rotation_period</option>
+          <option disabled={ disabled5 } value="surface_water">surface_water</option>
         </select>
+
         <select
           name="comparison"
           className="right-select"
