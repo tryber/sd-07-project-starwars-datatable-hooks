@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 function Filters() {
-  const { filters, setFilters, form, setForm } = useContext(StarWarsContext);
+  const { filters, setFilters, form, setForm, handleClick } = useContext(StarWarsContext);
 
   const handleInput = ({ target: { value } }) => {
     setFilters({ ...filters, filterByName: { name: value } });
@@ -19,7 +19,7 @@ function Filters() {
   const handleComparisonSelect = ({ target: { value } }) => {
     setForm({ ...form, comparison: value });
   };
-
+  /*
   const handleClick = () => {
     setFilters({
       ...filters,
@@ -29,8 +29,9 @@ function Filters() {
         value: form.value,
       }],
     });
+    setNumberClicks(numberClicks + 1);
   };
-
+  */
   return (
     <div>
       Filtros
@@ -52,7 +53,8 @@ function Filters() {
       </select>
       <select
         onChange={ handleComparisonSelect }
-        data-testid="comparison-filter">
+        data-testid="comparison-filter"
+      >
         <option>maior que</option>
         <option>menor que</option>
         <option>igual a</option>
@@ -65,7 +67,7 @@ function Filters() {
         onChange={ numberInput }
       />
       <button
-        onClick={ handleClick }
+        onClick={ () => handleClick() }
         type="button"
         data-testid="button-filter"
       >

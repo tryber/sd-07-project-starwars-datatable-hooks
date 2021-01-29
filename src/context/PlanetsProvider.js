@@ -16,11 +16,25 @@ function PlanetsProvider({ children }) {
     },
     filterByNumericValues: [],
   });
+  const ZERO = 0;
   const [isLoading, setIsLoading] = useState(true);
+  const [numberClicks, setNumberClicks] = useState(ZERO);
 
   const addPlanets = async () => {
     setData(await fetchPlanets());
     setIsLoading(false);
+  };
+
+  const handleClick = () => {
+    setFilters({
+      ...filters,
+      filterByNumericValues: [...filters.filterByNumericValues, {
+        column: form.column,
+        comparison: form.comparison,
+        value: form.value,
+      }],
+    });
+    setNumberClicks(numberClicks + 1);
   };
 
   const context = {
@@ -28,10 +42,13 @@ function PlanetsProvider({ children }) {
     data,
     filters,
     isLoading,
+    numberClicks,
     setForm,
     setData,
     setFilters,
     setIsLoading,
+    setNumberClicks,
+    handleClick,
   };
 
   useEffect(() => {

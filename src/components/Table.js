@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 function Table() {
-  const { data, isLoading, filters } = useContext(StarWarsContext);
+  const { data, isLoading, filters, numberClicks } = useContext(StarWarsContext);
   if (isLoading) return <div>Loading...</div>;
   console.log(filters);
   const { filterByName: { name } } = filters;
@@ -20,7 +20,34 @@ function Table() {
         {data && data
           .filter((planet) => planet.name.toLowerCase().includes(name))
           .map((planet) => {
-            /* if (parseInt(planet.diameter) < 12000) return null; */
+            let bool = false;
+            let boolTotal = false;
+            const ZERO = 0;
+            if (numberClicks >= 1) {
+              for (let i = ZERO; i <= numberClicks; i += 1) {
+                if (Object.entries(filters)[1][1][i]) {
+                  const { column, comparison, value } = Object.entries(filters)[1][1][i];
+
+                  // console.log(filters.filterByNumericValues[0].value);
+                  // console.log(filters.filterByNumericValues[0].comparison);
+                  if (comparison === 'igual a') {
+                    bool = parseInt(planet[column], 10) !== parseInt(value, 10);
+                  }
+                  if (comparison === 'maior que') {
+                    bool = parseInt(planet[column], 10) <= parseInt(value, 10)
+                || planet[column] === 'unknown';
+                  }
+
+                  if (comparison === 'menor que') {
+                    bool = (parseInt(planet[column], 10) >= parseInt(value, 10))
+                || planet[column] === 'unknown';
+                  }
+                  boolTotal = boolTotal || bool;
+
+                  if (boolTotal) return null;
+                }
+              }
+            }
             const {
               name: PlanetName,
               rotation_period: rotationPeriod,
