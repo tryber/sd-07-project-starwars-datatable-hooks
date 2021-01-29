@@ -19,6 +19,8 @@ function PlanetsProvider({ children }) {
   const ZERO = 0;
   const [isLoading, setIsLoading] = useState(true);
   const [numberClicks, setNumberClicks] = useState(ZERO);
+  const [column, setColumn] = useState([
+    'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water']);
 
   const addPlanets = async () => {
     setData(await fetchPlanets());
@@ -35,6 +37,22 @@ function PlanetsProvider({ children }) {
       }],
     });
     setNumberClicks(numberClicks + 1);
+
+    const test = [];
+
+    for (let i = ZERO; i < column.length; i += 1) {
+      if (column[i] !== form.column) {
+        test.push(column[i]);
+      }
+    }
+
+    setColumn(test);
+
+    setForm({
+      column: column[0],
+      comparison: 'maior que',
+      value: 0,
+    });
   };
 
   const context = {
@@ -43,6 +61,7 @@ function PlanetsProvider({ children }) {
     filters,
     isLoading,
     numberClicks,
+    column,
     setForm,
     setData,
     setFilters,
