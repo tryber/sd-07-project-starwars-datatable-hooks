@@ -9,8 +9,6 @@ export default function WarsProvider({ children }) {
   const [searchName, setsearchName] = useState('');
   const [filterByNumericValues, setfilterByNumericValues] = useState([]);
   const [filterdColumn, setFilteredColumn] = useState([
-    '',
-    'population',
     'orbital_period',
     'diameter',
     'rotation_period',
