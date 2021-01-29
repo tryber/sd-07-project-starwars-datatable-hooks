@@ -6,24 +6,33 @@ import StarWarsAPI from '../services/StarWarsAPI';
 const StarWarsProvider = ({ children }) => {
   const [backupPlanets, setBackupPlanets] = useState([]);
   const [data, setData] = useState([]);
-  const [filters, setFilters] = useState(
-    {
-      filterByName: { name: '' },
-      filterByNumericValues: [
-        {
-          column: '',
-          comparison: '',
-          value: '',
-        },
-      ],
-    },
-  );
-  const [inputValues, setInputValues] = useState(
-    { column: '',
-      comparison: '',
-      value: 0,
-    },
-  );
+  const [comparators, setComparators] = useState([
+    'maior que',
+    'menor que',
+    'igual a',
+  ]);
+  const [columns, setColumns] = useState([
+    'population',
+    'orbital_period',
+    'diameter',
+    'rotation_period',
+    'surface_water',
+  ]);
+  const [filters, setFilters] = useState({
+    filterByName: { name: '' },
+    filterByNumericValues: [
+      {
+        column: '',
+        comparison: '',
+        value: '',
+      },
+    ],
+  });
+  const [inputValues, setInputValues] = useState({
+    column: '',
+    comparison: '',
+    value: 0,
+  });
 
   const fetchData = async () => {
     const getPlanets = await StarWarsAPI();
@@ -41,32 +50,40 @@ const StarWarsProvider = ({ children }) => {
   };
 
   const handleClick = () => {
-    // const { filterByNumericValues } = filters;
-    // setFilters(
-    //   { ...filters, filterByNumericValues: [...filterByNumericValues, inputValues] },
-    // );
+    const { filterByNumericValues } = filters;
+    setFilters({
+      ...filters,
+      filterByNumericValues: [...filterByNumericValues, inputValues],
+    });
 
     let filterComparison = data;
-
     const { column, comparison, value } = inputValues;
+
     switch (comparison) {
     case 'maior que':
-      filterComparison = [...data.filter((planet) => +(planet[column]) > +value)];
+      filterComparison = [
+        ...data.filter((planet) => +planet[column] > +value),
+      ];
       setData([...filterComparison]);
       break;
     case 'menor que':
-      filterComparison = [...data.filter((planet) => +(planet[column]) < +(value))];
+      filterComparison = [
+        ...data.filter((planet) => +planet[column] < +value),
+      ];
       setData([...filterComparison]);
       break;
     case 'igual a':
-      filterComparison = [...data.filter(
-        (planet) => +(planet[column]) === +(value),
-      )];
+      filterComparison = [
+        ...data.filter((planet) => +planet[column] === +value),
+      ];
       setData([...filterComparison]);
       break;
     default:
       return filterComparison;
     }
+
+    const newArray = [...columns.filter((option) => option !== column)];
+    setColumns(newArray);
   };
 
   const context = {
@@ -79,6 +96,8 @@ const StarWarsProvider = ({ children }) => {
     handleClick,
     setValues,
     backupPlanets,
+    columns,
+    comparators,
   };
   return (
     <StarWarsContext.Provider value={ context }>

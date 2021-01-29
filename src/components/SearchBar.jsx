@@ -7,17 +7,11 @@ export default function Table() {
     setFilters,
     setValues,
     handleClick,
+    columns,
+    comparators,
   } = useContext(StarWarsContext);
   const { filterByName } = filters;
   const { filterByNumericValues } = filters;
-  const columns = [
-    'population',
-    'orbital_period',
-    'diameter',
-    'rotation_period',
-    'surface_water',
-  ];
-  const comparators = ['maior que', 'menor que', 'igual a'];
 
   return (
     <div>
@@ -72,7 +66,9 @@ export default function Table() {
         <button
           type="button"
           data-testid="button-filter"
-          onClick={ () => handleClick() }
+          onClick={ () => {
+            handleClick();
+          } }
         >
           Filtrar
         </button>
