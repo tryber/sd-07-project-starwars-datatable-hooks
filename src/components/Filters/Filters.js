@@ -11,7 +11,6 @@ function Filters() {
 
   function handleStateChange({ target: { name, value } }) {
     setState({ ...state, [name]: value });
-
   }
 
   function handleClick(event) {
@@ -50,8 +49,8 @@ function Filters() {
       'surface_water',
       'population',
     ];
-    const usedColumns = filters.filterByNumericValues.map(({column}) => column);
-    const removedComlumn = columnFilter.filter((column) => !usedColumns.includes(column))
+    const usedColumns = filters.filterByNumericValues.map(({ column }) => column);
+    const removedComlumn = columnFilter.filter((column) => !usedColumns.includes(column));
     return (
       <label htmlFor="column-filter">
         Coluna:
