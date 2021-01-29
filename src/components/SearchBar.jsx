@@ -28,7 +28,9 @@ export default function Table() {
           data-testid="name-filter"
           name="name"
           value={ filterByName.name }
-          onChange={ (e) => setFilters({ ...filters, filterByName: { name: e.target.value } }) }
+          onChange={ (e) => setFilters({
+            ...filters, filterByName: { name: e.target.value },
+          }) }
         />
       </label>
       <div>
