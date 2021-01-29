@@ -6,9 +6,17 @@ function FilterNumeric() {
   const [type, setType] = useState('population');
   const [compare, setCompare] = useState('maior que');
   const [number, setNumber] = useState('0');
+  const [typeFilters, setTypeFilters] = useState([]);
+  const [filterParameters, setFilterParameters] = useState([
+    'population',
+    'orbital_period',
+    'diameter',
+    'rotation_period',
+    'surface_water',
+  ]);
   const {
+    filters: { filters: { filterByNumericValues } },
     setFilters,
-    setFilterNumber,
     data,
     setPlanets,
   } = useContext(StarWarsContext);
@@ -31,23 +39,25 @@ function FilterNumeric() {
       setPlanets([...array]);
     }
 
+    setTypeFilters([...typeFilters, type]);
+
+    setFilterParameters(filterParameters.filter((item) => item !== type));
+
     setFilters({
       filters: {
         filterByName: {
           name: '',
         },
-        filterByNumericValues: [{
-          column: type,
-          comparison: compare,
-          value: number,
-        }],
+        filterByNumericValues: [
+          ...filterByNumericValues,
+          {
+            column: type,
+            comparison: compare,
+            value: number,
+          },
+        ],
       },
     });
-
-    setFilterNumber(true);
-    setType('population');
-    setCompare('maior que');
-    setNumber('0');
   };
 
   return (
@@ -57,11 +67,8 @@ function FilterNumeric() {
         value={ type }
         onChange={ (e) => setType(e.target.value) }
       >
-        <option selected value="population">population</option>
-        <option value="orbital_period">orbital_period</option>
-        <option value="diameter">diameter</option>
-        <option value="rotation_period">rotation_period</option>
-        <option value="surface_water">surface_water</option>
+        {filterParameters
+          .map((item) => <option key={ item } value={ item }>{item}</option>)}
       </select>
       <select
         data-testid="comparison-filter"

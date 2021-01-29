@@ -6,7 +6,6 @@ import StarWarsContext from './StarWarsContext';
 function Provider({ children }) {
   const [data, setData] = useState([]);
   const [planets, setPlanets] = useState([]);
-  const [filterNumber, setFilterNumber] = useState(false);
   const [filters, setFilters] = useState({
     filters: {
       filterByName: {
@@ -45,8 +44,6 @@ function Provider({ children }) {
         setPlanets,
         filters,
         setFilters,
-        filterNumber,
-        setFilterNumber,
       } }
     >
       {children}
