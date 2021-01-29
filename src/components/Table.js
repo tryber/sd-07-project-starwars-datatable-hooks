@@ -31,7 +31,7 @@ function Table() {
   useEffect(() => {
     handleFilter();
     filterByFilter();
-  }, []);
+  }, [filterByNumericValues]);
 
   return (
     <table>
@@ -54,7 +54,8 @@ function Table() {
       </thead>
       <tbody>
         {handleFilter()
-          .filter((planet) => planet.name.includes(searchName))
+          .filter((planet) => planet.name.toLowerCase()
+            .includes(searchName.toLowerCase()))
           .map((planet, i) => (
             <tr key={ i }>
               <td>{planet.name}</td>
