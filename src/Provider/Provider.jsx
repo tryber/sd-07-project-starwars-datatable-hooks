@@ -9,7 +9,9 @@ function Provider(props) {
   const [comparison, setComparison] = useState({});
   const [values, setValue] = useState(number);
   const [filteredData, setFilteredData] = useState([]);
-  const [filters, setFilters] = useState({ filterByName: { name: '' } });
+
+  const [filters, setFilters] = useState({ filterByName: { name: '' }, filterByNumericValues: [] });
+
   const [data, setData] = useState([]);
   const onHandleChange = (event) => {
     const { name, value } = event.target;
@@ -62,6 +64,7 @@ function Provider(props) {
     filters,
     comparison,
     filteredData,
+    setFilters,
     onHandlecolumn,
     onHandleChange,
     onHandleNumber,
