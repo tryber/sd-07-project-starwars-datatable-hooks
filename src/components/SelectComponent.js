@@ -1,18 +1,43 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
 import StarWarsContext from '../context/StarWarsContext';
 
 function SelectComponent(props) {
   const {
+    data,
+    setData,
     filters,
     setFilters,
     filter,
     setFilter,
-    setData, revertFilter,
-    setDataUrl } = useContext(
-    StarWarsContext,
-  );
+    revertFilter,
+    setDataUrl,
+  } = useContext(StarWarsContext);
+  const [sorted, setSorted] = useState({ order: { column: '', sort: '' } });
   const { setObjectFilter, selectFilter, updateListFunc, object } = props;
+
+  const typeSort = ({ target }) => {
+    setSorted({ ...sorted, order: { ...sorted.order, sort: target.value } });
+  };
+  const typeColumn = ({ target }) => {
+    setSorted({ ...sorted, order: { ...sorted.order, column: target.value } });
+  };
+
+  const sortData = () => {
+    if (sorted.order !== '' && sorted.column !== '') {
+      return sorted.order.sort === 'ASC'
+        ? setData({
+          results: data.results.sort(
+            (a, b) => a[sorted.order.column] - b[sorted.order.column],
+          ),
+        })
+        : setData({
+          results: data.results.sort(
+            (a, b) => b[sorted.order.column] - a[sorted.order.column],
+          ),
+        });
+    }
+  };
   return (
     <div>
       <select
@@ -54,6 +79,49 @@ function SelectComponent(props) {
       >
         Adicionar filtro
       </button>
+      <div>
+        <select
+          name="column"
+          data-testid="column-sort"
+          onMouseLeave={ typeColumn }
+          onChange={ typeColumn }
+        >
+          {filters.map((filt) => (
+            <option key={ filt } value={ filt }>
+              {filt}
+            </option>
+          ))}
+        </select>
+        <label htmlFor="asc">
+          <input
+            onChange={ typeSort }
+            data-testid=" column-sort-input-asc"
+            name="sort"
+            id="asc"
+            type="radio"
+            value="ASC"
+          />
+          ASC
+        </label>
+        <label htmlFor="desc">
+          <input
+            onChange={ typeSort }
+            data-testid="column-sort-input-desc"
+            name="sort"
+            id="desc"
+            type="radio"
+            value="DESC"
+          />
+          DESC
+        </label>
+        <button
+          onClick={ sortData }
+          data-testid="column-sort-button"
+          type="button"
+        >
+          Ordenar
+        </button>
+      </div>
       {filter.filters.filterByNumericValues.map(({ column }) => (
         <div data-testid="filter" key={ column }>
           <p>{`Filtro ${column}`}</p>
@@ -62,8 +130,11 @@ function SelectComponent(props) {
               const max = 2;
               if (Object.keys(revertFilter).length >= max) setDataUrl();
               else {
-                setData({ results: (Object.entries(revertFilter))
-                  .find((entries) => entries[0] === column)[1] });
+                setData({
+                  results: Object.entries(revertFilter).find(
+                    (entries) => entries[0] === column,
+                  )[1],
+                });
               }
               setFilters([...filters, column]);
               setFilter({
