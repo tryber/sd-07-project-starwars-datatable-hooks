@@ -26,23 +26,22 @@ function Table() {
       </thead>
       <tbody>
         {results.map((result) => {
-         return (
-        <tr key={result.name}>
-          <td>{result.name}</td>
-          <td>{result.rotation_period}</td>
-          <td>{result.orbital_period}</td>
-          <td>{result.diameter}</td>
-          <td>{result.edited}</td>
-          <td>{result.films.toString()}</td>
-          <td>{result.population}</td>
-          <td>{result.climate}</td>
-          <td>{result.url}</td>
-          <td>{result.terrain}</td>
-          <td>{result.surface_water}</td>
-          <td>{result.gravity}</td>
-          <td>{result.created}</td>
-        </tr>
-        )})}
+          return (
+            <tr key={result.name}>
+              <td>{result.name}</td>
+              <td>{result.rotation_period}</td>
+              <td>{result.orbital_period}</td>
+              <td>{result.diameter}</td>
+              <td>{result.edited}</td>
+              <td>{result.films}</td>
+              <td>{result.population}</td>
+              <td>{result.climate}</td>
+              <td>{result.url}</td>
+              <td>{result.terrain}</td>
+              <td>{result.surface_water}</td>
+              <td>{result.gravity}</td>
+              <td>{result.created}</td>
+            </tr>)})}
       </tbody>
     </table>)
 }

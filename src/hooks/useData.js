@@ -3,7 +3,6 @@ import { useState, useEffect } from 'react';
 const useData = () => {
   const [dataUrl, setDataUrl] = useState('');
   const [data, setData] = useState('Loading');
-  const [defaultData, setDefaultData] = useState('Loading')
 
   useEffect(() => {
     if (dataUrl !== '') {
