@@ -20,7 +20,7 @@ function FilterByNumber() {
     'igual a'];
 
   const removeColumnFilter = (column) => {
-    const arr = columns.filter((item) => item !== column);
+    const arr = columns.filter((item) => item !== column); // Source: https://medium.com/javascript-in-plain-english/how-to-remove-an-element-from-array-in-javascript-c968b920a03d
     setColumns(arr);
   };
 
@@ -64,7 +64,7 @@ function FilterByNumber() {
         onChange={ handleChange }
         data-testid="column-filter"
       >
-        <option disabled selected>Selecione a coluna</option>
+        {/* <option disabled selected>Selecione a coluna</option> */}
         { columns.map((item) => (<option value={ item } key={ item }>{ item }</option>)) }
       </select>
       <select
