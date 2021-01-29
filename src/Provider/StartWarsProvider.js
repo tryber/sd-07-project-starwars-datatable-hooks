@@ -16,8 +16,6 @@ const StartWarsProvider = ({ children }) => {
   }, []);
 
   const filterPlanet = (value) => {
-    console.log(value);
-    console.log(filter);
     if (value === '') {
       setFilter(data);
     }

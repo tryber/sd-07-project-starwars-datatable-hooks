@@ -3,7 +3,6 @@ import StarWarsContext from '../Provider/StarWarsContext';
 
 function Table() {
   const { data, filter } = useContext(StarWarsContext);
-  console.log(filter);
   const size = 0;
   const tableHead = (words) => Object.keys(words).filter((acc) => acc !== 'residents');
   return (
