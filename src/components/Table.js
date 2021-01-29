@@ -3,8 +3,8 @@ import StarWarsContext from '../context/StarWarsContext';
 
 function Table() {
   const { dataApi } = useContext(StarWarsContext);
-  const { results } = dataApi
-  if (dataApi === 'Loading') return <h1>Loading</h1>
+  const { results } = dataApi;
+  if (dataApi === 'Loading') return <h1>Loading</h1>;
   return (
     <table>
       <thead>
@@ -25,24 +25,23 @@ function Table() {
         </tr>
       </thead>
       <tbody>
-        {results.map((result) => {
-          return (
-            <tr key={result.name}>
-              <td>{result.name}</td>
-              <td>{result.rotation_period}</td>
-              <td>{result.orbital_period}</td>
-              <td>{result.diameter}</td>
-              <td>{result.edited}</td>
-              <td>{result.films}</td>
-              <td>{result.population}</td>
-              <td>{result.climate}</td>
-              <td>{result.url}</td>
-              <td>{result.terrain}</td>
-              <td>{result.surface_water}</td>
-              <td>{result.gravity}</td>
-              <td>{result.created}</td>
-            </tr>)})}
+        {results.map((result) => (
+          <tr key={ result.name }>
+            <td>{result.name}</td>
+            <td>{result.rotation_period}</td>
+            <td>{result.orbital_period}</td>
+            <td>{result.diameter}</td>
+            <td>{result.edited}</td>
+            <td>{result.films}</td>
+            <td>{result.population}</td>
+            <td>{result.climate}</td>
+            <td>{result.url}</td>
+            <td>{result.terrain}</td>
+            <td>{result.surface_water}</td>
+            <td>{result.gravity}</td>
+            <td>{result.created}</td>
+          </tr>))}
       </tbody>
-    </table>)
+    </table>);
 }
 export default Table;
