@@ -76,8 +76,8 @@ function Provider(props) {
   const { name } = filterByName;
 
   useEffect(() => {
-    setFilteredData(data);// eslint-disable-next-line
-  }, []);
+    setFilteredData(data);
+  }, [data]);
 
   useEffect(() => {
     if (name) {

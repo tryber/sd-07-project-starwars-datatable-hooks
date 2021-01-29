@@ -29,7 +29,6 @@ const useEvent = () => {
       values: number,
     };
     if (planetThings && parameter && number) {
-
       setFilters({
         ...filters, filterByNumericValues: [...filters.filterByNumericValues, obj],
       });
@@ -61,8 +60,16 @@ const useEvent = () => {
         setFilteredData(data);
       }
     }
-    // eslint-disable-next-line
-  }, [getEvent]);
+  }, [
+    data,
+    filters,
+    getEvent,
+    myNumber,
+    number,
+    parameter,
+    planetThings,
+    setFilteredData,
+    setFilters]);
   return [setGetEvent];
 };
 
