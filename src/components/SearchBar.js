@@ -1,11 +1,8 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useState } from 'react';
 import StartWarsContext from '../context/StarWarsContext';
 
 export default function SearchBar() {
-  const { selectFilter,
-    filterName,
-    filters,
-    filterPlanetsProvider } = useContext(StartWarsContext);
+  const { selectFilter, filterName } = useContext(StartWarsContext);
   const isNull = 0;
 
   const [name, setName] = useState('');
@@ -22,10 +19,6 @@ export default function SearchBar() {
   ];
 
   const dropdownRangeValue = ['maior que', 'menor que', 'igual a'];
-
-  useEffect(() => {
-    filterPlanetsProvider();
-  }, [filterPlanetsProvider, filters]);
 
   const handleChanges = ({ target }) => {
     setName(target.value);

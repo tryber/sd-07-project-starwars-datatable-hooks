@@ -43,29 +43,33 @@ function Provider({ children }) {
     }));
   };
 
-  const filterPlanetsProvider = () => {
-    let planetsFilter = initialData;
-    filters.filterByNumericValues.forEach((filter) => {
-      const { column, comparison, value } = filter;
-      switch (comparison) {
-      case 'maior que':
-        planetsFilter = planetsFilter
-          .filter((planet) => Number(planet[column]) > Number(value));
-        break;
-      case 'menor que':
-        planetsFilter = planetsFilter
-          .filter((planet) => Number(planet[column]) < Number(value));
-        break;
-      case 'igual a':
-        planetsFilter = planetsFilter
-          .filter((planet) => Number(planet[column]) === Number(value));
-        break;
-      default:
-        return planetsFilter;
-      }
-    });
-    setPlanetsProvider(planetsFilter);
-  };
+  useEffect(() => {
+    const filterPlanetsProvider = () => {
+      let planetsFilter = initialData;
+      filters.filterByNumericValues.forEach((filter) => {
+        const { column, comparison, value } = filter;
+        switch (comparison) {
+        case 'maior que':
+          planetsFilter = planetsFilter
+            .filter((planet) => Number(planet[column]) > Number(value));
+          break;
+        case 'menor que':
+          planetsFilter = planetsFilter
+            .filter((planet) => Number(planet[column]) < Number(value));
+          break;
+        case 'igual a':
+          planetsFilter = planetsFilter
+            .filter((planet) => Number(planet[column]) === Number(value));
+          break;
+        default:
+          return planetsFilter;
+        }
+      });
+      setPlanetsProvider(planetsFilter);
+      // return planetsFilter;
+    };
+    filterPlanetsProvider();
+  }, [filters, initialData]);
 
   const context = {
     filters,
@@ -73,7 +77,7 @@ function Provider({ children }) {
     planetsProvider,
     selectFilter,
     filterName,
-    filterPlanetsProvider,
+    // useFilter,
   };
 
   return (
