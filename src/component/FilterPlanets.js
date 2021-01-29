@@ -32,6 +32,7 @@ function FilterPlanets() {
         onChange={ handleFilter }
         data-testid="column-filter"
       >
+        {/* <option selected disabled value="">{' '}</option> */}
         {Object.keys(columnOptions).map((column) => (
           <option key={ column } value={ column }>{columnOptions[column]}</option>
         ))}

@@ -8,8 +8,11 @@ class Provider extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      column: 'population',
+      value: '',
+      comparison: '',
       columnOptions: {
-        empty: '',
+        // empty: '',
         population: 'population',
         orbital_period: 'orbital_period',
         diameter: 'diameter',
@@ -24,11 +27,7 @@ class Provider extends Component {
         filterByName: {
           name: '',
         },
-        filterByNumericValues: [{
-          column: '',
-          comparison: '',
-          value: '',
-        }],
+        filterByNumericValues: [],
       },
     };
 
