@@ -17,10 +17,22 @@ const Provider = ({ children }) => {
     });
   };
 
+  async function searchPlanets(value) {
+    if (value === '') {
+      await setFetching(() => true);
+      fetchPlanets();
+    }
+
+    const filterPlanets = await planetsStarWars
+      .filter((planet) => planet.name.includes(value));
+    setPlanetsStarWars(() => filterPlanets);
+  }
+
   const contextValue = {
     planetsStarWars,
     isFetching,
     fetchPlanets,
+    searchPlanets,
   };
 
   return (
