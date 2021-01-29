@@ -43,6 +43,7 @@ function Provider({ children }) {
     }));
   };
 
+  
   const filterPlanetsProvider = () => {
     let planetsFilter = initialData;
     filters.filterByNumericValues.forEach((filter) => {
@@ -66,18 +67,14 @@ function Provider({ children }) {
     });
     setPlanetsProvider(planetsFilter);
   };
-
-  useEffect(() => {
-    filterPlanetsProvider();
-  }, [filterPlanetsProvider, filters]);
-
+  
   const context = {
     filters,
     isFetching,
     planetsProvider,
     selectFilter,
     filterName,
-    // useFilter,
+    filterPlanetsProvider,
   };
 
   return (
