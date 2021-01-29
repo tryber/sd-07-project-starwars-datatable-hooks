@@ -1,7 +1,7 @@
 import React from 'react';
 import Provider from './context/StarProvider';
 import Table from './components/Table';
-import InputSearch from './components/InputSearch'
+import InputSearch from './components/InputSearch';
 import './App.css';
 
 function App() {

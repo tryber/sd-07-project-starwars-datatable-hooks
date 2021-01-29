@@ -1,7 +1,18 @@
-import React from 'react'
+import React, { useContext } from 'react';
+import PropTypes from 'prop-types';
+import StarWarsContext from '../context/StarWarsContext';
 
 function SelectComponent(props) {
-  const { setObjectFilter, selectFilter, updateListFunc, object} = props;
+  const {
+    filters,
+    setFilters,
+    filter,
+    setFilter,
+    setData, revertFilter,
+    setDataUrl } = useContext(
+    StarWarsContext,
+  );
+  const { setObjectFilter, selectFilter, updateListFunc, object } = props;
   return (
     <div>
       <select
@@ -10,11 +21,11 @@ function SelectComponent(props) {
         onChange={ setObjectFilter }
         data-testid="column-filter"
       >
-        <option value="population">population</option>
-        <option value="orbital_period">orbital_period</option>
-        <option value="diameter">diameter</option>
-        <option value="rotation_period">rotation_period</option>
-        <option value="surface_water">surface_water</option>
+        {filters.map((filt) => (
+          <option key={ filt } value={ filt }>
+            {filt}
+          </option>
+        ))}
       </select>
       <select
         name="comparison"
@@ -36,14 +47,51 @@ function SelectComponent(props) {
         onClick={ () => {
           selectFilter(object);
           updateListFunc(object);
+          setFilters(filters.filter((element) => object.column !== element));
         } }
         type="button"
         data-testid="button-filter"
       >
         Adicionar filtro
       </button>
+      {filter.filters.filterByNumericValues.map(({ column }) => (
+        <div data-testid="filter" key={ column }>
+          <p>{`Filtro ${column}`}</p>
+          <button
+            onClick={ () => {
+              const max = 2;
+              if (Object.keys(revertFilter).length >= max) setDataUrl();
+              else {
+                setData({ results: (Object.entries(revertFilter))
+                  .find((entries) => entries[0] === column)[1] });
+              }
+              setFilters([...filters, column]);
+              setFilter({
+                filters: {
+                  ...filter.filters,
+                  filterByNumericValues: [
+                    ...filter.filters.filterByNumericValues.filter(
+                      (removeFilter) => column !== removeFilter.column,
+                    ),
+                  ],
+                },
+              });
+            } }
+            type="button"
+          >
+            X
+          </button>
+        </div>
+      ))}
     </div>
   );
 }
+
+SelectComponent.propTypes = {
+  setObjectFilter: PropTypes.func.isRequired,
+  selectFilter: PropTypes.func.isRequired,
+  updateListFunc: PropTypes.func.isRequired,
+  object: PropTypes.shapeOf({}).isRequired,
+};
 
 export default SelectComponent;

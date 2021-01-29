@@ -3,7 +3,14 @@ import StarWarsContext from '../context/StarWarsContext';
 import SelectComponent from './SelectComponent';
 
 function InputSearch() {
-  const { filter, setFilter, data, setData } = useContext(StarWarsContext);
+  const {
+    filter,
+    setFilter,
+    data,
+    setData,
+    setRevert,
+    revertFilter,
+  } = useContext(StarWarsContext);
   const [object, setObject] = useState({
     column: '',
     comparison: '',
@@ -25,7 +32,8 @@ function InputSearch() {
   );
 
   const updateListFunc = (objector) => {
-    const filteredGambiarra = [...filter.filters.filterByNumericValues, objector];
+    let filteredGambiarra = [...filter.filters.filterByNumericValues];
+    if (objector) filteredGambiarra = [...filter.filters.filterByNumericValues, objector];
     if (data !== 'Loading') {
       const rdx = 10;
       filteredGambiarra
@@ -33,12 +41,15 @@ function InputSearch() {
           if (column && comparison && value) {
             switch (comparison) {
             case 'maior que':
+              setRevert({ ...revertFilter, [column]: data.results });
               return setData({ results: data.results
                 .filter((rtl) => parseInt(rtl[column], rdx) > parseInt(value, rdx)) });
             case 'menor que':
+              setRevert({ ...revertFilter, [column]: data.results });
               return setData({ results: data.results
                 .filter((rtl) => parseInt(rtl[column], rdx) < parseInt(value, rdx)) });
             default:
+              setRevert({ ...revertFilter, [column]: data.results });
               return setData({ results: data.results
                 .filter((rtl) => parseInt(rtl[column], rdx) === parseInt(value, rdx)) });
             }

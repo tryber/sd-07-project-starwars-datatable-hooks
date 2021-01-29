@@ -1,14 +1,23 @@
 import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import useData from '../hooks/useData';
 import StarWarsContext from './StarWarsContext';
 
 function Provider({ children }) {
   const [data, setDataUrl, setData] = useData();
   const [dataApi, setDataApi] = useState('Loading');
-  const [filter, setFilter] = useState(
-    { filters: { filterByName: { name: '' }, filterByNumericValues: [{}] } },
-  );
+  const [filter, setFilter] = useState({
+    filters: { filterByName: { name: '' }, filterByNumericValues: [] },
+  });
   const [selectCount, setSelectCount] = useState(1);
+  const [filters, setFilters] = useState([
+    'population',
+    'orbital_period',
+    'diameter',
+    'rotation_period',
+    'surface_water',
+  ]);
+  const [revertFilter, setRevert] = useState([]);
 
   useEffect(() => {
     setDataUrl('https://swapi-trybe.herokuapp.com/api/planets/');
@@ -16,9 +25,11 @@ function Provider({ children }) {
 
   useEffect(() => {
     if (data !== 'Loading') {
-      setDataApi({ results: data.results.filter(({ name }) => name
-        .toLowerCase()
-        .includes(filter.filters.filterByName.name.toLowerCase())) });
+      setDataApi({
+        results: data.results.filter(({ name }) => name
+          .toLowerCase()
+          .includes(filter.filters.filterByName.name.toLowerCase())),
+      });
     }
   }, [filter, data, setData]);
 
@@ -30,6 +41,11 @@ function Provider({ children }) {
     data,
     selectCount,
     setSelectCount,
+    filters,
+    setFilters,
+    setDataUrl,
+    revertFilter,
+    setRevert,
   };
   return (
     <main>
@@ -39,5 +55,9 @@ function Provider({ children }) {
     </main>
   );
 }
+
+Provider.propTypes = {
+  children: PropTypes.shapeOf({}).isRequired,
+};
 
 export default Provider;
