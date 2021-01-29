@@ -1,27 +1,30 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 function FilterByNumber() {
-  const { setArrayPlanets, data } = useContext(StarWarsContext);
-
-  const filterByNumericValues = [
-    {
+  const filterValues = {
       column: 'population',
       comparison: 'maior que',
       value: '100000',
-    },
-  ];
+  }
+  
+  const { setArrayPlanets, data, setFilter, filter } = useContext(StarWarsContext);  
+  const [numericValues, setNumericValues ] = useState(filterValues);
 
-  const [filterNumeric, setFilterNumeric] = useState(filterByNumericValues);
+  const arrayOptions = [
+    'population', 'orbital_period', 'diameter', 'rotation_period', 
+    'surface_water',
+  ]
 
-  const hadleChange = ({ target: { name, value } }) => {
-    setFilterNumeric([{ ...filterNumeric[0], [name]: value }]);
-  };
+  const hadleChange = ({ target: { name, value } }) => {    
+    setNumericValues({...numericValues, [name]: value});
+  }
 
-  const checkCompartion = (item) => {
-    const { column, comparison, value } = filterNumeric[0];
+  const checkCompartion = (item) => {    
+    const { column, comparison, value } = numericValues;
     const valueInteger = parseInt(value, 10);
     const itemColumn = parseInt(item[column], 10);
+    
     switch (comparison) {
     case 'maior que':
       return itemColumn > valueInteger;
@@ -29,15 +32,21 @@ function FilterByNumber() {
       return itemColumn < valueInteger;
     case 'igual a':
       return itemColumn === valueInteger;
-    default:
-      console.log('entrei no default');
+    default:      
       break;
     }
   };
 
-  const filterPlanets = () => {
-    const resultPlanets = data.filter((item) => checkCompartion(item));
+  const updateFilter = () => {    
+    setFilter({...filter,
+      filterByNumericValues:[...filter.filterByNumericValues, numericValues]})    
+  }  
+
+  const filterPlanets = async() => {
+    updateFilter();  
+    const resultPlanets = data.filter((item) => checkCompartion(item));   
     setArrayPlanets(resultPlanets);
+    
   };
 
   return (
@@ -47,11 +56,11 @@ function FilterByNumber() {
         name="column"
         onChange={ (event) => hadleChange(event) }
       >
-        <option value="population" defaultValue>population</option>
-        <option value="orbital_period">orbital_period</option>
-        <option value="diameter">diameter</option>
-        <option value="rotation_period">rotation_period</option>
-        <option value="surface_water">surface_water</option>
+        {
+          arrayOptions.map((option, i) => 
+          <option key={i} value={option}>{option}</option>
+          )
+        }        
       </select>
 
       <select

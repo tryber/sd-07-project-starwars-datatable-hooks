@@ -3,28 +3,22 @@ import StarWarsContext from '../context/StarWarsContext';
 
 function FilterByName() {
   const { setArrayPlanets, data } = useContext(StarWarsContext);
-
-  const FILTERS = {
-    filterByName: {
-      name: '',
-    },
-  };
-
-  const [filter, setFilter] = useState(FILTERS);
+  const { filter, setFilter } = useContext(StarWarsContext);
 
   const filterPlanets = () => {
-    const { name } = filter;
-    const searchPlanets = data.filter((item) => item.name.includes(name));
+    const { name } = filter.filterByName; 
+    const searchPlanets = data.filter((item) => item.name.includes(name));    
     setArrayPlanets(searchPlanets);
   };
 
-  useEffect(() => {
+  useEffect(() => {       
     filterPlanets();
   }, [filter]);
 
   const handleChange = (value) => {
     setFilter({
-      ...filter, name: value,
+      ...filter,
+      filterByName: {...filter.FilterByName, name: value},    
     });
   };
 
