@@ -24,8 +24,6 @@ export default function WarsProvider({ children }) {
 
   function filterByFilter() {
     const filterOne = [
-      '',
-      'population',
       'orbital_period',
       'diameter',
       'rotation_period',
