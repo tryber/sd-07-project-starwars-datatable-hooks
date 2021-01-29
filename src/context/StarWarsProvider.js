@@ -33,11 +33,7 @@ function StarWarsProvider({ children }) {
     getPlanets();
   }, []);
 
-  // const filterByNumValues = () => {
-  // };
-
   const applyFilters = () => {
-    // if (filterValue !== '') {
     const { column, comparison, value } = filterByNumericValues[0];
     switch (comparison) {
     case ('maior que'):
@@ -53,7 +49,7 @@ function StarWarsProvider({ children }) {
         .filter((planet) => Number(planet[column]) === Number(value)));
       break;
     default:
-      return SWPlanets;
+      return newArray;
     }
   };
 

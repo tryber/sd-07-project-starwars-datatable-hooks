@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 export default function SearchBar() {
@@ -8,7 +8,16 @@ export default function SearchBar() {
     applyFilters,
   } = useContext(StarWarsContext);
 
-  // const { column, comparison, value } = filterByNumericValues[0];
+  const [options, setOptions] = useState(
+    ['population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water'],
+  );
+
+  const hideOption = () => {
+    setOptions((prevState) => (
+      prevState.filter((item) => (
+        item !== filterByNumericValues[0].column))
+    ));
+  };
 
   return (
     <div>
@@ -21,21 +30,9 @@ export default function SearchBar() {
           }])
         }
       >
-        <option value="population">
-          population
-        </option>
-        <option value="orbital_period">
-          orbital_period
-        </option>
-        <option value="diameter">
-          diameter
-        </option>
-        <option value="rotation_period">
-          rotation_period
-        </option>
-        <option value="surface_water">
-          surface_water
-        </option>
+        {options.map((item) => (
+          <option key={ item } value={ item }>{item}</option>
+        ))}
       </select>
       <select
         name="comparison-filter"
@@ -69,7 +66,10 @@ export default function SearchBar() {
       <button
         type="button"
         data-testid="button-filter"
-        onClick={ applyFilters }
+        onClick={ () => {
+          applyFilters();
+          hideOption();
+        } }
       >
         Filtrar
       </button>
