@@ -11,6 +11,7 @@ function Filters() {
 
   function handleStateChange({ target: { name, value } }) {
     setState({ ...state, [name]: value });
+
   }
 
   function handleClick(event) {
@@ -49,6 +50,8 @@ function Filters() {
       'surface_water',
       'population',
     ];
+    const usedColumns = filters.filterByNumericValues.map(({column}) => column);
+    const removedComlumn = columnFilter.filter((column) => !usedColumns.includes(column))
     return (
       <label htmlFor="column-filter">
         Coluna:
@@ -56,9 +59,9 @@ function Filters() {
           data-testid="column-filter"
           className="input"
           name="column"
-          onChange={ (e) => handleStateChange(e) }
+          onChange={ (e) => (handleStateChange(e)) }
         >
-          {columnFilter.map((filter, index) => (
+          {removedComlumn.map((filter, index) => (
             <option key={ index }>{filter}</option>
           ))}
         </select>
@@ -77,8 +80,8 @@ function Filters() {
           name="comparison"
           onChange={ (e) => handleStateChange(e) }
         >
-          {comparisonFilter.map((filter, index) => (
-            <option key={ index }>{filter}</option>
+          {comparisonFilter.map((comparison, index) => (
+            <option key={ index }>{comparison}</option>
           ))}
         </select>
       </label>
