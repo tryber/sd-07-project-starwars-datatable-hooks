@@ -11,6 +11,12 @@ function StarWarsProvider({ children }) {
   const [columnFilter, setColumnFilter] = useState('');
   const [comparisonFilter, setComparisonFilter] = useState('');
   const [valueFilter, setValueFilter] = useState();
+  const [columns, setColumns] = useState([
+    'population',
+    'orbital_period',
+    'diameter',
+    'rotation_period',
+    'surface_water']);
 
   const dataUpdate = async () => {
     setData(await fetchAPI());
@@ -35,6 +41,8 @@ function StarWarsProvider({ children }) {
     setComparisonFilter,
     valueFilter,
     setValueFilter,
+    columns,
+    setColumns,
   };
 
   return (

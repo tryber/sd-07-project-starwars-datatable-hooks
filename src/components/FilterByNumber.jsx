@@ -10,19 +10,19 @@ function FilterByNumber() {
     setFilterData,
     columnFilter,
     comparisonFilter,
-    valueFilter } = useContext(StarWarsContext);
-
-  const columns = [
-    'population',
-    'orbital_period',
-    'diameter',
-    'rotation_period',
-    'surface_water'];
+    valueFilter,
+    columns,
+    setColumns } = useContext(StarWarsContext);
 
   const valueRange = [
     'maior que',
     'menor que',
     'igual a'];
+
+  const removeColumnFilter = (column) => {
+    const arr = columns.filter((item) => item !== column);
+    setColumns(arr);
+  };
 
   const handleClick = () => {
     if (comparisonFilter === 'maior que') {
@@ -40,6 +40,8 @@ function FilterByNumber() {
         .filter((planet) => Number(planet[columnFilter]) === Number(valueFilter));
       setFilterData(filtro);
     }
+
+    removeColumnFilter(columnFilter);
   };
 
   const handleChange = ({ target: { name, value } }) => {
