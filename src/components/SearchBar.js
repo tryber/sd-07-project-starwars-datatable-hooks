@@ -2,12 +2,12 @@ import React, { useContext, useState } from 'react';
 import StartWarsContext from '../context/StarWarsContext';
 
 export default function SearchBar() {
-  const { selectFilter, filterName } = useContext(StartWarsContext);
+  const { selectFilter, filterName, filters } = useContext(StartWarsContext);
   const isNull = 0;
 
   const [name, setName] = useState('');
-  const [comparison, setComparison] = useState('');
-  const [column, setColumn] = useState('');
+  const [comparison, setComparison] = useState('maior que');
+  const [column, setColumn] = useState('population');
   const [value, setValue] = useState(isNull);
 
   const dropdownFilterColumn = [
@@ -25,6 +25,19 @@ export default function SearchBar() {
     filterName(target.value);
   };
 
+  const renderCustomFilters = () => {
+    const { filterByNumericValues } = filters;
+    const getFilter = filterByNumericValues.map((filter) => filter.column);
+    console.log(getFilter);
+    const results = dropdownFilterColumn.filter((option) => {
+      const conditionToAdmitOption = -1; // -1 indica que os elementos são diferentes
+      const noResultsAvailable = 0;
+      if (getFilter.indexOf(option) === conditionToAdmitOption) return option;
+      return noResultsAvailable;
+    });
+    return results;
+  };
+
   return (
     <div>
       <input
@@ -40,9 +53,8 @@ export default function SearchBar() {
         data-testid="column-filter"
         onChange={ ({ target }) => setColumn(target.value) }
       >
-        <option>Filter by column</option>
         {
-          dropdownFilterColumn.map((key) => (
+          renderCustomFilters().map((key) => (
             <option
               value={ key }
               key={ key }
@@ -57,7 +69,7 @@ export default function SearchBar() {
         data-testid="comparison-filter"
         onChange={ ({ target }) => setComparison(target.value) }
       >
-        <option>Filter by range value</option>
+        {/* <option>Filter by range value</option> */}
         {
           dropdownRangeValue.map((key) => (
             <option

@@ -28,11 +28,11 @@ function Provider({ children }) {
     fetchPlanets();
   }, []);
 
-  const filterName = (name) => {
+  const filterName = (text) => {
     const initialPlanets = initialData;
     setPlanetsProvider(initialPlanets
-      .filter((planetName) => planetName.name.toLowerCase()
-        .includes(name)));
+      .filter((planetSelected) => planetSelected.name.toLowerCase()
+        .includes(text)));
   };
 
   const selectFilter = (column, comparison, value) => {
