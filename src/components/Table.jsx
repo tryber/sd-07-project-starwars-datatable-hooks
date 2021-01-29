@@ -7,7 +7,6 @@ function Table() {
     filters, filteringByNumericValues } = data;
   const { filterByName, filterByNumericValues } = filters;
   const { column, comparison, value } = filterByNumericValues;
-  const [myPlanets] = useState(planets);
   const [columnsArr, setColumnsArr] = useState(['population', 'orbital_period',
     'diameter', 'rotation_period', 'surface_water']);
 
