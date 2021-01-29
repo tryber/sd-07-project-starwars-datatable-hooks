@@ -43,7 +43,6 @@ function Provider({ children }) {
     }));
   };
 
-  
   const filterPlanetsProvider = () => {
     let planetsFilter = initialData;
     filters.filterByNumericValues.forEach((filter) => {
@@ -67,7 +66,7 @@ function Provider({ children }) {
     });
     setPlanetsProvider(planetsFilter);
   };
-  
+
   const context = {
     filters,
     isFetching,
