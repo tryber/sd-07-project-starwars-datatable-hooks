@@ -16,6 +16,7 @@ function Dashboard() {
     disable3,
     disable4,
     disable5 } = useContext(context);
+
   const [setGetEvent] = useEvent();
   const { disabled1 } = disable1;
   const { disabled2 } = disable2;

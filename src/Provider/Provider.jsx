@@ -77,7 +77,7 @@ function Provider(props) {
 
   useEffect(() => {
     setFilteredData(data);
-  }, [data]);
+  }, []);
 
   useEffect(() => {
     if (name) {

@@ -57,16 +57,7 @@ const useEvent = () => {
         setFilteredData(data);
       }
     }
-  }, [
-    data,
-    filters,
-    getEvent,
-    myNumber,
-    number,
-    parameter,
-    planetThings,
-    setFilteredData,
-    setFilters]);
+  }, [getEvent]);
   return [setGetEvent];
 };
 
