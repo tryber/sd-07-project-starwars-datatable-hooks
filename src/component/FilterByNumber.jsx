@@ -11,6 +11,14 @@ function FilterByNumber() {
   const { setArrayPlanets, data, setFilter, filter } = useContext(StarWarsContext);
   const [numericValues, setNumericValues] = useState(filterValues);
 
+  const arrayOptions = [
+    'population', 'orbital_period', 'diameter', 'rotation_period',
+    'surface_water',
+  ];
+
+  const { filterByNumericValues } = filter;
+  const arrayColums = filterByNumericValues.map(({ column }) => column);
+
   const checkCompartion = (item) => {
     const { column, comparison, value } = numericValues;
     const valueInteger = parseInt(value, 10);
@@ -37,11 +45,6 @@ function FilterByNumber() {
     filterPlanets();
   }, [filter.filterByNumericValues]);
 
-  const arrayOptions = [
-    'population', 'orbital_period', 'diameter', 'rotation_period',
-    'surface_water',
-  ];
-
   const hadleChange = ({ target: { name, value } }) => {
     setNumericValues({ ...numericValues, [name]: value });
   };
@@ -60,6 +63,7 @@ function FilterByNumber() {
       >
         {
           arrayOptions
+            .filter((phase) => !arrayColums.includes(phase))
             .map((option, i) => <option key={ i } value={ option }>{ option }</option>)
         }
       </select>
