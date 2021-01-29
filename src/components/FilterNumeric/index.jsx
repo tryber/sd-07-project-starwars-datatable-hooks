@@ -18,6 +18,7 @@ function FilterNumeric() {
     filters: { filters: { filterByNumericValues } },
     setFilters,
     data,
+    planets,
     setPlanets,
   } = useContext(StarWarsContext);
 
@@ -25,17 +26,17 @@ function FilterNumeric() {
     let array = [];
 
     if (compare === 'maior que') {
-      array = [...data.filter((item) => Number(item[type]) > Number(number))];
+      array = [...planets.filter((item) => Number(item[type]) > Number(number))];
       setPlanets([...array]);
     }
 
     if (compare === 'menor que') {
-      array = [...data.filter((item) => Number(item[type]) < Number(number))];
+      array = [...planets.filter((item) => Number(item[type]) < Number(number))];
       setPlanets([...array]);
     }
 
     if (compare === 'igual a') {
-      array = [...data.filter((item) => Number(item[type]) === Number(number))];
+      array = [...planets.filter((item) => Number(item[type]) === Number(number))];
       setPlanets([...array]);
     }
 
@@ -58,6 +59,37 @@ function FilterNumeric() {
         ],
       },
     });
+
+    setType(typeFilters[0]);
+    setCompare('maior que');
+    setNumber('0');
+  };
+
+  const removeFilters = () => {
+    setFilters({
+      filters: {
+        filterByName: {
+          name: '',
+        },
+        filterByNumericValues: [{
+          column: '',
+          comparison: '',
+          value: 0,
+        }],
+      },
+    });
+
+    setPlanets(data);
+
+    setFilterParameters([
+      'population',
+      'orbital_period',
+      'diameter',
+      'rotation_period',
+      'surface_water',
+    ]);
+    setCompare('maior que');
+    setNumber('0');
   };
 
   return (
@@ -91,6 +123,13 @@ function FilterNumeric() {
         onClick={ () => addFilters() }
       >
         Adicionar
+      </button>
+      <button
+        type="button"
+        data-testid="filter"
+        onClick={ () => removeFilters() }
+      >
+        X
       </button>
     </div>
   );
