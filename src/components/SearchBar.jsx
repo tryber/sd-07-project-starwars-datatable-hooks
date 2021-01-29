@@ -2,10 +2,21 @@ import React, { useContext } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 export default function Table() {
-  const { filters, setFilters, setValues, inputValues, setInputValues, handleClick } = useContext(StarWarsContext);
+  const {
+    filters,
+    setFilters,
+    setValues,
+    handleClick,
+  } = useContext(StarWarsContext);
   const { filterByName } = filters;
   const { filterByNumericValues } = filters;
-  const columns = ['population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water'];
+  const columns = [
+    'population',
+    'orbital_period',
+    'diameter',
+    'rotation_period',
+    'surface_water',
+  ];
   const comparators = ['maior que', 'menor que', 'igual a'];
 
   return (
@@ -21,7 +32,6 @@ export default function Table() {
         />
       </label>
       <div>
-
         <select
           data-testid="column-filter"
           id="column"
@@ -29,7 +39,9 @@ export default function Table() {
           onChange={ (e) => setValues(e.target.id, e.target.value) }
         >
           {columns.map((option) => (
-            <option key={ option } value={ option }>{option}</option>
+            <option key={ option } value={ option }>
+              {option}
+            </option>
           ))}
         </select>
 
@@ -40,7 +52,9 @@ export default function Table() {
           onChange={ (e) => setValues(e.target.id, e.target.value) }
         >
           {comparators.map((option) => (
-            <option key={ option } value={ option }>{option}</option>
+            <option key={ option } value={ option }>
+              {option}
+            </option>
           ))}
         </select>
 
@@ -60,7 +74,6 @@ export default function Table() {
         >
           Filtrar
         </button>
-
       </div>
     </div>
   );

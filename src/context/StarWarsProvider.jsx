@@ -40,12 +40,8 @@ const StarWarsProvider = ({ children }) => {
     setInputValues({ ...inputValues, [name]: value });
   };
 
-  const imprimir = () => {
-    console.log(filters);
-  };
-
   const handleClick = () => {
-    const { filterByNumericValues } = filters;
+    // const { filterByNumericValues } = filters;
     // setFilters(
     //   { ...filters, filterByNumericValues: [...filterByNumericValues, inputValues] },
     // );
@@ -82,6 +78,7 @@ const StarWarsProvider = ({ children }) => {
     inputValues,
     handleClick,
     setValues,
+    backupPlanets,
   };
   return (
     <StarWarsContext.Provider value={ context }>
