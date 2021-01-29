@@ -4,27 +4,119 @@ import StarWarsContext from '../context/StarWarsContext';
 function Table() {
   const { data } = useContext(StarWarsContext);
   const { planets, setPlanets, isLoading, filteringByName,
-    filters, filteringByNumericValues } = data;
+    filters, setFilters } = data;
   const { filterByName, filterByNumericValues } = filters;
-  const { column, comparison, value } = filterByNumericValues;
   const [myPlanets] = useState(planets);
-  // teste evaluator
+  const initialIndex = 0;
+  const [myIndex, setMyIndex] = useState(initialIndex);
+  const [renderFilters, setRenderFilters] = useState(false);
+  const [myFilters, setMyFilters] = useState({
+    column: '',
+    comparison: '',
+    value: '',
+  });
+
+  const filteringByNumericValues = ({ target }) => {
+    const { column, comparison, value } = myFilters;
+    const zero = 0;
+    setMyFilters({
+      ...myFilters,
+      [target.name]: target.value,
+    });
+    if (column.length !== zero && comparison.length !== zero && value.length !== zero) {
+      setRenderFilters(true);
+      console.log(column.length);
+    }
+  };
+
   const onClickHandler = () => {
+    const { column, comparison, value } = myFilters;
     if (column !== '' && comparison !== '' && value !== '') {
       setPlanets(planets.filter((planet) => {
         if (comparison === 'menor que') {
+          setMyIndex(myIndex + 1);
+          const myNewArr = filterByNumericValues.push(myFilters);
+          setFilters({
+            ...filters,
+            filterByNumericValues: myNewArr,
+          });
           return parseInt(value, 10) > parseInt(planet[column], 10);
         }
         if (comparison === 'maior que') {
+          setMyIndex(myIndex + 1);
+          const myNewArr = filterByNumericValues.push(myFilters);
+          setFilters({
+            ...filters,
+            filterByNumericValues: myNewArr,
+          });
           return parseInt(planet[column], 10) > parseInt(value, 10);
         }
         if (comparison === 'igual a') {
+          setMyIndex(myIndex + 1);
+          const myNewArr = filterByNumericValues.push(myFilters);
+          setFilters({
+            ...filters,
+            filterByNumericValues: myNewArr,
+          });
           return parseInt(planet[column], 10) === parseInt(value, 10);
         }
         return planet;
       }));
     }
     if (value === '') return setPlanets(myPlanets);
+  };
+
+  const renderNewFilter = () => {
+    const arrOfColumns = ['population', 'orbital_period', 'diameter',
+      'rotation_period', 'surface_water'];
+    return (
+      <div>
+        <input
+          type="text"
+          data-testid="name-filter"
+          onChange={ filteringByName }
+        />
+        <select
+          name="column"
+          data-testid="column-filter"
+          onChange={ filteringByNumericValues }
+        >
+          {arrOfColumns.map((columns) => {
+            const { column } = myFilters;
+            if (columns !== column) {
+              return (
+                <option key={ columns } value={ `${columns}` }>
+                  { columns }
+                </option>
+              );
+            }
+            return null;
+          })}
+        </select>
+        <select
+          name="comparison"
+          data-testid="comparison-filter"
+          onChange={ filteringByNumericValues }
+        >
+          <option value="maior que">maior que</option>
+          <option value="menor que">menor que</option>
+          <option value="igual a">igual a</option>
+        </select>
+        <input
+          name="value"
+          type="number"
+          data-testid="value-filter"
+          onChange={ filteringByNumericValues }
+        />
+        <button
+          type="button"
+          data-testid="button-filter"
+          onClick={ onClickHandler }
+        >
+          Filtrar
+        </button>
+      </div>
+    );
   };
 
   if (isLoading) {
@@ -71,6 +163,7 @@ function Table() {
         >
           Filtrar
         </button>
+        { renderFilters ? renderNewFilter() : null }
       </div>
       <table>
         <thead>

@@ -8,11 +8,9 @@ function StarWarsProvider({ children }) {
   const [isLoading, setIsLoading] = useState(true);
   const [filters, setFilters] = useState({
     filterByName: { name: '' },
-    filterByNumericValues: {
-      column: '',
-      comparison: '',
-      value: '',
-    },
+    filterByNumericValues: [
+      { column: '', comparison: '', value: '' },
+    ],
   });
 
   useEffect(() => {
@@ -30,22 +28,13 @@ function StarWarsProvider({ children }) {
     });
   };
 
-  const filteringByNumericValues = ({ target }) => {
-    const { value, name } = target;
-    const { filterByNumericValues } = filters;
-    setFilters({
-      ...filters,
-      filterByNumericValues: { ...filterByNumericValues, [name]: value },
-    });
-  };
-
   const data = {
     planets,
     isLoading,
     filteringByName,
-    filteringByNumericValues,
     filters,
     setPlanets,
+    setFilters,
   };
 
   return (
