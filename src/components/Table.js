@@ -1,30 +1,27 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useContext, useEffect } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 function Table() {
-  const {
-    data,
-    getApi,
-    searchName,
-    filterByNumericValues,
-    filterByFilter,
-  } = useContext(StarWarsContext);
+  const { data, getApi, searchName, filterByNumericValues, filterByFilter } = useContext(
+    StarWarsContext,
+  );
 
   useEffect(() => {
     getApi();
-  }, []);
+  }, [getApi]);
 
   const handleFilter = () => {
     let check = data;
     filterByNumericValues.forEach(({ column, comparison, value }) => {
       if (comparison === 'maior que') {
-        check = data.filter((el) => parseInt(el[column], 10) > parseInt(value, 10));
+        check = data.filter((col) => parseInt(col[column], 10) > parseInt(value, 10));
       }
       if (comparison === 'menor que') {
-        check = data.filter((el) => parseInt(el[column], 10) < parseInt(value, 10));
+        check = data.filter((col) => parseInt(col[column], 10) < parseInt(value, 10));
       }
       if (comparison === 'igual a') {
-        check = data.filter((el) => parseInt(el[column], 10) === parseInt(value, 10));
+        check = data.filter((col) => parseInt(col[column], 10) === parseInt(value, 10));
       }
     });
 
@@ -34,7 +31,7 @@ function Table() {
   useEffect(() => {
     handleFilter();
     filterByFilter();
-  }, [filterByNumericValues]);
+  }, []);
 
   return (
     <table>
@@ -57,23 +54,22 @@ function Table() {
       </thead>
       <tbody>
         {handleFilter()
-          .filter((planet) => planet.name.toLowerCase()
-            .includes(searchName))
+          .filter((planet) => planet.name.includes(searchName))
           .map((planet, i) => (
             <tr key={ i }>
-              <td>{ planet.name }</td>
-              <td>{ planet.climate }</td>
-              <td>{ planet.created }</td>
-              <td>{ planet.diameter }</td>
-              <td>{ planet.edited }</td>
-              <td>{ planet.films }</td>
-              <td>{ planet.gravity }</td>
-              <td>{ planet.orbital_period }</td>
-              <td>{ planet.population }</td>
-              <td>{ planet.rotation_period }</td>
-              <td>{ planet.surface_water }</td>
-              <td>{ planet.terrain }</td>
-              <td>{ planet.url }</td>
+              <td>{planet.name}</td>
+              <td>{planet.climate}</td>
+              <td>{planet.created}</td>
+              <td>{planet.diameter}</td>
+              <td>{planet.edited}</td>
+              <td>{planet.films}</td>
+              <td>{planet.gravity}</td>
+              <td>{planet.orbital_period}</td>
+              <td>{planet.population}</td>
+              <td>{planet.rotation_period}</td>
+              <td>{planet.surface_water}</td>
+              <td>{planet.terrain}</td>
+              <td>{planet.url}</td>
             </tr>
           ))}
       </tbody>
