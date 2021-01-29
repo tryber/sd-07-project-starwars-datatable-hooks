@@ -3,7 +3,6 @@ import StarWarsContext from '../context/StarWarsContext';
 
 function Table() {
   const { arrayPlanets } = useContext(StarWarsContext);
-  console.log(arrayPlanets);
   return (
     <div>
       <table border="1">

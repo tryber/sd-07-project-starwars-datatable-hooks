@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 function FilterByNumber() {
@@ -9,16 +9,7 @@ function FilterByNumber() {
   };
 
   const { setArrayPlanets, data, setFilter, filter } = useContext(StarWarsContext);
-  const [ numericValues, setNumericValues ] = useState(filterValues);
-
-  const arrayOptions = [
-    'population', 'orbital_period', 'diameter', 'rotation_period',
-    'surface_water',
-  ];
-
-  const hadleChange = ({ target: { name, value } }) => { 
-    setNumericValues({ ...numericValues, [name]: value });
-  };
+  const [numericValues, setNumericValues] = useState(filterValues);
 
   const checkCompartion = (item) => {
     const { column, comparison, value } = numericValues;
@@ -37,14 +28,27 @@ function FilterByNumber() {
     }
   };
 
-  const updateFilter = () => {
-    setFilter({ ...filter,
-      filterByNumericValues:[...filter.filterByNumericValues, numericValues] })    
-  };
-
   const filterPlanets = () => {
     const resultPlanets = data.filter((item) => checkCompartion(item));
     setArrayPlanets(resultPlanets);
+  };
+
+  useEffect(() => {
+    filterPlanets();
+  }, [filter.filterByNumericValues]);
+
+  const arrayOptions = [
+    'population', 'orbital_period', 'diameter', 'rotation_period',
+    'surface_water',
+  ];
+
+  const hadleChange = ({ target: { name, value } }) => {
+    setNumericValues({ ...numericValues, [name]: value });
+  };
+
+  const updateFilter = () => {
+    setFilter({ ...filter,
+      filterByNumericValues: [...filter.filterByNumericValues, numericValues] });
   };
 
   return (
@@ -55,9 +59,8 @@ function FilterByNumber() {
         onChange={ (event) => hadleChange(event) }
       >
         {
-          arrayOptions.map((option, i) =>
-            <option key={i} value={ option }>{ option }</option>,
-          )
+          arrayOptions
+            .map((option, i) => <option key={ i } value={ option }>{ option }</option>)
         }
       </select>
 
@@ -82,7 +85,7 @@ function FilterByNumber() {
       <button
         data-testid="button-filter"
         type="button"
-        onClick={ () => filterPlanets() }
+        onClick={ () => updateFilter() }
       >
         Buscar
       </button>

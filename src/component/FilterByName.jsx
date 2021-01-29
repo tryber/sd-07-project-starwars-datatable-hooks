@@ -1,24 +1,20 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 function FilterByName() {
   const { setArrayPlanets, data } = useContext(StarWarsContext);
   const { filter, setFilter } = useContext(StarWarsContext);
 
-  const filterPlanets = () => {
+  useEffect(() => {
     const { name } = filter.filterByName;
     const searchPlanets = data.filter((item) => item.name.includes(name));
     setArrayPlanets(searchPlanets);
-  };
-
-  useEffect(() => {
-    filterPlanets();
-  }, [filter]);
+  }, [filter.filterByName, data, setArrayPlanets]);
 
   const handleChange = (value) => {
     setFilter({
       ...filter,
-      filterByName: { ...filter.FilterByName, name: value },    
+      filterByName: { ...filter.FilterByName, name: value },
     });
   };
 
