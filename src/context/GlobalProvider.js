@@ -3,6 +3,8 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import GlobalContext from './GlobalContext';
 import getPlanets from '../services/Api';
+import handleBtnFilter from '../functions/handleBtnFilter';
+import removeOptions from '../functions/removeOptions';
 
 function Provider({ children }) {
   const [state, setState] = useState([]);
@@ -15,9 +17,17 @@ function Provider({ children }) {
         value: '100000',
       },
     ],
+    firstDropdown: [
+      'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water',
+    ],
   });
   const { name } = filters.filterByName;
-  const { column, comparison, value: getValue } = filters.filterByNumericValues[0];
+  const {
+    column,
+    comparison,
+    value: getValue,
+  } = filters.filterByNumericValues[0];
+  const { firstDropdown } = filters;
 
   function updateFilters(key, value) {
     setFilters({
@@ -35,6 +45,7 @@ function Provider({ children }) {
   return (
     <GlobalContext.Provider
       value={ {
+        firstDropdown,
         data: state,
         name,
         value: getValue,
@@ -51,22 +62,16 @@ function Provider({ children }) {
           updateFilters('filterByNumericValues', newNumericFilter);
         },
         filterBtn: () => {
-          const filteredPlanets = [];
-          state.forEach((planet) => {
-            const number = parseInt(planet[column], 10);
-            const value = parseInt(getValue, 10);
-            if (comparison === 'maior que') {
-              if (number > value) filteredPlanets.push(planet);
-            } else if (comparison === 'menor que') {
-              if (number < value) filteredPlanets.push(planet);
-            } else if (comparison === 'igual a') {
-              if (number === value) {
-                console.log(`${number} é igual a ${value}`);
-                filteredPlanets.push(planet);
-              }
-            }
-          });
-          setState(filteredPlanets);
+          setState(handleBtnFilter(
+            state,
+            column,
+            getValue,
+            comparison,
+          ));
+          updateFilters(
+            'firstDropdown',
+            removeOptions(column, firstDropdown),
+          );
         },
       } }
     >

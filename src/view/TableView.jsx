@@ -1,18 +1,16 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Dropdowns from '../components/dropdowns';
 import Inputs from '../components/inputs';
 import Table from '../components/Table';
 import Buttons from '../components/buttons';
-
-const firstDropdown = [
-  'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water',
-];
+import GlobalContext from '../context/GlobalContext';
 
 const secondDropdown = [
   'maior que', 'menor que', 'igual a',
 ];
 
 function TableView() {
+  const { firstDropdown } = useContext(GlobalContext);
   return (
     <div>
       <div>
