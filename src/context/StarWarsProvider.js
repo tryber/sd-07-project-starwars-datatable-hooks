@@ -4,23 +4,73 @@ import StarWarsContext from './StarWarsContext';
 import fetchPlanets from '../services/fetchPlanets';
 
 function StarWarsProvider({ children }) {
+  const [filterByName, setFilterByName] = useState({ name: '' });
   const [SWPlanets, setSWPlanets] = useState([]);
-  const contextValueSW = {
-    SWPlanets,
-    setSWPlanets,
+  const [newArray, setNewArray] = useState([]);
+  const [filterByNumericValues, setFiltersByNumericValues] = useState([{
+    column: 'population',
+    comparison: 'maior que',
+    value: '',
+  }]);
+
+  const [filters, setFilters] = useState({
+    filterByName,
+    filterByNumericValues: [],
+  });
+
+  const filteredPlanets = (inputChange) => {
+    setNewArray(SWPlanets
+      .filter((caracter) => caracter.name.toLowerCase().includes(inputChange)));
   };
 
   useEffect(() => {
     const getPlanets = async () => {
       const { results } = await fetchPlanets();
-      // console.log(results);
       results.forEach((item) => delete item.residents);
-      // console.log(results);
       setSWPlanets(results);
-      // console.log(SWPlanets);
+      setNewArray(results);
     };
     getPlanets();
   }, []);
+
+  // const filterByNumValues = () => {
+  // };
+
+  const applyFilters = () => {
+    // if (filterValue !== '') {
+    const { column, comparison, value } = filterByNumericValues[0];
+    switch (comparison) {
+    case ('maior que'):
+      setNewArray(SWPlanets
+        .filter((planet) => Number(planet[column]) > Number(value)));
+      break;
+    case ('menor que'):
+      setNewArray(SWPlanets
+        .filter((planet) => Number(planet[column]) < Number(value)));
+      break;
+    case ('igual a'):
+      setNewArray(SWPlanets
+        .filter((planet) => Number(planet[column]) === Number(value)));
+      break;
+    default:
+      return SWPlanets;
+    }
+  };
+
+  const contextValueSW = {
+    SWPlanets,
+    setSWPlanets,
+    filters,
+    setFilters,
+    filterByName,
+    setFilterByName,
+    newArray,
+    setNewArray,
+    filteredPlanets,
+    applyFilters,
+    setFiltersByNumericValues,
+    filterByNumericValues,
+  };
 
   return (
     <main>
