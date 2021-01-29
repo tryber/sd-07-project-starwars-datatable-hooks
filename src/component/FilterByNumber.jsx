@@ -1,5 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
+import getPlanets from '../services/API';
 
 function FilterByNumber() {
   const filterValues = {
@@ -41,6 +42,21 @@ function FilterByNumber() {
     setArrayPlanets(resultPlanets);
   };
 
+  const handleClick = async () => {
+    const result = await getPlanets();
+    setArrayPlanets(result);
+  };
+
+  const renderButton = () => (
+    <button
+      data-testid="filter"
+      type="button"
+      onClick={ () => handleClick() }
+    >
+      X
+    </button>
+  );
+
   useEffect(() => {
     filterPlanets();
   }, [filter.filterByNumericValues]);
@@ -56,6 +72,7 @@ function FilterByNumber() {
 
   return (
     <div>
+      {renderButton()}
       <select
         data-testid="column-filter"
         name="column"
