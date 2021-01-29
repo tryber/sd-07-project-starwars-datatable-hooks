@@ -21,7 +21,7 @@ const StarWarsProvider = ({ children }) => {
       setFilteredData(dataPlanets);
     }
     fetchPlanets();
-  });
+  }, []);
 
   const handleFilterByName = (input) => {
     const { value } = input.target;
