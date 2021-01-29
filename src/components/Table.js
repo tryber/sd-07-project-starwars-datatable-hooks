@@ -9,7 +9,7 @@ function Table() {
 
   useEffect(() => {
     getApi();
-  }, [getApi]);
+  }, []);
 
   const handleFilter = () => {
     let check = data;
