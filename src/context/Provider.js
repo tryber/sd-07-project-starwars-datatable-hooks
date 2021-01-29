@@ -4,29 +4,23 @@ import StartWarsContext from './StarWarsContext';
 import getPlanetsData from '../services';
 
 function Provider({ children }) {
-  const [isFetching, setIsFetching] = useState(true);
-  const [planetsProvider, setPlanetsProvider] = useState([]);
-  const [name, setNameSearchBar] = useState('');
-  const [filteredName, setFilteredName] = useState([]);
-
-  const filters = {
+  const initialFilters = {
     filterByName: {
       name: '',
     },
-    filterByNumericValues: [
-      {
-        column: 'population',
-        comparison: 'maior que',
-        value: '100000',
-      },
-    ],
+    filterByNumericValues: [],
   };
 
-  // Faz a requisição:
+  const [isFetching, setIsFetching] = useState(true);
+  const [initialData, setInitialData] = useState([]);
+  const [planetsProvider, setPlanetsProvider] = useState([]);
+  const [filters, setFilters] = useState(initialFilters);
+
   const fetchPlanets = async () => {
     const { results } = await getPlanetsData();
     const expected = results.filter((result) => delete result.residents);
     setPlanetsProvider(expected);
+    setInitialData(expected);
     setIsFetching(false);
   };
 
@@ -34,44 +28,55 @@ function Provider({ children }) {
     fetchPlanets();
   }, []);
 
-  // Atualiza o estado do nome a partir do filtro de busca:
-  useEffect(() => {
-    // console.log('teste', planetsProvider.filter((planetName) => {
-    //   console.log('planet name', planetName.name);
-    //   console.log('name', name);
-    //   return planetName.name.toLowerCase().includes(name);
-    // }));
-    setFilteredName(
-      [...planetsProvider]
-        .filter((planetName) => planetName.name.toLowerCase()
-          .includes(name)),
-    );
-  }, [name, planetsProvider]);
-
-  const handleChanges = ({ target }) => {
-    const { value } = target;
-    setNameSearchBar(value);
+  const filterName = (name) => {
+    const initialPlanets = initialData;
+    setPlanetsProvider(initialPlanets
+      .filter((planetName) => planetName.name.toLowerCase()
+        .includes(name)));
   };
 
-  // const useFilter = () => {
-  //   if (planetsProvider !== []) {
-  //     const planetsName = planetsProvider.map((planetData) => (
-  //       planetData.name
-  //     ))
-  //     const filteredPlanet = planetsName.filter(planetName => {
-  //       planetName.toLowerCase().includes();
-  //     })
-  //     console.log(filteredPlanet);
-  //     return filteredPlanet;
-  //   }
-  // }
+  const selectFilter = (column, comparison, value) => {
+    setFilters((prevState) => ({
+      ...prevState,
+      filterByNumericValues: prevState.filterByNumericValues
+        .concat({ column, comparison, value }),
+    }));
+  };
+
+  const filterPlanetsProvider = () => {
+    let planetsFilter = initialData;
+    filters.filterByNumericValues.forEach((filter) => {
+      const { column, comparison, value } = filter;
+      switch (comparison) {
+      case 'maior que':
+        planetsFilter = planetsFilter
+          .filter((planet) => Number(planet[column]) > Number(value));
+        break;
+      case 'menor que':
+        planetsFilter = planetsFilter
+          .filter((planet) => Number(planet[column]) < Number(value));
+        break;
+      case 'igual a':
+        planetsFilter = planetsFilter
+          .filter((planet) => Number(planet[column]) === Number(value));
+        break;
+      default:
+        return planetsFilter;
+      }
+    });
+    setPlanetsProvider(planetsFilter);
+  };
+
+  useEffect(() => {
+    filterPlanetsProvider();
+  }, [filterPlanetsProvider, filters]);
 
   const context = {
     filters,
     isFetching,
     planetsProvider,
-    filteredName,
-    handleChanges,
+    selectFilter,
+    filterName,
     // useFilter,
   };
 
