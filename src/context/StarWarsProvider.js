@@ -10,7 +10,7 @@ function StarWarsProvider({ children }) {
     filterByName: { name: '' },
     filterByNumericValues: {
       column: '',
-      comparsion: '',
+      comparison: '',
       value: '',
     },
   });

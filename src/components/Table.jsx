@@ -7,22 +7,25 @@ function Table() {
     filters, filteringByNumericValues } = data;
   const { filterByName, filterByNumericValues } = filters;
   const { column, comparison, value } = filterByNumericValues;
-  const [myPlanets] = useState([...planets]);
+  const [myPlanets] = useState(planets);
   // teste evaluator
-  const onClickHandler = () => ((column && comparison && value) ? (
-    setPlanets(planets.filter((planet) => {
-      switch (comparison) {
-      case 'biggerThen':
-        return planet[column] > value;
-      case 'smallThat':
-        return planet[column] < value;
-      case 'equal':
-        return planet[column] === value;
-      default:
+  const onClickHandler = () => {
+    if (column !== '' && comparison !== '' && value !== '') {
+      setPlanets(planets.filter((planet) => {
+        if (comparison === 'menor que') {
+          return parseInt(value, 10) > parseInt(planet[column], 10);
+        }
+        if (comparison === 'maior que') {
+          return parseInt(planet[column], 10) > parseInt(value, 10);
+        }
+        if (comparison === 'igual a') {
+          return parseInt(planet[column], 10) === parseInt(value, 10);
+        }
         return planet;
-      }
-    }))) : setPlanets(...myPlanets)
-  );
+      }));
+    }
+    if (value === '') return setPlanets(myPlanets);
+  };
 
   if (isLoading) {
     return <div>teste</div>;
@@ -51,9 +54,9 @@ function Table() {
           data-testid="comparison-filter"
           onChange={ filteringByNumericValues }
         >
-          <option value="biggerThen">maior que</option>
-          <option value="smalThat">menor que</option>
-          <option value="equal">igual a</option>
+          <option value="maior que">maior que</option>
+          <option value="menor que">menor que</option>
+          <option value="igual a">igual a</option>
         </select>
         <input
           name="value"
