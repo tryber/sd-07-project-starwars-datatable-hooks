@@ -7,6 +7,15 @@ const StartWarsProvider = ({ children }) => {
   const [data, setData] = useState([]);
   const [filter, setFilter] = useState([]);
 
+  const filterPlanet = (value) => {
+    if (value === '') {
+      console.log('entrou aqui');
+      setFilter(data);
+    }
+    const isWords = data.filter((acc) => acc.name.includes(value));
+    setFilter(isWords);
+  };
+
   useEffect(() => {
     const getApi = async () => {
       const result = await getWords();
@@ -14,14 +23,6 @@ const StartWarsProvider = ({ children }) => {
     };
     getApi();
   }, []);
-
-  const filterPlanet = (value) => {
-    if (value === '') {
-      setFilter(data);
-    }
-    const isWords = data.filter((acc) => acc.name.includes(value));
-    setFilter(isWords);
-  };
 
   const context = {
     data,

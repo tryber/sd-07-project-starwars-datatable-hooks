@@ -3,6 +3,7 @@ import StarWarsContext from '../Provider/StarWarsContext';
 
 function Filter() {
   const { filter, filterPlanet } = useContext(StarWarsContext);
+
   return (
     <div className="filter">
       <input

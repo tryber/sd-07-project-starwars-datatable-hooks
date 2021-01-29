@@ -4,6 +4,12 @@ import StarWarsContext from '../Provider/StarWarsContext';
 function Table() {
   const { data, filter } = useContext(StarWarsContext);
   const size = 0;
+  const isFilter = () => {
+    if (filter.length === size) {
+      return data;
+    }
+    return filter;
+  };
   const tableHead = (words) => Object.keys(words).filter((acc) => acc !== 'residents');
   return (
     <table>
@@ -18,24 +24,23 @@ function Table() {
       </thead>
       <tbody>
         {
-          filter.length === size
-            ? 'Loadin...' : filter.map((acc) => (
-              <tr key={ acc.name }>
-                <td>{acc.name}</td>
-                <td>{acc.rotation_period}</td>
-                <td>{acc.orbital_period}</td>
-                <td>{acc.diameter}</td>
-                <td>{acc.climate}</td>
-                <td>{acc.gravity}</td>
-                <td>{acc.terrain}</td>
-                <td>{acc.surface_water}</td>
-                <td>{acc.population}</td>
-                <td>{acc.films}</td>
-                <td>{acc.created}</td>
-                <td>{acc.edited}</td>
-                <td>{acc.url}</td>
-              </tr>
-            ))
+          isFilter().map((acc) => (
+            <tr key={ acc.name }>
+              <td>{acc.name}</td>
+              <td>{acc.rotation_period}</td>
+              <td>{acc.orbital_period}</td>
+              <td>{acc.diameter}</td>
+              <td>{acc.climate}</td>
+              <td>{acc.gravity}</td>
+              <td>{acc.terrain}</td>
+              <td>{acc.surface_water}</td>
+              <td>{acc.population}</td>
+              <td>{acc.films}</td>
+              <td>{acc.created}</td>
+              <td>{acc.edited}</td>
+              <td>{acc.url}</td>
+            </tr>
+          ))
         }
       </tbody>
     </table>
