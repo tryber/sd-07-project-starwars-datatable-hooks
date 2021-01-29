@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
-function Table() {  
+function Table() {
   const { arrayPlanets } = useContext(StarWarsContext);
   console.log(arrayPlanets);
   return (

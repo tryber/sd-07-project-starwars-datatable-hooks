@@ -6,15 +6,14 @@ import getPlanets from '../services/API';
 function StarWarsProvider({ children }) {
   const filters = {
     filterByName: {
-      name: ''
+      name: '',
     },
-    filterByNumericValues: [      
-    ]
-  }  
+    filterByNumericValues: [],
+  };
 
   const [data, setData] = useState([]);
   const [arrayPlanets, setArrayPlanets] = useState([]);
-  const [filter, setFilter] = useState(filters);  
+  const [filter, setFilter] = useState(filters);
 
   useEffect(() => {
     async function fetchData() {
