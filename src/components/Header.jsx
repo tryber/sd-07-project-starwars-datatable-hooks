@@ -1,9 +1,13 @@
 import React from 'react';
 import Search from './Search';
+import FilterByNumber from './FilterByNumber';
 
 function Header() {
   return (
-    <Search />
+    <div>
+      <Search />
+      <FilterByNumber />
+    </div>
   );
 }
 

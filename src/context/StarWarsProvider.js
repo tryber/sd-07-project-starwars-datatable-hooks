@@ -8,6 +8,9 @@ function StarWarsProvider({ children }) {
   const [filterData, setFilterData] = useState([]);
   const [searchInput, setSearchInput] = useState('');
   const [filteredPlanets, setFilteredPlanets] = useState([]);
+  const [columnFilter, setColumnFilter] = useState('');
+  const [comparisonFilter, setComparisonFilter] = useState('');
+  const [valueFilter, setValueFilter] = useState();
 
   const dataUpdate = async () => {
     setData(await fetchAPI());
@@ -26,6 +29,12 @@ function StarWarsProvider({ children }) {
     setSearchInput,
     filteredPlanets,
     setFilteredPlanets,
+    columnFilter,
+    setColumnFilter,
+    comparisonFilter,
+    setComparisonFilter,
+    valueFilter,
+    setValueFilter,
   };
 
   return (
