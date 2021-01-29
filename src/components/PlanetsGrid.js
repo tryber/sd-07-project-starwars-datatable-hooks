@@ -6,7 +6,25 @@ function PlanetsGrid() {
     planetsData: { results = [] },
     filter: { filters: { filterByName: { name } } },
     filter: { filters: { filterByNumericValue } },
+    filter: { filters: { order: { column: columnName, sort } } },
   } = useContext(PlanetsContext);
+
+  const orderSort = () => {
+    const ASC = 1;
+    const DESC = -1;
+    if (sort === 'ASC') {
+      results.sort((a, b) => {
+        if (columnName === 'name') return a[columnName] > b[columnName] ? ASC : DESC;
+        return parseInt(a[columnName], 10) > parseInt(b[columnName], 10) ? ASC : DESC;
+      });
+    } else {
+      results.sort((a, b) => {
+        if (columnName === 'name') return a[columnName] > b[columnName] ? DESC : ASC;
+        return parseInt(a[columnName], 10) > parseInt(b[columnName], 10) ? DESC : ASC;
+      });
+    }
+    return true;
+  };
 
   const filtersCheck = (planet) => {
     if (name !== '' && !(planet.name.toLowerCase().includes(name.toLowerCase()))) {
@@ -42,25 +60,29 @@ function PlanetsGrid() {
 
   return (
     <tbody>
-      {results.map((planet, index) => {
-        if (filtersCheck(planet)) {
-          return (
-            <tr key={ `row+${index}` }>
-              {Object.entries(planet).map((object, index2) => {
-                if (object[0] !== 'residents') {
-                  return (
-                    <td key={ `${index}${index2}` }>
-                      { object[1] }
-                    </td>
-                  );
-                }
-                return null;
-              }) }
-            </tr>
-          );
-        }
-        return false;
-      })}
+      {orderSort()
+        ? results.map((planet, index) => {
+          if (filtersCheck(planet)) {
+            return (
+              <tr key={ `row+${index}` }>
+                {Object.entries(planet).map((object, index2) => {
+                  if (object[0] !== 'residents') {
+                    return (
+                      <td
+                        key={ `${index}${index2}` }
+                        data-testid={ `planet-${object[0]}` }
+                      >
+                        { object[1] }
+                      </td>
+                    );
+                  }
+                  return null;
+                }) }
+              </tr>
+            );
+          }
+          return false;
+        }) : null}
     </tbody>
   );
 }

@@ -11,8 +11,8 @@ function PlanetsProvider({ children }) {
       },
       filterByNumericValue: [],
       order: {
-        column: '',
-        sort: '',
+        column: 'name',
+        sort: 'ASC',
       },
     },
   };
@@ -64,12 +64,22 @@ function PlanetsProvider({ children }) {
     });
   };
 
+  const updateOrderAscDesc = (object) => {
+    updateFilter({
+      ...filter,
+      filters: {
+        ...filter.filters,
+        order: object },
+    });
+  };
+
   const planetContext = {
     filter,
     planetsData,
     removeFilterByNumericValue,
     updateFilterByName,
     updateByNumericValue,
+    updateOrderAscDesc,
   };
 
   return (
