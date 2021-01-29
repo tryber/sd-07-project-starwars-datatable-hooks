@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
-import { fetchPlanets } from '../services/api';
+import fetchPlanets from '../services/api';
 import StarWarsContext from './StarWarsContext';
 
 function StarWarsProvider({ children }) {
@@ -33,6 +33,15 @@ function StarWarsProvider({ children }) {
     setDataApi(data);
   }, [data]);
 
+  const resetFilter = () => {
+    setNumeric({
+      column: '',
+      value: '',
+      comparison: '',
+    });
+    setDataApi(data);
+  };
+
   const handleClick = () => {
     const initialColumn = numeric.column;
 
@@ -40,11 +49,11 @@ function StarWarsProvider({ children }) {
       dataApi.filter((item) => {
         switch (numeric.comparison) {
         case 'maior que':
-          return parseFloat(item[initialColumn]) > parseFloat(numeric.value);
+          return Number(item[initialColumn]) > Number(numeric.value);
         case 'menor que':
-          return parseFloat(item[initialColumn]) < parseFloat(numeric.value);
+          return Number(item[initialColumn]) < Number(numeric.value);
         case 'igual a':
-          return parseFloat(item[initialColumn]) === parseFloat(numeric.value);
+          return Number(item[initialColumn]) === Number(numeric.value);
         default:
           return true;
         }
@@ -62,6 +71,7 @@ function StarWarsProvider({ children }) {
     handleClick,
     dataApi,
     setDataApi,
+    resetFilter,
   };
 
   return (
