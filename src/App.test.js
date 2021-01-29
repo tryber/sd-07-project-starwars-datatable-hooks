@@ -253,7 +253,7 @@ describe('Não utilize filtros repetidos', () => {
   beforeAll(mockFetch);
   beforeEach(cleanup);
 
-  it.only('Filtra por população e o remove das opções', async () => {
+  it('Filtra por população e o remove das opções', async () => {
     await act(async () => {
       render(<App />);
     });

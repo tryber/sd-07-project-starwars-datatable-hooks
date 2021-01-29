@@ -10,10 +10,13 @@ function Dashboard() {
     onHandlecolumn,
     onHandleComparison,
     onHandleNumber,
+    filters,
   } = useContext(context);
 
   const [setGetEvent] = useEvent();
 
+  const removeFild = filters.filterByNumericValues.map(({ column }) => column);
+  console.log(removeFild);
   return (
     <section className="settings">
       <input
@@ -31,11 +34,26 @@ function Dashboard() {
           data-testid="column-filter"
           onChange={ onHandlecolumn }
         >
-          <option value="population">population</option>
-          <option value="orbital_period">orbital_period</option>
-          <option value="diameter">diameter</option>
-          <option value="rotation_period">rotation_period</option>
-          <option value="surface_water">surface_water</option>
+          {
+            removeFild.includes('population') ? null
+              : <option value="population">population</option>
+          }
+          {
+            removeFild.includes('orbital_period') ? null
+              : <option value="orbital_period">orbital_period</option>
+          }
+          {
+            removeFild.includes('diameter') ? null
+              : <option value="diameter">diameter</option>
+          }
+          {
+            removeFild.includes('rotation_period') ? null
+              : <option value="rotation_period">rotation_period</option>
+          }
+          {
+            removeFild.includes('surface_water') ? null
+              : <option value="surface_water">surface_water</option>
+          }
         </select>
 
         <select
