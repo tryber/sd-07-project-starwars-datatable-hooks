@@ -9,6 +9,7 @@ class Provider extends Component {
     super(props);
     this.state = {
       columnOptions: {
+        empty: '',
         population: 'population',
         orbital_period: 'orbital_period',
         diameter: 'diameter',
@@ -38,6 +39,7 @@ class Provider extends Component {
     this.handleFilter = this.handleFilter.bind(this);
     this.sendFilter = this.sendFilter.bind(this);
     this.applyFilterData = this.applyFilterData.bind(this);
+    this.deletColumnFilter = this.deletColumnFilter.bind(this);
   }
 
   fetchPlanets() {
@@ -132,6 +134,15 @@ class Provider extends Component {
     this.setState({ filteredData: newData }, () => console.log(newData));
   }
 
+  deletColumnFilter() {
+    const { filters: { filterByNumericValues }, columnOptions } = this.state;
+    const newColumnOptions = { ...columnOptions };
+    filterByNumericValues.forEach(({ column }) => {
+      (delete newColumnOptions[column]);
+    });
+    this.setState({ columnOptions: newColumnOptions });
+  }
+
   render() {
     const contextValue = {
       ...this.state,
@@ -139,6 +150,7 @@ class Provider extends Component {
       handleFilterName: this.handleFilterName,
       handleFilter: this.handleFilter,
       sendFilter: this.sendFilter,
+      deletColumnFilter: this.deletColumnFilter,
     };
 
     const { children } = this.props;

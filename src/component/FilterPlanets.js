@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 
 import StarWarsContext from '../context/StarWarsContext';
 
@@ -8,7 +8,15 @@ function FilterPlanets() {
     handleFilter,
     sendFilter,
     columnOptions,
+    deletColumnFilter,
+    filters: { filterByNumericValues },
   } = useContext(StarWarsContext);
+
+  useEffect(() => {
+    deletColumnFilter();
+    console.log(filterByNumericValues);
+  }, [filterByNumericValues, deletColumnFilter]);
+
   return (
     <form>
       <input
