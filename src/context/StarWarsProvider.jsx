@@ -98,6 +98,7 @@ const StarWarsProvider = ({ children }) => {
     backupPlanets,
     columns,
     comparators,
+    setComparators,
   };
   return (
     <StarWarsContext.Provider value={ context }>
