@@ -2,7 +2,8 @@ import React, { useContext } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 export default function Table() {
-  const { data } = useContext(StarWarsContext);
+  const { data, filters } = useContext(StarWarsContext);
+  const { filterByName: { name } } = filters;
 
   const zero = 0;
 
@@ -30,13 +31,15 @@ export default function Table() {
         </tr>
       </thead>
       <tbody>
-        { data.map((planet) => {
-          const { name, diameter, climate,
+        { data.filter(
+          (planet) => planet.name.toLowerCase().includes(name.toLowerCase()),
+        ).map((planet) => {
+          const { diameter, climate,
             gravity, terrain, population, created, edited, films, url } = planet;
 
           return (
-            <tr key={ name }>
-              <td>{ name }</td>
+            <tr key={ planet.name }>
+              <td>{ planet.name }</td>
               <td>{ planet.rotation_period }</td>
               <td>{ planet.orbital_period }</td>
               <td>{ diameter }</td>
