@@ -74,6 +74,7 @@ function Provider({ children }) {
   const context = {
     filters,
     isFetching,
+    initialData,
     planetsProvider,
     selectFilter,
     filterName,
