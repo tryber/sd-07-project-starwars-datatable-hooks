@@ -3,21 +3,24 @@ import StarWarsContext from '../../context/StarWarsContext';
 import './style.css';
 
 function Filters() {
-  const { setFilter } = useContext(StarWarsContext);
+  const { filters, setFilters, state, setState } = useContext(StarWarsContext);
 
-  function handleChange({ target: { value } }) {
-    const nameFilter = {
-      filters: {
-        filterByName: {
-          name: value,
-        },
-      },
-    };
-    setFilter(nameFilter);
+  function handleChange({ target: { name, value } }) {
+    setFilters({ ...filters, filterByName: { [name]: value } });
+  }
+
+  function handleStateChange({ target: { name, value } }) {
+    setState({ ...state, [name]: value });
   }
 
   function handleClick(event) {
+    const { filterByNumericValues } = filters;
     event.preventDefault();
+    setFilters({
+      ...filters,
+      ...filters.filterByNumericValues,
+      filterByNumericValues: [...filterByNumericValues, state],
+    });
   }
 
   function renderValueInput() {
@@ -25,11 +28,13 @@ function Filters() {
       <label htmlFor="value">
         Valor:
         <input
+          autoComplete="off"
           id="value"
-          type="number"
+          data-testid="value-filter"
+          type="text"
           placeholder="Valor"
           name="value"
-          onChange={ (e) => handleChange(e) }
+          onChange={ (e) => handleStateChange(e) }
           className="input"
         />
       </label>
@@ -38,16 +43,21 @@ function Filters() {
 
   function renderColumnSelector() {
     const columnFilter = [
-      'population',
+      'rotation_period',
       'orbital_period',
       'diameter',
-      'rotation_period',
       'surface_water',
+      'population',
     ];
     return (
       <label htmlFor="column-filter">
         Coluna:
-        <select data-testid="column-filter" className="input">
+        <select
+          data-testid="column-filter"
+          className="input"
+          name="column"
+          onChange={ (e) => handleStateChange(e) }
+        >
           {columnFilter.map((filter, index) => (
             <option key={ index }>{filter}</option>
           ))}
@@ -57,11 +67,16 @@ function Filters() {
   }
 
   function renderComparisonSelector() {
-    const comparisonFilter = ['maior que', 'menor que', 'igual'];
+    const comparisonFilter = ['maior que', 'igual a', 'menor que'];
     return (
       <label htmlFor="comparison-filter">
         Comparação:
-        <select data-testid="comparison-filter" className="input">
+        <select
+          data-testid="comparison-filter"
+          className="input"
+          name="comparison"
+          onChange={ (e) => handleStateChange(e) }
+        >
           {comparisonFilter.map((filter, index) => (
             <option key={ index }>{filter}</option>
           ))}
@@ -75,9 +90,11 @@ function Filters() {
       <label htmlFor="text">
         Name:
         <input
+          autoComplete="off"
           id="text"
           data-testid="name-filter"
           type="text"
+          name="name"
           onChange={ (e) => handleChange(e) }
           placeholder="Text to Filter"
           className="input"
@@ -88,7 +105,12 @@ function Filters() {
 
   function renderButton() {
     return (
-      <button className="button" type="button" onClick={ (e) => handleClick(e) }>
+      <button
+        className="button"
+        data-testid="button-filter"
+        type="button"
+        onClick={ (e) => handleClick(e) }
+      >
         Add Filter
       </button>
     );

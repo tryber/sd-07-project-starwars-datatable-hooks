@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import logo from '../../images/trybe-400x400.jpg';
+import StarWarsContext from '../../context/StarWarsContext';
 import './style.css';
 
 const Header = () => {
+  const { filters } = useContext(StarWarsContext);
   function renderTitle() {
-    return (<h1>StarWars Planets</h1>);
+    return <h1>StarWars Planets</h1>;
   }
 
   function renderBelovedLogo() {
@@ -17,13 +19,18 @@ const Header = () => {
   }
 
   function renderFilters() {
+    const { filterByNumericValues } = filters;
     return (
       <div>
         <p>
           <strong>Active Filters</strong>
         </p>
-        <p>
-          <em>NONE</em>
+        <p className="filters">
+          {filterByNumericValues.map(({ column }, index) => (
+            <button type="button" key={ `${index}btn` }>
+              { `${column} X` }
+            </button>
+          ))}
         </p>
       </div>
     );
