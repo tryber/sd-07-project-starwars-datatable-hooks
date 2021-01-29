@@ -64,7 +64,7 @@ function FilterByNumber() {
         onChange={ handleChange }
         data-testid="column-filter"
       >
-        <option selected>Selecione a coluna</option>
+        <option disabled selected>Selecione a coluna</option>
         { columns.map((item) => (<option value={ item } key={ item }>{ item }</option>)) }
       </select>
       <select
