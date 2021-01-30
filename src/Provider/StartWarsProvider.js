@@ -5,15 +5,45 @@ import getWords from '../Service';
 
 const StartWarsProvider = ({ children }) => {
   const [data, setData] = useState([]);
+
   const [filter, setFilter] = useState([]);
+
+  const [filterColumn, setFilterColumn] = useState('');
+
+  const [filterComparison, setFilterComparison] = useState('');
+
+  const [filterValue, setFilterValue] = useState('');
+
+  let filtered = '';
 
   const filterPlanet = (value) => {
     if (value === '') {
-      console.log('entrou aqui');
       setFilter(data);
     }
     const isWords = data.filter((acc) => acc.name.includes(value));
     setFilter(isWords);
+  };
+
+  const onFilter = () => {
+    switch (filterComparison) {
+    case 'maior que':
+      filtered = data.filter((acc) => acc[filterColumn] > parseInt(filterValue, 10));
+      setFilter(filtered);
+      break;
+
+    case 'menor que':
+      filtered = data.filter((acc) => acc[filterColumn] < parseInt(filterValue, 10));
+      setFilter(filtered);
+      break;
+
+    case 'igual a':
+      filtered = data.filter((acc) => acc[filterColumn] === filterValue);
+      setFilter(filtered);
+      console.log(filterComparison);
+      break;
+    default:
+      console.log('Deu ruim');
+    }
   };
 
   useEffect(() => {
@@ -30,6 +60,11 @@ const StartWarsProvider = ({ children }) => {
     filter,
     setFilter,
     filterPlanet,
+    onFilter,
+    setFilterColumn,
+    setFilterComparison,
+    setFilterValue,
+
   };
 
   return (
