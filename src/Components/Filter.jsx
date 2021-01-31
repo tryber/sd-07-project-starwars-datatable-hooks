@@ -45,7 +45,6 @@ function Filter() {
           className="select-filter"
           onChange={ ({ target }) => setFilterColumn(target.value) }
         >
-          <option> </option>
           {columnOption.map((acc) => (
             <option value={ acc } key={ acc }>
               {acc}

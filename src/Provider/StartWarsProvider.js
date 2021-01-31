@@ -33,7 +33,7 @@ const StartWarsProvider = ({ children }) => {
 
   const filterColunSelect = (colum) => {
     const resultFilter = columnOption.filter((acc) => acc !== colum);
-    setColumnOption(resultFilter.filter((acc) => acc !== ''));
+    setColumnOption(resultFilter);
   };
 
   let filtered = '';
