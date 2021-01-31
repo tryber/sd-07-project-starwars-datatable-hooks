@@ -14,6 +14,27 @@ const StartWarsProvider = ({ children }) => {
 
   const [filterValue, setFilterValue] = useState('');
 
+  const [columnOption, setColumnOption] = useState([
+    'population',
+    'orbital_period',
+    'diameter',
+    'rotation_period',
+    'surface_water',
+  ]);
+
+  const [appFilter, setAppFilter] = useState([]);
+
+  console.log(columnOption);
+  console.log(filterValue);
+  console.log(filterColumn);
+  console.log(filterComparison);
+  console.log(appFilter);
+
+  const filterColunSelect = (colum) => {
+    const resultFilter = columnOption.filter((acc) => acc !== colum);
+    setColumnOption(resultFilter);
+  };
+
   let filtered = '';
 
   const filterPlanet = (value) => {
@@ -24,22 +45,32 @@ const StartWarsProvider = ({ children }) => {
     setFilter(isWords);
   };
 
+  const insertFilter = (value, column, comparioson) => {
+    const appFlitered = [{ value, column, comparioson }];
+    setAppFilter(appFlitered);
+  };
+
   const onFilter = () => {
     switch (filterComparison) {
     case 'maior que':
       filtered = data.filter((acc) => acc[filterColumn] > parseInt(filterValue, 10));
       setFilter(filtered);
+      filterColunSelect(filterColumn);
+      insertFilter(filterValue, filterColumn, filterComparison);
       break;
 
     case 'menor que':
       filtered = data.filter((acc) => acc[filterColumn] < parseInt(filterValue, 10));
       setFilter(filtered);
+      filterColunSelect(filterColumn);
+      insertFilter(filterValue, filterColumn, filterComparison);
       break;
 
     case 'igual a':
       filtered = data.filter((acc) => acc[filterColumn] === filterValue);
       setFilter(filtered);
-      console.log(filterComparison);
+      filterColunSelect(filterColumn);
+      insertFilter(filterValue, filterColumn, filterComparison);
       break;
     default:
       console.log('Deu ruim');
@@ -64,7 +95,11 @@ const StartWarsProvider = ({ children }) => {
     setFilterColumn,
     setFilterComparison,
     setFilterValue,
-
+    filterColumn,
+    filterComparison,
+    filterValue,
+    columnOption,
+    appFilter,
   };
 
   return (
