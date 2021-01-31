@@ -11,7 +11,7 @@ function Provider({ children }) {
       name: '',
     },
     filterByNumericValues: [],
-    order: { column: 'Name', sort: 'ASC' },
+    order: { column: 'name', sort: 'ASC' },
   });
 
   useEffect(() => {

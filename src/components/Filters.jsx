@@ -55,7 +55,6 @@ const Filters = () => {
       portionScaleForNumbers
         .filter((option) => option !== comparison),
     ];
-    console.log(columnOptions);
     setFilter(objToSave);
   };
 

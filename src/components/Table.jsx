@@ -43,7 +43,7 @@ const Table = () => {
     'surface_water',
   ];
   // CONSEGUI COM A AJUDA DO GRANDE RAFAEL GUIMARÃES !!!! MUITO OBRIGADO, RAFA!!!!
-  if (planetsToShow !== undefined) {
+  if (planetsToShow !== undefined && order !== undefined) {
     planetsToShow.sort((a, b) => {
       const numberOne = 1;
       if (numericColumns.includes(order.column)) {
@@ -80,17 +80,24 @@ const Table = () => {
       </thead>
       <tbody>
         { planetsToShow.map((planet) => (
-          <tr key={ planet.name }>
-            {Object.keys(planet).filter((info) => info !== 'residents')
-              .map((info) => (
-                <td
-                  key={ info }
-                >
-                  { planet[info] }
-                </td>
-              ))}
+          <tr
+            key={ planet.name }
+          >
+            <td data-testid="planet-name">{planet.name}</td>
+            <td>{planet.rotation_period}</td>
+            <td>{planet.orbital_period}</td>
+            <td>{planet.diameter}</td>
+            <td>{planet.climate}</td>
+            <td>{planet.gravity}</td>
+            <td>{planet.terrain}</td>
+            <td>{planet.surface_water}</td>
+            <td>{planet.population}</td>
+            <td>{planet.films}</td>
+            <td>{planet.created}</td>
+            <td>{planet.edited}</td>
+            <td>{planet.url}</td>
           </tr>
-        )).sort()}
+        ))}
       </tbody>
     </table>
   );
