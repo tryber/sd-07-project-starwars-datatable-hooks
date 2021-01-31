@@ -29,10 +29,11 @@ const StartWarsProvider = ({ children }) => {
   // console.log(filterColumn);
   // console.log(filterComparison);
   // console.log(appFilter);
+  console.log(columnOption);
 
   const filterColunSelect = (colum) => {
     const resultFilter = columnOption.filter((acc) => acc !== colum);
-    setColumnOption(resultFilter);
+    setColumnOption(resultFilter.filter((acc) => acc !== ''));
   };
 
   let filtered = '';
