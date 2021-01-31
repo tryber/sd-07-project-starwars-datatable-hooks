@@ -5,7 +5,6 @@ const Table = () => {
   const { data: { results },
     filters: { filterByName: { name },
       filterByNumericValues,
-      // filterByNumericValues: { column },
     } } = useContext(StarWarsContext);
 
   let planetsToShow = results;
@@ -27,7 +26,7 @@ const Table = () => {
         .filter((planet) => (
           Number(planet[column]) < Number(value)
         ));
-    } else {
+    } else if (comparison === 'igual a') {
       planetsToShow = planetsToShow
         .filter((planet) => (
           Number(planet[column]) === Number(value)

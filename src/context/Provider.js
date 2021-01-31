@@ -5,6 +5,7 @@ import fetchResult from '../services/fetchStarWarsApi';
 
 function Provider({ children }) {
   const [planets, setPlanets] = useState([]);
+  // const [sortObj, setSortObj] = useState({})
   const [filters, setFilter] = useState({
     filterByName: {
       name: '',

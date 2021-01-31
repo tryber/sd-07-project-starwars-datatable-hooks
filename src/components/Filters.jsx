@@ -2,9 +2,11 @@ import React, { useContext, useState } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 const Filters = () => {
-  const [column, setInput] = useState({});
+  const [column, setColumn] = useState({});
   const [comparison, setComparison] = useState({});
   const [value, setValue] = useState({});
+  const [directionToSort, setSort] = useState({});
+  const [sortColumn, setSortColumn] = useState({});
 
   const {
     setFilter,
@@ -13,6 +15,7 @@ const Filters = () => {
       filterByName,
     },
     data,
+    // setSortObj,
   } = useContext(StarWarsContext);
 
   let columnOptions = [
@@ -52,6 +55,7 @@ const Filters = () => {
       portionScaleForNumbers
         .filter((option) => option !== comparison),
     ];
+    console.log(columnOptions);
     setFilter(objToSave);
   };
 
@@ -66,6 +70,18 @@ const Filters = () => {
     setFilter(objToSave);
   };
 
+  const handleSortPlanets = () => {
+    const objToSaveSort = {
+      filterByName,
+      filterByNumericValues,
+      order: {
+        column: sortColumn,
+        sort: directionToSort,
+      },
+    };
+    setFilter(objToSaveSort);
+  };
+
   return (
     <div>
       <input
@@ -77,9 +93,10 @@ const Filters = () => {
       <select
         name="column"
         data-testid="column-filter"
-        onChange={ (e) => setInput(e.target.value) }
+        onChange={ (e) => setColumn(e.target.value) }
       >
         {columnOptions
+          .filter((option) => !filterByNumericValues.map((filter) => filter.column).includes(option))
           .map((option) => (
             <option
               key={ option }
@@ -107,9 +124,49 @@ const Filters = () => {
       <button
         data-testid="button-filter"
         type="button"
-        onClick={ () => handleClick() }
+        onClick={ handleClick }
       >
         Adicionar filtro
+      </button>
+      <select
+        data-testid="column-sort"
+        name="sort-column"
+        onChange={ (e) => setSortColumn(e.target.value)}
+      >
+        {data.results
+          ? Object.keys(data.results[0])
+            .filter((columnOption) => columnOption !== 'residents')
+            .map((columnOption) => (
+              <option
+                key={ columnOption }
+              >
+                {columnOption}
+              </option>
+            ))
+          : 'loading'}
+      </select>
+      <span>Crescente</span>
+      <input
+        testid="column-sort-input-asc"
+        name="select-sort"
+        type="radio"
+        value="ASC"
+        onClick={ (e) => setSort(e.target.value)}
+      />
+      <span>Decrescente</span>
+      <input
+        data-testid="column-sort-input-desc"
+        name="select-sort"
+        type="radio"
+        value="DESC"
+        onClick={ (e) => setSort(e.target.value) }
+      />
+      <button
+        data-testid="column-sort-button"
+        type="button"
+        onClick={ handleSortPlanets }
+      >
+        Ordenar
       </button>
       {filterByNumericValues.map((filter, index) => (
         <div data-testid="filter" key={ filter.column }>
@@ -128,22 +185,6 @@ const Filters = () => {
           </button>
         </div>
       ))}
-      <select
-        data-testid="column-sort"
-        name="sort-column"
-      >
-        {data.results
-          ? Object.keys(data.results[0])
-            .filter((columnOption) => columnOption !== 'residents')
-            .map((columnOption) => (
-              <option
-                key={ columnOption }
-              >
-                {columnOption}
-              </option>
-            ))
-          : 'loading'}
-      </select>
     </div>
   );
 };
