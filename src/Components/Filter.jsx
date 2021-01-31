@@ -13,8 +13,9 @@ function Filter() {
     appFilter,
   } = useContext(StarWarsContext);
 
+  const size = 0;
   const showFilter = () => {
-    if (appFilter.length > 0) {
+    if (appFilter.length > size) {
       return appFilter.map((acc) => (
         <div key={ acc.value }>
           {acc.value}

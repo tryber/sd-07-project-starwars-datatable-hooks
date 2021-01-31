@@ -24,11 +24,11 @@ const StartWarsProvider = ({ children }) => {
 
   const [appFilter, setAppFilter] = useState([]);
 
-  console.log(columnOption);
-  console.log(filterValue);
-  console.log(filterColumn);
-  console.log(filterComparison);
-  console.log(appFilter);
+  // console.log(columnOption);
+  // console.log(filterValue);
+  // console.log(filterColumn);
+  // console.log(filterComparison);
+  // console.log(appFilter);
 
   const filterColunSelect = (colum) => {
     const resultFilter = columnOption.filter((acc) => acc !== colum);
