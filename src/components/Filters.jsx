@@ -6,7 +6,14 @@ const Filters = () => {
   const [comparison, setComparison] = useState({});
   const [value, setValue] = useState({});
 
-  const { setFilter, filters: { filterByNumericValues, filterByName } } = useContext(StarWarsContext);
+  const {
+    setFilter,
+    filters: {
+      filterByNumericValues,
+      filterByName,
+    },
+    data,
+  } = useContext(StarWarsContext);
 
   let columnOptions = [
     'population',
@@ -17,9 +24,9 @@ const Filters = () => {
   ];
   let portionScaleForNumbers = ['maior que', 'menor que', 'igual a'];
 
-  const handleTypingNameInput = ({ target: { value, name } }) => {
+  const handleTypingNameInput = ({ target }) => {
     const objToSave = {
-      filterByName: { name: value },
+      filterByName: { name: target.value },
       filterByNumericValues: [...filterByNumericValues],
     };
     setFilter(objToSave);
@@ -28,17 +35,33 @@ const Filters = () => {
   const handleClick = () => {
     const objToSave = {
       filterByName,
-      filterByNumericValues: [...filterByNumericValues, { column, comparison, value }],
+      filterByNumericValues: [
+        ...filterByNumericValues,
+        {
+          column,
+          comparison,
+          value,
+        },
+      ],
     };
-    columnOptions = [columnOptions.filter((option) => option !== column)];
-    portionScaleForNumbers = [portionScaleForNumbers.filter((option) => option !== comparison)];
+    columnOptions = [
+      columnOptions
+        .filter((option) => option !== column),
+    ];
+    portionScaleForNumbers = [
+      portionScaleForNumbers
+        .filter((option) => option !== comparison),
+    ];
     setFilter(objToSave);
   };
 
   const removeFilter = (index) => {
     const objToSave = {
       filterByName,
-      filterByNumericValues: [...filterByNumericValues.filter((filter) => filter !== filterByNumericValues[index])],
+      filterByNumericValues: [
+        ...filterByNumericValues
+          .filter((filter) => filter !== filterByNumericValues[index]),
+      ],
     };
     setFilter(objToSave);
   };
@@ -51,16 +74,43 @@ const Filters = () => {
         onChange={ handleTypingNameInput }
         type="text"
       />
-      <select name="column" id="" data-testid="column-filter" onChange={ (e) => setInput(e.target.value) }>
+      <select
+        name="column"
+        data-testid="column-filter"
+        onChange={ (e) => setInput(e.target.value) }
+      >
         {columnOptions
-          .map((option) => <option key={ option } value={ option }>{option}</option>)}
+          .map((option) => (
+            <option
+              key={ option }
+              value={ option }
+            >
+              {option}
+            </option>
+          ))}
       </select>
-      <select name="comparison" id="" data-testid="comparison-filter" onChange={ (e) => setComparison(e.target.value) }>
+      <select
+        name="comparison"
+        data-testid="comparison-filter"
+        onChange={ (e) => setComparison(e.target.value) }
+      >
         {portionScaleForNumbers
           .map((option) => <option key={ option } value={ option }>{option}</option>)}
       </select>
-      <input type="number" name="value" id="" data-testid="value-filter" onChange={ (e) => setValue(e.target.value) } />
-      <button data-testid="button-filter" type="button" onClick={ () => handleClick() }>Adicionar filtro</button>
+      <input
+        type="number"
+        name="value"
+        id=""
+        data-testid="value-filter"
+        onChange={ (e) => setValue(e.target.value) }
+      />
+      <button
+        data-testid="button-filter"
+        type="button"
+        onClick={ () => handleClick() }
+      >
+        Adicionar filtro
+      </button>
       {filterByNumericValues.map((filter, index) => (
         <div data-testid="filter" key={ filter.column }>
           <span>
@@ -70,9 +120,30 @@ const Filters = () => {
             {' '}
             {filter.value}
           </span>
-          <button onClick={ () => removeFilter(index) }>x</button>
+          <button
+            type="button"
+            onClick={ () => removeFilter(index) }
+          >
+            x
+          </button>
         </div>
       ))}
+      <select
+        data-testid="column-sort"
+        name="sort-column"
+      >
+        {data.results
+          ? Object.keys(data.results[0])
+            .filter((columnOption) => columnOption !== 'residents')
+            .map((columnOption) => (
+              <option
+                key={ columnOption }
+              >
+                {columnOption}
+              </option>
+            ))
+          : 'loading'}
+      </select>
     </div>
   );
 };

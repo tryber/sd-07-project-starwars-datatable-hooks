@@ -5,6 +5,7 @@ const Table = () => {
   const { data: { results },
     filters: { filterByName: { name },
       filterByNumericValues,
+      // filterByNumericValues: { column },
     } } = useContext(StarWarsContext);
 
   let planetsToShow = results;
@@ -38,19 +39,11 @@ const Table = () => {
     <table>
       <thead>
         <tr>
-          <th>name</th>
-          <th>rotation_period</th>
-          <th>orbital_period</th>
-          <th>diameter</th>
-          <th>climate</th>
-          <th>gravity</th>
-          <th>terrain</th>
-          <th>surface_water</th>
-          <th>population</th>
-          <th>films</th>
-          <th>created</th>
-          <th>edited</th>
-          <th>url</th>
+          {results
+            ? Object.keys(results[0])
+              .filter((column) => column !== 'residents')
+              .map((column) => <td key={ column }>{column}</td>)
+            : 'loading'}
         </tr>
       </thead>
       <tbody>

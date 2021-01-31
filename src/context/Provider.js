@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import propTypes from 'prop-types';
 import StarWarsContext from './StarWarsContext';
 import fetchResult from '../services/fetchStarWarsApi';
 
@@ -9,6 +10,7 @@ function Provider({ children }) {
       name: '',
     },
     filterByNumericValues: [],
+    order: { column: 'Name', sort: 'ASC' },
   });
 
   useEffect(() => {
@@ -34,3 +36,7 @@ function Provider({ children }) {
 }
 
 export default Provider;
+
+Provider.propTypes = {
+  children: propTypes.arrayOf(propTypes.object).isRequired,
+};
