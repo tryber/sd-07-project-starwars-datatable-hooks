@@ -5,6 +5,7 @@ const Table = () => {
   const { data: { results },
     filters: { filterByName: { name },
       filterByNumericValues,
+      order,
     } } = useContext(StarWarsContext);
 
   let planetsToShow = results;
@@ -33,6 +34,30 @@ const Table = () => {
         ));
     }
   });
+
+  const numericColumns = [
+    'population',
+    'orbital_period',
+    'diameter',
+    'rotation_period',
+    'surface_water',
+  ];
+  // CONSEGUI COM A AJUDA DO GRANDE RAFAEL GUIMARÃES !!!! MUITO OBRIGADO, RAFA!!!!
+  if (planetsToShow !== undefined) {
+    planetsToShow.sort((a, b) => {
+      const numberOne = 1;
+      if (numericColumns.includes(order.column)) {
+        if (order.sort === 'ASC') {
+          return Number(a[order.column]) - Number(b[order.column]);
+        }
+        return Number(b[order.column]) - Number(a[order.column]);
+      }
+      if (order.sort === 'ASC') {
+        return (a[order.column] > b[order.column] ? numberOne : -numberOne);
+      }
+      return (a[order.column] > b[order.column] ? -numberOne : numberOne);
+    });
+  }
 
   const returnPlanetsList = () => (
     <table>

@@ -81,6 +81,7 @@ const Filters = () => {
     };
     setFilter(objToSaveSort);
   };
+  // CONSEGUI COM A AJUDA DO GRANDE RAFAEL GUIMARÃES !!!! MUITO OBRIGADO, RAFA!!!!
 
   return (
     <div>
