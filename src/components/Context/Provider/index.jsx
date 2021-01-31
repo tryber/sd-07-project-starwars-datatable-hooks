@@ -5,12 +5,21 @@ import StarWarsContext from '../StarWarsContext';
 
 function Provider({ children }) {
   const [data, setData] = useState([]);
+  const [planetList, setPlanetList] = useState([]);
   const [filters, setFilters] = useState({
     filterByName: {
       name: '',
     },
+    filterByNumericValues: [
+      { column: '',
+        comparison: '',
+        value: '' },
+    ],
   });
-  const [search, setSearch] = useState('');
+  const [paramColumn, setParamColumn] = useState('');
+  const [paramComparison, setParamComparison] = useState('');
+  const [paramNumber, setParamNumber] = useState('');
+  const [filterData, setFilterData] = useState(data);
 
   useEffect(() => {
     const dataAPI = async () => {
@@ -19,6 +28,12 @@ function Provider({ children }) {
     };
     dataAPI();
   }, []);
+
+  const planetListName = filterData ? planetList
+    .filter((planet) => planet.name.toLowerCase()
+      .includes(filters.filterByName.name.toLowerCase())) : filterData
+    .filter((planet) => planet.name.toLowerCase()
+      .includes(filters.filterByName.name.toLowerCase()));
 
   const handleFilterPlanets = ({ target: { value } }) => {
     setFilters({
@@ -29,21 +44,57 @@ function Provider({ children }) {
     });
   };
 
-  // useEffect(() => {
-  //   planetListName(
-  //     [...planetList].filter((planet) => planet.name
-  //       .toLowerCase().includes(filters.filterByName.name
-  //         .toLowerCase())),
-  //   );
-  // }, [filters.filterByName.name, planetList]);
+  const handleFiltersByColumn = ({ target: { value } }) => {
+    setParamColumn(value);
+  };
+
+  const handleFiltersByComparison = ({ target: { value } }) => {
+    setParamComparison(value);
+  };
+
+  const handleFiltersByNumber = ({ target: { value } }) => {
+    setParamNumber(value);
+  };
+
+  const searchButton = () => {
+    if (paramComparison !== '' && paramColumn !== '' && paramNumber !== '') {
+      switch (paramComparison) {
+      case 'maior que':
+        setFilterData(planetListName
+          .filter((planet) => Number(planet[paramColumn]) > Number(paramNumber)));
+        break;
+      case 'menor que':
+        setFilterData(planetListName
+          .filter((planet) => Number(planet[paramColumn]) < Number(paramNumber)));
+        break;
+      case 'igual a':
+        setFilterData(planetListName
+          .filter((planet) => Number(planet[paramColumn]) === Number(paramNumber)));
+        break;
+      default:
+        setFilterData(planetListName);
+      }
+    } else setFilterData(planetListName);
+  };
 
   const context = {
     data,
     filters,
     handleFilterPlanets,
-    search,
-    setSearch,
-    // handleSearchNamePlanet,
+    paramNumber,
+    setParamNumber,
+    paramColumn,
+    setParamColumn,
+    paramComparison,
+    setParamComparison,
+    handleFiltersByColumn,
+    handleFiltersByComparison,
+    handleFiltersByNumber,
+    searchButton,
+    filterData,
+    planetList,
+    setPlanetList,
+    planetListName,
   };
 
   return (
