@@ -24,16 +24,24 @@ const StartWarsProvider = ({ children }) => {
 
   const [appFilter, setAppFilter] = useState([]);
 
-  // console.log(columnOption);
   // console.log(filterValue);
   // console.log(filterColumn);
   // console.log(filterComparison);
-  // console.log(appFilter);
-  console.log(columnOption);
+
+  // console.log(columnOption);
 
   const filterColunSelect = (colum) => {
     const resultFilter = columnOption.filter((acc) => acc !== colum);
     setColumnOption(resultFilter);
+  };
+
+  const removeFilter = (target) => {
+    const restoreOption = columnOption;
+    restoreOption.push(appFilter[0].column);
+    const removeAppFilter = appFilter.filter((acc) => acc.column !== target);
+    setColumnOption(restoreOption);
+    setAppFilter(removeAppFilter);
+    setFilter(data);
   };
 
   let filtered = '';
@@ -47,8 +55,8 @@ const StartWarsProvider = ({ children }) => {
   };
 
   const insertFilter = (value, column, comparioson) => {
-    const appFlitered = [{ value, column, comparioson }];
-    setAppFilter(appFlitered);
+    const appFiltered = { value, column, comparioson };
+    setAppFilter([...appFilter, appFiltered]);
   };
 
   const onFilter = () => {
@@ -101,6 +109,7 @@ const StartWarsProvider = ({ children }) => {
     filterValue,
     columnOption,
     appFilter,
+    removeFilter,
   };
 
   return (

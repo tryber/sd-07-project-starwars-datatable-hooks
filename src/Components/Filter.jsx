@@ -11,18 +11,27 @@ function Filter() {
     setFilterColumn,
     columnOption,
     appFilter,
+    removeFilter,
   } = useContext(StarWarsContext);
 
   const size = 0;
   const showFilter = () => {
     if (appFilter.length > size) {
       return appFilter.map((acc) => (
-        <div key={ acc.value }>
+        <div data-testid="filter" key={ acc.column }>
           {acc.value}
           |
           {acc.column}
           |
           {acc.comparioson}
+          <button
+            type="button"
+            onClick={ ({ target }) => removeFilter(target.name) }
+            className="remove"
+            name={ acc.column }
+          >
+            x
+          </button>
         </div>
       ));
     }
