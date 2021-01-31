@@ -2,8 +2,33 @@ import React, { useContext } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 const Table = () => {
-  const { data } = useContext(StarWarsContext);
+  const { data: { results }, filters: { filterByName: { name }, filterByNumericValues } } = useContext(StarWarsContext);
 
+  let planetsToShow = results;
+
+  if (name) {
+    planetsToShow = results.filter((planet) => planet
+      .name
+      .toUpperCase()
+      .includes(name.toUpperCase()));
+  } else if (filterByNumericValues.length !== 0) {
+    if (filterByNumericValues[0].comparison === 'maior que') {
+      planetsToShow = results
+        .filter((planet) => (
+          Number(planet[filterByNumericValues[0].column]) > filterByNumericValues[0].value
+        ));
+    } else if (filterByNumericValues[0].comparison === 'menor que') {
+      planetsToShow = results
+        .filter((planet) => (
+          Number(planet[filterByNumericValues[0].column]) < Number(filterByNumericValues[0].value)
+        ));
+    } else {
+      planetsToShow = results
+        .filter((planet) => (
+          Number(planet[filterByNumericValues[0].column]) === Number(filterByNumericValues[0].value)
+        ));
+    }
+  }
   const returnPlanetsList = () => (
     <table>
       <thead>
@@ -24,12 +49,12 @@ const Table = () => {
         </tr>
       </thead>
       <tbody>
-        {data.results.map((planet) => (
+        { planetsToShow.map((planet) => (
           <tr key={ planet.name }>
             {Object.keys(planet).filter((info) => info !== 'residents')
               .map((info) => (
                 <td
-                  key={ planet.info }
+                  key={ info }
                 >
                   { planet[info] }
                 </td>
@@ -41,7 +66,7 @@ const Table = () => {
   );
   return (
     <div>
-      {data.results === undefined ? 'loading'
+      {results === undefined ? 'loading'
         : returnPlanetsList()}
     </div>
   );

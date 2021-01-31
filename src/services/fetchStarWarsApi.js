@@ -1,5 +1,3 @@
-const fetch = require('node-fetch');
-
 const fetchApi = async () => {
   try {
     const fetchResult = await fetch(
