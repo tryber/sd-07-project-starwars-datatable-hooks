@@ -96,7 +96,8 @@ const Filters = () => {
         onChange={ (e) => setColumn(e.target.value) }
       >
         {columnOptions
-          .filter((option) => !filterByNumericValues.map((filter) => filter.column).includes(option))
+          .filter((option) => !filterByNumericValues
+            .map((filter) => filter.column).includes(option))
           .map((option) => (
             <option
               key={ option }
@@ -131,7 +132,7 @@ const Filters = () => {
       <select
         data-testid="column-sort"
         name="sort-column"
-        onChange={ (e) => setSortColumn(e.target.value)}
+        onChange={ (e) => setSortColumn(e.target.value) }
       >
         {data.results
           ? Object.keys(data.results[0])
@@ -151,7 +152,7 @@ const Filters = () => {
         name="select-sort"
         type="radio"
         value="ASC"
-        onClick={ (e) => setSort(e.target.value)}
+        onClick={ (e) => setSort(e.target.value) }
       />
       <span>Decrescente</span>
       <input
