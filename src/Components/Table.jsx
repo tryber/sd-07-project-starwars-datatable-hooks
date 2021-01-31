@@ -26,7 +26,7 @@ function Table() {
         {
           isFilter().map((acc) => (
             <tr key={ acc.name }>
-              <td>{acc.name}</td>
+              <td data-testid="planet-name">{acc.name}</td>
               <td>{acc.rotation_period}</td>
               <td>{acc.orbital_period}</td>
               <td>{acc.diameter}</td>

@@ -30,8 +30,8 @@ body {
   background-color: #5D8EDC;
   display: flex;
   height: auto;
-  margin-right: 20px;
   margin-bottom: 10px;
+  margin-right: 20px;
   padding-left: 15px;
   padding-top: 15px;
   padding-bottom: 10px;
@@ -107,3 +107,10 @@ body {
   color: white;
   transition-duration: 1.0s;
 }
+
+.form-order {
+  color: white;
+  margin-left: 10px;
+  margin-top:10px; 
+}
+

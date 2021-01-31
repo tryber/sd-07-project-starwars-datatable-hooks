@@ -1,7 +1,17 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import StarWarsContext from '../Provider/StarWarsContext';
 
 function Filter() {
+  const [ordenar, setInt] = useState({
+    sort: '',
+    column: '',
+  });
+
+  const setValue = (prevState, target, interator) => ({
+    ...prevState,
+    [interator]: target.value,
+  });
+
   const {
     filter,
     filterPlanet,
@@ -12,29 +22,46 @@ function Filter() {
     columnOption,
     appFilter,
     removeFilter,
+    data,
+    byOrder,
+    // setOrder,
   } = useContext(StarWarsContext);
 
+  // const { column, sort } = order;
+
+  // console.log(order);
   const size = 0;
   const showFilter = () => {
     if (appFilter.length > size) {
       return appFilter.map((acc) => (
-        <div data-testid="filter" key={ acc.column }>
-          {acc.value}
-          |
-          {acc.column}
-          |
-          {acc.comparioson}
-          <button
-            type="button"
-            onClick={ ({ target }) => removeFilter(target.name) }
-            className="remove"
-            name={ acc.column }
-          >
-            x
-          </button>
+        <div className="app-filter" key={ acc.column }>
+          <div data-testid="filter">
+            {acc.value}
+            |
+            {acc.column}
+            |
+            {acc.comparioson}
+            <button
+              type="button"
+              onClick={ ({ target }) => removeFilter(target.name) }
+              className="remove"
+              name={ acc.column }
+            >
+              x
+            </button>
+          </div>
         </div>
       ));
     }
+  };
+
+  const tableHead = (words) => Object.keys(words).filter((acc) => acc !== 'residents');
+
+  const getOptions = () => {
+    if (data.length === size) {
+      return 'Loading ...';
+    }
+    return tableHead(data[0]).map((acc) => <option key={ acc }>{acc}</option>);
   };
 
   return (
@@ -92,8 +119,50 @@ function Filter() {
         >
           Filtrar
         </button>
+        <div className="form-order">
+          Ordenar por:
+          <select
+            data-testid="column-sort"
+            className="select-filter"
+            onChange={ ({ target }) => setInt(setValue(ordenar, target, 'column')) }
+          >
+            {getOptions()}
+          </select>
+          <label htmlFor="ascendent">
+            <input
+              type="radio"
+              name="order"
+              value="ASC"
+              id="ascendent"
+              data-testid="column-sort-input-asc"
+              onChange={ ({ target }) => setInt(setValue(ordenar, target, 'sort')) }
+            />
+            ASC
+          </label>
+          <label htmlFor="descendente">
+            <input
+              type="radio"
+              name="order"
+              value="DESC"
+              id="descendente"
+              data-testid="column-sort-input-desc"
+              onChange={ ({ target }) => setInt(setValue(ordenar, target, 'sort')) }
+            />
+            DESC
+          </label>
+          <button
+            type="button"
+            data-testid="column-sort-button"
+            onClick={ () => byOrder(ordenar) }
+            className="btn-filter"
+          >
+            {' '}
+            Ordenar
+            {' '}
+          </button>
+        </div>
       </form>
-      <div className="app-filter">{showFilter()}</div>
+      {showFilter()}
     </div>
   );
 }
