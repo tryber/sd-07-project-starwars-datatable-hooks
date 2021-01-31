@@ -29,12 +29,21 @@ function Provider({ children }) {
     });
   };
 
+  // useEffect(() => {
+  //   planetListName(
+  //     [...planetList].filter((planet) => planet.name
+  //       .toLowerCase().includes(filters.filterByName.name
+  //         .toLowerCase())),
+  //   );
+  // }, [filters.filterByName.name, planetList]);
+
   const context = {
     data,
     filters,
     handleFilterPlanets,
     search,
     setSearch,
+    // handleSearchNamePlanet,
   };
 
   return (
