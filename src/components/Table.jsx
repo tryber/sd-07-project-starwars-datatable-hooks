@@ -2,7 +2,10 @@ import React, { useContext } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 const Table = () => {
-  const { data: { results }, filters: { filterByName: { name }, filterByNumericValues } } = useContext(StarWarsContext);
+  const { data: { results },
+    filters: { filterByName: { name },
+      filterByNumericValues,
+    } } = useContext(StarWarsContext);
 
   let planetsToShow = results;
 
@@ -11,24 +14,26 @@ const Table = () => {
       .name
       .toUpperCase()
       .includes(name.toUpperCase()));
-  } else if (filterByNumericValues.length !== 0) {
-    if (filterByNumericValues[0].comparison === 'maior que') {
-      planetsToShow = results
+  }
+  filterByNumericValues.forEach(({ column, comparison, value }) => {
+    if (comparison === 'maior que') {
+      planetsToShow = planetsToShow
         .filter((planet) => (
-          Number(planet[filterByNumericValues[0].column]) > filterByNumericValues[0].value
+          Number(planet[column]) > Number(value)
         ));
-    } else if (filterByNumericValues[0].comparison === 'menor que') {
-      planetsToShow = results
+    } else if (comparison === 'menor que') {
+      planetsToShow = planetsToShow
         .filter((planet) => (
-          Number(planet[filterByNumericValues[0].column]) < Number(filterByNumericValues[0].value)
+          Number(planet[column]) < Number(value)
         ));
     } else {
-      planetsToShow = results
+      planetsToShow = planetsToShow
         .filter((planet) => (
-          Number(planet[filterByNumericValues[0].column]) === Number(filterByNumericValues[0].value)
+          Number(planet[column]) === Number(value)
         ));
     }
-  }
+  });
+
   const returnPlanetsList = () => (
     <table>
       <thead>

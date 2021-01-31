@@ -30,8 +30,8 @@ const Filters = () => {
       filterByName,
       filterByNumericValues: [...filterByNumericValues, { column, comparison, value }],
     };
-    columnOptions = [columnOptions.filter((option) => option !== column)]
-    portionScaleForNumbers = [portionScaleForNumbers.filter((option) => option !== comparison)]
+    columnOptions = [columnOptions.filter((option) => option !== column)];
+    portionScaleForNumbers = [portionScaleForNumbers.filter((option) => option !== comparison)];
     setFilter(objToSave);
   };
 
@@ -40,8 +40,8 @@ const Filters = () => {
       filterByName,
       filterByNumericValues: [...filterByNumericValues.filter((filter) => filter !== filterByNumericValues[index])],
     };
-    setFilter(objToSave)
-  }
+    setFilter(objToSave);
+  };
 
   return (
     <div>
@@ -61,14 +61,18 @@ const Filters = () => {
       </select>
       <input type="number" name="value" id="" data-testid="value-filter" onChange={ (e) => setValue(e.target.value) } />
       <button data-testid="button-filter" type="button" onClick={ () => handleClick() }>Adicionar filtro</button>
-      {filterByNumericValues.map((filter, index) => {
-        return(
-          <div data-testid='filter' key={filter.column}>
-            <span>{filter.column}{' '}{filter.comparison}{' '}{filter.value}</span>
-            <button onClick={() => removeFilter(index)}>x</button>
-          </div>
-        )
-      })}
+      {filterByNumericValues.map((filter, index) => (
+        <div data-testid="filter" key={ filter.column }>
+          <span>
+            {filter.column}
+            {' '}
+            {filter.comparison}
+            {' '}
+            {filter.value}
+          </span>
+          <button onClick={ () => removeFilter(index) }>x</button>
+        </div>
+      ))}
     </div>
   );
 };
