@@ -11,6 +11,10 @@ function Provider({ children }) {
       name: '',
     },
     filterByNumericValues: [],
+    order: {
+      column: '',
+      sort: '',
+    },
   });
   const [paramColumn, setParamColumn] = useState('');
   const [paramComparison, setParamComparison] = useState('');
@@ -18,9 +22,17 @@ function Provider({ children }) {
   const [filterData, setFilterData] = useState(data);
 
   useEffect(() => {
+    const orderNumberAsc = 1;
+    const orderNumberDesc = -1;
+    const orderNumberNull = 0;
     const dataAPI = async () => {
       const { results } = await getPlanets();
-      setData(results);
+      const resultsOrdened = results.sort((a, b) => {
+        if (a.name > b.name) return orderNumberAsc;
+        if (a.name < b.name) return orderNumberDesc;
+        return orderNumberNull;
+      });
+      setData(resultsOrdened);
     };
     dataAPI();
   }, []);
@@ -92,6 +104,37 @@ function Provider({ children }) {
     setFilterData(data);
   };
 
+  const handleOrderBySelect = ({ target: { value } }) => {
+    setFilters({
+      ...filters,
+      order: {
+        ...filters.order,
+        column: value,
+      },
+    });
+  };
+
+  const getOrder = ({ target: { value } }) => {
+    setFilters({
+      ...filters,
+      order: {
+        ...filters.order,
+        sort: value,
+      },
+    });
+  };
+
+  const orderPlanets = () => {
+    const { order: { column } } = filters;
+    if (filters.order.sort === 'ASC') {
+      const listASC = planetListName.sort((a, b) => a[column] - b[column]);
+      setFilterData(listASC);
+    } else {
+      const listDESC = planetListName.sort((a, b) => b[column] - a[column]);
+      setFilterData(listDESC);
+    }
+  };
+
   const context = {
     data,
     filters,
@@ -111,6 +154,9 @@ function Provider({ children }) {
     setPlanetList,
     planetListName,
     deleteParam,
+    handleOrderBySelect,
+    getOrder,
+    orderPlanets,
   };
 
   return (

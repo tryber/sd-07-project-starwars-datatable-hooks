@@ -9,6 +9,9 @@ function SearchBar() {
     handleFiltersByNumber,
     searchButton,
     deleteParam,
+    handleOrderBySelect,
+    getOrder,
+    orderPlanets,
     filters: { filterByNumericValues,
     },
   } = useContext(StarWarsContext);
@@ -111,7 +114,7 @@ function SearchBar() {
           </div>)) : <div />}
       <select
         data-testid="column-sort"
-        // onChange={  }
+        onChange={ handleOrderBySelect }
       >
         {dropOrderOptions.map((optionsOrder) => (
           <option
@@ -124,13 +127,24 @@ function SearchBar() {
       <input
         type="radio"
         data-testid="column-sort-input-asc"
+        value="ASC"
+        onClick={ getOrder }
       />
       ASC
       <input
         type="radio"
         data-testid="column-sort-input-desc"
+        value="DESC"
+        onClick={ getOrder }
       />
       DESC
+      <button
+        data-testid="column-sort-button"
+        type="button"
+        onClick={ orderPlanets }
+      >
+        sort
+      </button>
     </div>
   );
 }
