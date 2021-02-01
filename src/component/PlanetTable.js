@@ -4,7 +4,10 @@ import StarWarsContext from '../context/starWarsContext';
 
 function PlanetTable() {
   const { filterPlanets } = useContext(StarWarsContext);
-  console.log(filterPlanets);
+  // console.log(filterPlanets);
+  if (filterPlanets.length === 0) {
+    return <h1>loading</h1>
+  } 
   return (
     <div>
       <p>Planetas</p>
@@ -27,21 +30,21 @@ function PlanetTable() {
           </tr>
         </thead>
         <tbody>
-          {filterPlanets.map((filterPlanets) => (
-            <tr key={filterPlanets.name}>
-              <td >{filterPlanets.name}</td>
-              <td >{filterPlanets.rotation_period}</td>
-              <td >{filterPlanets.orbital_period}</td>
-              <td >{filterPlanets.diameter}</td>
-              <td >{filterPlanets.climate}</td>
-              <td >{filterPlanets.gravity}</td>
-              <td >{filterPlanets.terrain}</td>
-              <td >{filterPlanets.surface_water}</td>
-              <td >{filterPlanets.population}</td>
-              <td >{filterPlanets.films}</td>
-              <td >{filterPlanets.created}</td>
-              <td >{filterPlanets.edited}</td>
-              <td >{filterPlanets.url}</td>
+          {filterPlanets.map((planet) => (
+            <tr key={planet.name}>
+              <td >{planet.name}</td>
+              <td >{planet.rotation_period}</td>
+              <td >{planet.orbital_period}</td>
+              <td >{planet.diameter}</td>
+              <td >{planet.climate}</td>
+              <td >{planet.gravity}</td>
+              <td >{planet.terrain}</td>
+              <td >{planet.surface_water}</td>
+              <td >{planet.population}</td>
+              <td >{planet.films}</td>
+              <td >{planet.created}</td>
+              <td >{planet.edited}</td>
+              <td >{planet.url}</td>
             </tr>
           ))}
         </tbody>

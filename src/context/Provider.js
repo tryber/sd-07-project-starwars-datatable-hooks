@@ -4,11 +4,22 @@ import StarWarsContext from './starWarsContext';
 import fetchPlanets from '../services/starWarsAPI';
 
 function StarWarsProvider({ children }) {
-  const [planets, setPlanets] = useState([]);
   const [filterPlanets, setFilterPlanets] = useState([]);
+  const [planets, setPlanets] = useState([]);
   const [filters, setFilters] = useState();
   const [ paramArray , setParamArray ] = useState([]);
   
+  useEffect(() => {
+    const getPlanets = async () => {
+      const { results } = await fetchPlanets();
+      // console.log(results);
+      results.forEach((item) => delete item.residents);
+      setFilterPlanets(results);
+      setPlanets(results);
+    };
+    getPlanets();
+  }, []);
+
   const contextValueSW = {
     planets,
     setPlanets,
@@ -22,17 +33,6 @@ function StarWarsProvider({ children }) {
         filterByNumericValues: paramArray,
     }
   };
-
-  useEffect(() => {
-    const getPlanets = async () => {
-      const { results } = await fetchPlanets();
-      // console.log(results);
-      results.forEach((item) => delete item.residents);
-      setPlanets(results);
-      setFilterPlanets(results);
-    };
-    getPlanets();
-  }, []);
 
   return (
     <main>

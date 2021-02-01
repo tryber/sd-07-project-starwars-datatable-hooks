@@ -12,9 +12,9 @@ function SearchBar() {
     setParamArray,
   } = useContext(StarWarsContext);
 
-  const [column, setColumn] = useState();
+  const [column, setColumn] = useState('population');
   const [comparison, setComparison] = useState('maior que');
-  const [numberValue, setNumber] = useState();
+  const [numberValue, setNumberValue] = useState();
 
   const handleFilterName = (value) => {
     setFilterPlanets(
@@ -47,7 +47,7 @@ function SearchBar() {
         break
       case 'igual a':
         setFilterPlanets(planets.filter((planet) => (
-        parseFloat(planet[column]) === parseFloat(numberValue))));
+        Number(planet[column]) === Number(numberValue))));
         break
       default:
         setFilterPlanets(planets);
@@ -65,7 +65,7 @@ function SearchBar() {
   };
 
   const handleChangeNumber = ({ target: { value } }) => {
-    setNumber(value);
+    setNumberValue(value);
   };
 
   const filterOptions = [
