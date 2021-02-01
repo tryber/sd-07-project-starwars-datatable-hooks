@@ -17,6 +17,22 @@ function SearchBar() {
     'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water',
   ];
 
+  const dropOrderOptions = [
+    'name',
+    'rotation_period',
+    'orbital_period',
+    'diameter',
+    'climate',
+    'gravity',
+    'terrain',
+    'surface_water',
+    'population',
+    'films',
+    'created',
+    'edited',
+    'url',
+  ];
+
   return (
     <div>
       <input
@@ -93,6 +109,28 @@ function SearchBar() {
               X
             </button>
           </div>)) : <div />}
+      <select
+        data-testid="column-sort"
+        // onChange={  }
+      >
+        {dropOrderOptions.map((optionsOrder) => (
+          <option
+            key={ optionsOrder }
+          >
+            { optionsOrder }
+          </option>
+        ))}
+      </select>
+      <input
+        type="radio"
+        data-testid="column-sort-input-asc"
+      />
+      ASC
+      <input
+        type="radio"
+        data-testid="column-sort-input-desc"
+      />
+      DESC
     </div>
   );
 }
