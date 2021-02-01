@@ -7,12 +7,7 @@ function StarWarsProvider({ children }) {
   const [filterByName, setFilterByName] = useState({ name: '' });
   const [SWPlanets, setSWPlanets] = useState([]);
   const [newArray, setNewArray] = useState([]);
-  const [filterByNumericValues, setFiltersByNumericValues] = useState([{
-    column: 'population',
-    comparison: 'maior que',
-    value: '',
-  }]);
-
+  const [filterByNumericValues, setFiltersByNumericValues] = useState([]);
   const [filters, setFilters] = useState({
     filterByName,
     filterByNumericValues: [],
@@ -34,24 +29,32 @@ function StarWarsProvider({ children }) {
   }, []);
 
   const applyFilters = () => {
-    const { column, comparison, value } = filterByNumericValues[0];
-    switch (comparison) {
-    case ('maior que'):
-      setNewArray(SWPlanets
-        .filter((planet) => Number(planet[column]) > Number(value)));
-      break;
-    case ('menor que'):
-      setNewArray(SWPlanets
-        .filter((planet) => Number(planet[column]) < Number(value)));
-      break;
-    case ('igual a'):
-      setNewArray(SWPlanets
-        .filter((planet) => Number(planet[column]) === Number(value)));
-      break;
-    default:
-      return newArray;
-    }
+    const zero = 0;
+    if (filterByNumericValues.length === zero) return;
+    filterByNumericValues.forEach((item) => {
+      const { column, comparison, value } = item;
+      switch (comparison) {
+      case ('maior que'):
+        setNewArray((prevState) => prevState
+          .filter((planet) => Number(planet[column]) > Number(value)));
+        break;
+      case ('menor que'):
+        setNewArray((prevState) => prevState
+          .filter((planet) => Number(planet[column]) < Number(value)));
+        break;
+      case ('igual a'):
+        setNewArray((prevState) => prevState
+          .filter((planet) => Number(planet[column]) === Number(value)));
+        break;
+      default:
+        return newArray;
+      }
+    });
   };
+
+  useEffect(() => {
+    applyFilters();
+  }, [filterByNumericValues]);
 
   const contextValueSW = {
     SWPlanets,

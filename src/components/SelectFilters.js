@@ -5,8 +5,15 @@ export default function SearchBar() {
   const {
     setFiltersByNumericValues,
     filterByNumericValues,
-    applyFilters,
+    setNewArray,
+    SWPlanets,
   } = useContext(StarWarsContext);
+
+  const [filterObject, setFilterObject] = useState({
+    column: 'population',
+    comparison: 'maior que',
+    value: '',
+  });
 
   const [options, setOptions] = useState(
     ['population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water'],
@@ -15,8 +22,19 @@ export default function SearchBar() {
   const hideOption = () => {
     setOptions((prevState) => (
       prevState.filter((item) => (
-        item !== filterByNumericValues[0].column))
+        item !== filterObject.column))
     ));
+  };
+
+  const removeFilter = (item) => {
+    setNewArray(SWPlanets);
+    setFiltersByNumericValues(filterByNumericValues
+      .filter((planet) => planet.column !== item.column));
+  };
+
+  const onClick = () => {
+    setFiltersByNumericValues([...filterByNumericValues, filterObject]);
+    hideOption();
   };
 
   return (
@@ -25,9 +43,9 @@ export default function SearchBar() {
         name="column-filter"
         data-testid="column-filter"
         onChange={
-          ({ target: { value } }) => setFiltersByNumericValues([{
-            ...filterByNumericValues[0], column: value,
-          }])
+          ({ target: { value } }) => setFilterObject({
+            ...filterObject, column: value,
+          })
         }
       >
         {options.map((item) => (
@@ -38,9 +56,9 @@ export default function SearchBar() {
         name="comparison-filter"
         data-testid="comparison-filter"
         onChange={
-          ({ target: { value } }) => setFiltersByNumericValues([{
-            ...filterByNumericValues[0], comparison: value,
-          }])
+          ({ target: { value } }) => setFilterObject({
+            ...filterObject, comparison: value,
+          })
         }
       >
         <option value="maior que">
@@ -58,21 +76,31 @@ export default function SearchBar() {
         data-testid="value-filter"
         placeholder="Number"
         onChange={
-          ({ target: { value } }) => setFiltersByNumericValues([{
-            ...filterByNumericValues[0], value,
-          }])
+          ({ target: { value } }) => setFilterObject({
+            ...filterObject, value,
+          })
         }
       />
       <button
         type="button"
         data-testid="button-filter"
-        onClick={ () => {
-          applyFilters();
-          hideOption();
-        } }
+        onClick={ () => onClick() }
       >
         Filtrar
       </button>
+      { filterByNumericValues.map((item, index) => (
+        <div key={ index } data-testid="filter">
+          <p>
+            { `Filter: ${item.column} ${item.comparison} ${item.value}` }
+          </p>
+          <button
+            type="button"
+            onClick={ () => removeFilter(item) }
+          >
+            X
+          </button>
+        </div>
+      ))}
     </div>
   );
 }
