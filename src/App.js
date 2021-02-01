@@ -1,13 +1,20 @@
 import React from 'react';
-import StarWarsPlanets from './components/StarWarsPlanets';
 import Table from './components/Table';
-// import './styles/App.css';
+import FilterByName from './components/FilterByName';
+import FilterByNumericValues from './components/FilterByNumericValues';
+import FiltersPresents from './components/FilterPresents';
+import OrderBy from './components/OrderBy';
+import { Provider } from './context/StarWarsContext';
 
 function App() {
   return (
-    <StarWarsPlanets>
+    <Provider>
+      <FilterByName />
+      <FilterByNumericValues />
+      <FiltersPresents />
+      <OrderBy />
       <Table />
-    </StarWarsPlanets>
+    </Provider>
   );
 }
 
