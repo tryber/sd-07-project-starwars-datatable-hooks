@@ -8,7 +8,10 @@ function SearchBar() {
     handleFiltersByComparison,
     handleFiltersByNumber,
     searchButton,
+    filters: { filterByNumericValues,
+    },
   } = useContext(StarWarsContext);
+
   const optionsDropdownNumber = [
     'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water',
   ];
@@ -25,13 +28,21 @@ function SearchBar() {
         data-testid="column-filter"
         onChange={ handleFiltersByColumn }
       >
-        {optionsDropdownNumber.map((optionsNumber) => (
-          <option
-            key={ optionsNumber }
-          >
-            { optionsNumber }
-          </option>
-        ))}
+        {filterByNumericValues.length >= 1 ? optionsDropdownNumber
+          .filter((option) => (option !== filterByNumericValues[0].column))
+          .map((optionsNumber) => (
+            <option
+              key={ optionsNumber }
+            >
+              { optionsNumber }
+            </option>
+          )) : optionsDropdownNumber
+          .map((optionsNumber) => (
+            <option
+              key={ optionsNumber }
+            >
+              { optionsNumber }
+            </option>))}
       </select>
       <select
         data-testid="comparison-filter"

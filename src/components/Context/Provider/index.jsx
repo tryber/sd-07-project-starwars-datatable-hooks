@@ -10,11 +10,7 @@ function Provider({ children }) {
     filterByName: {
       name: '',
     },
-    filterByNumericValues: [
-      { column: '',
-        comparison: '',
-        value: '' },
-    ],
+    filterByNumericValues: [],
   });
   const [paramColumn, setParamColumn] = useState('');
   const [paramComparison, setParamComparison] = useState('');
@@ -58,6 +54,14 @@ function Provider({ children }) {
 
   const searchButton = () => {
     if (paramComparison !== '' && paramColumn !== '' && paramNumber !== '') {
+      setFilters({
+        ...filters,
+        filterByNumericValues: [...filters.filterByNumericValues,
+          { column: paramColumn,
+            comparison: paramComparison,
+            value: paramNumber },
+        ],
+      });
       switch (paramComparison) {
       case 'maior que':
         setFilterData(planetListName
