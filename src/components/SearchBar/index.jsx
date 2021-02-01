@@ -8,6 +8,7 @@ function SearchBar() {
     handleFiltersByComparison,
     handleFiltersByNumber,
     searchButton,
+    deleteParam,
     filters: { filterByNumericValues,
     },
   } = useContext(StarWarsContext);
@@ -77,6 +78,21 @@ function SearchBar() {
       >
         Filter
       </button>
+      {filterByNumericValues.length >= 1 ? filterByNumericValues
+        .map((filterObj) => (
+          <div
+            key={ filterObj.column }
+            data-testid="filter"
+          >
+            <p>{filterObj.column}</p>
+            <button
+              type="button"
+              value={ filterObj.column }
+              onClick={ deleteParam }
+            >
+              X
+            </button>
+          </div>)) : <div />}
     </div>
   );
 }

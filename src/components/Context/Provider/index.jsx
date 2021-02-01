@@ -81,6 +81,17 @@ function Provider({ children }) {
     } else setFilterData(planetListName);
   };
 
+  const deleteParam = (e) => {
+    const { value } = e.target;
+    const filterUsed = filters.filterByNumericValues
+      .filter((param) => (param.column) !== value);
+    setFilters({
+      ...filters,
+      filterByNumericValues: filterUsed,
+    });
+    setFilterData(data);
+  };
+
   const context = {
     data,
     filters,
@@ -99,6 +110,7 @@ function Provider({ children }) {
     planetList,
     setPlanetList,
     planetListName,
+    deleteParam,
   };
 
   return (
