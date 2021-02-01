@@ -9,9 +9,9 @@ const StarWarsProvider = ({ children }) => {
   const [filterColumn, setColumn] = useState('');
   const [filterComparison, setComparison] = useState('');
   const [filterValue, setValue] = useState('');
-  const [filteredData, setFilteredData] = useState(data);
-  // const [filterObject, setFilterObject] = useState({});
+  const [filteredData, setFilteredData] = useState([]);
   const [filtersArray, setFiltersArray] = useState([]);
+  const [dataFilteredByName, setDataFilteredByName] = useState([]);
 
   useEffect(() => {
     async function fetchPlanets() {
@@ -19,6 +19,7 @@ const StarWarsProvider = ({ children }) => {
       const dataPlanets = results;
       setDataPlanets(dataPlanets);
       setFilteredData(dataPlanets);
+      setDataFilteredByName(dataPlanets);
     }
     fetchPlanets();
   }, []);
@@ -43,48 +44,46 @@ const StarWarsProvider = ({ children }) => {
     setValue(value);
   };
 
+  useEffect(() => {
+    setDataFilteredByName(data.filter((planet) => (
+      planet.name.toLowerCase().includes(filterName.toLowerCase()))))
+  }, [filterName, data]);
+
   const filterDataButton = () => {
     if (filterColumn !== '' && filterComparison !== '' && filterValue !== '') {
-      // console.log(filterColumn);
-      // setFilterObject({
-      //   column: filterColumn,
-      //   comparison: filterComparison,
-      //   value: filterValue,
-      // });
-      // console.log(filterObject);
-      // add o obj ao array de filtros
       setFiltersArray([...filtersArray, {
         column: filterColumn,
         comparison: filterComparison,
         value: filterValue,
       }]);
-      // console.log(filtersArray);
       switch (filterComparison) {
       case 'maior que':
-        setFilteredData(data
+        setFilteredData(dataFilteredByName
           .filter((planet) => (
             parseFloat(planet[filterColumn]) > parseFloat(filterValue))));
         break;
       case 'menor que':
-        setFilteredData(data
+        setFilteredData(dataFilteredByName
           .filter((planet) => (
             parseFloat(planet[filterColumn]) < parseFloat(filterValue))));
         break;
       case 'igual a':
-        setFilteredData(data
+        setFilteredData(dataFilteredByName
           .filter((planet) => (
             parseFloat(planet[filterColumn]) === parseFloat(filterValue))));
         break;
       default:
-        setFilteredData(data);
+        setFilteredData(dataFilteredByName);
       }
-    } else setFilteredData(data);
+    } else setFilteredData(dataFilteredByName);
   };
 
   const deleteFilter = (event) => {
     const { value } = event.target;
     const removedFilter = filtersArray.filter((filter) => (filter.column !== value));
     setFiltersArray(removedFilter);
+    // voltar o estado anterior
+    setFilteredData(data);
   };
 
   const context = {
@@ -102,6 +101,7 @@ const StarWarsProvider = ({ children }) => {
       //   },
       // ],
       filterByNumericValues: filtersArray,
+      dataFilteredByName,
     },
     handleFilterByName,
     handleInputColumn,
