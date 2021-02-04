@@ -63,9 +63,9 @@ function Filter() {
     const indexof = event.target.name;
     const newFilterData = filterData;
     const presentfilters = [...filterData.filters.filterByNumericValues];
-    const newfilters = presentfilters.filter((element, index) => {
-      return (toString(index) !== toString(indexof));
-    });
+    const newfilters = presentfilters.filter(
+      (element, index) => toString(index) !== toString(indexof),
+    );
     newFilterData.filters.filterByNumericValues = newfilters;
     setFilterData(newFilterData);
     setNewFltrMsg('Filtro Removido!');
