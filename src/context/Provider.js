@@ -24,8 +24,9 @@ const Provider = ({ children }) => {
     }
 
     const filterPlanets = await planetsStarWars
-      .filter((planet) => planet.name.includes(value));
-    setPlanetsStarWars(() => filterPlanets);
+      .filter((planet) => planet?.name?.includes(value));
+      console.log(filterPlanets);
+    await setPlanetsStarWars(() => filterPlanets);
   }
 
   const contextValue = {
