@@ -1,5 +1,5 @@
 import { createContext } from 'react';
 
-const StrWrs = createContext();
+const StrWrs = createContext('');
 
 export default StrWrs;

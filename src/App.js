@@ -1,17 +1,15 @@
 import React from 'react';
 import Filter from './pages/Filter';
-import StrWrs from './context';
+import Provider from './context/provider';
 import './App.css';
 
 function App() {
-  const initial = '';
-
   return (
-    <StrWrs.Provider value={ initial }>
+    <Provider>
       <div className="App">
         <Filter />
       </div>
-    </StrWrs.Provider>
+    </Provider>
   );
 }
 
