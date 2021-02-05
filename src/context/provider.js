@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import StrWrs from './index';
+import StarWarsContext from './index';
 
 function Provider({ children }) {
   const [initial, setInitial] = useState('');
@@ -10,9 +10,9 @@ function Provider({ children }) {
   };
 
   return (
-    <StrWrs.Provider value={ value }>
+    <StarWarsContext.Provider value={ value }>
       {children}
-    </StrWrs.Provider>
+    </StarWarsContext.Provider>
   );
 }
 

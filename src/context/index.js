@@ -1,5 +1,5 @@
 import { createContext } from 'react';
 
-const StrWrs = createContext('');
+const StarWarsContext = createContext('');
 
-export default StrWrs;
+export default StarWarsContext;
