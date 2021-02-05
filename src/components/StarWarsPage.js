@@ -4,11 +4,11 @@ import StarWarsTable from './StarWarsTable';
 import FormStarWars from './FormStarWars';
 
 export default function StarWarsPage() {
-  const { fetchPlanets, isFetching, planetsStarWars } = useContext(StarWarsContext);
+  const { fetchPlanets, isFetching } = useContext(StarWarsContext);
 
   useEffect(() => {
     fetchPlanets();
-  }, [planetsStarWars]);
+  }, [fetchPlanets]);
 
   return (
     <div>
