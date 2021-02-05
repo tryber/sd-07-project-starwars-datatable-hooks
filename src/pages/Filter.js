@@ -17,6 +17,10 @@ function Filter() {
         name: '',
       },
       filterByNumericValues: [],
+      order: {
+        column: 'Name',
+        sort: 'ASC',
+      },
     },
   });
   // tests if filter data alredy have all filters and disable button - to be tested
@@ -27,6 +31,36 @@ function Filter() {
       SetAddBtn(true);
     }
     SetAddBtn(false);
+  };
+  const filterPlanets = (rawdata) => {
+    const { name } = filterData.filters.filterByName;
+    const { filterByNumericValues } = filterData.filters;
+
+    console.log(rawdata, filterData, name);
+    const nameFiltered = rawdata.filter((planet) => {
+      if (name !== '') {
+        return planet.name.includes(name);
+      }
+      return planet;
+    });
+    let output = nameFiltered;
+    if (filterByNumericValues !== []) {
+      filterByNumericValues.forEach((filter) => {
+        output = output.filter((planet) => {
+          if (filter.comparison === 'maior que') {
+            return (parseInt(planet[filter.column], 10) > parseInt(filter.value, 10));
+          }
+          if (filter.comparison === 'menor que') {
+            return (parseInt(planet[filter.column], 10) < parseInt(filter.value, 10));
+          }
+          if (filter.comparison === 'igual a') {
+            return (planet[filter.column] === filter.value);
+          }
+          return planet;
+        });
+      });
+    }
+    setFilteredData(output);
   };
   // creates the new filter to be added to filterbynumericvalues and checks if all values are filled - tested.
   const createNewFilter = () => {
@@ -56,19 +90,21 @@ function Filter() {
       filterData.filters.filterByNumericValues.push(newFilter);
       setNewFltrMsg('Filtro Adicionado');
       allFiltersAdded();
+      filterPlanets(data);
     }
   };
-  // deleta filtro - apagando todos - to be fixed
+  // deleta filtro - tested.
   const deleteFilter = (event) => {
-    const indexof = event.target.name;
+    const column = event.target.name;
     const newFilterData = filterData;
     const presentfilters = [...filterData.filters.filterByNumericValues];
     const newfilters = presentfilters.filter(
-      (element, index) => toString(index) !== toString(indexof),
+      (element) => element.column !== column,
     );
     newFilterData.filters.filterByNumericValues = newfilters;
     setFilterData(newFilterData);
     setNewFltrMsg('Filtro Removido!');
+    filterPlanets(data);
   };
   // add new filter to filterbynumericvalues / verify if filter is in duplicity - tested.
   const updateFilter = (event) => {
@@ -107,36 +143,6 @@ function Filter() {
       .then((apidata) => {
         updateData(apidata.results);
       });
-  };
-  const filterPlanets = (rawdata) => {
-    const { name } = filterData.filters.filterByName;
-    const { filterByNumericValues } = filterData.filters;
-
-    console.log(rawdata, filterData, name);
-    const nameFiltered = rawdata.filter((planet) => {
-      if (name !== '') {
-        return planet.name.includes(name);
-      }
-      return planet;
-    });
-    let output = nameFiltered;
-    if (filterByNumericValues !== []) {
-      filterByNumericValues.forEach((filter) => {
-        output = output.filter((planet) => {
-          if (filter.comparison === 'maior que') {
-            return (parseInt(planet[filter.column], 10) > parseInt(filter.value, 10));
-          }
-          if (filter.comparison === 'menor que') {
-            return (parseInt(planet[filter.column], 10) < parseInt(filter.value, 10));
-          }
-          if (filter.comparison === 'igual a') {
-            return (planet[filter.column] === filter.value);
-          }
-          return planet;
-        });
-      });
-    }
-    setFilteredData(output);
   };
   useEffect(() => {
     getApi();
@@ -202,9 +208,16 @@ function Filter() {
             <div
               key={ index }
               name={ index }
+              data-testid="filter"
             >
               <span>{`${column} ${comparison} ${value}`}</span>
-              <button name={ index } onClick={ deleteFilter } type="button">x</button>
+              <button
+                name={ `${column}` }
+                onClick={ deleteFilter }
+                type="button"
+              >
+                X
+              </button>
             </div>
           );
         })}
