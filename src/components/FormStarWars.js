@@ -12,7 +12,12 @@ const FormStarWars = () => {
     <div>
       <label htmlFor="home">
         Nome Planeta
-        <input id="nome" data-testid='name-filter' type="text" onChange={ inputHandler } />
+        <input
+          id="nome"
+          data-testid="name-filter"
+          type="text"
+          onChange={ inputHandler }
+        />
       </label>
     </div>
   );

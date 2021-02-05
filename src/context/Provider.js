@@ -6,6 +6,7 @@ import starwarsAPI from '../services/starwarsAPI';
 const Provider = ({ children }) => {
   const [planetsStarWars, setPlanetsStarWars] = useState([]);
   const [isFetching, setFetching] = useState(true);
+  const [filterPlanets, setfilterPlanets] = useState([]);
 
   const fetchPlanets = async () => {
     if (!isFetching) return;
@@ -14,19 +15,19 @@ const Provider = ({ children }) => {
 
     await starwarsAPI().then((response) => {
       setPlanetsStarWars(() => response.results);
+      setfilterPlanets(() => response.results);
     });
   };
 
   async function searchPlanets(value) {
     if (value === '') {
-      await setFetching(() => true);
-      fetchPlanets();
+      setFetching(() => true);
+      setPlanetsStarWars(() => filterPlanets);
     }
 
-    const filterPlanets = await planetsStarWars
-      .filter((planet) => planet?.name?.includes(value));
-      console.log(filterPlanets);
-    await setPlanetsStarWars(() => filterPlanets);
+    const filter = filterPlanets
+      .filter((planet) => planet.name.includes(value));
+    setPlanetsStarWars(() => filter);
   }
 
   const contextValue = {
