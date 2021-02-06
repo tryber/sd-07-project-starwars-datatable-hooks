@@ -1,9 +1,10 @@
 import React, { useContext, useState } from 'react';
+import { Button } from 'reactstrap';
 import StarWarsContext from '../context/StarWarsContext';
 
-function SearchByNumber() {
-  const globalState = useContext(StarWarsContext);
-  const { data, inputNumbers, setInputNumbers, setFilteredPlanets } = globalState;
+function Header() {
+  const state = useContext(StarWarsContext);
+  const { data, inputNumbers, setInputNumbers, setFilteredPlanets } = state;
   const zero = 0;
   const [column, setColumn] = useState('population');
   const [comparison, setComparison] = useState('maior que');
@@ -66,6 +67,7 @@ function SearchByNumber() {
         {columns.map((col) => <option key={ col } value={ col }>{ col }</option>)}
       </select>
       <select
+        className="select-comparison"
         onChange={ updateComparison }
         data-testid="comparison-filter"
         value={ comparison }
@@ -80,22 +82,56 @@ function SearchByNumber() {
         onChange={ updateNumber }
         value={ number }
       />
-      <button
-        type="button"
-        data-testid="button-filter"
-        onClick={ executeFilter }
-      >
-        Acionar filtro
-      </button>
-      <button
-        type="button"
-        data-testid="filter"
-        onClick={ clearFilter }
-      >
-        X
-      </button>
+      <div className="filter-button">
+        <Button
+          color="primary"
+          type="button"
+          data-testid="button-filter"
+          onClick={ executeFilter }
+        >
+          Filtrar
+        </Button>
+      </div>
+
+      <div>
+        <label htmlFor="ascending">
+          <input
+            type="radio"
+            id="ascending"
+            name="sort_method"
+            data-testid="column-sort-input-asc"
+            value="ASC"
+          // checked={  }
+          // onChange={ (e) => }
+          />
+          Ascending
+        </label>
+        <label htmlFor="descending">
+          <input
+            type="radio"
+            id="descending"
+            name="sort_method"
+            data-testid="column-sort-input-desc"
+            value="DESC"
+          // checked={  }
+          // onChange={ (e) =>  }
+          />
+          Descending
+        </label>
+      </div>
+      <div>
+        <Button
+          color="primary"
+          type="button"
+          data-testid="filter"
+          onClick={ clearFilter }
+        >
+          X
+        </Button>
+      </div>
+
     </div>
   );
 }
 
-export default SearchByNumber;
+export default Header;

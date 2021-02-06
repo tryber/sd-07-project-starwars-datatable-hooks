@@ -1,26 +1,28 @@
 import React, { useContext } from 'react';
+import { Table } from 'reactstrap';
+
 import StarWarsContext from '../context/StarWarsContext';
 
-function Table() {
+const TableInformation = () => {
   const { filterdPlanets } = useContext(StarWarsContext);
   if (filterdPlanets) {
     return (
       <div>
-        <table>
+        <Table dark>
           <thead>
             <tr>
-              <th>name</th>
-              <th>rotation_period</th>
-              <th>orbital_period</th>
-              <th>diameter</th>
-              <th>climate</th>
-              <th>gravity</th>
-              <th>terrain</th>
-              <th>surface_water</th>
-              <th>population</th>
-              <th>films</th>
-              <th>created</th>
-              <th>edited</th>
+              <th>nome</th>
+              <th>periodo de rotação</th>
+              <th>periodo orbital</th>
+              <th>diâmetro</th>
+              <th>clima</th>
+              <th>gravidade</th>
+              <th>tipo de solo</th>
+              <th>Água na superfície</th>
+              <th>população</th>
+              <th>filmes</th>
+              <th>criado</th>
+              <th>editadp</th>
               <th>url</th>
             </tr>
           </thead>
@@ -59,10 +61,10 @@ function Table() {
               ),
             )}
           </tbody>
-        </table>
+        </Table>
       </div>
     );
   }
-}
+};
 
-export default Table;
+export default TableInformation;
