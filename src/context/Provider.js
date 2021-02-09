@@ -12,7 +12,7 @@ function StarWarsProvider({ children }) {
   useEffect(() => {
     const getPlanets = async () => {
       const { results } = await fetchPlanets();
-      // console.log(results);
+      // precisa desse delete residents aqui?
       results.forEach((item) => delete item.residents);
       setFilterPlanets(results);
       setPlanets(results);
@@ -20,18 +20,21 @@ function StarWarsProvider({ children }) {
     getPlanets();
   }, []);
 
+  // console.log('aqui');
   const contextValueSW = {
     planets,
     setPlanets,
     filterPlanets,
     setFilterPlanets,
+    paramArray,
     setParamArray,
     filters: {
         filterByName: {
           name: ''
         },
         filterByNumericValues: paramArray,
-    }
+    },
+    setFilters,
   };
 
   return (

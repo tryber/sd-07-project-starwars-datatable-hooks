@@ -9,12 +9,13 @@ function SearchBar() {
     setFilterPlanets,
     filters,
     setFilters,
+    paramArray,
     setParamArray,
   } = useContext(StarWarsContext);
 
   const [column, setColumn] = useState('population');
   const [comparison, setComparison] = useState('maior que');
-  const [numberValue, setNumberValue] = useState();
+  const [numberValue, setNumberValue] = useState('0');
 
   const handleFilterName = (value) => {
     setFilterPlanets(
@@ -25,35 +26,42 @@ function SearchBar() {
   };
 
   const handleButton = () => {
-    setParamArray([
-      {
-        column: column,
-        comparison: comparison,
-        value: numberValue,
-      },
-    ]);
-    console.log(comparison);
-    console.log(column);
-    console.log(numberValue);
+    // filterProvider()
+
+    // setParamArray([
+    //   {
+    //     column: column,
+    //     comparison: comparison,
+    //     value: numberValue,
+    //   },
+    // ]);
+    console.log('switch', column, comparison, numberValue);
     switch (comparison) {
       case 'maior que':
-        setFilterPlanets(planets.filter((planet) => (
-        parseFloat(planet[column]) > parseFloat(numberValue))));
-        // console.log(filterPlanets);
-        break
+        setFilterPlanets(
+          planets.filter(
+            (planet) => parseFloat(planet[column]) > parseFloat(numberValue)
+          )
+        );
+        break;
       case 'menor que':
-        setFilterPlanets(planets.filter((planet) => (
-        parseFloat(planet[column]) < parseFloat(numberValue))));
-        break
+        setFilterPlanets(
+          planets.filter(
+            (planet) => parseFloat(planet[column]) < parseFloat(numberValue)
+          )
+        );
+        // console.log('menor que');
+        break;
       case 'igual a':
-        setFilterPlanets(planets.filter((planet) => (
-        Number(planet[column]) === Number(numberValue))));
-        break
+        setFilterPlanets(
+          planets.filter(
+            (planet) => Number(planet[column]) === Number(numberValue)
+          )
+        );
+        break;
       default:
         setFilterPlanets(planets);
     }
-
- 
   };
 
   const handleChangeColumn = ({ target: { value } }) => {
@@ -66,6 +74,7 @@ function SearchBar() {
 
   const handleChangeNumber = ({ target: { value } }) => {
     setNumberValue(value);
+    console.log('handlchange', value);
   };
 
   const filterOptions = [
@@ -88,8 +97,8 @@ function SearchBar() {
         />
       </label>
       <select data-testid='column-filter' onChange={handleChangeColumn}>
-        {filterOptions.map((option) => (
-          <option>{option}</option>
+        {filterOptions.map((option, index) => (
+          <option key={index}>{option}</option>
         ))}
       </select>
       <select data-testid='comparison-filter' onChange={handleChangeComparison}>
@@ -99,8 +108,9 @@ function SearchBar() {
       </select>
       <input
         name='numberSearch'
-        type='numberValue'
+        type='number'
         data-testid='value-filter'
+        value={ numberValue }
         onChange={handleChangeNumber}
       />
       <button type='button' data-testid='button-filter' onClick={handleButton}>
