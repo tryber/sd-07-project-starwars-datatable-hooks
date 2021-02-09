@@ -6,7 +6,7 @@ import fetchPlanets from '../services/starWarsAPI';
 function StarWarsProvider({ children }) {
   const [filterPlanets, setFilterPlanets] = useState([]);
   const [planets, setPlanets] = useState([]);
-  const [filters, setFilters] = useState();
+  const [setFilters] = useState();
   const [paramArray, setParamArray] = useState([]);
 
   useEffect(() => {
