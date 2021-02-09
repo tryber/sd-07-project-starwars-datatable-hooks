@@ -7,8 +7,8 @@ function StarWarsProvider({ children }) {
   const [filterPlanets, setFilterPlanets] = useState([]);
   const [planets, setPlanets] = useState([]);
   const [filters, setFilters] = useState();
-  const [ paramArray , setParamArray ] = useState([]);
-  
+  const [paramArray, setParamArray] = useState([]);
+
   useEffect(() => {
     const getPlanets = async () => {
       const { results } = await fetchPlanets();
@@ -20,7 +20,7 @@ function StarWarsProvider({ children }) {
     getPlanets();
   }, []);
 
-  // console.log('aqui');
+  console.log('aqui', filters);
   const contextValueSW = {
     planets,
     setPlanets,
@@ -29,10 +29,10 @@ function StarWarsProvider({ children }) {
     paramArray,
     setParamArray,
     filters: {
-        filterByName: {
-          name: ''
-        },
-        filterByNumericValues: paramArray,
+      filterByName: {
+        name: '',
+      },
+      filterByNumericValues: paramArray,
     },
     setFilters,
   };
