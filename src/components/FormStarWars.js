@@ -8,24 +8,36 @@ const FormStarWars = () => {
     await searchPlanets(target.value);
   };
 
-  return (
+  const getInputName = () => (
+    <label htmlFor="home">
+      Nome Planeta
+      <input
+        id="nome"
+        data-testid="name-filter"
+        type="text"
+        onChange={ inputHandler }
+      />
+    </label>
+  );
+
+  const getNumbersFilter = () => (
     <div>
-      <label htmlFor="home">
-        Nome Planeta
-        <input
-          id="nome"
-          data-testid="name-filter"
-          type="text"
-          onChange={ inputHandler }
-        />
-      </label>
-      <select>
+      <select
+        name="column-filter"
+      >
         <option value="population">population</option>
         <option value="orbital_period">orbital_period</option>
         <option value="diameter">diameter</option>
         <option value="rotation_period">rotation_period</option>
         <option value="surface_water">surface_water</option>
       </select>
+    </div>
+  );
+
+  return (
+    <div>
+      {getInputName()}
+      {getNumbersFilter()}
     </div>
   );
 };
