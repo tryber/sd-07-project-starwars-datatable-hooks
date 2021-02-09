@@ -148,11 +148,13 @@ function Filter() {
   };
   useEffect(() => {
     getApi();
-  }, [getApi]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     filterPlanets(data);
-  }, [data, filtername, filterData.filters.filterByNumericValues.length, filterPlanets]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data, filtername, filterData.filters.filterByNumericValues.length]);
   const { filterByNumericValues } = filterData.filters;
   return (
     <div>
