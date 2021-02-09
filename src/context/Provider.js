@@ -20,7 +20,7 @@ function StarWarsProvider({ children }) {
     getPlanets();
   }, []);
 
-  console.log('aqui', filters);
+  // console.log('aqui', filters);
   const contextValueSW = {
     planets,
     setPlanets,
