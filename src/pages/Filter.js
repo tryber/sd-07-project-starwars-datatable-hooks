@@ -32,6 +32,7 @@ function Filter() {
     }
     SetAddBtn(false);
   };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const filterPlanets = (rawdata) => {
     const { name } = filterData.filters.filterByName;
     const { filterByNumericValues } = filterData.filters;
@@ -136,6 +137,7 @@ function Filter() {
     setData(value);
   };
   // used o useEffect to fetch API data - tested.
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const getApi = async () => {
     const url = 'https://swapi-trybe.herokuapp.com/api/planets/';
     await fetch(url)
@@ -146,11 +148,11 @@ function Filter() {
   };
   useEffect(() => {
     getApi();
-  }, []);
+  }, [getApi]);
 
   useEffect(() => {
     filterPlanets(data);
-  }, [data, filtername, filterData.filters.filterByNumericValues.length]);
+  }, [data, filtername, filterData.filters.filterByNumericValues.length, filterPlanets]);
   const { filterByNumericValues } = filterData.filters;
   return (
     <div>
