@@ -9,21 +9,6 @@ function Provider({ children }) {
   const [filterPlanets, setfilterPlanets] = useState([]);
   const [filters, setFilters] = useState([]);
 
-  const useFilters = () => {
-    filters.forEach((filter) => {
-      const { column, comparison, value } = filter;
-      if (comparison === 'maior que') {
-        setPlanetsStarWars(() => planetsStarWars
-          .filter((planet) => parseInt(planet[column], 0) > parseInt(value, 0)));
-      }
-    });
-  };
-
-  useEffect(() => {
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    useFilters();
-  }, [filters]);
-
   const fetchPlanets = async () => {
     if (!isFetching) return;
 
@@ -34,6 +19,26 @@ function Provider({ children }) {
       setfilterPlanets(() => response.results);
     });
   };
+
+  const getFilters = () => {
+    filters.forEach((filter) => {
+      const { column, comparison, value } = filter;
+      if (comparison === 'maior que') {
+        setPlanetsStarWars(() => planetsStarWars
+          .filter((planet) => parseInt(planet[column], 0) > parseInt(value, 0)));
+      } else if (comparison === 'menor que') {
+        setPlanetsStarWars(() => planetsStarWars
+          .filter((planet) => parseInt(planet[column], 0) < parseInt(value, 0)));
+      } else if (comparison === 'igual a') {
+        setPlanetsStarWars(() => planetsStarWars
+          .filter((planet) => parseInt(planet[column], 0) === parseInt(value, 0)));
+      }
+    });
+  };
+
+  useEffect(() => {
+    getFilters();
+  }, [filters]);
 
   async function searchPlanets(value) {
     if (value === '') {
