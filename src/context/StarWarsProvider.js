@@ -4,15 +4,13 @@ import StarWarsContext from './StarWarsContext';
 
 const StarWarsProvider = ({ children }) => {
   const [data, setPlanets] = useState({});
+  const [copyData, setCopyData] = useState({});
   const [filters, setFilters] = useState({ filterByName: { name: '' } });
   const [planetsError, setPlanetsError] = useState(false);
   const [planetsLoaded, setPlanetsLoaded] = useState(false);
 
   async function fetchData() {
-    let endpoint = '';
-    const { name: search } = filters.filterByName;
-    if (search) endpoint = `https://swapi-trybe.herokuapp.com/api/planets/?search=${search}`;
-    else endpoint = 'https://swapi-trybe.herokuapp.com/api/planets/';
+    const endpoint = 'https://swapi-trybe.herokuapp.com/api/planets/';
 
     await fetch(endpoint)
       .then((response) => (
@@ -22,6 +20,7 @@ const StarWarsProvider = ({ children }) => {
             if (response.ok) {
               results.map((item) => delete item.residents);
               setPlanets(results);
+              setCopyData(results);
             } else {
               setPlanetsError(results);
             }
@@ -34,7 +33,16 @@ const StarWarsProvider = ({ children }) => {
     fetchData();
   }, []);
 
-  const context = { data, planetsError, planetsLoaded, fetchData, filters, setFilters };
+  const context = {
+    data,
+    setPlanets,
+    copyData,
+    setCopyData,
+    planetsError,
+    planetsLoaded,
+    fetchData,
+    filters,
+    setFilters };
 
   return (
     <StarWarsContext.Provider value={ context }>
