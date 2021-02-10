@@ -1,12 +1,28 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import StarWarsContext from './StarWarsContext';
 import starwarsAPI from '../services/starwarsAPI';
 
-const Provider = ({ children }) => {
+function Provider({ children }) {
   const [planetsStarWars, setPlanetsStarWars] = useState([]);
   const [isFetching, setFetching] = useState(true);
   const [filterPlanets, setfilterPlanets] = useState([]);
+  const [filters, setFilters] = useState([]);
+
+  const useFilters = () => {
+    filters.forEach((filter) => {
+      const { column, comparison, value } = filter;
+      if (comparison === 'maior que') {
+        setPlanetsStarWars(() => planetsStarWars
+          .filter((planet) => parseInt(planet[column], 0) > parseInt(value, 0)));
+      }
+    });
+  };
+
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    useFilters();
+  }, [filters]);
 
   const fetchPlanets = async () => {
     if (!isFetching) return;
@@ -33,8 +49,10 @@ const Provider = ({ children }) => {
   const contextValue = {
     planetsStarWars,
     isFetching,
+    filters,
     fetchPlanets,
     searchPlanets,
+    setFilters,
   };
 
   return (
@@ -42,7 +60,7 @@ const Provider = ({ children }) => {
       {children}
     </StarWarsContext.Provider>
   );
-};
+}
 
 export default Provider;
 

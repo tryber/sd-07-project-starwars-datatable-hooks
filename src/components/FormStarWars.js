@@ -1,8 +1,13 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 const FormStarWars = () => {
-  const { searchPlanets } = useContext(StarWarsContext);
+  const { searchPlanets, filters, setFilters } = useContext(StarWarsContext);
+  const [filterValues, setFilterValues] = useState({
+    column: 'population',
+    comparison: 'maior que',
+    value: '',
+  });
 
   const inputHandler = async ({ target }) => {
     await searchPlanets(target.value);
@@ -20,10 +25,16 @@ const FormStarWars = () => {
     </label>
   );
 
+  const getFilterValues = ({ target: { value, name } }) => {
+    setFilterValues({ ...filterValues, [name]: value });
+  };
+
   const getNumbersFilter = () => (
     <div>
       <select
-        name="column-filter"
+        data-testid="column-filter"
+        name="column"
+        onChange={ getFilterValues }
       >
         <option value="population">population</option>
         <option value="orbital_period">orbital_period</option>
@@ -31,6 +42,34 @@ const FormStarWars = () => {
         <option value="rotation_period">rotation_period</option>
         <option value="surface_water">surface_water</option>
       </select>
+      <select
+        data-testid="comparison-filter"
+        name="comparison"
+        onChange={ getFilterValues }
+      >
+        <option value="maior que">
+          maior que
+        </option>
+        <option value="menor que">
+          menor que
+        </option>
+        <option value="igual a">
+          igual a
+        </option>
+      </select>
+      <input
+        data-testid="value-filter"
+        type="number"
+        name="value"
+        onChange={ getFilterValues }
+      />
+      <button
+        data-testid="button-filter"
+        type="button"
+        onClick={ () => setFilters([...filters, filterValues]) }
+      >
+        Filtro
+      </button>
     </div>
   );
 
