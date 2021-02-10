@@ -10,7 +10,12 @@ function Planets() {
   };
   return (
     <div>
-      <input name="filter-name" onChange={ handleChange } />
+      <input
+        type="text"
+        data-testid="name-filter"
+        name="filter-name"
+        onChange={ handleChange }
+      />
     </div>
   );
 }
