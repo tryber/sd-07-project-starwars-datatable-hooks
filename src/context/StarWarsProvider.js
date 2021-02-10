@@ -2,10 +2,21 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import StarWarsContext from './StarWarsContext';
 
+const initialStateFilter = {
+  filterByName: { name: '' },
+  filterByNumericValues: [
+    {
+      column: '',
+      comparison: '',
+      value: '',
+    },
+  ],
+};
+
 const StarWarsProvider = ({ children }) => {
   const [data, setPlanets] = useState({});
   const [copyData, setCopyData] = useState({});
-  const [filters, setFilters] = useState({ filterByName: { name: '' } });
+  const [filters, setFilters] = useState(initialStateFilter);
   const [planetsError, setPlanetsError] = useState(false);
   const [planetsLoaded, setPlanetsLoaded] = useState(false);
 
