@@ -3,6 +3,7 @@ import StarWarsContext from '../context/starWarsContext';
 
 function SearchBar() {
   const { planets, setFilterPlanets } = useContext(StarWarsContext);
+  const { filterOptions, setFilterOptions } = useContext(StarWarsContext);
 
   const [column, setColumn] = useState('population');
   const [comparison, setComparison] = useState('maior que');
@@ -10,13 +11,12 @@ function SearchBar() {
 
   const handleFilterName = (value) => {
     setFilterPlanets(
-      planets.filter((planet) => planet.name.toLowerCase()
-        .includes(value.toLowerCase())),
+      planets.filter((planet) => planet.name.toLowerCase().includes(value.toLowerCase())),
     );
   };
 
   const handleButton = () => {
-    console.log('switch', column, comparison, numberValue);
+    // console.log('switch', column, comparison, numberValue);
     switch (comparison) {
     case 'maior que':
       setFilterPlanets(
@@ -47,6 +47,8 @@ function SearchBar() {
 
   const handleChangeColumn = ({ target: { value } }) => {
     setColumn(value);
+    console.log('handleColumn', value);
+    setFilterOptions(filterOptions.filter((option) => option !== value));
   };
 
   const handleChangeComparison = ({ target: { value } }) => {
@@ -55,16 +57,7 @@ function SearchBar() {
 
   const handleChangeNumber = ({ target: { value } }) => {
     setNumberValue(value);
-    console.log('handlchange', value);
   };
-
-  const filterOptions = [
-    'population',
-    'orbital_period',
-    'diameter',
-    'rotation_period',
-    'surface_water',
-  ];
 
   return (
     <div>

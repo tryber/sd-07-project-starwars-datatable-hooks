@@ -6,7 +6,13 @@ import fetchPlanets from '../services/starWarsAPI';
 function StarWarsProvider({ children }) {
   const [filterPlanets, setFilterPlanets] = useState([]);
   const [planets, setPlanets] = useState([]);
-  const [setFilters] = useState();
+  const [filterOptions, setFilterOptions] = useState([
+    'population',
+    'orbital_period',
+    'diameter',
+    'rotation_period',
+    'surface_water',
+  ]);
   const [paramArray, setParamArray] = useState([]);
 
   useEffect(() => {
@@ -28,13 +34,14 @@ function StarWarsProvider({ children }) {
     setFilterPlanets,
     paramArray,
     setParamArray,
+    filterOptions,
+    setFilterOptions,
     filters: {
       filterByName: {
         name: '',
       },
       filterByNumericValues: paramArray,
     },
-    setFilters,
   };
 
   return (
