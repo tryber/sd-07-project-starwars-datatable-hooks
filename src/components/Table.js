@@ -3,21 +3,26 @@ import React, { useContext } from 'react';
 import { StarWarsContext } from '../context/Provider';
 
 export default function Table() {
-  const { data } = useContext(StarWarsContext);
+  const { data, filters } = useContext(StarWarsContext);
   console.log(data);
-
+  const { filterByName } = filters;
   const renderTableBody = () => data
-    .map((planet, index) => (
-      <tr key={ index }>
-        { Object.keys(planet).map((planetKey) => {
-          if (planetKey === 'residents') return null;
-          return (
-            <td key={ planetKey }>
-              { planet[planetKey] }
-            </td>
-          );
-        })}
-      </tr>));
+    .map((planet, index) => {
+      if (planet.name.toLowerCase().includes(filterByName)) {
+        return (
+          <tr key={ index }>
+            { Object.keys(planet).map((planetKey) => {
+              if (planetKey === 'residents') return null;
+              return (
+                <td key={ planetKey }>
+                  { planet[planetKey] }
+                </td>
+              );
+            })}
+          </tr>);
+      }
+      return null;
+    });
 
   return (
     <table>
