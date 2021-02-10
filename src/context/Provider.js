@@ -5,11 +5,6 @@ const StarWarsContext = createContext();
 
 const StarWarsProvider = ({ children }) => {
   const [data, setData] = useState([]);
-  const [filters, setFilters] = useState({
-    filterByName: '',
-    filterByNumericValues: [],
-  });
-  const [usedFilters, setUsedFilters] = useState([]);
 
   useEffect(() => {
     fetch('https://swapi-trybe.herokuapp.com/api/planets/')
@@ -19,34 +14,8 @@ const StarWarsProvider = ({ children }) => {
       });
   }, []);
 
-  const filterByName = (name) => {
-    setFilters({ ...filters, filterByName: name });
-  };
-
-  const filterByValues = (chosenFilters) => {
-    const newFilter = filters.filterByNumericValues.concat(chosenFilters);
-    const newUsedFilters = usedFilters.concat(chosenFilters.column);
-    setUsedFilters(newUsedFilters);
-    setFilters({ ...filters, filterByNumericValues: newFilter });
-  };
-
-  const removeFilter = (column) => {
-    const newFilters = filters.filterByNumericValues
-      .filter((filter) => filter.column !== column);
-
-    const newUsedFilters = usedFilters.filter((usedFilter) => usedFilter !== column);
-
-    setUsedFilters(newUsedFilters);
-    setFilters({ ...filters, filterByNumericValues: newFilters });
-  };
-
   const context = {
     data,
-    filters,
-    usedFilters,
-    filterByName,
-    filterByValues,
-    removeFilter,
   };
 
   return (
