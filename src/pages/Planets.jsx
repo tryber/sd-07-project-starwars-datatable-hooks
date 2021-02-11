@@ -1,7 +1,7 @@
 import React from 'react';
-import TablePlanets from '../components/TablePlanets';
 import FilterByName from '../components/FilterByName';
 import FilterByNumeric from '../components/FilterByNumeric';
+import TablePlanets from '../components/TablePlanets';
 
 function Planets() {
   return (
