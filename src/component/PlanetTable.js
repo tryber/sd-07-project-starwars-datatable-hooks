@@ -4,6 +4,7 @@ import StarWarsContext from '../context/starWarsContext';
 
 function PlanetTable() {
   const { filterPlanets } = useContext(StarWarsContext);
+
   // console.log('tabela', filterPlanets);
   // if (filterPlanets.length === 0) {
   //   return 'loading';
@@ -13,7 +14,7 @@ function PlanetTable() {
       <p>Planetas</p>
       <table>
         <thead>
-          <tr role="row">
+          <tr>
             <th>Name</th>
             <th>rotation_period</th>
             <th>orbital_period</th>
@@ -31,8 +32,8 @@ function PlanetTable() {
         </thead>
         <tbody>
           {filterPlanets.map((planet) => (
-            <tr key={ planet.name } role="row">
-              <td>{planet.name}</td>
+            <tr key={ planet.name }>
+              <td data-testid="planet-name">{planet.name}</td>
               <td>{planet.rotation_period}</td>
               <td>{planet.orbital_period}</td>
               <td>{planet.diameter}</td>
