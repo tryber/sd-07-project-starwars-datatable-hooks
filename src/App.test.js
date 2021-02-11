@@ -341,7 +341,7 @@ describe('Apague o filtro de valores numéricos e desfaça as filtragens dos dad
   });
 });
 
-describe.skip('Ordene as colunas de forma ascendente ou descendente', () => {
+describe('Ordene as colunas de forma ascendente ou descendente', () => {
   beforeAll(mockFetch);
   beforeEach(cleanup);
 

@@ -3,7 +3,12 @@ import StarWarsContext from '../context/starWarsContext';
 
 function SearchBar() {
   const { planets, setFilterPlanets } = useContext(StarWarsContext);
-  const { filterOptions, setFilterOptions } = useContext(StarWarsContext);
+  const {
+    filterOptions,
+    setFilterOptions,
+    setSorted,
+    setSortedSelect,
+  } = useContext(StarWarsContext);
 
   const [column, setColumn] = useState('population');
   const [comparison, setComparison] = useState('maior que');
@@ -76,8 +81,18 @@ function SearchBar() {
     console.log('Change number', column, comparison, numberValue);
   };
 
-  const handleChangeSortInput = () => {
-    console.log('handleChangeSortInput:');
+  const handleChangeSortInput = ({ target: { value } }) => {
+    console.log('handleChangeSortInput:', value);
+    setSorted(value);
+  };
+
+  const handleSortedPlanets = () => {
+    console.log('handleSortedPlanets:');
+  };
+
+  const handleChangeSortSelect = ({ target: { value } }) => {
+    setSortedSelect(value);
+    console.log('handleChangeSortSelect:', value);
   };
 
   return (
@@ -127,30 +142,43 @@ function SearchBar() {
         Filtrar
       </button>
 
-      <select data-testid="column-sort" onChange={ handleChangeSortInput }>
+      <select data-testid="column-sort" onChange={ handleChangeSortSelect }>
         <option value="population">population</option>
+        <option value="orbital_period">orbital_period</option>
         <option value="diameter">diameter</option>
-        <option value="rotation_period">rotation period</option>
-        <option value="surface_water">surface water</option>
+        <option value="rotation_period">rotation_period</option>
+        <option value="surface_water">surface_water</option>
       </select>
 
-      <input
-        type="radio"
-        id="idAsc"
-        data-testid="column-sort-input-asc"
-        value="asc"
-      />
-      {/* <label htmlFor="idAsc">Ascendente</label> */}
+      <label htmlFor="idAsc">
+        Ascendente
+        <input
+          type="radio"
+          id="idAsc"
+          data-testid="column-sort-input-asc"
+          value="asc"
+          onChange={ handleChangeSortInput }
+        />
+      </label>
 
-      <input
-        type="radio"
-        id="idDesc"
-        data-testid="column-sort-input-desc"
-        value="desc"
-      />
-      {/* <label htmlFor="idDesc">Descendente</label> */}
+      <label htmlFor="idDesc">
+        <input
+          type="radio"
+          id="idDesc"
+          data-testid="column-sort-input-desc"
+          value="desc"
+          onChange={ handleChangeSortInput }
+        />
+        Descendente
+      </label>
 
-      <button type="button" data-testid="column-sort-button">Ordenar</button>
+      <button
+        type="button"
+        data-testid="column-sort-button"
+        onClick={ handleSortedPlanets }
+      >
+        Ordenar
+      </button>
     </div>
   );
 }

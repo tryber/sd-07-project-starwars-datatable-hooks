@@ -13,6 +13,10 @@ function StarWarsProvider({ children }) {
     'rotation_period',
     'surface_water',
   ]);
+  // o estado inicial não precisa estar entre colchetes
+  const [sorted, setSorted] = useState('');
+  const [sortedSelect, setSortedSelect] = useState('name');
+
   const [paramArray, setParamArray] = useState([]);
 
   useEffect(() => {
@@ -36,6 +40,10 @@ function StarWarsProvider({ children }) {
     setParamArray,
     filterOptions,
     setFilterOptions,
+    sorted,
+    setSorted,
+    sortedSelect,
+    setSortedSelect,
     filters: {
       filterByName: {
         name: '',

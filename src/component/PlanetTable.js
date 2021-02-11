@@ -3,9 +3,85 @@ import React, { useContext } from 'react';
 import StarWarsContext from '../context/starWarsContext';
 
 function PlanetTable() {
-  const { filterPlanets } = useContext(StarWarsContext);
+  const { filterPlanets, sorted, sortedSelect } = useContext(StarWarsContext);
 
-  // console.log('tabela', filterPlanets);
+  let sortedPlanets = [];
+  // sortedPlanets = filterPlanets.sort((a, b) => {
+  //   if (a.name > b.name) {
+  //     return 1;
+  //   }
+  //   if (a.name < b.name) {
+  //     return -1;
+  //   }
+  //   // a must be equal to b
+  //   return 0;
+  // });
+
+  // função se for só strings
+  // console.log('SwitchSortedTable:', sorted, sortedSelect);
+  // const menosUm = -1;
+  // const zero = 0;
+  // switch (sorted) {
+  // case 'asc':
+  //   console.log('case asc');
+  //   sortedPlanets = filterPlanets.sort((a, b) => {
+  //     if (a[sortedSelect] > b[sortedSelect]) {
+  //       return 1;
+  //     }
+  //     if (a[sortedSelect] < b[sortedSelect]) {
+  //       return menosUm;
+  //     }
+  //     // a must be equal to b
+  //     return zero;
+  //   });
+  //   break;
+  // case 'desc':
+  //   console.log('case desc');
+  //   sortedPlanets = filterPlanets.sort((a, b) => {
+  //     if (a[sortedSelect] > b[sortedSelect]) {
+  //       return menosUm;
+  //     }
+  //     if (a[sortedSelect] < b[sortedSelect]) {
+  //       return 1;
+  //     }
+  //     // a must be equal to b
+  //     return zero;
+  //   });
+  //   break;
+  // default:
+  //   console.log('default');
+  //   sortedPlanets = filterPlanets;
+  // }
+
+  // função para todos casos
+  console.log('SwitchSortedTable:', sorted, sortedSelect);
+  const menosUm = -1;
+  const zero = 0;
+  switch (sorted) {
+  case 'asc':
+    console.log('case asc');
+    sortedPlanets = filterPlanets.sort((a, b) => a[sortedSelect] - b[sortedSelect]);
+    break;
+  case 'desc':
+    console.log('case desc');
+    sortedPlanets = filterPlanets.sort((a, b) => b[sortedSelect] - a[sortedSelect]);
+    break;
+  default:
+    console.log('default');
+    // sortedPlanets = filterPlanets;
+    sortedPlanets = filterPlanets.sort((a, b) => {
+      if (a.name > b.name) {
+        return 1;
+      }
+      if (a.name < b.name) {
+        return menosUm;
+      }
+      // a must be equal to b
+      return zero;
+    });
+  }
+
+  // console.log('tabela', sortedPlanets);
   // if (filterPlanets.length === 0) {
   //   return 'loading';
   // }
@@ -31,7 +107,7 @@ function PlanetTable() {
           </tr>
         </thead>
         <tbody>
-          {filterPlanets.map((planet) => (
+          {sortedPlanets.map((planet) => (
             <tr key={ planet.name }>
               <td data-testid="planet-name">{planet.name}</td>
               <td>{planet.rotation_period}</td>
