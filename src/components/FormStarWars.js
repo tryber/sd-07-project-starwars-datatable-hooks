@@ -25,6 +25,12 @@ const FormStarWars = () => {
     </label>
   );
 
+  const deleteFilter = (index) => {
+    const newFilter = filters.slice();
+    newFilter.splice(index, 1);
+    setFilters(newFilter);
+  };
+
   const getFilterValues = ({ target: { value, name } }) => {
     setFilterValues({ ...filterValues, [name]: value });
   };
@@ -70,6 +76,19 @@ const FormStarWars = () => {
       >
         Filtro
       </button>
+      {filters.map((filter, index) => (
+        <div data-testid="filter" key={ index }>
+          <p>{filter.column}</p>
+          <p>{filter.comparison}</p>
+          <p>{filter.value}</p>
+          <button
+            type="button"
+            onClick={ () => deleteFilter(index) }
+          >
+            x
+          </button>
+        </div>
+      ))}
     </div>
   );
 
