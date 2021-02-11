@@ -42,6 +42,7 @@ function Table() {
             let controlVar = EMPTY;
             filterByNumericValues.forEach((filter) => {
               const { column, comparison, value } = filter;
+  // conditionals adapted from vitor-rc1
               if (
                 comparison === 'maior que'
                 && Number(planet[column]) > Number(value)
