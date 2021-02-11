@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
-function Planets() {
+function FilterByName() {
   const getPlanetsStateGlobal = useContext(StarWarsContext);
   const { setFilterOfName } = getPlanetsStateGlobal;
 
@@ -20,4 +20,4 @@ function Planets() {
   );
 }
 
-export default Planets;
+export default FilterByName;

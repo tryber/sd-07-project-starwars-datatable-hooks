@@ -7,6 +7,12 @@ import StarWarsContext from './StarWarsContext';
 function Provider({ children }) {
   const [data, setData] = useState([]);
   const [filters, setFilterOfName] = useState('');
+  const [filterByNumericValues, setFilterByNumericValues] = useState({
+    column: '',
+    comparison: '',
+    value: 0,
+  });
+  console.log(filterByNumericValues);
 
   async function getFetchPlanets() {
     const planetsStarWars = await fetchAPIPlanets();
@@ -18,6 +24,8 @@ function Provider({ children }) {
     setData,
     filters,
     setFilterOfName,
+    filterByNumericValues,
+    setFilterByNumericValues,
   };
 
   useEffect(() => {
