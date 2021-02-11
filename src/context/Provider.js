@@ -20,6 +20,13 @@ function Provider({ children }) {
     });
   };
 
+  const deleteFilter = (index) => {
+    setPlanetsStarWars(filterPlanets);
+    const newFilter = filters.slice();
+    newFilter.splice(index, 1);
+    setFilters(newFilter);
+  };
+
   const getFilters = () => {
     filters.forEach((filter) => {
       const { column, comparison, value } = filter;
@@ -58,6 +65,7 @@ function Provider({ children }) {
     fetchPlanets,
     searchPlanets,
     setFilters,
+    deleteFilter,
   };
 
   return (
