@@ -1,12 +1,19 @@
 import React from 'react';
 import Provider from './context/Provider';
-import Planets from './pages/Planets';
+import FilterByName from './components/FilterByName';
+import FilterByNumeric from './components/FilterByNumeric';
+import TablePlanets from './components/TablePlanets';
 import './App.css';
 
 function App() {
   return (
     <Provider>
-      <Planets />
+      <div>
+        Planets - Star Wars
+        <FilterByName />
+        <FilterByNumeric />
+        <TablePlanets />
+      </div>
     </Provider>
   );
 }
