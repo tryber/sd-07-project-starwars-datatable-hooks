@@ -7,7 +7,7 @@ export default function Table() {
   const { filterByName } = filters;
 
   const renderTableBody = () => {
-    const { filterByNumericValues } = filters;
+    const { filterByNumericValues, order } = filters;
     let preFiltered = data;
     filterByNumericValues.forEach((filter) => {
       const { column, comparison, value } = filter;
@@ -26,7 +26,32 @@ export default function Table() {
       });
     });
 
-    // console.log(preFiltered)
+    preFiltered.sort((a, b) => {
+      const one = 1;
+      const minusOne = -1;
+      const zero = 0;
+      if (order.column === 'name') {
+        if (a[order.column] > b[order.column]) {
+          if (order.sort === 'ASC') return one;
+          return minusOne;
+        }
+        if (a[order.column] < b[order.column]) {
+          if (order.sort === 'ASC') return minusOne;
+          return one;
+        }
+        return zero;
+      }
+      if (Number(a[order.column]) > Number(b[order.column])) {
+        if (order.sort === 'ASC') return one;
+        return minusOne;
+      }
+      if (Number(a[order.column]) < Number(b[order.column])) {
+        if (order.sort === 'ASC') return minusOne;
+        return one;
+      }
+      return zero;
+    });
+
     return preFiltered.map((planet, index) => {
       if (planet.name.toLowerCase().includes(filterByName)) {
         return (
@@ -34,7 +59,7 @@ export default function Table() {
             { Object.keys(planet).map((planetKey) => {
               if (planetKey === 'residents') return null;
               return (
-                <td key={ planetKey }>
+                <td key={ planetKey } data-testid={ `planet-${planetKey}` }>
                   { planet[planetKey] }
                 </td>
               );

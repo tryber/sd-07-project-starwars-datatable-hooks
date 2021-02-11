@@ -8,6 +8,10 @@ const StarWarsProvider = ({ children }) => {
   const [filters, setFilters] = useState({
     filterByName: '',
     filterByNumericValues: [],
+    order: {
+      column: 'name',
+      sort: 'ASC',
+    },
   });
   const [usedFilters, setUsedFilters] = useState([]);
 
@@ -40,6 +44,10 @@ const StarWarsProvider = ({ children }) => {
     setFilters({ ...filters, filterByNumericValues: newFilters });
   };
 
+  const changeSort = (newOrder) => {
+    setFilters({ ...filters, order: newOrder });
+  };
+
   const context = {
     data,
     filters,
@@ -47,6 +55,7 @@ const StarWarsProvider = ({ children }) => {
     updateTextFilter,
     updateValueFilters,
     removeFilter,
+    changeSort,
   };
 
   return (

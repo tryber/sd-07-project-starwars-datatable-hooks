@@ -61,6 +61,7 @@ export default function ValuesFilter() {
           </div>
         ))}
       </section>
+      Filtrar:
       <select
         data-testid="column-filter"
         onChange={

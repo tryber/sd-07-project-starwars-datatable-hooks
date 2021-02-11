@@ -4,6 +4,7 @@ import { StarWarsProvider } from './context/Provider';
 import Table from './components/Table';
 import TextFilter from './components/TextFilter';
 import ValuesFilter from './components/ValuesFilter';
+import SortOptions from './components/SortOptions';
 
 import './App.css';
 
@@ -12,6 +13,7 @@ function App() {
     <StarWarsProvider>
       <TextFilter />
       <ValuesFilter />
+      <SortOptions />
       <Table />
     </StarWarsProvider>
   );
