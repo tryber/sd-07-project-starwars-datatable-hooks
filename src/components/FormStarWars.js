@@ -2,7 +2,12 @@ import React, { useContext, useState } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 const FormStarWars = () => {
-  const { searchPlanets, filters, setFilters, deleteFilter } = useContext(StarWarsContext);
+  const {
+    searchPlanets,
+    filters,
+    setFilters,
+    deleteFilter,
+  } = useContext(StarWarsContext);
   const [filterValues, setFilterValues] = useState({
     column: 'population',
     comparison: 'maior que',
