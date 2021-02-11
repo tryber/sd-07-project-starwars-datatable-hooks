@@ -9,7 +9,7 @@ function App() {
   return (
     <Provider>
       <div>
-        Planets - Star Wars
+        <h5>Planets - Star Wars</h5>
         <FilterByName />
         <FilterByNumeric />
         <TablePlanets />
