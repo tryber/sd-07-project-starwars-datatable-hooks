@@ -1,18 +1,19 @@
 import React, { useContext, useState } from 'react';
 import { Context } from '../context/StarWarsProvider';
+import CardFilter from './CardFilter';
 
 /** FONTES: https://pt-br.reactjs.org/docs/faq-ajax.html
  *  https://medium.com/better-programming/how-to-fetch-data-from-an-api-with-react-hooks-9e7202b8afcd */
 
 const Table = () => {
-  const { data, planetsLoaded,
-    setFilters, copyData, setCopyData } = useContext(Context);
+  const { data, planetsLoaded, filters,
+    setFilters, copyData, setCopyData, applyFilters } = useContext(Context);
   const backSpace = 8;
   const del = 46;
   let tecla = '';
 
   const [column, setColumn] = useState('population');
-  const [comparason, setComparason] = useState('maior que');
+  const [comparison, setComparason] = useState('maior que');
   const [num, setNum] = useState('');
   const [search, setSearch] = useState('');
 
@@ -46,19 +47,11 @@ const Table = () => {
   }
 
   function handleFilters() {
-    setFilters({ filterByNumericValues: { column, comparason, value: num } });
-    let newData;
+    applyFilters(column, comparison, num);
+  }
 
-    if (comparason === 'maior que') {
-      newData = data.filter((planet) => parseInt(planet[column], 10) > parseInt(num, 10));
-    } else if (comparason === 'menor que') {
-      newData = data.filter((planet) => parseInt(planet[column], 10) < parseInt(num, 10));
-    } else {
-      newData = data.filter(
-        (planet) => parseInt(planet[column], 10) === parseInt(num, 10),
-      );
-    }
-    setCopyData(newData);
+  function deleteFilters() {
+    setCopyData(data);
   }
 
   return (
@@ -88,21 +81,31 @@ const Table = () => {
       <input
         name="num"
         type="number"
+        value={ num }
         data-testid="value-filter"
         onChange={ handleChange }
       />
       <button
         type="button"
+        value="X"
+        name="filter"
+        onClick={ deleteFilters }
+        data-testid="filter"
+      >
+        X
+      </button>
+      <button
+        type="button"
         data-testid="button-filter"
         onClick={ handleFilters }
       >
-        dicionar Filtro
+        Aplicar Filtro
       </button>
-
+      {filters.filterByNumericValues !== [] ? (<CardFilter />) : null}
       <table border="1">
         <thead>
           <tr>
-            {Object.keys(copyData[0])
+            {Object.keys(data[0])
               .map((item, index) => (<th key={ index }>{ item }</th>))}
           </tr>
         </thead>

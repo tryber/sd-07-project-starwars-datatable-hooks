@@ -44,6 +44,25 @@ const StarWarsProvider = ({ children }) => {
     fetchData();
   }, []);
 
+  function applyFilters(column, comparison, value) {
+    setFilters({
+      filterByNumericValues: [
+        ...filters.filterByNumericValues,
+        { column, comparison, value }] });
+    let newData;
+    console.log(column, value, comparison);
+    if (comparison === 'maior que') {
+      newData = copyData.filter((planet) => parseInt(planet[column], 10) > parseInt(value, 10));
+    } else if (comparison === 'menor que') {
+      newData = copyData.filter((planet) => parseInt(planet[column], 10) < parseInt(value, 10));
+    } else {
+      newData = copyData.filter(
+        (planet) => parseInt(planet[column], 10) === parseInt(value, 10),
+      );
+    }
+    setCopyData(newData);
+  }
+
   const context = {
     data,
     setPlanets,
@@ -53,7 +72,8 @@ const StarWarsProvider = ({ children }) => {
     planetsLoaded,
     fetchData,
     filters,
-    setFilters };
+    setFilters,
+    applyFilters };
 
   return (
     <StarWarsContext.Provider value={ context }>
