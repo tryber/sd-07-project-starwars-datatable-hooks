@@ -84,10 +84,6 @@ const StarWarsProvider = ({ children }) => {
     if (newData) setCopyData(newData);
   }
 
-/*   useEffect(() => {
-    setCopyData(data);
-  }, [filters]); */
-
   const context = {
     data,
     setPlanets,
