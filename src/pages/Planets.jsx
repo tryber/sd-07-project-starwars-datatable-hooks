@@ -1,6 +1,7 @@
 import React from 'react';
-import FilterByName from '../components/FilterByName';
+
 import FilterByNumeric from '../components/FilterByNumeric';
+import FilterByName from '../components/FilterByName';
 import TablePlanets from '../components/TablePlanets';
 
 function Planets() {
