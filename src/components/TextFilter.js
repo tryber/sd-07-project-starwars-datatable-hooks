@@ -7,6 +7,7 @@ export default function TextFilter() {
 
   return (
     <label htmlFor="name-filter">
+      Filtrar por Nome:
       <input
         type="text"
         data-testid="name-filter"

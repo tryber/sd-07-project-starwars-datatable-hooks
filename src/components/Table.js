@@ -4,10 +4,10 @@ import { StarWarsContext } from '../context/Provider';
 
 export default function Table() {
   const { data, filters } = useContext(StarWarsContext);
-  console.log(data);
   const { filterByName } = filters;
-  const renderTableBody = () => data
-    .map((planet, index) => {
+
+  const renderTableBody = () => {
+    const nameFiltered = data.map((planet, index) => {
       if (planet.name.toLowerCase().includes(filterByName)) {
         return (
           <tr key={ index }>
@@ -23,6 +23,8 @@ export default function Table() {
       }
       return null;
     });
+    return nameFiltered;
+  };
 
   return (
     <table>
