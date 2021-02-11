@@ -27,6 +27,7 @@ function Form() {
     setValue('');
   };
 
+ // function inspired by vitor-rc1   
   const checkSelected = (entry) => {
     let columnSelected = false;
     filterByNumericValues.forEach((filter) => {
