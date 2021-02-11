@@ -52,9 +52,11 @@ const StarWarsProvider = ({ children }) => {
     let newData;
     console.log(column, value, comparison);
     if (comparison === 'maior que') {
-      newData = copyData.filter((planet) => parseInt(planet[column], 10) > parseInt(value, 10));
+      newData = copyData
+        .filter((planet) => parseInt(planet[column], 10) > parseInt(value, 10));
     } else if (comparison === 'menor que') {
-      newData = copyData.filter((planet) => parseInt(planet[column], 10) < parseInt(value, 10));
+      newData = copyData
+        .filter((planet) => parseInt(planet[column], 10) < parseInt(value, 10));
     } else {
       newData = copyData.filter(
         (planet) => parseInt(planet[column], 10) === parseInt(value, 10),
