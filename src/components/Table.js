@@ -7,7 +7,27 @@ export default function Table() {
   const { filterByName } = filters;
 
   const renderTableBody = () => {
-    const nameFiltered = data.map((planet, index) => {
+    const { filterByNumericValues } = filters;
+    let preFiltered = data;
+    filterByNumericValues.forEach((filter) => {
+      const { column, comparison, value } = filter;
+      preFiltered = preFiltered.filter((planet) => {
+        let check = false;
+        if (comparison === 'maior que' && Number(planet[column]) > Number(value)) {
+          check = true;
+        }
+        if (comparison === 'menor que' && Number(planet[column]) < Number(value)) {
+          check = true;
+        }
+        if (comparison === 'igual a' && Number(planet[column]) === Number(value)) {
+          check = true;
+        }
+        return check;
+      });
+    });
+
+    // console.log(preFiltered)
+    return preFiltered.map((planet, index) => {
       if (planet.name.toLowerCase().includes(filterByName)) {
         return (
           <tr key={ index }>
@@ -23,7 +43,6 @@ export default function Table() {
       }
       return null;
     });
-    return nameFiltered;
   };
 
   return (

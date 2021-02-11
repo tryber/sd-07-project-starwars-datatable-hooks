@@ -7,7 +7,7 @@ const StarWarsProvider = ({ children }) => {
   const [data, setData] = useState([]);
   const [filters, setFilters] = useState({
     filterByName: '',
-    filterByNumericValues: [{ comparison: 'maior que', column: 'population', value: 0 }],
+    filterByNumericValues: [],
   });
   const [usedFilters, setUsedFilters] = useState([]);
 
@@ -30,12 +30,23 @@ const StarWarsProvider = ({ children }) => {
     setFilters({ ...filters, filterByNumericValues: newFilter });
   };
 
+  const removeFilter = (column) => {
+    const newFilters = filters.filterByNumericValues
+      .filter((filter) => filter.column !== column);
+
+    const newUsedFilters = usedFilters.filter((usedFilter) => usedFilter !== column);
+
+    setUsedFilters(newUsedFilters);
+    setFilters({ ...filters, filterByNumericValues: newFilters });
+  };
+
   const context = {
     data,
     filters,
     usedFilters,
     updateTextFilter,
     updateValueFilters,
+    removeFilter,
   };
 
   return (

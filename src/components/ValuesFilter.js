@@ -3,7 +3,12 @@ import React, { useContext, useEffect, useState } from 'react';
 import { StarWarsContext } from '../context/Provider';
 
 export default function ValuesFilter() {
-  const { usedFilters, updateValueFilters } = useContext(StarWarsContext);
+  const {
+    usedFilters,
+    updateValueFilters,
+    removeFilter,
+    filters,
+  } = useContext(StarWarsContext);
   const [chosenFilters, setChosenFilters] = useState({
     column: 'population',
     comparison: 'maior que',
@@ -32,6 +37,30 @@ export default function ValuesFilter() {
 
   return (
     <div>
+      <section>
+        filtros ativos:
+        {filters.filterByNumericValues.map((filter, index) => (
+          <div data-testid="filter" key={ index }>
+            <span>
+              { `${filter.column} ` }
+            </span>
+            <span>
+              { `${filter.comparison} ` }
+            </span>
+            <span>
+              { `${filter.value} ` }
+            </span>
+            <button
+              type="button"
+              onClick={ () => {
+                removeFilter(filter.column);
+              } }
+            >
+              x
+            </button>
+          </div>
+        ))}
+      </section>
       <select
         data-testid="column-filter"
         onChange={
