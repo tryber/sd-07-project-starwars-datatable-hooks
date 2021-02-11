@@ -279,7 +279,7 @@ describe('Não utilize filtros repetidos', () => {
     expect(column).toHaveProperty('nodeName', 'SELECT');
     foundColumnFilter = Array.from(column.children).map(child => {
       expect(child).toHaveProperty('nodeName', 'OPTION');
-      return child.innerHTML;
+      return child.innerHTML; 
     });
     expect(foundColumnFilter).toEqual(expect.arrayContaining(['orbital_period', 'diameter', 'rotation_period', 'surface_water']));
   });

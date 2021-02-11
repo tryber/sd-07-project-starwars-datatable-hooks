@@ -12,7 +12,6 @@ function Provider({ children }) {
     comparison: '',
     value: 0,
   });
-  console.log(filterByNumericValues);
 
   async function getFetchPlanets() {
     const planetsStarWars = await fetchAPIPlanets();
