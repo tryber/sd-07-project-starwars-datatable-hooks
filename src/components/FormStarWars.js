@@ -7,11 +7,17 @@ const FormStarWars = () => {
     filters,
     setFilters,
     deleteFilter,
+    setOrderColumns,
   } = useContext(StarWarsContext);
   const [filterValues, setFilterValues] = useState({
     column: 'population',
     comparison: 'maior que',
     value: '',
+  });
+
+  const [orderValue, setOrderValue] = useState({
+    column: 'name',
+    sort: 'ASC',
   });
 
   const inputHandler = async ({ target }) => {
@@ -32,6 +38,10 @@ const FormStarWars = () => {
 
   const getFilterValues = ({ target: { value, name } }) => {
     setFilterValues({ ...filterValues, [name]: value });
+  };
+
+  const getOrderValue = ({ target: { value, name } }) => {
+    setOrderValue({ ...orderValue, [name]: value });
   };
 
   const getNumbersFilter = () => (
@@ -75,6 +85,49 @@ const FormStarWars = () => {
       >
         Filtro
       </button>
+      <div>
+        <select
+          name="column"
+          data-testid="column-sort"
+          onChange={ getOrderValue }
+        >
+          <option value="name">name</option>
+          <option value="population">population</option>
+          <option value="orbital_period">orbital_period</option>
+          <option value="diameter">diameter</option>
+          <option value="rotation_period">rotation_period</option>
+          <option value="surface_water">surface_water</option>
+        </select>
+        <label htmlFor="ASC">
+          Ascendente
+          <input
+            data-testid="column-sort-input-asc"
+            id="ASC"
+            name="sort"
+            type="radio"
+            value="ASC"
+            onClick={ getOrderValue }
+          />
+        </label>
+        <label htmlFor="DESC">
+          Descendente
+          <input
+            data-testid="column-sort-input-desc"
+            id="DESC"
+            name="sort"
+            type="radio"
+            value="DESC"
+            onClick={ getOrderValue }
+          />
+        </label>
+        <button
+          data-testid="column-sort-button"
+          type="button"
+          onClick={ () => setOrderColumns(orderValue) }
+        >
+          Ordenar
+        </button>
+      </div>
       {filters.map((filter, index) => (
         <div data-testid="filter" key={ index }>
           <p>{filter.column}</p>

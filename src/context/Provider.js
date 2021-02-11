@@ -8,6 +8,51 @@ function Provider({ children }) {
   const [isFetching, setFetching] = useState(true);
   const [filterPlanets, setfilterPlanets] = useState([]);
   const [filters, setFilters] = useState([]);
+  const [orderColumns, setOrderColumns] = useState({
+    column: 'name',
+    sort: 'ASC',
+  });
+
+  // Compares pegos no stackoverflow
+  const compare = (a, b) => {
+    const { column } = orderColumns;
+    const menosum = -1;
+    const zero = 0;
+    if (a[column] < b[column]) {
+      return menosum;
+    }
+    if (a[column] > b[column]) {
+      return 1;
+    }
+    return zero;
+  };
+
+  const compareDesc = (a, b) => {
+    const { column } = orderColumns;
+    const menosum = -1;
+    const zero = 0;
+    if (a[column] > b[column]) {
+      return menosum;
+    }
+    if (a[column] < b[column]) {
+      return 1;
+    }
+    return zero;
+  };
+
+  const orderTable = () => {
+    const { sort } = orderColumns;
+    switch (sort) {
+    case 'ASC':
+      setPlanetsStarWars((previous) => previous.sort((a, b) => compare(a, b)));
+      break;
+    case 'DESC':
+      setPlanetsStarWars((previous) => previous.sort((a, b) => compareDesc(a, b)));
+      break;
+    default:
+      break;
+    }
+  };
 
   const fetchPlanets = async () => {
     if (!isFetching) return;
@@ -28,6 +73,8 @@ function Provider({ children }) {
   };
 
   const getFilters = () => {
+    const zero = 0;
+    if (filters.length === zero) return undefined;
     filters.forEach((filter) => {
       const { column, comparison, value } = filter;
       if (comparison === 'maior que') {
@@ -45,27 +92,32 @@ function Provider({ children }) {
 
   useEffect(() => {
     getFilters();
-  }, [filters]);
+    orderTable();
+  }, [filters, orderColumns, planetsStarWars]);
 
   async function searchPlanets(value) {
     if (value === '') {
       setFetching(() => true);
       setPlanetsStarWars(() => filterPlanets);
+      orderTable();
     }
 
     const filter = filterPlanets
       .filter((planet) => planet.name.includes(value));
     setPlanetsStarWars(() => filter);
+    orderTable();
   }
 
   const contextValue = {
     planetsStarWars,
     isFetching,
     filters,
+    orderColumns,
     fetchPlanets,
     searchPlanets,
     setFilters,
     deleteFilter,
+    setOrderColumns,
   };
 
   return (
