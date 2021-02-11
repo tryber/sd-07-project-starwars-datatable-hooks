@@ -28,6 +28,7 @@ export default function SortOptions() {
         <input
           type="radio"
           id="ASC"
+          data-testid="column-sort-input-asc"
           name="sort-direction"
           value="ASC"
           onClick={ ({ target }) => setOrderInfo({ ...orderInfo, sort: target.value }) }
@@ -38,6 +39,7 @@ export default function SortOptions() {
         <input
           type="radio"
           id="DESC"
+          data-testid="column-sort-input-desc"
           name="sort-direction"
           value="DESC"
           onClick={ ({ target }) => setOrderInfo({ ...orderInfo, sort: target.value }) }
