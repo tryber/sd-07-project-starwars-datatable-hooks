@@ -6,7 +6,7 @@ import CardFilter from './CardFilter';
  *  https://medium.com/better-programming/how-to-fetch-data-from-an-api-with-react-hooks-9e7202b8afcd */
 
 const Table = () => {
-  const { data, planetsLoaded, filters,
+  const { data, planetsLoaded, filters, tableHeader,
     setFilters, copyData, setCopyData, applyFilters } = useContext(Context);
   const backSpace = 8;
   const del = 46;
@@ -24,7 +24,7 @@ const Table = () => {
   function handleInput({ target }) {
     const { value } = target;
     let newData;
-    setFilters({ filterByName: { name: value } });
+    setFilters({ ...filters, filterByName: { name: value } });
     setSearch(value);
 
     if (value === '' || tecla === backSpace || tecla === del) {
@@ -48,10 +48,6 @@ const Table = () => {
 
   function handleFilters() {
     applyFilters(column, comparison, num);
-  }
-
-  function deleteFilters() {
-    setCopyData(data);
   }
 
   return (
@@ -87,26 +83,16 @@ const Table = () => {
       />
       <button
         type="button"
-        value="X"
-        name="filter"
-        onClick={ deleteFilters }
-        data-testid="filter"
-      >
-        X
-      </button>
-      <button
-        type="button"
         data-testid="button-filter"
         onClick={ handleFilters }
       >
         Aplicar Filtro
       </button>
-      {filters.filterByNumericValues !== [] ? (<CardFilter />) : null}
+      <CardFilter />
       <table border="1">
         <thead>
           <tr>
-            {Object.keys(data[0])
-              .map((item, index) => (<th key={ index }>{ item }</th>))}
+            {tableHeader.map((item, index) => (<th key={ index }>{ item }</th>))}
           </tr>
         </thead>
         <tbody>

@@ -1,32 +1,35 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { Context } from '../context/StarWarsProvider';
 
 function CardFilter() {
-  /* const { filters } = useContext(Context);
+  const { filters, reapplyFilters, setFilters, data, setCopyData } = useContext(Context);
+  const { filterNumeric } = filters;
 
-  function deleteFilters() {
-    console.log('DELETOU');
+  function deleteFilters(index) {
+    setCopyData(data);
+    const { filterByNumericValues } = filters;
+    filterByNumericValues.splice(index, 1);
+    setFilters({ ...filters, filterByNumericValues });
+    reapplyFilters();
   }
-
-   if (filters.filterByNumericValues[0].column !== '') {
-    console.log(filters.filterByNumericValues !== []);
+  if (filterNumeric) {
     return (
       <ol>
         {filters.filterByNumericValues.map((line, index) => (
-          <li key={ index }>
+          <li key={ index } data-testid="filter">
             {`${line.column} | ${line.comparison} | ${line.value}`}
             <button
               type="button"
               value="X"
               name="filter"
-              onClick={ deleteFilters }
-              data-testid="filter"
+              onClick={ () => deleteFilters(index) }
             >
               X
             </button>
           </li>
         ))}
       </ol>);
-  } */
+  }
   return (<div />);
 }
 

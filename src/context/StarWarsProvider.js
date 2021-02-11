@@ -4,13 +4,8 @@ import StarWarsContext from './StarWarsContext';
 
 const initialStateFilter = {
   filterByName: { name: '' },
-  filterByNumericValues: [
-    {
-      column: '',
-      comparison: '',
-      value: '',
-    },
-  ],
+  filterByNumericValues: [],
+  filterNumeric: false,
 };
 
 const StarWarsProvider = ({ children }) => {
@@ -19,6 +14,7 @@ const StarWarsProvider = ({ children }) => {
   const [filters, setFilters] = useState(initialStateFilter);
   const [planetsError, setPlanetsError] = useState(false);
   const [planetsLoaded, setPlanetsLoaded] = useState(false);
+  const [tableHeader, setTableHeader] = useState([]);
 
   async function fetchData() {
     const endpoint = 'https://swapi-trybe.herokuapp.com/api/planets/';
@@ -32,6 +28,7 @@ const StarWarsProvider = ({ children }) => {
               results.map((item) => delete item.residents);
               setPlanets(results);
               setCopyData(results);
+              setTableHeader(Object.keys(results[0]));
             } else {
               setPlanetsError(results);
             }
@@ -48,9 +45,9 @@ const StarWarsProvider = ({ children }) => {
     setFilters({
       filterByNumericValues: [
         ...filters.filterByNumericValues,
-        { column, comparison, value }] });
+        { column, comparison, value }],
+      filterNumeric: true });
     let newData;
-    console.log(column, value, comparison);
     if (comparison === 'maior que') {
       newData = copyData
         .filter((planet) => parseInt(planet[column], 10) > parseInt(value, 10));
@@ -65,6 +62,32 @@ const StarWarsProvider = ({ children }) => {
     setCopyData(newData);
   }
 
+  function reapplyFilters() {
+    const { filterByNumericValues } = filters;
+    console.log(filterByNumericValues);
+    let newData;
+
+    filterByNumericValues.forEach(({ column, comparison, value }) => {
+      if (comparison === 'maior que') {
+        newData = copyData
+          .filter((planet) => parseInt(planet[column], 10) > parseInt(value, 10));
+      } else if (comparison === 'menor que') {
+        newData = copyData
+          .filter((planet) => parseInt(planet[column], 10) < parseInt(value, 10));
+      } else {
+        newData = copyData.filter(
+          (planet) => parseInt(planet[column], 10) === parseInt(value, 10),
+        );
+      }
+    });
+
+    if (newData) setCopyData(newData);
+  }
+
+/*   useEffect(() => {
+    setCopyData(data);
+  }, [filters]); */
+
   const context = {
     data,
     setPlanets,
@@ -75,7 +98,9 @@ const StarWarsProvider = ({ children }) => {
     fetchData,
     filters,
     setFilters,
-    applyFilters };
+    applyFilters,
+    reapplyFilters,
+    tableHeader };
 
   return (
     <StarWarsContext.Provider value={ context }>
