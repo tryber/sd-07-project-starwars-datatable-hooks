@@ -4,19 +4,19 @@ import StarWarsContext from './StarWarsContext';
 import getPlanetsFetch from '../service/getPlanetsAPI';
 
 function Provider({ children }) {
-  const [data, setData] = useState([]);
+  const [planets, setPlanets] = useState([]);
 
   useEffect(() => {
     const fetchPlanets = async () => {
       const planetsList = await getPlanetsFetch();
       planetsList.map((planet) => delete planet.residents);
-      setData(planetsList);
+      setPlanets(planetsList);
     };
     fetchPlanets();
   }, []);
 
   const value = {
-    data,
+    planets,
   };
 
   return (
