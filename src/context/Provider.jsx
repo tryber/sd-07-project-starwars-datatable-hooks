@@ -12,9 +12,21 @@ function Provider({ children }) {
     comparison: '',
     value: 0,
   });
+  const [orderColumn, setOrderColumn] = useState({
+    column: '',
+    sort: '',
+  });
 
   async function getFetchPlanets() {
     const planetsStarWars = await fetchAPIPlanets();
+    const elementName = 'name';
+    planetsStarWars.sort((a, b) => {
+      const negative = -1;
+      const neutral = 0;
+      if (a[elementName] > b[elementName]) return 1;
+      if (a[elementName] < b[elementName]) return negative;
+      return neutral;
+    });
     setData(planetsStarWars);
   }
 
@@ -25,6 +37,8 @@ function Provider({ children }) {
     setFilterOfName,
     filterByNumericValues,
     setFilterByNumericValues,
+    orderColumn,
+    setOrderColumn,
   };
 
   useEffect(() => {

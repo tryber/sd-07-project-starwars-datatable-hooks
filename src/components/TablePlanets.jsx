@@ -29,7 +29,7 @@ function TablePlanets() {
           { data.filter((planet) => planet.name.includes(!value ? '' : value))
             .map((planet) => (
               <tr key={ planet.name }>
-                <td>{ planet.name }</td>
+                <td data-testid="planet-name">{ planet.name }</td>
                 <td>{ planet.climate }</td>
                 <td>{ planet.created }</td>
                 <td>{ planet.diameter }</td>
