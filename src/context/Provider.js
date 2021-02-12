@@ -93,7 +93,7 @@ function Provider({ children }) {
   useEffect(() => {
     getFilters();
     orderTable();
-  }, [filters, orderColumns, planetsStarWars]);
+  }, [filters, orderColumns]);
 
   async function searchPlanets(value) {
     if (value === '') {
