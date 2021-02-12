@@ -20,7 +20,7 @@ function Ordem() {
 
   return (
     <div>
-      <select name="select" data-testid="column-sort" onClick={ handleChange }>
+      <select name="select" data-testid="column-sort" onChange={ handleChange }>
         {tableHeader.map((item, index) => (<option key={ index }>{ item }</option>))}
       </select>
       <label htmlFor="asc">

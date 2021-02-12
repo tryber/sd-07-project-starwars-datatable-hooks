@@ -4,6 +4,7 @@ import CardFilter from './CardFilter';
 import Ordem from './Ordem';
 
 const Table = () => {
+  console.log('Table');
   const { data, planetsLoaded, filters, tableHeader,
     setFilters, copyData, setCopyData, applyFilters } = useContext(Context);
   const backSpace = 8;
@@ -103,6 +104,7 @@ const Table = () => {
                   <td
                     key={ i }
                     data-testid={ i === columName ? 'planet-name' : '' }
+                    className={ i === columName ? 'planet-name' : '' }
                   >
                     { item }
                   </td>))}
