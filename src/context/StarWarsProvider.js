@@ -109,41 +109,36 @@ const StarWarsProvider = ({ children }) => {
     if (newData) setCopyData(newData);
   }
 
-  function ordinationNameDesc(a, b) {
-    if (a.name > b.name) {
-      return aMenor;
-    }
-    if (a.name < b.name) {
-      return bMenor;
-    }
-    return bIgaul;
-  }
-
   function ordinationColumn(sort, col) {
-    switch (col) {
-    case 'orbital_period':
-      if (sort === 'DESC') {
-        copyData.sort((a, b) => b.orbital_period - a.orbital_period);
-      } else {
-        copyData.sort((a, b) => a.orbital_period - b.orbital_period);
+    const orderDecreasing = (a, b) => b[col] - a[col];
+    const orderGrowing = (a, b) => a[col] - b[col];
+    const orderStrinDecreasing = (a, b) => {
+      if (a[col] > b[col]) {
+        return aMenor;
       }
-      break;
-    case 'population':
-      if (sort === 'DESC') {
-        copyData.sort((a, b) => b.population - a.population);
-      } else {
-        copyData.sort((a, b) => a.population - b.population);
+      if (a[col] < b[col]) {
+        return bMenor;
       }
-      break;
-    case 'name':
-      if (sort === 'DESC') {
-        copyData.sort(ordinationNameDesc);
-      } else {
-        copyData.sort(ordinationNameAsc);
+      return bIgaul;
+    };
+    const orderStrinGrowing = (a, b) => {
+      if (a[col] < b[col]) {
+        return aMenor;
       }
-      break;
-    default:
+      if (a[col] > b[col]) {
+        return bMenor;
+      }
+      return bIgaul;
+    };
+
+    if (sort === 'DESC') {
+      copyData.sort(orderStrinDecreasing);
+      copyData.sort(orderDecreasing);
+    } else {
+      copyData.sort(orderStrinGrowing);
+      copyData.sort(orderGrowing);
     }
+
     setCopyData(copyData);
   }
 
