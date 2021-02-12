@@ -8,6 +8,7 @@ function Table() {
     filters,
     setData,
   } = useContext(StarWarsContext);
+
   useEffect(() => {
     (async () => {
       const response = await getPlanets();
@@ -15,6 +16,7 @@ function Table() {
     })();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
   const filterName = (planet) => {
     const nameFilter = filters.filtersByName.name !== '';
     const filter = filters.filtersByName.name.toLowerCase();
