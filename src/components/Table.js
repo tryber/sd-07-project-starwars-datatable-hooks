@@ -1,15 +1,14 @@
 import React, { useContext, useState } from 'react';
 import { Context } from '../context/StarWarsProvider';
 import CardFilter from './CardFilter';
-
-/** FONTES: https://pt-br.reactjs.org/docs/faq-ajax.html
- *  https://medium.com/better-programming/how-to-fetch-data-from-an-api-with-react-hooks-9e7202b8afcd */
+import Ordem from './Ordem';
 
 const Table = () => {
   const { data, planetsLoaded, filters, tableHeader,
     setFilters, copyData, setCopyData, applyFilters } = useContext(Context);
   const backSpace = 8;
   const del = 46;
+  const columName = 0;
   let tecla = '';
 
   const [column, setColumn] = useState('population');
@@ -89,6 +88,7 @@ const Table = () => {
         Aplicar Filtro
       </button>
       <CardFilter />
+      <Ordem />
       <table border="1">
         <thead>
           <tr>
@@ -98,7 +98,14 @@ const Table = () => {
         <tbody>
           {copyData.map((row, index) => (
             <tr key={ index }>
-              {Object.values(row).map((item, i) => (<td key={ i }>{ item }</td>))}
+              {Object.values(row)
+                .map((item, i) => (
+                  <td
+                    key={ i }
+                    data-testid={ i === columName ? 'planet-name' : '' }
+                  >
+                    { item }
+                  </td>))}
             </tr>
           ))}
         </tbody>

@@ -6,10 +6,16 @@ function CardFilter() {
   const { filterNumeric } = filters;
 
   function deleteFilters(index) {
+    const emptyArray = 0;
     setCopyData(data);
     const { filterByNumericValues } = filters;
     filterByNumericValues.splice(index, 1);
     setFilters({ ...filters, filterByNumericValues });
+    console.log(Object.keys(filterByNumericValues).length);
+    if (Object.keys(filterByNumericValues).length === emptyArray) {
+      setFilters({ ...filters, filterNumeric: false });
+    }
+
     reapplyFilters();
   }
   if (filterNumeric) {
