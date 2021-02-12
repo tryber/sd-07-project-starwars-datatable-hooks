@@ -106,7 +106,7 @@ const FormStarWars = () => {
             name="sort"
             type="radio"
             value="ASC"
-            onClick={ getOrderValue }
+            onChange={ getOrderValue }
           />
         </label>
         <label htmlFor="DESC">
@@ -117,7 +117,7 @@ const FormStarWars = () => {
             name="sort"
             type="radio"
             value="DESC"
-            onClick={ getOrderValue }
+            onChange={ getOrderValue }
           />
         </label>
         <button

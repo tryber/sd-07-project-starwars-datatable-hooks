@@ -18,36 +18,42 @@ function Provider({ children }) {
     const { column } = orderColumns;
     const menosum = -1;
     const zero = 0;
-    if (a[column] < b[column]) {
-      return menosum;
+    if (column === 'name') {
+      if (a[column].charCodeAt() < b[column].charCodeAt()) {
+        return menosum;
+      }
+      if (a[column].charCodeAt() > b[column].charCodeAt()) {
+        return 1;
+      }
+      return zero;
     }
-    if (a[column] > b[column]) {
-      return 1;
-    }
-    return zero;
+    return parseFloat(a[column]) - parseFloat(b[column]);
   };
 
   const compareDesc = (a, b) => {
     const { column } = orderColumns;
     const menosum = -1;
     const zero = 0;
-    if (a[column] > b[column]) {
-      return menosum;
+    if (column === 'name') {
+      if (a[column] > b[column]) {
+        return menosum;
+      }
+      if (a[column] < b[column]) {
+        return 1;
+      }
+      return zero;
     }
-    if (a[column] < b[column]) {
-      return 1;
-    }
-    return zero;
+    return parseFloat(b[column]) - parseFloat(a[column]);
   };
 
   const orderTable = () => {
     const { sort } = orderColumns;
     switch (sort) {
     case 'ASC':
-      setPlanetsStarWars((previous) => previous.sort((a, b) => compare(a, b)));
+      setPlanetsStarWars((previous) => [...previous].sort((a, b) => compare(a, b)));
       break;
     case 'DESC':
-      setPlanetsStarWars((previous) => previous.sort((a, b) => compareDesc(a, b)));
+      setPlanetsStarWars((previous) => [...previous].sort((a, b) => compareDesc(a, b)));
       break;
     default:
       break;
@@ -93,11 +99,10 @@ function Provider({ children }) {
   useEffect(() => {
     getFilters();
     orderTable();
-  }, [filters, orderColumns]);
+  }, [filters, orderColumns, filterPlanets]);
 
   async function searchPlanets(value) {
     if (value === '') {
-      setFetching(() => true);
       setPlanetsStarWars(() => filterPlanets);
       orderTable();
     }
@@ -118,6 +123,7 @@ function Provider({ children }) {
     setFilters,
     deleteFilter,
     setOrderColumns,
+    orderTable,
   };
 
   return (
