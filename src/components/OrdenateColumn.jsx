@@ -4,7 +4,7 @@ import fetchAPIPlanets from '../services/api';
 
 function OrdenateColumn() {
   const sendPlanetsStateGlobal = useContext(StarWarsContext);
-  const { setData } = sendPlanetsStateGlobal;
+  const { setData, setOrderColumn } = sendPlanetsStateGlobal;
   const [orderColumnLocal, setOrderColumnLocal] = useState('');
   const [orderAscOrDesc, setOrderAscOrDesc] = useState('');
   const [getAPI, setGetAPI] = useState([]);
@@ -40,6 +40,7 @@ function OrdenateColumn() {
     };
     const insertOrdenation = getAPI.sort(ordenate);
     setData(insertOrdenation);
+    setOrderColumn({ column: orderColumnLocal, sort: orderAscOrDesc });
   };
 
   useEffect(() => {
@@ -85,9 +86,9 @@ function OrdenateColumn() {
         </label>
       </div>
       <button
-        type="button"
+        type="submit"
         data-testid="column-sort-button"
-        onClick={ ordenateFnSet }
+        onClick={ () => ordenateFnSet() }
       >
         Ordenar
       </button>

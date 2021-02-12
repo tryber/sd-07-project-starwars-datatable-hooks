@@ -10,18 +10,18 @@ function TablePlanets() {
       <table>
         <thead>
           <tr>
-            <th>Nome</th>
-            <th>Clima</th>
-            <th>Criado em:</th>
-            <th>Diametro</th>
-            <th>Editado em:</th>
-            <th>Qtd. Filmes</th>
-            <th>Gravidade</th>
-            <th>Órbita</th>
-            <th>população</th>
-            <th>Rotação</th>
-            <th>Superfície</th>
-            <th>Terreno</th>
+            <th>Name</th>
+            <th>Climate</th>
+            <th>Created</th>
+            <th>Diameter</th>
+            <th>Edited</th>
+            <th>Filmes</th>
+            <th>Gravity</th>
+            <th>Orbital_Period</th>
+            <th>Population</th>
+            <th>Rotation_Period</th>
+            <th>Surface_Water</th>
+            <th>Terrean</th>
             <th>URL</th>
           </tr>
         </thead>

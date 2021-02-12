@@ -12,18 +12,20 @@ function Provider({ children }) {
     comparison: '',
     value: 0,
   });
+
   const [orderColumn, setOrderColumn] = useState({
-    column: '',
-    sort: '',
+    column: 'name',
+    sort: 'ASC',
   });
 
   async function getFetchPlanets() {
     const planetsStarWars = await fetchAPIPlanets();
     const elementName = 'name';
     planetsStarWars.sort((a, b) => {
+      const positive = 1;
       const negative = -1;
       const neutral = 0;
-      if (a[elementName] > b[elementName]) return 1;
+      if (a[elementName] > b[elementName]) return positive;
       if (a[elementName] < b[elementName]) return negative;
       return neutral;
     });
