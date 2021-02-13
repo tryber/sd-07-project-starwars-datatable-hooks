@@ -4,6 +4,7 @@ import Table from './Table';
 function Filter() {
   const minFilterValue = 0;
   const [addBtn, SetAddBtn] = useState(false);
+  const [isupdating, setIsUpdating] = useState(false);
   const [data, setData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   const [filterColumn, SetFilterColumn] = useState('');
@@ -23,6 +24,44 @@ function Filter() {
       },
     },
   });
+  const handleOrderChange = (e) => {
+    const { name, value } = e.target;
+    const presentFilters = filterData;
+    if (name === 'column') {
+      presentFilters.filters.order.column = value;
+    } else {
+      presentFilters.filters.order.sort = value;
+    }
+    setFilterData(presentFilters);
+    console.log(filterData);
+  };
+
+  const sortPlanets = () => {
+    const { column, sort } = filterData.filters.order;
+    console.log(column, sort);
+    let presentPlanets = filteredData;
+    if (filteredData.length < 1) {
+      presentPlanets = data;
+    }
+    function compare(a,b) {
+      if (sort === "ASC") {
+        if (parseInt(a[column], 10) > parseInt(b[column], 10)) {
+          return 1;
+        }
+        return -1;
+      }
+      if (parseInt(a[column], 10) < parseInt(b[column], 10)) {
+        return 1;
+      }
+      return -1;
+    }
+    presentPlanets.sort((a, b) => compare(a, b));
+    setFilteredData(presentPlanets);
+    if (isupdating) {
+      setIsUpdating(false);
+    }
+    setIsUpdating(true);
+  };
   // tests if filter data alredy have all filters and disable button - to be tested
   const allFiltersAdded = () => {
     const { filterByNumericValues } = filterData.filters;
@@ -32,12 +71,9 @@ function Filter() {
     }
     SetAddBtn(false);
   };
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   const filterPlanets = (rawdata) => {
     const { name } = filterData.filters.filterByName;
     const { filterByNumericValues } = filterData.filters;
-
-    console.log(rawdata, filterData, name);
     const nameFiltered = rawdata.filter((planet) => {
       if (name !== '') {
         return planet.name.includes(name);
@@ -137,24 +173,40 @@ function Filter() {
     setData(value);
   };
   // used o useEffect to fetch API data - tested.
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   const getApi = async () => {
     const url = 'https://swapi-trybe.herokuapp.com/api/planets/';
     await fetch(url)
       .then((result) => result.json())
       .then((apidata) => {
-        updateData(apidata.results);
+        const rawApi = apidata.results;
+        function compare(a,b) {
+          if (a.name > b.name) {
+            return 1;
+          }
+          return -1;
+        }
+        rawApi.sort((a, b) => compare(a, b));
+        console.log(rawApi);
+        updateData(rawApi);
       });
   };
+
   useEffect(() => {
     getApi();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
     filterPlanets(data);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data, filtername, filterData.filters.filterByNumericValues.length]);
+  },[data, filtername, filterData.filters.filterByNumericValues.length]);
+
+  useEffect(() => {
+    filterPlanets(filteredData);
+  },[isupdating]);
+  let istheredata = false;
+  const nodata = 0;
+  if (filteredData.length > nodata) {
+    istheredata = true;
+  }
   const { filterByNumericValues } = filterData.filters;
   return (
     <div>
@@ -225,6 +277,50 @@ function Filter() {
             </div>
           );
         })}
+      </div>
+      <div>
+        <select
+          name="column"
+          onChange={ handleOrderChange }
+          data-testid="column-sort"
+        >
+          { istheredata
+            ? Object.keys(filteredData[0]).map((element) => {
+              return (
+                <option key={ element } value={ element }>{ element }</option>
+              );
+            }) : <option>Carregando...</option>}
+        </select>
+        <div>
+          <input
+            onChange={ handleOrderChange }
+            name="ordem"
+            data-testid="column-sort-input-asc"
+            type="radio"
+            id="ASC"
+            value="ASC"
+            defaultChecked
+          />
+          <span>ASC</span>
+        </div>
+        <div>
+          <input
+            onChange={ handleOrderChange }
+            name="ordem"
+            data-testid="column-sort-input-desc"
+            type="radio"
+            id="DESC"
+            value="DESC"
+          />
+          <span>DESC</span>
+        </div>
+        <button
+          onClick={ sortPlanets }
+          type="button"
+          data-testid="column-sort-button"
+        >
+          Ordenar
+        </button>
       </div>
       <Table planets={ filteredData } />
     </div>

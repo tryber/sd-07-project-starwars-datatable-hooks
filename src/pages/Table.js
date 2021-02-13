@@ -41,7 +41,7 @@ function Table({ planets }) {
             } = planet;
             return (
               <tr key={ index }>
-                <td>{ name }</td>
+                <td data-testid="planet-name">{ name }</td>
                 <td>{ climate }</td>
                 <td>{ created }</td>
                 <td>{ diameter }</td>
