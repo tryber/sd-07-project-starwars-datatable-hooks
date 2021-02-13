@@ -43,17 +43,19 @@ function Filter() {
     if (filteredData.length < 1) {
       presentPlanets = data;
     }
-    function compare(a,b) {
-      if (sort === "ASC") {
+    function compare(a, b) {
+      const one = 1;
+      const minusone = -1;
+      if (sort === 'ASC') {
         if (parseInt(a[column], 10) > parseInt(b[column], 10)) {
-          return 1;
+          return one;
         }
-        return -1;
+        return minusone;
       }
       if (parseInt(a[column], 10) < parseInt(b[column], 10)) {
-        return 1;
+        return one;
       }
-      return -1;
+      return minusone;
     }
     presentPlanets.sort((a, b) => compare(a, b));
     setFilteredData(presentPlanets);
@@ -179,11 +181,13 @@ function Filter() {
       .then((result) => result.json())
       .then((apidata) => {
         const rawApi = apidata.results;
-        function compare(a,b) {
+        const one = 1;
+        const minusone = -1;
+        function compare(a, b) {
           if (a.name > b.name) {
-            return 1;
+            return one;
           }
-          return -1;
+          return minusone;
         }
         rawApi.sort((a, b) => compare(a, b));
         console.log(rawApi);
@@ -197,11 +201,11 @@ function Filter() {
 
   useEffect(() => {
     filterPlanets(data);
-  },[data, filtername, filterData.filters.filterByNumericValues.length]);
+  }, [data, filtername, filterData.filters.filterByNumericValues.length]);
 
   useEffect(() => {
     filterPlanets(filteredData);
-  },[isupdating]);
+  }, [isupdating]);
   let istheredata = false;
   const nodata = 0;
   if (filteredData.length > nodata) {
@@ -286,6 +290,7 @@ function Filter() {
         >
           { istheredata
             ? Object.keys(filteredData[0]).map((element) => {
+              console.log('entrounomap');
               return (
                 <option key={ element } value={ element }>{ element }</option>
               );
