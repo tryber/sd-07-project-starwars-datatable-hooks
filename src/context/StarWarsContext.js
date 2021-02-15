@@ -1,4 +1,4 @@
-import { creatContext } from 'react';
+import { createContext } from 'react';
 
 const StarWarsContext = createContext();
 
