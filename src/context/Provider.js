@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import fetchPlanets from '../services/API';
 import StarWarsContext from './StarWarsContext';
 
@@ -23,5 +24,9 @@ function GetPlanets({ children }) {
     </StarWarsContext.Provider>
   );
 }
+
+GetPlanets.propTypes = {
+  children: PropTypes.instanceOf(Object).isRequired,
+};
 
 export default GetPlanets;
