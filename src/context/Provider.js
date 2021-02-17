@@ -4,7 +4,7 @@ import fetchPlanets from '../services/API';
 import StarWarsContext from './StarWarsContext';
 
 function GetPlanets({ children }) {
-  const [response, setResponse] = useState('');
+  const [response, setResponse] = useState([]);
 
   useEffect(() => {
     async function res() {
@@ -26,7 +26,7 @@ function GetPlanets({ children }) {
 }
 
 GetPlanets.propTypes = {
-  children: PropTypes.instanceOf(Object).isRequired,
+  children: PropTypes.node.isRequired,
 };
 
 export default GetPlanets;
