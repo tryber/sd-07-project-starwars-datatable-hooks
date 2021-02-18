@@ -22,8 +22,13 @@ export default function Provider({ children }) {
   const getPlanets = async () => { setData(await API()); };
 
   useEffect(() => {
-    getPlanets();
-  }, []);
+    const { filterName } = filters;
+    if (filterName === '') {
+      getPlanets();
+    } else {
+      setData(data.filter((item) => item.name.toLowerCase().includes(filterName)));
+    }
+  }, [filters, setData, setFilters]);
 
   return (
     <StarWarsContext.Provider

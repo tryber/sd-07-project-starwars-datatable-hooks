@@ -2,8 +2,7 @@ import React, { useContext } from 'react';
 import StarWarsContext from '../context/StartWarsContext';
 
 function Table() {
-  const { data, filters } = useContext(StarWarsContext);
-  const { filterName } = filters;
+  const { data } = useContext(StarWarsContext);
 
   const theadTable = () => (
     <tr>
@@ -13,35 +12,21 @@ function Table() {
   );
 
   const tbodyTable = () => (
-    !filterName
-      ? data.map((planet, index) => (
-        <tr key={ index }>
-          { Object.values(planet)
-            .map((value, i) => (
-              <td key={ i }>
-                { value }
-              </td>))}
-        </tr>))
-      : data.filter((item) => item.name.toLowerCase()
-        .includes(filterName))
-        .map((planet, index) => (
-          <tr key={ index }>
-            { Object
-              .values(planet)
-              .map((value, i) => (
-                <td key={ i }>
-                  { value }
-                </td>
-              ))}
-          </tr>
-        ))
+    data.map((planet, index) => (
+      <tr key={ index }>
+        { Object.values(planet)
+          .map((value, i) => (
+            <td key={ i }>
+              { value }
+            </td>))}
+      </tr>))
   );
 
   return (
     <div>
       <table>
         <thead>
-          {theadTable(data)}
+          {theadTable()}
         </thead>
         <tbody>
           { tbodyTable() }
