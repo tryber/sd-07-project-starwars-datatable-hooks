@@ -13,31 +13,45 @@ function Table() {
   );
 
   const tbodyTable = () => (
-    data.map((planet, index) => (
-      <tr key={ index }>
-        { Object.values(planet)
-          .map((value, i) => (
-            <td key={ i }>
-              { value }
-            </td>))}
-      </tr>))
-  );
-
-  const tbodyTableFiltred = () => (
-    data.filter((item) => item.name.toLowerCase()
-      .includes(filterName))
-      .map((planet, index) => (
+    !filterName
+      ? data.map((planet, index) => (
         <tr key={ index }>
-          { Object
-            .values(planet)
+          { Object.values(planet)
             .map((value, i) => (
               <td key={ i }>
                 { value }
-              </td>
-            ))}
-        </tr>
-      ))
+              </td>))}
+        </tr>))
+      : data.filter((item) => item.name.toLowerCase()
+        .includes(filterName))
+        .map((planet, index) => (
+          <tr key={ index }>
+            { Object
+              .values(planet)
+              .map((value, i) => (
+                <td key={ i }>
+                  { value }
+                </td>
+              ))}
+          </tr>
+        ))
   );
+
+  // const tbodyTableFiltred = () => (
+  //   data.filter((item) => item.name.toLowerCase()
+  //     .includes(filterName))
+  //     .map((planet, index) => (
+  //       <tr key={ index }>
+  //         { Object
+  //           .values(planet)
+  //           .map((value, i) => (
+  //             <td key={ i }>
+  //               { value }
+  //             </td>
+  //           ))}
+  //       </tr>
+  //     ))
+  // );
 
   // const tbodyTableFiltredValues = () => (
   //   data.filter((item) => console.log(item[filterOption] == 304 ? item.name : null))
@@ -63,7 +77,8 @@ function Table() {
           {theadTable(data)}
         </thead>
         <tbody>
-          { !filterName ? tbodyTable(data) : tbodyTableFiltred(data, filterName) }
+          {/* { !filterName ? tbodyTable() : tbodyTableFiltred() } */}
+          { tbodyTable() }
         </tbody>
       </table>
     </div>
