@@ -26,7 +26,11 @@ export default function Provider({ children }) {
   }, []);
 
   return (
-    <StarWarsContext.Provider value={ { data, filters, options, setOptions, setFilters } }>
+    <StarWarsContext.Provider
+      value={ {
+        data, filters, options, setOptions, setFilters,
+      } }
+    >
       { children}
     </StarWarsContext.Provider>);
 }
