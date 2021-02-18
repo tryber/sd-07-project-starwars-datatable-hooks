@@ -26,7 +26,7 @@ function Table() {
         </thead>
         {
           filterResults.map((item) => (
-            <tbody key={ item.name }>
+            <tbody key={ item.index }>
               <tr>
                 <td>{item.name}</td>
                 <td>{item.rotation_period}</td>
@@ -51,4 +51,5 @@ function Table() {
 }
 
 export default Table;
+
 // linha 28 a 45 de Alexandre Faustino

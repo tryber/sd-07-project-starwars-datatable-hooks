@@ -8,6 +8,9 @@ function Provider({ children }) {
   const [data, setData] = useState([]);
   const [filterName, setFilterName] = useState('');
   const [filterResults, setFilterResults] = useState([]);
+  const [filterByNumericValues, setFilterByNumericValues] = useState({
+    column: '', comparison: '', value: '' });
+  const [resultsPlanets, setResultsPlanets] = useState([]);
 
   useEffect(() => {
     const api = async () => {
@@ -18,11 +21,33 @@ function Provider({ children }) {
     };
     api();
   }, []);
-  // codigo Eric vini
+
+  // linhas 25 a 28 codigo de Erick Vini
   useEffect(() => {
     const filterInput = data.filter(({ name }) => name.includes(filterName));
     setFilterResults(filterInput);
   }, [data, filterName]);
+
+  useEffect(() => {
+    let filterInput;
+    const { column, comparison, value } = filterByNumericValues;
+    if (column !== '') {
+      switch (comparison) {
+      case 'maior que':
+        filterInput = data
+          .filter((planet) => parseFloat(planet[column]) > parseFloat(value));
+        break;
+      case 'menor que':
+        filterInput = data
+          .filter((planet) => parseFloat(planet[column]) < parseFloat(value));
+        break;
+      default:
+        filterInput = data
+          .filter((planet) => parseFloat(planet[column]) === parseFloat(value));
+      }
+      setFilterResults(filterInput);
+    }
+  }, [data, filterByNumericValues]);
 
   return (
     <StarWarsContext.Provider
@@ -32,6 +57,9 @@ function Provider({ children }) {
         setFilterName,
         filterResults,
         setFilterResults,
+        setFilterByNumericValues,
+        resultsPlanets,
+        setResultsPlanets,
       } }
     >
       { children }
@@ -43,3 +71,5 @@ Provider.propTypes = {
 };
 
 export default Provider;
+
+
