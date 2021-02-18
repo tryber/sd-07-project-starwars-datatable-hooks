@@ -1,16 +1,24 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 import PlanetsForm from './PlanetsForm';
 
 function PlanetsTable() {
-  const { response } = useContext(StarWarsContext);
+  const { response, planetsArray, setPlanets } = useContext(StarWarsContext);
   const { filters: { filterByName: { name } } } = useContext(StarWarsContext);
-  let planetsArray = response;
-  if (name !== '') {
-    planetsArray = response.filter(({ name: planetName }) => (
+
+  useEffect(() => {
+    setPlanets(response.filter(({ name: planetName }) => (
       planetName.includes(name)
-    ));
-  }
+    )));
+  }, [name]);
+
+  // if (name !== '') {
+  //   const newArray = response.filter(({ name: planetName }) => (
+  //     planetName.includes(name)
+  //   ));
+  //   setPlanets(newArray);
+  // }
+
   const zero = 0;
   if (response.length > zero) {
     const planetsKeys = Object.keys(response[0]);

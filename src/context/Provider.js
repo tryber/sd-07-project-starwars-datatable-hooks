@@ -6,24 +6,41 @@ import StarWarsContext from './StarWarsContext';
 function GetPlanets({ children }) {
   const [response, setResponse] = useState([]);
   const [name, setName] = useState('');
+  const [column, setColumn] = useState('');
+  const [comparison, setComparison] = useState('');
+  const [value, setValue] = useState('');
+  const [planetsArray, setPlanets] = useState([]);
 
   useEffect(() => {
     async function res() {
       const planets = await fetchPlanets();
       setResponse(planets);
     }
+    setPlanets(response);
     res();
-  }, []);
+  }, [response]);
 
   const state = {
     response,
+    planetsArray,
     filters: {
       filterByName: {
         name,
       },
+      filterByNumericValues: [
+        {
+          column,
+          comparison,
+          value,
+        },
+      ],
     },
+    setPlanets,
     setName,
     setResponse,
+    setColumn,
+    setComparison,
+    setValue,
   };
 
   return (
