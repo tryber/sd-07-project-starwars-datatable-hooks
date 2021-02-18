@@ -5,6 +5,7 @@ import StarWarsContext from './StarWarsContext';
 
 function GetPlanets({ children }) {
   const [response, setResponse] = useState([]);
+  const [name, setName] = useState('');
 
   useEffect(() => {
     async function res() {
@@ -16,6 +17,13 @@ function GetPlanets({ children }) {
 
   const state = {
     response,
+    filters: {
+      filterByName: {
+        name,
+      },
+    },
+    setName,
+    setResponse,
   };
 
   return (
