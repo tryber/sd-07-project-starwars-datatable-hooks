@@ -37,39 +37,6 @@ function Table() {
         ))
   );
 
-  // const tbodyTableFiltred = () => (
-  //   data.filter((item) => item.name.toLowerCase()
-  //     .includes(filterName))
-  //     .map((planet, index) => (
-  //       <tr key={ index }>
-  //         { Object
-  //           .values(planet)
-  //           .map((value, i) => (
-  //             <td key={ i }>
-  //               { value }
-  //             </td>
-  //           ))}
-  //       </tr>
-  //     ))
-  // );
-
-  // const tbodyTableFiltredValues = () => (
-  //   data.filter((item) => console.log(item[filterOption] == 304 ? item.name : null))
-
-  // .includes(filterOption))
-  // .map((planet, index) => (
-  //   <tr key={ index }>
-  //     { Object
-  //       .values(planet)
-  //       .map((value, i) => (
-  //         <td key={ i }>
-  //           { value }
-  //         </td>
-  //       ))}
-  //   </tr>
-  // ))
-  // );
-
   return (
     <div>
       <table>
@@ -77,7 +44,6 @@ function Table() {
           {theadTable(data)}
         </thead>
         <tbody>
-          {/* { !filterName ? tbodyTable() : tbodyTableFiltred() } */}
           { tbodyTable() }
         </tbody>
       </table>
