@@ -2,28 +2,22 @@ import React, { useContext } from 'react';
 import StarWarsContext from '../context/StartWarsContext';
 
 function Form() {
-  const { setFilters } = useContext(StarWarsContext);
-  const options = [
-    'population',
-    'orbital_period',
-    'diameter',
-    'rotation_period',
-    'surface_water',
-  ];
+  const { options, setFilters } = useContext(StarWarsContext);
 
   const selectOptions = () => (
     <select
       data-testid="column-filter"
       name="column"
-      // onChange={(e) => setColumn(e.target.value)}
+      onChange={ (event) => setFilters({ filterOption: (event.target.value) }) }
     >
-      {
-        options.map((column, index) => (
-          <option key={ index } value={ `${column}` }>
-            { column }
-          </option>
-        ))
-      }
+      { !options
+        ? null
+        : Object.keys(options)
+          .map((column, index) => (
+            <option key={ index } value={ `${column}` }>
+              { column }
+            </option>
+          ))}
     </select>
   );
 
@@ -38,17 +32,17 @@ function Form() {
           onChange={ (event) => setFilters({ filterName: (event.target.value) }) }
 
         />
-        { selectOptions(options) }
+        { selectOptions() }
         <button
           type="button"
-        // onClick={ resetFilter }
+        // onClick={  }
         >
           X
         </button>
         <select
           data-testid="comparison-filter"
           name="comparison"
-        // onChange={ (e) => setComparison(e.target.value) }
+          onChange={ (event) => setFilters({ filterComparison: (event.target.value) }) }
         >
           <option value="maior que">maior que</option>
           <option value="menor que">menor que</option>
@@ -66,7 +60,7 @@ function Form() {
           data-testid="value-filter"
           placeholder="value"
           name="value"
-        // onChange={ (e) => setValue(e.target.value) }
+          onChange={ (event) => setFilters({ filterValue: (event.target.value) }) }
         />
         <button
           type="button"

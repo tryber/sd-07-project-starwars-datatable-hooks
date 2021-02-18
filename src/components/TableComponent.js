@@ -3,7 +3,8 @@ import StarWarsContext from '../context/StartWarsContext';
 
 function Table() {
   const { data, filters } = useContext(StarWarsContext);
-  const { filterName } = filters;
+  const { filterName, filterOption } = filters;
+  const maior = '>';
   const theadTable = () => (
     <tr>
       { !data[0] ? null : Object.keys(data[0])
@@ -38,6 +39,23 @@ function Table() {
       ))
   );
 
+  // const tbodyTableFiltredValues = () => (
+  //   data.filter((item) => console.log(item[filterOption] == 304 ? item.name : null))
+
+    // .includes(filterOption))
+    // .map((planet, index) => (
+    //   <tr key={ index }>
+    //     { Object
+    //       .values(planet)
+    //       .map((value, i) => (
+    //         <td key={ i }>
+    //           { value }
+    //         </td>
+    //       ))}
+    //   </tr>
+    // ))
+  // );
+
   return (
     <div>
       <table>
@@ -46,6 +64,7 @@ function Table() {
         </thead>
         <tbody>
           { !filterName ? tbodyTable(data) : tbodyTableFiltred(data, filterName) }
+          {/* { !filterOption ? tbodyTable(data) : console.log(tbodyTableFiltredValues(data)) } */}
         </tbody>
       </table>
     </div>

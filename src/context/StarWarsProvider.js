@@ -7,9 +7,16 @@ export default function Provider({ children }) {
   const [data, setData] = useState([]);
   const [filters, setFilters] = useState({
     filterName: '',
-    filterOption: '',
-    filterComparison: '',
-    filterValue: [],
+    filterOption: 'population',
+    filterComparison: 'maior que',
+    filterValue: Number,
+  });
+  const [options, setOptions] = useState({
+    population: true,
+    orbital_period: true,
+    diameter: true,
+    rotation_period: true,
+    surface_water: true,
   });
 
   const getPlanets = async () => { setData(await API()); };
@@ -19,7 +26,7 @@ export default function Provider({ children }) {
   }, []);
 
   return (
-    <StarWarsContext.Provider value={ { data, filters, setFilters } }>
+    <StarWarsContext.Provider value={ { data, filters, options, setOptions, setFilters } }>
       { children}
     </StarWarsContext.Provider>);
 }
