@@ -11,65 +11,82 @@ function GetPlanets({ children }) {
   const [comparison, setComparison] = useState('maiorQue');
   const [value, setValue] = useState(zero);
   const [planetsArray, setPlanets] = useState([]);
+  const [filters, setFilters] = useState({
+    filterByName: {},
+    filterByNumericValues: [],
+  });
 
   useEffect(() => {
     async function res() {
       const planets = await fetchPlanets();
-      setResponse(planets);
-      setPlanets(planets);
+      setResponse([...planets]);
+      setPlanets([...planets]);
     }
     res();
   }, []);
 
+  useEffect(() => {
+    const { filterByName, filterByNumericValues } = filters;
+    if (filterByName.length !== zero) {
+      const { name: nome } = filterByName;
+      const newArray = response.filter(({ name: planetName }) => (
+        planetName.includes(nome)
+      ));
+      setPlanets(newArray);
+    }
+
+    if (filterByNumericValues !== []) {
+      filterByNumericValues.forEach((element) => {
+        const { column: coluna, comparison: comp, value: valor } = element;
+        if (comp === 'maior que') {
+          setPlanets(response.filter((planet) => (
+            parseFloat(planet[coluna]) > parseFloat(valor)
+          )));
+        }
+        if (comp === 'menor que') {
+          setPlanets(response.filter((planet) => (
+            parseFloat(planet[coluna]) < parseFloat(valor)
+          )));
+        }
+        if (comp === 'igual a') {
+          setPlanets(response.filter((planet) => (
+            parseFloat(planet[coluna]) === parseFloat(valor)
+          )));
+        }
+      });
+    }
+  }, [filters]);
+
   const inputFilter = (inputName) => {
-    setName(inputName);
-    const newArray = response.filter(({ name: planetName }) => (
-      planetName.includes(inputName)
-    ));
-    setPlanets(newArray);
+    setFilters({
+      ...filters,
+      filterByName: { name: inputName },
+    });
   };
 
-  const buttonFilter = async (coluna, comp, valor) => {
-    console.log(coluna, comp, valor);
-    console.log(typeof valor);
-    const numberValues = response.filter((planet) => (
-      planet[coluna] !== 'unknown'
-    ));
-    if (comp === 'maiorQue') {
-      const newArray = numberValues.filter((planet) => (
-        parseFloat(planet[coluna]) > parseFloat(valor)
-      ));
-      return setPlanets(newArray);
-    }
-    if (comp === 'menorQue') {
-      const newArray = numberValues.filter((planet) => (
-        parseFloat(planet[coluna]) < parseFloat(valor)
-      ));
-      return setPlanets(newArray);
-    }
-    if (comp === 'igualA') {
-      const newArray = numberValues.filter((planet) => (
-        parseFloat(planet[coluna]) === parseFloat(valor)
-      ));
-      return setPlanets(newArray);
-    }
+  const buttonFilter = () => {
+    const newNumericFilter = {
+      column,
+      comparison,
+      value,
+    };
+    setFilters({
+      ...filters,
+      filterByNumericValues: [
+        ...filters.filterByNumericValues,
+        newNumericFilter,
+      ],
+    });
   };
 
   const state = {
     response,
     planetsArray,
-    filters: {
-      filterByName: {
-        name,
-      },
-      filterByNumericValues: [
-        {
-          column,
-          comparison,
-          value,
-        },
-      ],
-    },
+    filters,
+    column,
+    comparison,
+    value,
+    name,
     setPlanets,
     setName,
     setResponse,

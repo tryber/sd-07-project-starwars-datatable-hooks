@@ -5,9 +5,8 @@ import PlanetsForm from './PlanetsForm';
 function PlanetsTable() {
   const { response, planetsArray } = useContext(StarWarsContext);
   const zero = 0;
-  if (response.length > zero) {
+  if (planetsArray.length > zero) {
     const planetsKeys = Object.keys(response[0]);
-    console.log(planetsArray);
     const keysFiltered = planetsKeys.filter((element) => (
       element !== 'residents'
     ));
@@ -15,11 +14,13 @@ function PlanetsTable() {
       <div>
         <PlanetsForm />
         <table className="tabela">
-          <tr>
-            {keysFiltered.map((planetsKey) => (
-              <th className="table-head" key={ planetsKey.name }>{planetsKey}</th>
-            ))}
-          </tr>
+          <thead>
+            <tr>
+              {keysFiltered.map((planetsKey) => (
+                <th className="table-head" key={ planetsKey.name }>{planetsKey}</th>
+              ))}
+            </tr>
+          </thead>
           {planetsArray.map((planet) => (
             <tr key={ planet }>
               <td>{planet.name}</td>

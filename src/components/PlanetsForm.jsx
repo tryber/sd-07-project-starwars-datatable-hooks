@@ -10,11 +10,6 @@ function PlanetsForm() {
     buttonFilter,
   } = useContext(StarWarsContext);
 
-  const {
-    filters: {
-      filterByNumericValues },
-  } = useContext(StarWarsContext);
-  const { column, comparison, value } = filterByNumericValues[0];
   return (
     <form>
       <label htmlFor="name-filter">
@@ -47,11 +42,11 @@ function PlanetsForm() {
           name="value-range"
           id="value-range"
           data-testid="comparison-filter"
-          onClick={ (event) => setComparison(event.target.value) }
+          onChange={ (event) => setComparison(event.target.value) }
         >
-          <option value="maiorQue">maior que</option>
-          <option value="menorQue">menor que</option>
-          <option value="igualA">igual a</option>
+          <option value="maior que">maior que</option>
+          <option value="menor que">menor que</option>
+          <option value="igual a">igual a</option>
         </select>
       </label>
       <label htmlFor="value-filter">
@@ -66,7 +61,7 @@ function PlanetsForm() {
       <button
         type="button"
         data-testid="button-filter"
-        onClick={ () => buttonFilter(column, comparison, value) }
+        onClick={ () => buttonFilter() }
       >
         Filtrar
       </button>
