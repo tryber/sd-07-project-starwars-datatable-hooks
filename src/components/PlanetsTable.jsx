@@ -1,37 +1,23 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 import PlanetsForm from './PlanetsForm';
 
 function PlanetsTable() {
-  const { response, planetsArray, setPlanets } = useContext(StarWarsContext);
-  const { filters: { filterByName: { name } } } = useContext(StarWarsContext);
-
-  useEffect(() => {
-    setPlanets(response.filter(({ name: planetName }) => (
-      planetName.includes(name)
-    )));
-  }, [name]);
-
-  // if (name !== '') {
-  //   const newArray = response.filter(({ name: planetName }) => (
-  //     planetName.includes(name)
-  //   ));
-  //   setPlanets(newArray);
-  // }
-
+  const { response, planetsArray } = useContext(StarWarsContext);
   const zero = 0;
   if (response.length > zero) {
     const planetsKeys = Object.keys(response[0]);
+    console.log(planetsArray);
     const keysFiltered = planetsKeys.filter((element) => (
       element !== 'residents'
     ));
     return (
       <div>
         <PlanetsForm />
-        <table>
+        <table className="tabela">
           <tr>
             {keysFiltered.map((planetsKey) => (
-              <th key={ planetsKey }>{planetsKey}</th>
+              <th className="table-head" key={ planetsKey.name }>{planetsKey}</th>
             ))}
           </tr>
           {planetsArray.map((planet) => (
