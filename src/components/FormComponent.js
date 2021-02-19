@@ -2,16 +2,24 @@ import React, { useContext } from 'react';
 import StarWarsContext from '../context/StartWarsContext';
 
 function Form() {
-  const { options, filters, setClick, setFilters, setName, setOptions } = useContext(StarWarsContext);
+  const {
+    options,
+    filters,
+    setClick,
+    setFilters,
+    setName,
+    setOptions,
+  } = useContext(StarWarsContext);
 
   const selectOptions = () => (
     <select
       data-testid="column-filter"
       name="column"
-      onChange={ (event) => { setFilters({
-        ...filters, filterOption: (event.target.value),
-      });
-      setOptions({ ...options, [event.target.value]: false });
+      onChange={ (event) => {
+        setFilters({
+          ...filters, filterOption: (event.target.value),
+        });
+        setOptions({ ...options, [event.target.value]: false });
       } }
     >
       { !options
@@ -50,7 +58,8 @@ function Form() {
         <select
           data-testid="comparison-filter"
           name="comparison"
-          onChange={ (event) => setFilters({ ...filters, filterComparison: (event.target.value) }) }
+          onChange={ (event) => setFilters({
+            ...filters, filterComparison: (event.target.value) }) }
         >
           <option value="maior que">maior que</option>
           <option value="menor que">menor que</option>
@@ -68,7 +77,8 @@ function Form() {
           data-testid="value-filter"
           placeholder="value"
           name="value"
-          onChange={ (event) => setFilters({ ...filters, filterValue: (event.target.value) }) }
+          onChange={ (event) => setFilters({
+            ...filters, filterValue: (event.target.value) }) }
         />
         <button
           type="button"
