@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import StarWarsContext from '../context/StartWarsContext';
 
 function Table() {
-  const { data } = useContext(StarWarsContext);
+  const { data, setClick } = useContext(StarWarsContext);
 
   const theadTable = () => (
     <tr>

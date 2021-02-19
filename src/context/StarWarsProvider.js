@@ -5,11 +5,12 @@ import API from '../service';
 
 export default function Provider({ children }) {
   const [data, setData] = useState([]);
+  const [click, setClick] = useState(false);
+  const [name, setName] = useState('');
   const [filters, setFilters] = useState({
-    filterName: '',
     filterOption: 'population',
     filterComparison: 'maior que',
-    filterValue: Number,
+    filterValue: '',
   });
   const [options, setOptions] = useState({
     population: true,
@@ -22,18 +23,36 @@ export default function Provider({ children }) {
   const getPlanets = async () => { setData(await API()); };
 
   useEffect(() => {
-    const { filterName } = filters;
-    if (filterName === '') {
+    if (name === '') {
       getPlanets();
     } else {
-      setData(data.filter((item) => item.name.toLowerCase().includes(filterName)));
+      setData(data.filter((item) => item.name.toLowerCase().includes(name)));
     }
-  }, [filters, setData, setFilters]);
+  }, [name, setName]);
+
+  useEffect(() => {
+    const { filterComparison, filterOption, filterValue } = filters;
+    switch (filterComparison) {
+    case 'maior que':
+      setData(data.filter((item) => Number(item[filterOption]) > Number(filterValue)));
+      break;
+    case 'menor que':
+      setData(data.filter((item) => Number(item[filterOption]) < Number(filterValue)));
+      break;
+    case 'igual a':
+      setData(data.filter((item) => Number(item[filterOption]) === Number(filterValue)));
+      break;
+    default:
+      getPlanets();
+      break;
+    }
+    setOptions({ ...options });
+  }, [click, setClick]);
 
   return (
     <StarWarsContext.Provider
       value={ {
-        data, filters, options, setOptions, setFilters,
+        data, name, filters, options, click, setName, setOptions, setFilters, setClick,
       } }
     >
       { children}

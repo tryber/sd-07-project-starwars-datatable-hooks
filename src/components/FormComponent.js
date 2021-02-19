@@ -2,20 +2,28 @@ import React, { useContext } from 'react';
 import StarWarsContext from '../context/StartWarsContext';
 
 function Form() {
-  const { options, setFilters } = useContext(StarWarsContext);
+  const { options, filters, setClick, setFilters, setName, setOptions } = useContext(StarWarsContext);
 
   const selectOptions = () => (
     <select
       data-testid="column-filter"
       name="column"
-      onChange={ (event) => setFilters({ filterOption: (event.target.value) }) }
+      onChange={ (event) => { setFilters({
+        ...filters, filterOption: (event.target.value),
+      });
+      setOptions({ ...options, [event.target.value]: false });
+      } }
     >
       { !options
         ? null
         : Object.keys(options)
           .map((column, index) => (
             <option key={ index } value={ `${column}` }>
-              { column }
+              {
+                !options[column]
+                  ? null
+                  : column
+              }
             </option>
           ))}
     </select>
@@ -29,7 +37,7 @@ function Form() {
           data-testid="name-filter"
           placeholder="Search by name"
           name="name"
-          onChange={ (event) => setFilters({ filterName: (event.target.value) }) }
+          onChange={ (event) => setName(event.target.value) }
 
         />
         { selectOptions() }
@@ -42,7 +50,7 @@ function Form() {
         <select
           data-testid="comparison-filter"
           name="comparison"
-          onChange={ (event) => setFilters({ filterComparison: (event.target.value) }) }
+          onChange={ (event) => setFilters({ ...filters, filterComparison: (event.target.value) }) }
         >
           <option value="maior que">maior que</option>
           <option value="menor que">menor que</option>
@@ -60,7 +68,7 @@ function Form() {
           data-testid="value-filter"
           placeholder="value"
           name="value"
-          onChange={ (event) => setFilters({ filterValue: (event.target.value) }) }
+          onChange={ (event) => setFilters({ ...filters, filterValue: (event.target.value) }) }
         />
         <button
           type="button"
@@ -72,7 +80,7 @@ function Form() {
         <button
           type="button"
           data-testid="button-filter"
-        // onClick={ filterByValue }
+          onClick={ () => setClick(true) }
         >
           Search by value
         </button>
