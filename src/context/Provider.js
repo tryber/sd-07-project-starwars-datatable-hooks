@@ -8,7 +8,7 @@ function GetPlanets({ children }) {
   const [response, setResponse] = useState([]);
   const [name, setName] = useState('');
   const [column, setColumn] = useState('population');
-  const [comparison, setComparison] = useState('maiorQue');
+  const [comparison, setComparison] = useState('maior que');
   const [value, setValue] = useState(zero);
   const [planetsArray, setPlanets] = useState([]);
   const [filters, setFilters] = useState({
@@ -27,34 +27,41 @@ function GetPlanets({ children }) {
 
   useEffect(() => {
     const { filterByName, filterByNumericValues } = filters;
-    if (filterByName.length !== zero) {
+    console.log(filterByName.name);
+    let newArray = [...response];
+    if (filterByName !== []) {
+      console.log('name');
       const { name: nome } = filterByName;
-      const newArray = response.filter(({ name: planetName }) => (
+      newArray = newArray.filter(({ name: planetName }) => (
         planetName.includes(nome)
       ));
-      setPlanets(newArray);
     }
 
-    if (filterByNumericValues !== []) {
+    if (filterByNumericValues.length !== zero) {
       filterByNumericValues.forEach((element) => {
         const { column: coluna, comparison: comp, value: valor } = element;
         if (comp === 'maior que') {
-          setPlanets(response.filter((planet) => (
+          console.log('maior que');
+          newArray = newArray.filter((planet) => (
             parseFloat(planet[coluna]) > parseFloat(valor)
-          )));
+          ));
         }
         if (comp === 'menor que') {
-          setPlanets(response.filter((planet) => (
+          console.log('menor que');
+          newArray = newArray.filter((planet) => (
             parseFloat(planet[coluna]) < parseFloat(valor)
-          )));
+          ));
         }
         if (comp === 'igual a') {
-          setPlanets(response.filter((planet) => (
+          console.log('igual a');
+          newArray = newArray.filter((planet) => (
             parseFloat(planet[coluna]) === parseFloat(valor)
-          )));
+          ));
         }
       });
     }
+    console.log(newArray);
+    setPlanets(newArray);
   }, [filters]);
 
   const inputFilter = (inputName) => {
