@@ -27,11 +27,7 @@ function Form() {
         : Object.keys(options)
           .map((column, index) => (
             <option key={ index } value={ `${column}` }>
-              {
-                !options[column]
-                  ? null
-                  : column
-              }
+              { !options[column] ? null : column }
             </option>
           ))}
     </select>
