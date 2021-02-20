@@ -40,10 +40,13 @@ function PlanetsTable() {
           ))}
         </table>
       </div>
-
     );
   }
-  return <div>Loading...</div>;
+  return (
+    <div>
+      <PlanetsForm />
+    </div>
+  );
 }
 
 export default PlanetsTable;

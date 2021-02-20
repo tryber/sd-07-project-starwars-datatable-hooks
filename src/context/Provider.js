@@ -27,10 +27,8 @@ function GetPlanets({ children }) {
 
   useEffect(() => {
     const { filterByName, filterByNumericValues } = filters;
-    console.log(filterByName.name);
     let newArray = [...response];
-    if (filterByName !== []) {
-      console.log('name');
+    if (filterByName.name) {
       const { name: nome } = filterByName;
       newArray = newArray.filter(({ name: planetName }) => (
         planetName.includes(nome)
@@ -38,6 +36,7 @@ function GetPlanets({ children }) {
     }
 
     if (filterByNumericValues.length !== zero) {
+      console.log('Entrou na condição');
       filterByNumericValues.forEach((element) => {
         const { column: coluna, comparison: comp, value: valor } = element;
         if (comp === 'maior que') {

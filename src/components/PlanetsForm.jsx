@@ -9,8 +9,26 @@ function PlanetsForm() {
     setValue,
     buttonFilter,
     filters,
+    column,
   } = useContext(StarWarsContext);
   const { filterByNumericValues } = filters;
+
+  const columnValues = [
+    'population',
+    'orbital_period',
+    'diameter',
+    'rotation_period',
+    'surface_water',
+    'MAP FUNCIONA',
+  ];
+
+  let columnOptions = [...columnValues];
+
+  const filterColumn = async () => {
+    await buttonFilter();
+    columnOptions = columnValues.filter((element) => element !== column);
+  };
+
   const zero = 0;
   return (
     <div>
@@ -32,11 +50,11 @@ function PlanetsForm() {
             data-testid="column-filter"
             onChange={ (event) => setColumn(event.target.value) }
           >
-            <option value="population">population</option>
-            <option value="orbital_period">orbital_period</option>
-            <option value="diameter">diameter</option>
-            <option value="rotation_period">rotation_period</option>
-            <option value="surface_water">surface_water</option>
+            {columnOptions.map((columnValue) => (
+              <option key={ columnValue } value={ columnValue }>
+                {columnValue}
+              </option>
+            ))}
           </select>
         </label>
         <label htmlFor="value-range">
@@ -64,17 +82,20 @@ function PlanetsForm() {
         <button
           type="button"
           data-testid="button-filter"
-          onClick={ () => buttonFilter() }
+          onClick={ () => filterColumn() }
         >
           Filtrar
         </button>
       </form>
-      {filterByNumericValues.length > zero && filterByNumericValues.map((element) => (
-        <div key={ element } data-testid="filter">
-          <p>{`${element.column}| ${element.comparison} | ${element.value}`}</p>
-          <button type="button" onClick={ () => console.log('teste') }>X</button>
-        </div>
-      ))}
+      {filterByNumericValues.length > zero
+        && filterByNumericValues.map((element) => (
+          <div key={ element } data-testid="filter">
+            <p>{`${element.column}| ${element.comparison} | ${element.value}`}</p>
+            <button type="button" onClick={ () => console.log('teste') }>
+              X
+            </button>
+          </div>
+        ))}
     </div>
   );
 }
