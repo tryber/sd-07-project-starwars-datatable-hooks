@@ -21,7 +21,7 @@ function StarWarsProvider({ children }) {
   }, []);
 
   useEffect(() => {
-    const input = data.filter(({ name }) => name.includes(filterName));
+    const input = data.filter(({ name }) => name.toLowerCase().includes(filterName));
     setResponse(input);
   }, [data, filterName]);
 
