@@ -1,13 +1,11 @@
 import React from 'react';
-import Header from './components/Header';
 import PlanetProvider from './context/StarWarsProvider';
-import PlanetList from './pages/PlanetList';
+import PlanetList from './components/PlanetList';
 
 function App() {
   return (
     <div className="App">
       <PlanetProvider>
-        <Header />
         <PlanetList />
       </PlanetProvider>
     </div>
