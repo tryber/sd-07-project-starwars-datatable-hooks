@@ -1,4 +1,5 @@
 import React, { useContext, useState } from 'react';
+import { Form, FormCheck, Button, Card } from 'react-bootstrap';
 import StarWarsContext from '../context/StarWarsContext';
 
 function PlanetsForm() {
@@ -46,19 +47,23 @@ function PlanetsForm() {
   const zero = 0;
   return (
     <div>
-      <form>
-        <label htmlFor="name-filter">
+      <Form>
+        <Form.Label htmlFor="name-filter">
           Filtrar por nome
-          <input
+          <Form.Control
+            size="sm"
             type="text"
             id="name-filter"
             data-testid="name-filter"
             onChange={ (event) => inputFilter(event.target.value) }
           />
-        </label>
-        <label htmlFor="collumn">
+        </Form.Label>
+        <br />
+        <Form.Label htmlFor="column-filter">
           Selecione sua coluna
-          <select
+          <Form.Control
+            as="select"
+            size="sm"
             name="column-filter"
             id="column-filter"
             data-testid="column-filter"
@@ -75,11 +80,13 @@ function PlanetsForm() {
                   {columnValue}
                 </option>
               ))}
-          </select>
-        </label>
-        <label htmlFor="value-range">
+          </Form.Control>
+        </Form.Label>
+        <Form.Label htmlFor="value-range">
           Faixa de Valor
-          <select
+          <Form.Control
+            as="select"
+            size="sm"
             name="value-range"
             id="value-range"
             data-testid="comparison-filter"
@@ -88,27 +95,31 @@ function PlanetsForm() {
             <option value="maior que">maior que</option>
             <option value="menor que">menor que</option>
             <option value="igual a">igual a</option>
-          </select>
-        </label>
-        <label htmlFor="value-filter">
+          </Form.Control>
+        </Form.Label>
+        <Form.Label htmlFor="value-filter">
           Valor
-          <input
+          <Form.Control
+            size="sm"
             id="value-filter"
             data-testid="value-filter"
             type="number"
             onChange={ (event) => setValue(event.target.value) }
           />
-        </label>
-        <button
+        </Form.Label>
+        <Button
           type="button"
           data-testid="button-filter"
           onClick={ () => filterColumn() }
         >
           Filtrar
-        </button>
-        <label htmlFor="collumn">
+        </Button>
+        <br />
+        <Form.Label htmlFor="collumn">
           Ordernar por coluna
-          <select
+          <Form.Control
+            as="select"
+            size="sm"
             name="column-sort"
             id="column-sort"
             data-testid="column-sort"
@@ -119,11 +130,11 @@ function PlanetsForm() {
                 {columnValue}
               </option>
             ))}
-          </select>
-        </label>
-        <label htmlFor="radio-asc">
-          ASC
-          <input
+          </Form.Control>
+        </Form.Label>
+        <FormCheck.Label htmlFor="radio-asc">
+          Ascendente
+          <Form.Check
             name="order"
             type="radio"
             id="radio-asc"
@@ -132,10 +143,10 @@ function PlanetsForm() {
             data-testid="column-sort-input-asc"
             onChange={ (event) => setOrderSort(event.target.value) }
           />
-        </label>
-        <label htmlFor="radio-dsc">
-          DSC
-          <input
+        </FormCheck.Label>
+        <FormCheck.Label htmlFor="radio-dsc">
+          Descendente
+          <Form.Check
             name="order"
             type="radio"
             id="radio-dsc"
@@ -144,23 +155,37 @@ function PlanetsForm() {
             data-testid="column-sort-input-desc"
             onChange={ (event) => setOrderSort(event.target.value) }
           />
-        </label>
-        <button
+        </FormCheck.Label>
+        <Button
           type="button"
           data-testid="column-sort-button"
           onClick={ () => orderFilter() }
         >
           Ordernar
-        </button>
-      </form>
+        </Button>
+      </Form>
       {filterByNumericValues.length > zero
-        && filterByNumericValues.map((element) => (
-          <div key={ element } data-testid="filter">
-            <p>{`${element.column}| ${element.comparison} | ${element.value}`}</p>
-            <button type="button" onClick={ () => deleteFilter(element.column) }>
+        && filterByNumericValues.map((element, index) => (
+          <Card
+            bg="light"
+            key={ element }
+            data-testid="filter"
+            style={ { width: '10rem' } }
+          >
+            <Card.Header>{`Filtro ${index + 1}`}</Card.Header>
+            <Card.Body>
+              <Card.Text>{element.column}</Card.Text>
+              <Card.Text>{element.comparison}</Card.Text>
+              <Card.Text>{element.value}</Card.Text>
+            </Card.Body>
+            <Button
+              variant="danger"
+              type="button"
+              onClick={ () => deleteFilter(element.column) }
+            >
               X
-            </button>
-          </div>
+            </Button>
+          </Card>
         ))}
     </div>
   );

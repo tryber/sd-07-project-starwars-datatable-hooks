@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import { Table } from 'react-bootstrap';
 import StarWarsContext from '../context/StarWarsContext';
 import PlanetsForm from './PlanetsForm';
 
@@ -9,12 +10,11 @@ function PlanetsTable() {
     return (
       <div>
         <PlanetsForm />
-        <table className="tabela">
+        <Table striped bordered hover responsive>
           <thead>
             <tr>
               {keysFiltered.map((planetsKey) => (
                 <th
-                  className="table-head"
                   key={ planetsKey.name }
                 >
                   {planetsKey}
@@ -22,24 +22,26 @@ function PlanetsTable() {
               ))}
             </tr>
           </thead>
-          {planetsArray.map((planet) => (
-            <tr key={ planet }>
-              <td data-testid="planet-name">{planet.name}</td>
-              <td>{planet.rotation_period}</td>
-              <td>{planet.orbital_period}</td>
-              <td>{planet.diameter}</td>
-              <td>{planet.climate}</td>
-              <td>{planet.gravity}</td>
-              <td>{planet.terrain}</td>
-              <td>{planet.surface_water}</td>
-              <td>{planet.population}</td>
-              <td>{planet.films}</td>
-              <td>{planet.created}</td>
-              <td>{planet.edited}</td>
-              <td>{planet.url}</td>
-            </tr>
-          ))}
-        </table>
+          <tbody>
+            {planetsArray.map((planet) => (
+              <tr key={ planet }>
+                <td data-testid="planet-name">{planet.name}</td>
+                <td>{planet.rotation_period}</td>
+                <td>{planet.orbital_period}</td>
+                <td>{planet.diameter}</td>
+                <td>{planet.climate}</td>
+                <td>{planet.gravity}</td>
+                <td>{planet.terrain}</td>
+                <td>{planet.surface_water}</td>
+                <td>{planet.population}</td>
+                <td>{planet.films}</td>
+                <td>{planet.created}</td>
+                <td>{planet.edited}</td>
+                <td>{planet.url}</td>
+              </tr>
+            ))}
+          </tbody>
+        </Table>
       </div>
     );
   }
