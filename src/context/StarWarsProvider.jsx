@@ -5,12 +5,19 @@ import StarWarsContext from './StarWarsContext';
 const StarWarsProvider = ({ children }) => {
   const [data, setData] = useState([]);
   const [searchText, setSearchText] = useState('');
+  const [filters, setFilters] = useState({
+    filterByName: {
+      name: '',
+    },
+  });
 
   const context = {
     data,
     setData,
     searchText,
     setSearchText,
+    filters,
+    setFilters,
   };
 
   return (

@@ -2,11 +2,12 @@ import React, { useContext } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 const Filter = () => {
-  const { searchText, setSearchText } = useContext(StarWarsContext);
+  const { filters, setFilters } = useContext(StarWarsContext);
 
   const sendCurrentSearch = (e) => {
     const text = e.target.value;
-    setSearchText(text);
+    setFilters({ filterByName: { name: text } });
+    console.log(filters);
   };
 
   return (
@@ -15,7 +16,7 @@ const Filter = () => {
         type="text"
         data-testid="name-filter"
         onChange={ (e) => sendCurrentSearch(e) }
-      />g
+      />
     </div>
   );
 };
