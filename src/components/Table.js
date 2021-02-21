@@ -1,25 +1,11 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 function Table() {
-  const { planets } = useContext(StarWarsContext);
-  const [filteredPlanets, setFilteredPlanets] = useState('');
-
-  const filteringPlanets = planets.filter((planet) => (
-    planet.name.toLowerCase().includes(filteredPlanets.toLowerCase())));
+  const { planets, filteredPlanets } = useContext(StarWarsContext);
 
   return (
     <div>
-      <header>
-        <h2>Star Wars Planets Guide</h2>
-        <input
-          onChange={ (event) => setFilteredPlanets(event.target.value) }
-          name="search-bar"
-          type="text"
-          data-testid="name-filter"
-          placeholder="Encontre o planeta"
-        />
-      </header>
       <table>
         <tr>
           <th>Name</th>
@@ -36,7 +22,8 @@ function Table() {
           <th>edited</th>
           <th>url</th>
         </tr>
-        {filteringPlanets.map((planet) => (
+
+        {filteredPlanets.map((planet) => (
           <tr key={ planet.name }>
             <td>{planet.name}</td>
             <td>{planet.rotation_period}</td>

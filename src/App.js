@@ -1,12 +1,12 @@
 import React from 'react';
-import Table from './components/Table';
+import TablePage from './pages/TablePage';
 import Provider from './context/Provider';
 
 function App() {
   return (
     <div>
       <Provider>
-        <Table />
+        <TablePage />
       </Provider>
     </div>
   );
