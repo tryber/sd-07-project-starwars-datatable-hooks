@@ -11,8 +11,8 @@ function Provider({ children }) {
   const [filterByNumericValues, setFilterByNumericValues] = useState([]);
   const [resultsPlanets, setResultsPlanets] = useState([]);
 
-  // const [order, setOrder] = useState({ column: 'Name',
-  // sort: 'ASC' });
+  const [order, setOrder] = useState({ column: 'name',
+    sort: 'asc' });
 
   useEffect(() => {
     const api = async () => {
@@ -24,7 +24,7 @@ function Provider({ children }) {
     api();
   }, []);
 
-  // linhas 25 a 28 Referencia: Erick Vini
+  // Referencia: Erick Vini
   useEffect(() => {
     const filterInput = data.filter(({ name }) => name.includes(filterName));
     setFilterResults(filterInput);
@@ -52,23 +52,12 @@ function Provider({ children }) {
     setFilterResults(filterInput);
   }, [data, filterByNumericValues]);
 
-  // useEffect(() => {
-  //   const filterOrder = [...filterResults].sort((a, b) => {
-  //     if (a[order.column] > b[order.column]) {
-  //       return order.sort === 'ASC' ? 1: -1;
-  //     }
-  //     if (a[order.column] < b[order.column]) {
-  //       return order.sort === 'ASC' ? -1: 1;
-  //     }
-  //     return 0;
-  //   });
-  //   setFilterResults(filterOrder);
-  // }, [filterResults, order]);
 
   return (
     <StarWarsContext.Provider
       value={ {
         data,
+        setData,
         filterName,
         setFilterName,
         filterResults,
@@ -77,7 +66,8 @@ function Provider({ children }) {
         setFilterByNumericValues,
         resultsPlanets,
         setResultsPlanets,
-        // setOrder,
+        order,
+        setOrder,
       } }
     >
       { children }

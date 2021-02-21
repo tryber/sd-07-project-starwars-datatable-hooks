@@ -29,7 +29,7 @@ function Table() {
           filterResults.map((item) => (
             <tbody key={ item.index }>
               <tr>
-                <td>{item.name}</td>
+                <td data-testid="planet-name">{item.name}</td>
                 <td>{item.rotation_period}</td>
                 <td>{item.orbital_period}</td>
                 <td>{item.diameter}</td>
@@ -52,5 +52,3 @@ function Table() {
 }
 
 export default Table;
-
-// linha 28 a 45 Referencia: Alexandre Faustino
