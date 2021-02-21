@@ -1,7 +1,15 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 function PlanetsForm() {
+  const [columnValues] = useState([
+    'population',
+    'orbital_period',
+    'diameter',
+    'rotation_period',
+    'surface_water',
+  ]);
+
   const {
     inputFilter,
     setColumn,
@@ -9,24 +17,11 @@ function PlanetsForm() {
     setValue,
     buttonFilter,
     filters,
-    column,
   } = useContext(StarWarsContext);
   const { filterByNumericValues } = filters;
 
-  const columnValues = [
-    'population',
-    'orbital_period',
-    'diameter',
-    'rotation_period',
-    'surface_water',
-    'MAP FUNCIONA',
-  ];
-
-  let columnOptions = [...columnValues];
-
-  const filterColumn = async () => {
-    await buttonFilter();
-    columnOptions = columnValues.filter((element) => element !== column);
+  const filterColumn = () => {
+    buttonFilter();
   };
 
   const zero = 0;
@@ -50,11 +45,16 @@ function PlanetsForm() {
             data-testid="column-filter"
             onChange={ (event) => setColumn(event.target.value) }
           >
-            {columnOptions.map((columnValue) => (
-              <option key={ columnValue } value={ columnValue }>
-                {columnValue}
-              </option>
-            ))}
+            {columnValues.filter((col) => (
+              !filterByNumericValues.some((filterObj) => (
+                col === filterObj.column
+              ))
+            ))
+              .map((columnValue) => (
+                <option key={ columnValue } value={ columnValue }>
+                  { columnValue }
+                </option>
+              ))}
           </select>
         </label>
         <label htmlFor="value-range">
