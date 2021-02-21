@@ -3,15 +3,17 @@ import StarWarsContext from '../context/StarWarsContext';
 
 function FilterNumber() {
   const context = useContext(StarWarsContext);
-  const { setFilterByNumericValues } = context;
+  const { filterByNumericValues, setFilterByNumericValues } = context;
 
-  const [column, setColumn] = useState([
+  const [column, setColumn] = useState(
     'population',
-  ]);
+  );
+  const [numericColumns] = useState([
+    'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water']);
   const [comparison, setComparison] = useState('maior que');
   const zero = 0;
   const [number, setNumber] = useState(zero);
-
+  // referencia: Erick vini
   const handleChangeColumn = ({ target }) => {
     const { value } = target;
     setColumn(value);
@@ -27,13 +29,14 @@ function FilterNumber() {
   };
 
   const filter = () => {
-    setFilterByNumericValues(
+    setFilterByNumericValues([
+      ...filterByNumericValues,
       {
         column,
         comparison,
         value: number,
       },
-    );
+    ]);
   };
 
   return (
@@ -43,11 +46,15 @@ function FilterNumber() {
         onChange={ handleChangeColumn }
         value={ column }
       >
-        <option key="index" value="population">population</option>
-        <option key="orbital_period" value="orbital_period">orbital_period</option>
-        <option key="diameter" value="diameter">diameter</option>
-        <option key="rotation_period" value="rotation_period">rotation_period</option>
-        <option key="surface_water" value="surface_water">surface_water</option>
+        {
+          numericColumns
+            .filter((col) => !filterByNumericValues
+              .some((nFilter) => (nFilter.column === col)))
+            .map((col) => (
+              <option key={ col } value={ col }>{ col }</option>
+            ))
+        }
+
       </select>
 
       <select
@@ -77,5 +84,3 @@ function FilterNumber() {
 }
 
 export default FilterNumber;
-
-// codigo feito com a ajuda de Erick vini

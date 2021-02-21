@@ -1,12 +1,13 @@
 import React, { useContext } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
+import '../table.css';
 
 function Table() {
   const { filterResults } = useContext(StarWarsContext);
 
   return (
     <div>
-      <table>
+      <table className="tabela">
         <thead>
           <tr>
             <th>name</th>
@@ -52,4 +53,4 @@ function Table() {
 
 export default Table;
 
-// linha 28 a 45 de Alexandre Faustino
+// linha 28 a 45 Referencia: Alexandre Faustino

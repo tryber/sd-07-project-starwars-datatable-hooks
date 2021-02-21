@@ -12,6 +12,7 @@ function FilterByName() {
   return (
     <div>
       <label htmlFor="input">
+        Buscar:
         <input
           name="input"
           type="text"
