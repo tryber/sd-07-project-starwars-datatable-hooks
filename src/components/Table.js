@@ -1,11 +1,52 @@
-import React, { useContext } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { StarWarsContext } from '../context/StarWarsContext';
 import NumericFilter from './numericFilter';
 
 function Table() {
-  const { data, setSearch, search } = useContext(StarWarsContext);
+  const { data, setSearch, filter } = useContext(StarWarsContext);
+  const [planets, setPlanets ] = useState([]);
+
+  const handleComparisonFilterLogic = useCallback((planet, filters) => {
+    const { column, value, comparison } = filters;
+    if (comparison === 'maior que') {
+      return Number(planet[column]) > Number(value);
+    } if (comparison === 'menor que') {
+      return Number(planet[column]) < Number(value);
+    }
+    return Number(planet[column]) === Number(value);
+  }, []);
+
+  const filterByName = useCallback(() => {
+    const filteredPlanets = data.filter((planet) => planet.name.toLowerCase()
+      .includes(filter.filterByName.name.toLowerCase()));
+
+    return filteredPlanets;
+  }, [data, filter]);
+
+  const filtersPlanets = useCallback(() => {
+    const filteredPlanets = filterByName(filter);
+
+    if (filter && filter.filterByNumericValues.length > 0) {
+    
+      filter.filterByNumericValues.forEach((batata) => {
+        const finallyFilteredPlanets = filteredPlanets.filter((planet) => handleComparisonFilterLogic(planet, batata));
+        setPlanets(finallyFilteredPlanets);
+      });
+
+    } else {
+      setPlanets(filteredPlanets); 
+    }    
+
+  }, [filter, filterByName, handleComparisonFilterLogic]);
+
+
+  useEffect(() => {
+    filtersPlanets();
+  }, [filtersPlanets])
+
+
   return (
-    <div>
+    <div style={{overflowX: 'auto'}}>
       <NumericFilter />
       <input
         type="text"
@@ -34,10 +75,9 @@ function Table() {
           </tr>
         </thead>
         <tbody>
-          { data.filter((planet) => planet.name.toLowerCase()
-            .includes(search.toLowerCase()))
-            .map((planet) => (
-              <tr key={ planet.name }>
+            {
+            planets.map((planet) => (
+              <tr key={ planet.url }>
                 <td>{planet.name}</td>
                 <td>{planet.rotation_period}</td>
                 <td>{planet.created}</td>
@@ -52,7 +92,8 @@ function Table() {
                 <td>{planet.surface_water}</td>
                 <td>{planet.population}</td>
               </tr>
-            ))}
+              ))
+               }
         </tbody>
       </table>
     </div>
