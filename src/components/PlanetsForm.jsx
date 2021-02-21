@@ -9,7 +9,8 @@ function PlanetsForm() {
     'rotation_period',
     'surface_water',
   ]);
-
+  const [orderColumn, setOrderColumn] = useState('name');
+  const [orderSort, setOrderSort] = useState('ASC');
   const {
     inputFilter,
     setColumn,
@@ -17,11 +18,29 @@ function PlanetsForm() {
     setValue,
     buttonFilter,
     filters,
+    setFilters,
+    keysFiltered,
   } = useContext(StarWarsContext);
   const { filterByNumericValues } = filters;
 
   const filterColumn = () => {
     buttonFilter();
+  };
+
+  const deleteFilter = (deletedColumn) => {
+    setFilters({
+      ...filters,
+      filterByNumericValues: filters.filterByNumericValues.filter(
+        ({ column }) => column !== deletedColumn,
+      ),
+    });
+  };
+
+  const orderFilter = () => {
+    setFilters({
+      ...filters,
+      order: { column: orderColumn, sort: orderSort },
+    });
   };
 
   const zero = 0;
@@ -45,14 +64,15 @@ function PlanetsForm() {
             data-testid="column-filter"
             onChange={ (event) => setColumn(event.target.value) }
           >
-            {columnValues.filter((col) => (
-              !filterByNumericValues.some((filterObj) => (
-                col === filterObj.column
-              ))
-            ))
+            {columnValues
+              .filter(
+                (col) => !filterByNumericValues.some(
+                  (filterObj) => col === filterObj.column,
+                ),
+              )
               .map((columnValue) => (
                 <option key={ columnValue } value={ columnValue }>
-                  { columnValue }
+                  {columnValue}
                 </option>
               ))}
           </select>
@@ -86,12 +106,58 @@ function PlanetsForm() {
         >
           Filtrar
         </button>
+        <label htmlFor="collumn">
+          Ordernar por coluna
+          <select
+            name="column-sort"
+            id="column-sort"
+            data-testid="column-sort"
+            onChange={ (event) => setOrderColumn(event.target.value) }
+          >
+            {keysFiltered.map((columnValue) => (
+              <option key={ columnValue } value={ columnValue }>
+                {columnValue}
+              </option>
+            ))}
+          </select>
+        </label>
+        <label htmlFor="radio-asc">
+          ASC
+          <input
+            name="order"
+            type="radio"
+            id="radio-asc"
+            checked={ orderSort === 'ASC' }
+            value="ASC"
+            data-testid="column-sort-input-asc"
+            onChange={ (event) => setOrderSort(event.target.value) }
+          />
+        </label>
+        <label htmlFor="radio-dsc">
+          DSC
+          <input
+            name="order"
+            type="radio"
+            id="radio-dsc"
+            checked={ orderSort === 'DESC' }
+            value="DESC"
+            data-testid="column-sort-input-desc"
+            onChange={ (event) => setOrderSort(event.target.value) }
+          />
+        </label>
+        <button
+          type="button"
+          data-testid="column-sort-button"
+          onClick={ () => orderFilter() }
+        >
+          Ordernar
+        </button>
       </form>
       {filterByNumericValues.length > zero
         && filterByNumericValues.map((element) => (
           <div key={ element } data-testid="filter">
             <p>{`${element.column}| ${element.comparison} | ${element.value}`}</p>
-            <button type="button" onClick={ () => console.log('teste') }>
+            <button type="button" onClick={ () => deleteFilter(element.column) }>
               X
             </button>
           </div>
