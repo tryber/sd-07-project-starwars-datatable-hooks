@@ -4,7 +4,7 @@ import NumericFilter from './numericFilter';
 
 function Table() {
   const { data, setSearch, filter } = useContext(StarWarsContext);
-  const [planets, setPlanets ] = useState([]);
+  const [planets, setPlanets] = useState([]);
 
   const handleComparisonFilterLogic = useCallback((planet, filters) => {
     const { column, value, comparison } = filters;
@@ -25,28 +25,24 @@ function Table() {
 
   const filtersPlanets = useCallback(() => {
     const filteredPlanets = filterByName(filter);
-
-    if (filter && filter.filterByNumericValues.length > 0) {
-    
+    const zero = 0;
+    if (filter && filter.filterByNumericValues.length > zero) {
       filter.filterByNumericValues.forEach((batata) => {
-        const finallyFilteredPlanets = filteredPlanets.filter((planet) => handleComparisonFilterLogic(planet, batata));
+        const finallyFilteredPlanets = filteredPlanets
+          .filter((planet) => handleComparisonFilterLogic(planet, batata));
         setPlanets(finallyFilteredPlanets);
       });
-
     } else {
-      setPlanets(filteredPlanets); 
-    }    
-
+      setPlanets(filteredPlanets);
+    }
   }, [filter, filterByName, handleComparisonFilterLogic]);
-
 
   useEffect(() => {
     filtersPlanets();
-  }, [filtersPlanets])
-
+  }, [filtersPlanets]);
 
   return (
-    <div style={{overflowX: 'auto'}}>
+    <div style={ { overflowX: 'auto' } }>
       <NumericFilter />
       <input
         type="text"
@@ -75,7 +71,7 @@ function Table() {
           </tr>
         </thead>
         <tbody>
-            {
+          {
             planets.map((planet) => (
               <tr key={ planet.url }>
                 <td>{planet.name}</td>
@@ -92,8 +88,8 @@ function Table() {
                 <td>{planet.surface_water}</td>
                 <td>{planet.population}</td>
               </tr>
-              ))
-               }
+            ))
+          }
         </tbody>
       </table>
     </div>
