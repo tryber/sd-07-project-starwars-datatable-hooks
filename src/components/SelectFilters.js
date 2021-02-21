@@ -7,6 +7,7 @@ export default function SearchBar() {
     filterByNumericValues,
     setNewArray,
     SWPlanets,
+    setSortOrder,
   } = useContext(StarWarsContext);
 
   const [filterObject, setFilterObject] = useState({
@@ -18,6 +19,25 @@ export default function SearchBar() {
   const [options, setOptions] = useState(
     ['population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water'],
   );
+
+  const columnsNames = [
+    'name',
+    'population',
+    'orbital_period',
+    'diameter',
+    'rotation_period',
+    'surface_water',
+    'climate',
+    'gravity',
+    'terrain',
+    'films',
+    'created',
+    'edited',
+    'url',
+  ];
+
+  const [sortOption, setSortOption] = useState('ASC');
+  const [sortColumn, setSortColumn] = useState('name');
 
   const hideOption = () => {
     setOptions((prevState) => (
@@ -35,6 +55,11 @@ export default function SearchBar() {
   const onClick = () => {
     setFiltersByNumericValues([...filterByNumericValues, filterObject]);
     hideOption();
+  };
+
+  const orderColumn = () => {
+    console.log('entrou no click');
+    setSortOrder({ column: sortColumn, sort: sortOption });
   };
 
   return (
@@ -101,6 +126,52 @@ export default function SearchBar() {
           </button>
         </div>
       ))}
+      <select
+        name="column-filter"
+        data-testid="column-sort"
+        onChange={
+          ({ target: { value } }) => setSortColumn(value)
+        }
+      >
+        {columnsNames.map((item) => (
+          <option key={ item } value={ item }>{item}</option>
+        ))}
+      </select>
+      <div>
+        <label htmlFor="ASC">
+          Ascendente
+          <input
+            type="radio"
+            data-testid="column-sort-input-asc"
+            name="order"
+            value="ASC"
+            checked={ sortOption === 'ASC' }
+            onChange={
+              ({ target: { value } }) => setSortOption(value)
+            }
+          />
+        </label>
+        <label htmlFor="DESC">
+          Descendente
+          <input
+            type="radio"
+            data-testid="column-sort-input-desc"
+            name="order"
+            value="DESC"
+            checked={ sortOption === 'DESC' }
+            onChange={
+              ({ target: { value } }) => setSortOption(value)
+            }
+          />
+        </label>
+        <button
+          type="button"
+          data-testid="column-sort-button"
+          onClick={ () => orderColumn() }
+        >
+          Ordenar
+        </button>
+      </div>
     </div>
   );
 }
