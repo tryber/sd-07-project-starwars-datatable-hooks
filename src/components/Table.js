@@ -7,6 +7,8 @@ function Table() {
 
   return (
     <div>
+      <Filter />
+      <br />
       <table>
         <thead>
           <tr>
@@ -48,8 +50,7 @@ function Table() {
           ))
         }
       </table>
-      <Filter />
-    </div>
+    </div >
   );
 }
 

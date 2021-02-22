@@ -21,6 +21,7 @@ function StarWarsProvider({ children }) {
   }, []);
 
   useEffect(() => {
+    /* Aplicando um filtro nos nomes dos planetas com toLowerCase */
     const input = data.filter(({ name }) => name.toLowerCase().includes(filterName));
     setResponse(input);
   }, [data, filterName]);
