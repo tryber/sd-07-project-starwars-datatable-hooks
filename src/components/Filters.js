@@ -4,14 +4,8 @@ import StarWarsContext from '../context/StarWarsContext';
 function Filters() {
   const {
     planets,
-    filters,
-    setNumericFilter,
-    setFilterByName,
-    filteredPlanets,
     setFilteredPlanets,
   } = useContext(StarWarsContext);
-
-  const { filterByName, filterByNumericValues } = filters;
 
   const planetInfos = [
     'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water'];
@@ -22,30 +16,25 @@ function Filters() {
   const [number, setNumber] = useState(zero);
   const [info, setInfo] = useState('population');
 
-  // const handleClick = () => {
-  //   setFilterByNumericValues([{
-  //     filterByNumericValues: filteredNumeric,
-  //   }]);
-  //   switch (comparison) {
-  //   case 'maior que':
-  //     return setFilteredNumeric(
-  //       planets
-  //         .filter((planet) => parseFloat(planet[info]) > parseFloat(number)),
-  //     );
-  //   case 'menor que':
-  //     return setFilteredNumeric(
-  //       planets
-  //         .filter((planet) => parseFloat(planet[info]) < parseFloat(number)),
-  //     );
-  //   case 'igual a':
-  //     return setFilteredNumeric(
-  //       planets
-  //         .filter((planet) => Number(planet[info]) === Number(number)),
-  //     );
-  //   default:
-  //     return setFilterByNumericValues(planets);
-  //   }
-  // };
+  const handleClick = () => {
+    if (comparison === 'maior que') {
+      return setFilteredPlanets(
+        planets
+          .filter((planet) => parseFloat(planet[info]) > parseFloat(number)),
+      );
+    } if (comparison === 'menor que') {
+      return setFilteredPlanets(
+        planets
+          .filter((planet) => parseFloat(planet[info]) < parseFloat(number)),
+      );
+    } if (comparison === 'igual a') {
+      return setFilteredPlanets(
+        planets
+          .filter((planet) => Number(planet[info]) === Number(number)),
+      );
+    }
+    return setFilteredPlanets(planets);
+  };
 
   const filteringByName = (name) => {
     const filteredByName = planets.filter((planet) => (
@@ -87,8 +76,7 @@ function Filters() {
       />
       <button
         onClick={ () => {
-          // handleClick();
-          // console.log(filteredNumeric);
+          handleClick();
         } }
         type="button"
         data-testid="button-filter"

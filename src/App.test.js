@@ -249,7 +249,7 @@ describe('Crie um filtro para valores numéricos', () => {
   });
 });
 
-describe.skip('Não utilize filtros repetidos', () => {
+describe('Não utilize filtros repetidos', () => {
   beforeAll(mockFetch);
   beforeEach(cleanup);
 
