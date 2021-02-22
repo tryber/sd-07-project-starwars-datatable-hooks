@@ -27,6 +27,7 @@ function StarWarsProvider({ children }) {
   }, [data, filterName]);
 
   return (
+    /* utilizando o o context para encapsular tudo no provider */
     <MyContext.Provider
       value={ {
         data,

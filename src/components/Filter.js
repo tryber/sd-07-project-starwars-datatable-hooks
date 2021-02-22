@@ -19,7 +19,7 @@ function FilterPlanets() {
           data-testid="name-filter"
           placeholder="Digite o nome do planeta"
           /* onChange={(event) => setName(event.target.value)} */
-          onChange={(event) => handleChange(event)}
+          onChange={ (event) => handleChange(event) }
         />
       </label>
       <label htmlFor="valor-numerico">

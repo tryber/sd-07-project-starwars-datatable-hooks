@@ -50,7 +50,7 @@ function Table() {
           ))
         }
       </table>
-    </div >
+    </div>
   );
 }
 
