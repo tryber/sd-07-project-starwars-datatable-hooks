@@ -42,6 +42,13 @@ function Filters() {
     return setFilteredPlanets(filteredByName);
   };
 
+  const resetNumericFIlter = () => {
+    setComparison('maior que');
+    setNumber(zero);
+    setInfo('population');
+    setFilteredPlanets(planets);
+  };
+
   return (
     <div>
       <input
@@ -55,19 +62,35 @@ function Filters() {
       <select
         onChange={ (e) => setInfo(e.target.value) }
         data-testid="column-filter"
+        value={ info }
       >
         {planetInfos.map((infoPlanet) => (
           <option key={ infoPlanet }>{infoPlanet}</option>
         ))}
       </select>
+      <button
+        type="button"
+        data-testid="filter"
+        onClick={ resetNumericFIlter }
+      >
+        x
+      </button>
       <select
         onChange={ (e) => setComparison(e.target.value) }
         data-testid="comparison-filter"
+        value={ comparison }
       >
         <option>maior que</option>
         <option>menor que</option>
         <option>igual a</option>
       </select>
+      <button
+        type="button"
+        data-testid="filter"
+        onClick={ resetNumericFIlter }
+      >
+        x
+      </button>
       <input
         onChange={ (e) => setNumber(e.target.value) }
         type="number"
