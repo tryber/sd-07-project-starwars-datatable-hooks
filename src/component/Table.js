@@ -27,7 +27,7 @@ function Table() {
         </thead>
         {
           filterResults.map((item) => (
-            <tbody key={ item.index }>
+            <tbody key={ item.name }>
               <tr>
                 <td data-testid="planet-name">{item.name}</td>
                 <td>{item.rotation_period}</td>

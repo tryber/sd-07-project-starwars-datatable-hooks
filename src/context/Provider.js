@@ -15,11 +15,20 @@ function Provider({ children }) {
     sort: 'asc' });
 
   useEffect(() => {
+    const negativo = -1;
+    const zero = 0;
+    const positivo = 1;
     const api = async () => {
       const apiUrl = await fetch('https://swapi-trybe.herokuapp.com/api/planets/');
       const url = await apiUrl.json();
-      setData(url.results);
       setFilterResults(url.results);
+      const arrayOrder = [...url.results];
+      arrayOrder.sort((a, b) => {
+        if (a.name > b.name) return positivo;
+        if (a.name < b.name) return negativo;
+        return zero;
+      });
+      setData(arrayOrder);
     };
     api();
   }, []);
@@ -51,7 +60,6 @@ function Provider({ children }) {
     });
     setFilterResults(filterInput);
   }, [data, filterByNumericValues]);
-
 
   return (
     <StarWarsContext.Provider
