@@ -5,6 +5,7 @@ import planetsAPI from '../services/StarWarsAPI';
 
 function Provider({ children }) {
   const [data, setData] = useState();
+  const [name, setName] = useState('');
 
   const fetchData = async () => {
     setData(await planetsAPI());
@@ -16,6 +17,8 @@ function Provider({ children }) {
 
   const context = {
     data,
+    name,
+    setName,
   };
 
   return (
