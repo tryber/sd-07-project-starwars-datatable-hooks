@@ -6,16 +6,12 @@ function FilterOrder() {
 
   function orderDesc() {
     const dataOrder = [...data];
-    dataOrder.sort((a, b) => {
-      return (b[order.column] - a[order.column]);
-    });
+    dataOrder.sort((a, b) => (b[order.column] - a[order.column]));
     setData(dataOrder);
   }
   function orderAsc() {
     const dataOrder = [...data];
-    dataOrder.sort((a, b) => {
-      return (a[order.column] - b[order.column]);
-    });
+    dataOrder.sort((a, b) => (a[order.column] - b[order.column]));
     setData(dataOrder);
   }
   function ordered() {
