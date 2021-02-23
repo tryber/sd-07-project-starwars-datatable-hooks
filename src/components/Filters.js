@@ -68,13 +68,14 @@ function Filters() {
           <option key={ infoPlanet }>{infoPlanet}</option>
         ))}
       </select>
-      <button
-        type="button"
-        data-testid="filter"
-        onClick={ resetNumericFIlter }
-      >
-        x
-      </button>
+      <div data-testid="filter">
+        <button
+          type="button"
+          onClick={ resetNumericFIlter }
+        >
+          X
+        </button>
+      </div>
       <select
         onChange={ (e) => setComparison(e.target.value) }
         data-testid="comparison-filter"
@@ -84,13 +85,14 @@ function Filters() {
         <option>menor que</option>
         <option>igual a</option>
       </select>
-      <button
-        type="button"
-        data-testid="filter"
-        onClick={ resetNumericFIlter }
-      >
-        x
-      </button>
+      <div data-testid="filter">
+        <button
+          type="button"
+          onClick={ resetNumericFIlter }
+        >
+          X
+        </button>
+      </div>
       <input
         onChange={ (e) => setNumber(e.target.value) }
         type="number"
