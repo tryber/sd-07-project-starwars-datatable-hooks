@@ -1,11 +1,10 @@
 import React from 'react';
-import StarWarsContext from '../context/StarWarsContext';
+// import StarWarsContext from '../context/StarWarsContext';
 
 function FilterBar() {
-  const { filters, setFilters } = React.useContext(StarWarsContext);
+  // const { filters, setFilters } = React.useContext(StarWarsContext);
 
   React.useEffect(() => {
-    
   });
 
   return (

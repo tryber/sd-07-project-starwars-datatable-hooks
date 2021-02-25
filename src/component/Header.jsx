@@ -1,6 +1,6 @@
 import React from 'react';
 import StarWarsContext from '../context/StarWarsContext';
-import FilterBar from '../component/FilterBar';
+import FilterBar from './FilterBar';
 
 const Header = () => {
   const { data } = React.useContext(StarWarsContext);
