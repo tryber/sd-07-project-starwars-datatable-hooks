@@ -7,9 +7,6 @@ function Form() {
     filters,
     setClick,
     setFilters,
-    setOptions,
-    dataOrigin,
-    setData,
   } = useContext(StarWarsContext);
 
   const [aux, setAux] = useState({
@@ -18,38 +15,44 @@ function Form() {
     value: '',
   });
 
-  const reset = () => {
-    (
-      setOptions({
-        population: true,
-        orbital_period: true,
-        diameter: true,
-        rotation_period: true,
-        surface_water: true,
-      }));
-    setData({ dataOrigin });
+  const handleClick = () => {
+    const { column, value } = aux;
+    if (column && value) {
+      setFilters({ ...filters,
+        filterByNumericValues: [...filters.filterByNumericValues, aux] });
+      const newOptions = options.filter((option) => option !== column)[0];
+      setAux({ column: newOptions, comparison: aux.comparison, value: '' });
+    }
+    setClick(true);
   };
+
+  // const reset = () => {
+  //   (
+  //     setOptions({
+  //       population: true,
+  //       orbital_period: true,
+  //       diameter: true,
+  //       rotation_period: true,
+  //       surface_water: true,
+  //     }));
+  //   setData({ dataOrigin });
+  // };
 
   const selectOptions = () => (
     <select
+      id="column"
       data-testid="column-filter"
       name="column"
       onChange={ (event) => {
         setAux({ ...aux, column: (event.target.value) });
-        setFilters({ ...filters,
-          filterByNumericValues: [...filters.filterByNumericValues, aux] });
-        setOptions({ ...options, [event.target.value]: false });
       } }
     >
-      <option value="" selected disabled hidden>Choose here</option>
-      { !options
-        ? null
-        : Object.keys(options)
-          .map((column, index) => (
-            <option key={ index } value={ `${column}` }>
-              { !options[column] ? null : column }
-            </option>
-          ))}
+      { options
+        .map((column) => (
+          <option key={ column } value={ `${column}` }>
+            { column }
+          </option>
+        ))}
     </select>
   );
 
@@ -87,20 +90,18 @@ function Form() {
           type="button"
           name="button"
           data-testid="filter"
-          // disabled
-          onClick={ () => reset(dataOrigin) }
+          // onClick={ () => reset(dataOrigin) }
         >
           X
         </button>
         <button
           type="button"
           data-testid="button-filter"
-          onClick={ () => setClick(true) }
+          onClick={ () => handleClick() }
         >
           Search by value
         </button>
       </form>
-      { console.log(aux)}
     </div>
   );
 }

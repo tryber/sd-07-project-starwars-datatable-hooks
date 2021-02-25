@@ -4,7 +4,8 @@ import StarWarsContext from '../context/StartWarsContext';
 function Table() {
   const { data, filters } = useContext(StarWarsContext);
   const { filterByName } = filters;
-  // const { name } = filterByName;
+
+
 
   const theadTable = () => (
     <tr>
