@@ -1,13 +1,22 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import fetchAPI from './services/fetchAPI';
+import StarWarsContext from './context/StarWarsContext';
+import Table from './components/Table';
 import './App.css';
 
 function App() {
+  const [data, setData] = useState();
+
+  useEffect(() => {
+    fetchAPI().then((r) => setData(r));
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <h1>Iniciando projeto :rocket: :green-heart:</h1>
-      </header>
-    </div>
+    <StarWarsContext.Provider value={ { data } }>
+      <div>
+        {data ? <Table /> : <p>Loading...</p>}
+      </div>
+    </StarWarsContext.Provider>
   );
 }
 
