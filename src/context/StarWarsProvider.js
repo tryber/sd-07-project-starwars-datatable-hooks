@@ -1,7 +1,9 @@
 import React from 'react';
 import StarWarsContext from './StarWarsContext';
+import Header from '../component/Header';
+import Tablet from '../component/Tablet';
 
-function StarWarsProvider({ children }) {
+function StarWarsProvider() {
   const [data, setData] = React.useState([]);
 
   React.useEffect(() => {
@@ -18,7 +20,8 @@ function StarWarsProvider({ children }) {
   return (
     <div>
       <StarWarsContext.Provider value={ context }>
-        {children}
+        <Header />
+        <Tablet />
       </StarWarsContext.Provider>
     </div>
   );
