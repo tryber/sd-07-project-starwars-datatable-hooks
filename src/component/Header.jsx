@@ -6,7 +6,7 @@ const Header = () => {
 
   return (
     <div>
-      <h1>{ data ? 'Star Wars' : 'fudeu'}</h1>
+      <h1>{ data ? 'Star Wars' : 'Erro'}</h1>
     </div>
   );
 };

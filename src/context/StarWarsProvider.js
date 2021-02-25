@@ -5,6 +5,7 @@ import Tablet from '../component/Tablet';
 
 function StarWarsProvider() {
   const [data, setData] = React.useState([]);
+  const [filters, setFilters] = React.useState({});
 
   React.useEffect(() => {
     fetch('https://swapi-trybe.herokuapp.com/api/planets/')
@@ -15,6 +16,8 @@ function StarWarsProvider() {
   const context = {
     data,
     setData,
+    filters,
+    setFilters,
   };
 
   return (
