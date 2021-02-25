@@ -5,8 +5,6 @@ function Table() {
   const { data, filters } = useContext(StarWarsContext);
   const { filterByName } = filters;
 
-
-
   const theadTable = () => (
     <tr>
       { !data[0] ? null : Object.keys(data[0])
