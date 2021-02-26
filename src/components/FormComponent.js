@@ -88,20 +88,37 @@ function Form() {
         />
         <button
           type="button"
-          name="button"
-          data-testid="filter"
-          // onClick={ () => reset(dataOrigin) }
-        >
-          X
-        </button>
-        <button
-          type="button"
           data-testid="button-filter"
           onClick={ () => handleClick() }
         >
           Search by value
         </button>
       </form>
+      <br />
+      <div>
+        { filters.filterByNumericValues
+          .map((element, index) => (
+            <div key={ index }>
+              <p>
+                <span><b>Filtro aplicado: </b></span>
+                <span>{ element.column }</span>
+                <span> - </span>
+                <span>{ element.comparison }</span>
+                <span> - </span>
+                <span>{ element.value }</span>
+                <span> </span>
+                <button
+                  type="button"
+                  name="button"
+                  data-testid="filter"
+                  // onClick={ () => reset(dataOrigin) }
+                >
+                  X
+                </button>
+              </p>
+            </div>)) }
+        <br />
+      </div>
     </div>
   );
 }
