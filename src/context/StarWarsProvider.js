@@ -37,6 +37,7 @@ export default function Provider({ children }) {
 
   useEffect(() => {
     let temp = dataOrigin;
+    
     const zero = 0;
     for (let i = zero; i < filters.filterByNumericValues.length; i += 1) {
       const { comparison, column, value } = filters.filterByNumericValues[i];
@@ -51,7 +52,7 @@ export default function Provider({ children }) {
         temp = (temp.filter((item) => Number(item[column]) === Number(value)));
         break;
       default:
-        getPlanets();
+        temp = (temp.filter((item) => Number(item[column]) === Number(value)));
         break;
       }
       if (!options[column]) {
@@ -59,9 +60,10 @@ export default function Provider({ children }) {
         setClick(false);
       }
     }
+    // console.log(temp);
     setData(temp);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [click, setClick, setOptions]);
+  }, [click, setClick, setOptions, filters.filterByNumericValues]);
 
   return (
     <StarWarsContext.Provider

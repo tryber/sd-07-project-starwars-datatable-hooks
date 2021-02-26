@@ -27,10 +27,9 @@ function Form() {
   };
 
   const reset = (index) => {
-    console.log(index);
-    // filters.filterByNumericValues.splice(index, 1);
-    setFilters({...filters,
-      filterByNumericValues: filters.filterByNumericValues.splice(index, 1) });
+    filters.filterByNumericValues.splice(index, 1);
+    setFilters({ ...filters,
+      filterByNumericValues: [...filters.filterByNumericValues] });
   };
 
   const selectOptions = () => (
@@ -93,8 +92,8 @@ function Form() {
       <div>
         { filters.filterByNumericValues
           .map((element, index) => (
-            <div key={ index }>
-              <p>
+           
+              <p data-testid="filter">
                 <span><b>Filtro aplicado: </b></span>
                 <span>{ element.column }</span>
                 <span> - </span>
@@ -105,13 +104,13 @@ function Form() {
                 <button
                   type="button"
                   name="button"
-                  data-testid="filter"
+                  
                   onClick={ () => reset(index) }
                 >
                   X
                 </button>
               </p>
-            </div>)) }
+            )) }
         <br />
       </div>
     </div>
