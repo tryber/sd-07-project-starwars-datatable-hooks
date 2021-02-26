@@ -11,6 +11,7 @@ function HomePage() {
         onChange={ ({ target }) => setFilters({
           filterByName: { name: target.value },
         }) }
+        data-testid="name-filter"
       />
       {data ? <Table /> : <p>Loading...</p>}
     </div>
