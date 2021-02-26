@@ -37,7 +37,6 @@ export default function Provider({ children }) {
 
   useEffect(() => {
     let temp = dataOrigin;
-    
     const zero = 0;
     for (let i = zero; i < filters.filterByNumericValues.length; i += 1) {
       const { comparison, column, value } = filters.filterByNumericValues[i];

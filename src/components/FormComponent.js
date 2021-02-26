@@ -92,25 +92,23 @@ function Form() {
       <div>
         { filters.filterByNumericValues
           .map((element, index) => (
-           
-              <p data-testid="filter">
-                <span><b>Filtro aplicado: </b></span>
-                <span>{ element.column }</span>
-                <span> - </span>
-                <span>{ element.comparison }</span>
-                <span> - </span>
-                <span>{ element.value }</span>
-                <span> </span>
-                <button
-                  type="button"
-                  name="button"
-                  
-                  onClick={ () => reset(index) }
-                >
-                  X
-                </button>
-              </p>
-            )) }
+            <p key={ index } data-testid="filter">
+              <span><b>Filtro aplicado: </b></span>
+              <span>{ element.column }</span>
+              <span> - </span>
+              <span>{ element.comparison }</span>
+              <span> - </span>
+              <span>{ element.value }</span>
+              <span> </span>
+              <button
+                type="button"
+                name="button"
+                onClick={ () => reset(index) }
+              >
+                X
+              </button>
+            </p>
+          )) }
         <br />
       </div>
     </div>
