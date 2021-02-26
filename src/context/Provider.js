@@ -12,6 +12,11 @@ function Provider({ children }) {
     comparison: 'maior que',
     value: '100000',
   }]);
+  const [sortPlanets, setSortPlanets] = useState({
+    column: 'Name',
+    sort: 'ASC',
+  });
+  const [sortedPlanets, setSortedPlanets] = useState([]);
 
   useEffect(() => {
     const fetchPlanets = async () => {
@@ -30,11 +35,15 @@ function Provider({ children }) {
         name: filterByName,
       },
       filterByNumericValues: numericFilter,
+      order: sortPlanets,
     },
     setFilterByName,
     setNumericFilter,
     filteredPlanets,
     setFilteredPlanets,
+    setSortPlanets,
+    sortedPlanets,
+    setSortedPlanets,
   };
 
   return (

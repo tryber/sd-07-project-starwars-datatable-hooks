@@ -4,6 +4,25 @@ import StarWarsContext from '../context/StarWarsContext';
 function Table() {
   const { filteredPlanets } = useContext(StarWarsContext);
 
+  // const zero = 0;
+  // const minusOne = -1;
+
+  // if (sort === 'ASC') {
+  //   return setSortedPlanets(filteredPlanets.sort((a, b) => a[column] - b[column]));
+  // } if (sort === 'DESC') {
+  //   setSortedPlanets(filteredPlanets.sort((a, b) => b[column] - a[column]));
+  // } else {
+  //   setSortedPlanets(filteredPlanets.sort((a, b) => {
+  //     if (a.name > b.name) {
+  //       return 1;
+  //     }
+  //     if (a.name < b.name) {
+  //       return minusOne;
+  //     }
+  //     return zero;
+  //   }));
+  // }
+
   return (
     <div>
       <table>
@@ -25,7 +44,7 @@ function Table() {
 
         {filteredPlanets.map((planet) => (
           <tr key={ planet.name }>
-            <td>{planet.name}</td>
+            <td data-testid="planet-name">{planet.name}</td>
             <td>{planet.rotation_period}</td>
             <td>
               {planet.orbital_period}
