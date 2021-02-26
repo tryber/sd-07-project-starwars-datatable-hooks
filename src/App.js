@@ -1,22 +1,17 @@
-import React, { useEffect, useState } from 'react';
-import fetchAPI from './services/fetchAPI';
-import StarWarsContext from './context/StarWarsContext';
-import Table from './components/Table';
+import React from 'react';
+import StarWarsProvider from './context/StarWarsProvider';
+import HomePage from './pages/HomePage';
 import './App.css';
 
 function App() {
-  const [data, setData] = useState();
-
-  useEffect(() => {
-    fetchAPI().then((r) => setData(r));
-  }, []);
+  const teste = 'teste';
+  const boll = teste.match(/ES/i);
+  console.log(boll);
 
   return (
-    <StarWarsContext.Provider value={ { data } }>
-      <div>
-        {data ? <Table /> : <p>Loading...</p>}
-      </div>
-    </StarWarsContext.Provider>
+    <StarWarsProvider>
+      <HomePage />
+    </StarWarsProvider>
   );
 }
 
