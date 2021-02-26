@@ -26,17 +26,12 @@ function Form() {
     setClick(true);
   };
 
-  // const reset = () => {
-  //   (
-  //     setOptions({
-  //       population: true,
-  //       orbital_period: true,
-  //       diameter: true,
-  //       rotation_period: true,
-  //       surface_water: true,
-  //     }));
-  //   setData({ dataOrigin });
-  // };
+  const reset = (index) => {
+    console.log(index);
+    // filters.filterByNumericValues.splice(index, 1);
+    setFilters({...filters,
+      filterByNumericValues: filters.filterByNumericValues.splice(index, 1) });
+  };
 
   const selectOptions = () => (
     <select
@@ -111,7 +106,7 @@ function Form() {
                   type="button"
                   name="button"
                   data-testid="filter"
-                  // onClick={ () => reset(dataOrigin) }
+                  onClick={ () => reset(index) }
                 >
                   X
                 </button>
