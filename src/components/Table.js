@@ -1,6 +1,6 @@
 import React, { useEffect, useContext } from 'react';
 import Context from '../context/Context';
-import { trs } from '../service/helpers';
+import { trs } from '../service/helper';
 
 function StarWarsTable() {
   const {
@@ -12,7 +12,7 @@ function StarWarsTable() {
   const byValue = searchTerm.filters.filterByNumericValues;
   useEffect(() => {
     dataApi();
-  }, []);
+  });
 
   function masterFilter() {
     let initialArray = data;

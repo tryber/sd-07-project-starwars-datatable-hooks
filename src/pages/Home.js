@@ -1,14 +1,14 @@
 import React from 'react';
 import Provider from '../context/Provider';
 import Table from '../components/Table';
-import Search from '../components/Search';
-import Selected from '../components/Selected';
+import SearchInput from '../components/Search';
+import SearchSelected from '../components/Selected';
 
 function Home() {
   return (
     <Provider>
-      <Search />
-      <Selected />
+      <SearchInput />
+      <SearchSelected />
       <Table />
     </Provider>
   );

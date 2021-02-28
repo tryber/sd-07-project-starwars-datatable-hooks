@@ -5,16 +5,16 @@ import Context from './Context';
 
 function Provider({ children }) {
   const [data, setData] = useState([]);
-  const [Value, setValue] = useState([]);
-  const [search, setSearch] = useState(
+  const [byValue, setByValue] = useState([]);
+  const [searchTerm, setSearchTerm] = useState(
     {
       filters:
       {
-        filterName:
+        filterByName:
         {
           name: '',
         },
-        filterValues: [],
+        filterByNumericValues: [],
         order: {
           column: 'name',
           sort: 'ASC',
@@ -33,10 +33,10 @@ function Provider({ children }) {
       value={
         { data,
           dataApi,
-          search,
-          setSearch,
-          Value,
-          setValue }
+          searchTerm,
+          setSearchTerm,
+          byValue,
+          setByValue }
       }
     >
       { children}

@@ -1,42 +1,42 @@
 import React, { useContext, useState } from 'react';
 import Context from '../context/Context';
-import { length, population, columns } from '../service/helpers';
+import { length, tags, columnSort } from '../service/helper';
 
 function Selected() {
-  const { setSerach, Serach } = useContext(Context);
+  const { setSearchTerm, searchTerm } = useContext(Context);
   const [about, setAbout] = useState('population');
   const [lengthType, setLengthType] = useState('maior que');
   const [value, setValue] = useState('');
 
   function setByValue(filter) {
-    setSerach((SerachParam) => (
+    setSearchTerm((searchTermParam) => (
       {
-        ...SerachParam,
-        filters: { ...SerachParam.filters,
+        ...searchTermParam,
+        filters: { ...searchTermParam.filters,
           filterByNumericValues:
-           [...SerachParam.filters.filterByNumericValues, filter] },
+           [...searchTermParam.filters.filterByNumericValues, filter] },
       }
     ));
   }
 
   const setDropDown = () => {
-    let arrpopulation = population;
+    let arrTags = tags;
 
-    const dropDownArray = Serach.filters.filterByNumericValues
+    const dropDownArray = searchTerm.filters.filterByNumericValues
       .map((elementDropDown) => Object.values(elementDropDown)[0]);
 
-    arrpopulation = arrpopulation
+    arrTags = arrTags
       .filter((elementAbout) => !dropDownArray.includes(elementAbout));
-    return arrpopulation;
+    return arrTags;
   };
 
   function eraseFilter(index) {
-    const arrayOfFilters = [...Serach.filters.filterByNumericValues];
+    const arrayOfFilters = [...searchTerm.filters.filterByNumericValues];
     arrayOfFilters.splice(index, 1);
-    setSerach((SerachParam) => (
+    setSearchTerm((searchTermParam) => (
       {
-        ...SerachParam,
-        filters: { ...SerachParam.filters,
+        ...searchTermParam,
+        filters: { ...searchTermParam.filters,
           filterByNumericValues: arrayOfFilters },
       }
     ));
@@ -44,10 +44,10 @@ function Selected() {
   const [radio, setRadio] = useState('ASC');
   const [columnRadio, setColumnRadio] = useState('Name');
   function handleSort() {
-    setSerach((SerachParam) => (
+    setSearchTerm((searchTermParam) => (
       {
-        ...SerachParam,
-        filters: { ...SerachParam.filters,
+        ...searchTermParam,
+        filters: { ...searchTermParam.filters,
           order: {
             column: columnRadio,
             sort: radio,
@@ -100,7 +100,7 @@ function Selected() {
         Filter
       </button>
       <div>
-        { Serach.filters.filterByNumericValues.map((elem, index) => (
+        { searchTerm.filters.filterByNumericValues.map((elem, index) => (
           <div key={ index } data-testid="filter">
             <button
               type="button"
@@ -116,7 +116,7 @@ function Selected() {
         data-testid="column-sort"
         onChange={ (event) => setColumnRadio(event.target.value) }
       >
-        {columns.map((elem, index) => (
+        {columnSort.map((elem, index) => (
           <option
             key={ index }
             value={ elem }

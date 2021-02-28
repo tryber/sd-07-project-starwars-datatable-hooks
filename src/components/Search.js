@@ -2,16 +2,16 @@ import React, { useContext } from 'react';
 import Context from '../context/Context';
 
 function Search() {
-  const { search, setSearch } = useContext(Context);
-  const { filters: { filterByName: { name } } } = search;
+  const { searchTerm, setSearchTerm } = useContext(Context);
+  const { filters: { filterByName: { name } } } = searchTerm;
 
   function handleInput(value) {
     const objectInput = {
-      ...search,
-      filters: { ...search.filters,
+      ...searchTerm,
+      filters: { ...searchTerm.filters,
         filterByName: { name: value } },
     };
-    setSearch(objectInput);
+    setSearchTerm(objectInput);
   }
   return (
     <div>
