@@ -15,7 +15,20 @@ const Filter = () => {
     console.log(filters);
   };
 
+  useEffect(() => {
+    console.log(filters);
+  });
+
   const sendNumericFilter = (e) => {
+    e.preventDefault();
+    setFilters({
+      ...filters,
+      filterByNumericValues: [
+        ...filters.filterByNumericValues,
+        currNumFilter,
+      ],
+    });
+
     // console.log(currNumFilter);
     // e.preventDefault();
     // setFilters({
@@ -23,16 +36,15 @@ const Filter = () => {
     //   filterByNumericValues: filters.filterByNumericValues.push(currNumFilter),
     // });
     // // const data = e.target;
-    // console.log(filters);
   };
 
   const handleNumericFilterChange = (e) => {
-    // const { value } = e.target;
-    // setCurrNumFilter({
-    //   ...currNumFilter,
-    //   [e.target.name]: value,
-    // });
-    // console.log(currNumFilter);
+    const { value } = e.target;
+    setCurrNumFilter({
+      ...currNumFilter,
+      [e.target.name]: value,
+    });
+    console.log(currNumFilter);
   };
 
   return (
@@ -42,9 +54,7 @@ const Filter = () => {
         data-testid="name-filter"
         onChange={ (e) => sendCurrentSearch(e) }
       />
-      <form
-        onSubmit={ (e) => sendNumericFilter(e) }
-      >
+      <form>
         <select
           data-testid="column-filter"
           name="column"
@@ -77,6 +87,7 @@ const Filter = () => {
         <button
           type="submit"
           data-testid="button-filter"
+          onClick={ sendNumericFilter }
         >
           Filtrar
         </button>
