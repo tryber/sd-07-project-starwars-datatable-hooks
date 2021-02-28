@@ -15,11 +15,11 @@ function Filters() {
         } }
         data-testid="column-filter"
       >
-        <option value="population">Population</option>
-        <option value="orbital_period">Orbital period</option>
-        <option value="diameter">Diameter</option>
-        <option value="rotation_period">Rotation period</option>
-        <option value="surface_water">Surface Water</option>
+        <option value="population">population</option>
+        <option value="orbital_period">orbital_period</option>
+        <option value="diameter">diameter</option>
+        <option value="rotation_period">rotation_period</option>
+        <option value="surface_water">surface_water</option>
       </select>
       <div>
         <select
@@ -28,9 +28,9 @@ function Filters() {
           } }
           data-testid="comparison-filter"
         >
-          <option value=">">Maior que</option>
-          <option value="<">Menor que</option>
-          <option value="=">Igual a</option>
+          <option value=">">maior que</option>
+          <option value="=">igual a</option>
+          <option value="<">menor que</option>
         </select>
         <input
           onChange={ ({ target }) => {
