@@ -9,6 +9,7 @@ const StarWarsProvider = ({ children }) => {
     filterByName: {
       name: '',
     },
+    filterByNumericValues: [],
   });
 
   const context = {

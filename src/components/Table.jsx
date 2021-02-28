@@ -20,10 +20,6 @@ const Table = () => {
     console.log(filtered);
   }, [filtered, filters.filterByName.name]);
 
-  useEffect(() => {
-    setTable();
-  });
-
   const setTable = () => {
     if (filtered) {
       const filteredPlanets = data.filter((planet) => (
@@ -68,6 +64,10 @@ const Table = () => {
       ))
     );
   };
+
+  useEffect(() => {
+    setTable();
+  });
 
   return (
     <div>
