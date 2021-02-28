@@ -95,6 +95,7 @@ function Table() {
                 </tr>
               );
             }
+
             return null;
           })
         }
