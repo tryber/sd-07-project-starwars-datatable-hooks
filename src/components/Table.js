@@ -14,13 +14,13 @@ function Table() {
     const currentValue = Number(curr[column]);
     switch (comparison) {
     case '>':
-      if (currentValue > value || currentValue === 'unknown') acc.push(curr);
+      if (currentValue >= value || curr[column] === 'unknown') acc.push(curr);
       break;
     case '<':
-      if (currentValue < value || currentValue === 'unknown') acc.push(curr);
+      if (currentValue <= value || curr[column] === 'unknown') acc.push(curr);
       break;
     default:
-      if (currentValue === value || currentValue === 'unknown') acc.push(curr);
+      if (currentValue === value || curr[column] === 'unknown') acc.push(curr);
       break;
     }
 
