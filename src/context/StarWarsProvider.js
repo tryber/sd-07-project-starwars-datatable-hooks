@@ -9,6 +9,11 @@ function StarWarsProvider({ children }) {
     filterByName: {
       name: '',
     },
+    filterByNumericValues: [{
+      column: 'population',
+      comparison: '>',
+      value: 0,
+    }],
   });
 
   useEffect(() => {

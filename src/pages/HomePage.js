@@ -1,19 +1,14 @@
-import React, { useContext } from 'react';
-import StarWarsContext from '../context/StarWarsContext';
+import React from 'react';
+import InputTxt from '../components/InputTxt';
+import Filters from '../components/Filters';
 import Table from '../components/Table';
 
 function HomePage() {
-  const { data, setFilters } = useContext(StarWarsContext);
   return (
     <div>
-      <input
-        type="text"
-        onChange={ ({ target }) => setFilters({
-          filterByName: { name: target.value },
-        }) }
-        data-testid="name-filter"
-      />
-      {data ? <Table /> : <p>Loading...</p>}
+      <InputTxt />
+      <Filters />
+      <Table />
     </div>
   );
 }
