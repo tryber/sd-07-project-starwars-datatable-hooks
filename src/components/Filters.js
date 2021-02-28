@@ -41,7 +41,16 @@ function Filters() {
         />
       </div>
       <button
-        onClick={ () => setFilters({ ...filters, filterByNumericValues: [...filters.filterByNumericValues, { column, comparison, value: Number(value) }] }) }
+        onClick={ () => {
+          setFilters(
+            { ...filters,
+              filterByNumericValues: [
+                ...filters.filterByNumericValues,
+                { column, comparison, value: Number(value) },
+              ],
+            },
+          );
+        } }
         type="button"
         data-testid="button-filter"
       >
