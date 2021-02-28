@@ -11,12 +11,14 @@ const Remove = () => {
     setFilter({ ...filter, filterByNumericValues: newFilter });
   };
 
-  return (<button
-    type="submit"
-    data-testid="filter"
-    onClick={ () => removeFilters() }
-  >
-    X
-  </button>);
+  return (
+    <button
+      type="submit"
+      data-testid="filter"
+      onClick={ () => removeFilters() }
+    >
+      X
+    </button>
+  );
 };
 export default Remove;
