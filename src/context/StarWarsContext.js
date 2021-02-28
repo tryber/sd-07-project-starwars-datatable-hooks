@@ -5,7 +5,9 @@ const StarWarsContext = createContext();
 const StarWarsProvider = ({ children }) => {
   const [data, setData] = useState([]);
   const [search, setSearch] = useState('');
-  const [filter, setFilter] = useState({ filterByName: { name: '' }, filterByNumericValues: [] });
+  const [filter, setFilter] = useState({
+    filterByName: { name: '' },
+    filterByNumericValues: [] });
 
   useEffect(() => {
     fetch('https://swapi-trybe.herokuapp.com/api/planets/')

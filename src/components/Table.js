@@ -9,7 +9,7 @@ function Table() {
 
   const handleComparisonFilterLogic = useCallback((planet, filters) => {
     const { column, value, comparison } = filters;
-    if(comparison === 'maior que' ) {
+    if (comparison === 'maior que') {
       return Number(planet[column]) > Number(value);
     } if (comparison === 'menor que') {
       return Number(planet[column]) < Number(value);
@@ -24,30 +24,28 @@ function Table() {
     return filteredPlanets;
   }, [data, filter]);
 
- const filtersPlanets = useCallback(() => {
+  const filtersPlanets = useCallback(() => {
     const filteredPlanets = filterByName(filter);
     const zero = 0;
-   if (filter && filter.filterByNumericValues.length > zero) {
-     filter.filterByNumericValues.forEach((value) => {
-        const finallyFilteredPlanets = filteredPlanets.filter((planet) => handleComparisonFilterLogic(planet, value));
+    if (filter && filter.filterByNumericValues.length > zero) {
+      filter.filterByNumericValues.forEach((value) => {
+        const finallyFilteredPlanets = filteredPlanets
+          .filter((planet) => handleComparisonFilterLogic(planet, value));
         setPlanets(finallyFilteredPlanets);
       });
-
     } else {
-      setPlanets(filteredPlanets); 
-    }    
-
+      setPlanets(filteredPlanets);
+    }
   }, [filter, filterByName, handleComparisonFilterLogic]);
- 
 
   useEffect(() => {
     filtersPlanets();
-  }, [filtersPlanets])
- 
+  }, [filtersPlanets]);
+
   return (
-    <div style={{overflowX: 'auto'}}>
+    <div style={ { overflowX: 'auto' } }>
       <NumericFilter />
-      <Remove/>
+      <Remove />
       <input
         type="text"
         placeholder="Search Planets"
@@ -75,7 +73,7 @@ function Table() {
           </tr>
         </thead>
         <tbody>
-            {
+          {
             planets.map((planet) => (
               <tr key={ planet.url }>
                 <td>{planet.name}</td>
@@ -92,8 +90,8 @@ function Table() {
                 <td>{planet.surface_water}</td>
                 <td>{planet.population}</td>
               </tr>
-              ))
-               }
+            ))
+          }
         </tbody>
       </table>
     </div>

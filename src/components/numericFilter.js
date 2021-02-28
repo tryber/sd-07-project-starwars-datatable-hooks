@@ -1,6 +1,5 @@
 import React, { useContext, useCallback, useState } from 'react';
 import { StarWarsContext } from '../context/StarWarsContext';
-import remove from './removeFilters';
 
 function NumericFilter() {
   const { setFilter, filter } = useContext(StarWarsContext);
@@ -33,8 +32,8 @@ function NumericFilter() {
 
   const checkIfIsDuplicated = useCallback((column) => {
     let duplicated;
-
-    for (let index = 0; index < filter.filterByNumericValues.length; index++) {
+    const zero = 0;
+    for (let i = zero; i < filter.filterByNumericValues.length; i = +1) {
       const element = filter.filterByNumericValues[index];
       if (element.column === column) {
         duplicated = true;
@@ -55,15 +54,18 @@ function NumericFilter() {
         columns.filter((column) => column !== filtersByNumericInput.column),
       );
     }
-  }, [checkIfIsDuplicated, checkIfIsNotEmpty, columns, filter, filtersByNumericInput, setFilter]);
+  }, [checkIfIsDuplicated,
+    checkIfIsNotEmpty, columns, filter, filtersByNumericInput, setFilter]);
 
   return (
     <div className="formWrapper">
-      <label>
+      <label htmlFor="labels">
         Coluna
         <select
           data-testid="column-filter"
-          onChange={ ({ target: { value } }) => setFiltersByNumericInput({ ...filtersByNumericInput, column: value }) }
+          onChange={ ({ target: { value } }) => setFiltersByNumericInput(
+            { ...filtersByNumericInput, column: value },
+          ) }
         >
           <option key="Selecione" value="">Selecione uma coluna</option>
           { columns.map((column) => (
@@ -74,24 +76,32 @@ function NumericFilter() {
         </select>
       </label>
 
-      <label>
+      <label htmlFor="label">
         Comparação
         <select
           data-testid="comparison-filter"
-          onChange={ ({ target: { value } }) => setFiltersByNumericInput({ ...filtersByNumericInput, comparison: value }) }
+          onChange={ ({
+            target:
+            { value },
+          }) => setFiltersByNumericInput(
+            { ...filtersByNumericInput,
+              comparison: value },
+          ) }
         >
           <option key="Selecione" value="">Selecione uma comparação</option>
           {comparison.map((items) => (
             <option key={ items }>{items}</option>))}
         </select>
       </label>
-      <label>
+      <label htmlFor="l">
         Valor
         <input
           type="number"
           placeholder="Selecione um valor"
           data-testid="value-filter"
-          onChange={ ({ target: { value } }) => setFiltersByNumericInput({ ...filtersByNumericInput, value }) }
+          onChange={ ({ target: { value } }) => setFiltersByNumericInput(
+            { ...filtersByNumericInput, value },
+          ) }
         />
       </label>
       <button
