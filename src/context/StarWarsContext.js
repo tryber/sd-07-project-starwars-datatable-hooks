@@ -21,10 +21,9 @@ const StarWarsProvider = ({ children }) => {
     search,
   };
 
-
   useEffect(() => {
     setFilter({ ...filter, filterByName: { name: search } });
-  }, [search]);
+  }, [filter, search]);
 
   return (
     <StarWarsContext.Provider value={ context }>

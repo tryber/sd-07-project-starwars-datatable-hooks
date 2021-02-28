@@ -1,14 +1,15 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { StarWarsContext } from '../context/StarWarsContext';
 import NumericFilter from './numericFilter';
+import Remove from './removeFilters';
 
 function Table() {
   const { data, setSearch, filter } = useContext(StarWarsContext);
-  const [planets, setPlanets ] = useState([]);
+  const [planets, setPlanets] = useState([]);
 
   const handleComparisonFilterLogic = useCallback((planet, filters) => {
     const { column, value, comparison } = filters;
-    if (comparison === 'maior que') {
+    if(comparison === 'maior que' ) {
       return Number(planet[column]) > Number(value);
     } if (comparison === 'menor que') {
       return Number(planet[column]) < Number(value);
@@ -23,13 +24,12 @@ function Table() {
     return filteredPlanets;
   }, [data, filter]);
 
-  const filtersPlanets = useCallback(() => {
+ const filtersPlanets = useCallback(() => {
     const filteredPlanets = filterByName(filter);
-
-    if (filter && filter.filterByNumericValues.length > 0) {
-    
-      filter.filterByNumericValues.forEach((batata) => {
-        const finallyFilteredPlanets = filteredPlanets.filter((planet) => handleComparisonFilterLogic(planet, batata));
+    const zero = 0;
+   if (filter && filter.filterByNumericValues.length > zero) {
+     filter.filterByNumericValues.forEach((value) => {
+        const finallyFilteredPlanets = filteredPlanets.filter((planet) => handleComparisonFilterLogic(planet, value));
         setPlanets(finallyFilteredPlanets);
       });
 
@@ -38,16 +38,16 @@ function Table() {
     }    
 
   }, [filter, filterByName, handleComparisonFilterLogic]);
-
+ 
 
   useEffect(() => {
     filtersPlanets();
   }, [filtersPlanets])
-
-
+ 
   return (
     <div style={{overflowX: 'auto'}}>
       <NumericFilter />
+      <Remove/>
       <input
         type="text"
         placeholder="Search Planets"

@@ -1,5 +1,6 @@
 import React, { useContext, useCallback, useState } from 'react';
 import { StarWarsContext } from '../context/StarWarsContext';
+import remove from './removeFilters';
 
 function NumericFilter() {
   const { setFilter, filter } = useContext(StarWarsContext);
@@ -16,13 +17,11 @@ function NumericFilter() {
     'igual a',
   ]);
 
-
   const [filtersByNumericInput, setFiltersByNumericInput] = useState({
     column: 'population',
     comparison: 'maior que',
     value: '',
   });
-
 
   const checkIfIsNotEmpty = useCallback(() => {
     if (filtersByNumericInput.column !== ''
@@ -34,16 +33,16 @@ function NumericFilter() {
 
   const checkIfIsDuplicated = useCallback((column) => {
     let duplicated;
-    
+
     for (let index = 0; index < filter.filterByNumericValues.length; index++) {
       const element = filter.filterByNumericValues[index];
-      if(element.column === column){
+      if (element.column === column) {
         duplicated = true;
       } else {
         duplicated = false;
       }
-    }    
-    
+    }
+
     return duplicated;
   }, [filter.filterByNumericValues]);
 
@@ -52,53 +51,49 @@ function NumericFilter() {
       setFilter({ ...filter,
         filterByNumericValues: [...filter.filterByNumericValues,
           filtersByNumericInput] });
-          setColumns(
-            columns.filter((column) => {
-              return column !== filtersByNumericInput.column
-            })
-          );
-
+      setColumns(
+        columns.filter((column) => column !== filtersByNumericInput.column),
+      );
     }
-  }, [checkIfIsDuplicated, checkIfIsNotEmpty, filter, filtersByNumericInput, setFilter]);
+  }, [checkIfIsDuplicated, checkIfIsNotEmpty, columns, filter, filtersByNumericInput, setFilter]);
 
   return (
     <div className="formWrapper">
-    <label>
+      <label>
         Coluna
-      <select
-        data-testid="column-filter"
-        onChange={ ({ target: { value } }) => setFiltersByNumericInput({ ...filtersByNumericInput, column: value }) }
-      >
-        <option key="Selecione" value="">Selecione uma coluna</option>
-        { columns.map((column) => (
-          <option key={ column } value={ column }>
-            {column}
-          </option>
-        ))}
-      </select>
+        <select
+          data-testid="column-filter"
+          onChange={ ({ target: { value } }) => setFiltersByNumericInput({ ...filtersByNumericInput, column: value }) }
+        >
+          <option key="Selecione" value="">Selecione uma coluna</option>
+          { columns.map((column) => (
+            <option key={ column } value={ column }>
+              {column}
+            </option>
+          ))}
+        </select>
       </label>
 
       <label>
         Comparação
-      <select
-        data-testid="comparison-filter"
-        onChange={ ({ target: { value } }) => setFiltersByNumericInput({ ...filtersByNumericInput, comparison: value }) }
-      >
-        <option key="Selecione" value="">Selecione uma comparação</option>
-        {comparison.map((items) => (
-         <option key={items}>{items}</option>)
-        )}
-      </select>
+        <select
+          data-testid="comparison-filter"
+          onChange={ ({ target: { value } }) => setFiltersByNumericInput({ ...filtersByNumericInput, comparison: value }) }
+        >
+          <option key="Selecione" value="">Selecione uma comparação</option>
+          {comparison.map((items) => (
+            <option key={ items }>{items}</option>))}
+        </select>
       </label>
       <label>
         Valor
-      <input
-        type="number"
-        placeholder="Selecione um valor"
-        data-testid="value-filter"
-        onChange={ ({ target: { value } }) => setFiltersByNumericInput({ ...filtersByNumericInput, value }) }
+        <input
+          type="number"
+          placeholder="Selecione um valor"
+          data-testid="value-filter"
+          onChange={ ({ target: { value } }) => setFiltersByNumericInput({ ...filtersByNumericInput, value }) }
         />
-        </label>
+      </label>
       <button
         type="submit"
         data-testid="button-filter"
@@ -106,6 +101,7 @@ function NumericFilter() {
       >
         filtro
       </button>
+
     </div>);
 }
 
