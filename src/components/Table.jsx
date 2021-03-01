@@ -16,7 +16,7 @@ function Table() {
         <tr>
           {pageLoading
             ? null
-            : headers.map((tHead) => <th key={tHead}>{tHead}</th>)}
+            : headers.map((tHead) => <th key={ tHead }>{ tHead }</th>)}
         </tr>
         <tbody>
           {pageLoading
