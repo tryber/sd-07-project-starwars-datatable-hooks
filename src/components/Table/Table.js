@@ -7,18 +7,81 @@ const Tabela = () => {
   const { planets, filters } = useContext(StarWarsContext);
   const zero = 0;
   const one = 1;
-  const oneLess = -1;
-  const compare = (a, b) => {
-    const populationA = (a) ? parseInt(a[filters.order.column], 10) : a;
-    const populationB = (b) ? parseInt(b[filters.order.column], 10) : b;
+  const negOne = -1;
 
-    if (filters.order.sort === 'EQ') return zero;
+  const biggerThen = (planerColumn, number) => (
+    parseInt(planerColumn, 10) > parseInt(number, 10)
+  );
 
-    if (populationA < populationB) return filters.order.sort === 'ASC' ? one : oneLess;
+  const lessThen = (planerColumn, number) => (
+    parseInt(planerColumn, 10) < parseInt(number, 10)
+  );
 
-    if (populationA > populationB) return filters.order.sort === 'ASC' ? oneLess : one;
+  const equalTo = (planerColumn, number) => (
+    parseInt(planerColumn, 10) === parseInt(number, 10)
+  );
 
-    return zero;
+  const getComparisons = (planet, column, comparison, value) => {
+    const comparisons = {
+      'maior que': biggerThen(planet[column], value),
+      'menor que': lessThen(planet[column], value),
+      'igual a': equalTo(planet[column], value),
+    };
+    return comparisons[comparison];
+  };
+
+  const filterPlanetsByNumericValues = () => {
+    const { filterByNumericValues } = filters;
+
+    if (filterByNumericValues.length === zero) {
+      return planets;
+    }
+
+    return planets.filter((planet) => (filterByNumericValues.every((filter) => (
+      getComparisons(planet, filter.column, filter.comparison, filter.value, filter)
+    ))));
+  };
+
+  const sortPlanets = () => {
+    const arrayColumns = [
+      'population',
+      'orbital_period',
+      'diameter',
+      'rotation_period',
+      'surface_water',
+    ];
+    if (arrayColumns.includes(filters.order.column)) {
+      planets.sort((b, a) => {
+        if (parseInt(a[filters.order.column], 10)
+         < parseInt(b[filters.order.column], 10)) {
+          return filters.order.sort === 'ASC' ? one : negOne;
+        }
+        if (parseInt(a[filters.order.column], 10)
+         > parseInt(b[filters.order.column], 10)) {
+          return filters.order.sort === 'ASC' ? negOne : one;
+        }
+        return zero;
+      });
+    } else {
+      planets.sort((b, a) => {
+        if (a[filters.order.column] < b[filters.order.column]) {
+          return filters.order.sort === 'ASC' ? one : negOne;
+        }
+        if (a[filters.order.column] > b[filters.order.column]) {
+          return filters.order.sort === 'ASC' ? negOne : one;
+        }
+        return zero;
+      });
+    }
+    return planets;
+  };
+
+  const filterPlanets = () => {
+    const planetsByNumericValue = filterPlanetsByNumericValues(planets);
+    const sortedPlanets = sortPlanets(planetsByNumericValue);
+    console.log(sortedPlanets);
+
+    return sortedPlanets;
   };
 
   return (
@@ -41,10 +104,8 @@ const Tabela = () => {
         </tr>
       </thead>
       <tbody>
-        {planets
-          .sort(compare)
-          .filter((planet) => planet.name
-            .toLowerCase()
+        {filterPlanets()
+          .filter((planet) => planet.name.toLowerCase()
             .includes(filters.filterByName.name.toLowerCase()))
           .map((planet) => (
             <TableLine planet={ planet } key={ planet.name } />

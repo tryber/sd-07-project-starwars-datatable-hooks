@@ -18,7 +18,7 @@ function Provider({ children }) {
     ],
     order: {
       column: 'name',
-      sort: 'EQ',
+      sort: 'ASC',
     },
   });
   const fetchData = async () => {
