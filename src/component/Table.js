@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 function Table() {
-  const { data, name, data2, setData, setFilters, filters } = useContext(StarWarsContext);
+  const { data, name, setFilters, filters } = useContext(StarWarsContext);
 
   const [aux, setAux] = useState({
     column: 'population',

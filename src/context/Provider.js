@@ -33,10 +33,9 @@ function Provider({ children }) {
   }, []);
 
   useEffect(() => {
-
     let auxData = data2;
-
-    for (let index = 0; index < filters.filterByNumericValues.length; index++) {
+    const zero = 0;
+    for (let index = zero; index < filters.filterByNumericValues.length; index += 1) {
       const { column, comparison, value } = filters.filterByNumericValues[index];
 
       switch (comparison) {
