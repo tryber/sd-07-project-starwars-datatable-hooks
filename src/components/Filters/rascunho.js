@@ -20,3 +20,6 @@
   .map((planet) => (
     <TableLine planet={ planet } key={ planet.name } />
   ))} */
+
+/*  .filter((planet) => planet.name.toLowerCase()
+            .includes(filters.filterByName.name.toLowerCase())) */

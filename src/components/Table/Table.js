@@ -10,16 +10,13 @@ const Tabela = () => {
   const negOne = -1;
 
   const biggerThen = (planerColumn, number) => (
-    parseInt(planerColumn, 10) > parseInt(number, 10)
-  );
+    parseInt(planerColumn, 10) > parseInt(number, 10));
 
   const lessThen = (planerColumn, number) => (
-    parseInt(planerColumn, 10) < parseInt(number, 10)
-  );
+    parseInt(planerColumn, 10) < parseInt(number, 10));
 
   const equalTo = (planerColumn, number) => (
-    parseInt(planerColumn, 10) === parseInt(number, 10)
-  );
+    parseInt(planerColumn, 10) === parseInt(number, 10));
 
   const getComparisons = (planet, column, comparison, value) => {
     const comparisons = {
@@ -30,19 +27,20 @@ const Tabela = () => {
     return comparisons[comparison];
   };
 
-  const filterPlanetsByNumericValues = () => {
+  const filterPlanetsByNumericValues = (planetsSorts) => {
     const { filterByNumericValues } = filters;
 
     if (filterByNumericValues.length === zero) {
-      return planets;
+      return planetsSorts;
     }
 
-    return planets.filter((planet) => (filterByNumericValues.every((filter) => (
-      getComparisons(planet, filter.column, filter.comparison, filter.value, filter)
-    ))));
+    return planetsSorts.filter((planet) => (
+      filterByNumericValues.every((filter) => (
+        getComparisons(planet, filter.column, filter.comparison, filter.value, filter)
+      ))));
   };
 
-  const sortPlanets = () => {
+  const sortPlanets = (_planets) => {
     const arrayColumns = [
       'population',
       'orbital_period',
@@ -51,7 +49,7 @@ const Tabela = () => {
       'surface_water',
     ];
     if (arrayColumns.includes(filters.order.column)) {
-      planets.sort((b, a) => {
+      _planets.sort((b, a) => {
         if (parseInt(a[filters.order.column], 10)
          < parseInt(b[filters.order.column], 10)) {
           return filters.order.sort === 'ASC' ? one : negOne;
@@ -63,7 +61,7 @@ const Tabela = () => {
         return zero;
       });
     } else {
-      planets.sort((b, a) => {
+      _planets.sort((b, a) => {
         if (a[filters.order.column] < b[filters.order.column]) {
           return filters.order.sort === 'ASC' ? one : negOne;
         }
@@ -73,17 +71,14 @@ const Tabela = () => {
         return zero;
       });
     }
-    return planets;
+    return _planets;
   };
 
   const filterPlanets = () => {
     const planetsByNumericValue = filterPlanetsByNumericValues(planets);
     const sortedPlanets = sortPlanets(planetsByNumericValue);
-    console.log(sortedPlanets);
-
     return sortedPlanets;
   };
-
   return (
     <table>
       <thead>
@@ -108,6 +103,7 @@ const Tabela = () => {
           .filter((planet) => planet.name.toLowerCase()
             .includes(filters.filterByName.name.toLowerCase()))
           .map((planet) => (
+
             <TableLine planet={ planet } key={ planet.name } />
           ))}
       </tbody>
