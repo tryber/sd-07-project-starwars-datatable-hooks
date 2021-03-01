@@ -3,7 +3,7 @@ import StarWarsContext from '../context/StarWarsContext';
 
 export default function Table() {
   const { apiData } = useContext(StarWarsContext);
-  const tableHeaders = apiData ? Object.keys(apiData.results[0])
+  const tableHeaders = apiData ? Object.keys(apiData[0])
     .filter((item) => item !== 'residents') : '';
   return (
     <div>
@@ -17,7 +17,7 @@ export default function Table() {
             </tr>
           </thead>
           <tbody>
-            {apiData.results.map(({
+            {apiData.map(({
               name,
               rotation_period: rotationPeriod,
               orbital_period: orbitalPeriod,

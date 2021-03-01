@@ -4,12 +4,27 @@ import StarWarsContext from './StarWarsContext';
 
 const StarWarsProvider = ({ children }) => {
   const [apiData, setApiData] = useState(undefined);
+  const [resquestData, setRequestData] = useState([]);
+  const [nameFilter, setNameFilter] = useState('');
+
+  function searchByName({ target }) {
+    const name = target.value;
+    setNameFilter(name);
+    const filterByName = [...apiData].filter((item) => item.name.includes(name));
+    console.log(filterByName);
+    if (name.length !== 0) {
+      setApiData(filterByName);
+    } else {
+      setApiData(resquestData);
+    }
+  }
 
   useEffect(() => {
     async function FetchApi() {
       const response = await fetch('https://swapi-trybe.herokuapp.com/api/planets/');
       const data = await response.json();
-      setApiData(data);
+      setApiData(data.results);
+      setRequestData([...data.results]);
     }
     FetchApi();
   }, []);
@@ -17,6 +32,8 @@ const StarWarsProvider = ({ children }) => {
   const contextValue = {
     name: 'Iniciando o projeto com tudo!',
     apiData,
+    searchByName,
+    nameFilter,
   };
 
   return (
