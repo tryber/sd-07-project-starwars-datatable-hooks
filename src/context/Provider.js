@@ -5,20 +5,67 @@ import planetsAPI from '../services/StarWarsAPI';
 
 function Provider({ children }) {
   const [data, setData] = useState();
+  const [data2, setData2] = useState();
   const [name, setName] = useState('');
+  const [filters, setFilters] = useState(
+    {
+      filterByName: {
+        name: '',
+      },
+      filterByNumericValues: [],
+      order: {
+        column: '',
+        sort: '',
+      },
+    },
+  );
+
+  let aux = [];
 
   const fetchData = async () => {
-    setData(await planetsAPI());
+    aux = await planetsAPI();
+    setData(aux);
+    setData2(aux);
   };
 
   useEffect(() => {
     fetchData();
   }, []);
 
+  useEffect(() => {
+
+    let auxData = data2;
+
+    for (let index = 0; index < filters.filterByNumericValues.length; index++) {
+      const { column, comparison, value } = filters.filterByNumericValues[index];
+
+      switch (comparison) {
+      case 'maior que':
+        auxData = (auxData.filter((e) => Number(e[column]) > Number(value)));
+        break;
+      case 'menor que':
+        auxData = (auxData.filter((e) => Number(e[column]) < Number(value)));
+        break;
+      case 'igual a':
+        auxData = (auxData.filter((e) => Number(e[column]) === Number(value)));
+        break;
+      default:
+        auxData = (auxData.filter((e) => Number(e[column]) === Number(value)));
+        break;
+      }
+      setData(auxData);
+    }
+    console.log(auxData);
+  }, [filters.filterByNumericValues]);
+
   const context = {
     data,
+    data2,
     name,
+    filters,
     setName,
+    setFilters,
+    setData,
   };
 
   return (
