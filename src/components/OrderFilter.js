@@ -1,19 +1,17 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 function OrderFilter() {
   const {
-    setSortPlanets,
-    filters,
-    setSortedPlanets,
-    filteredPlanets,
+    setSortOrder,
+    // filteredPlanets,
+    setSortColumn,
+    // sortOrder,
+    // sortColumn,
   } = useContext(StarWarsContext);
 
-  const { order } = filters;
-  const { sort, column } = order;
-
-  const [ordernation, setOrdernation] = useState('ASC');
-  const [orderSelected, setOrderSelected] = useState('Name');
+  // const [ordernation, setOrdernation] = useState('ASC');
+  // const [orderSelected, setOrderSelected] = useState('name');
 
   const infos = [
     'name',
@@ -31,40 +29,42 @@ function OrderFilter() {
     'url',
   ];
 
-  const clickSorted = () => {
-    setSortPlanets({
-      column: orderSelected,
-      sort: ordernation,
-    });
+  // console.log(sortOrder, sortColumn);
+
+  // const zero = 0;
+  // const minusOne = -1;
+  // let orderingPlanets = [];
+  // const toSortArr = [...filteredPlanets];
+
+  // switch (sort) {
+  // case 'ASC':
+  //   orderingPlanets = toSortArr.sort((a, b) => Number(a[column]) - Number(b[column]));
+  //   break;
+  // case 'DESC':
+  //   orderingPlanets = toSortArr.sort((a, b) => Number(b[column]) - Number(a[column]));
+  //   break;
+  // default:
+  //   orderingPlanets = toSortArr.sort((a, b) => {
+  //     if (a.name > b.name) {
+  //       return 1;
+  //     }
+  //     if (a.name < b.name) {
+  //       return minusOne;
+  //     }
+  //     return zero;
+  //   });
+  // }
+
+  const clickHandle = () => {
+    console.log('cliquei');
   };
 
-  const OrderingList = () => {
-    const minusOne = -1;
-    const zero = 0;
-
-    if (sort === 'ASC') {
-      return setSortedPlanets(filteredPlanets.sort((a, b) => a[column] - b[column]));
-    } if (sort === 'DESC') {
-      setSortedPlanets(filteredPlanets.sort((a, b) => b[column] - a[column]));
-    } else {
-      setSortedPlanets(filteredPlanets.sort((a, b) => {
-        if (a.name > b.name) {
-          return 1;
-        }
-        if (a.name < b.name) {
-          return minusOne;
-        }
-        return zero;
-      }));
-    }
+  const handleChangeSort = ({ target }) => {
+    setSortOrder(target.value);
   };
 
-  const getOrder = ({ target }) => {
-    setOrdernation(target.value);
-  };
-
-  const getSelectOrder = ({ target }) => {
-    setOrderSelected(target.value);
+  const gettingSortColumn = ({ target }) => {
+    setSortColumn(target.value);
   };
 
   return (
@@ -74,7 +74,7 @@ function OrderFilter() {
         <select
           id="order"
           data-testid="column-sort"
-          onChange={ getSelectOrder }
+          onChange={ gettingSortColumn }
         >
           {infos.map((info) => (
             <option key={ info }>{info}</option>
@@ -84,7 +84,7 @@ function OrderFilter() {
       <label htmlFor="asc">
         <span>ASC</span>
         <input
-          onChange={ getOrder }
+          onChange={ handleChangeSort }
           value="ASC"
           id="asc"
           name="radio"
@@ -95,7 +95,7 @@ function OrderFilter() {
       <label htmlFor="desc">
         <span>DESC</span>
         <input
-          onChange={ getOrder }
+          onChange={ handleChangeSort }
           id="desc"
           value="DESC"
           name="radio"
@@ -104,10 +104,7 @@ function OrderFilter() {
         />
       </label>
       <button
-        onClick={ () => {
-          clickSorted();
-          OrderingList();
-        } }
+        onClick={ clickHandle }
         data-testid="column-sort-button"
         type="button"
       >

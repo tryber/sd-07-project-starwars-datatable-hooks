@@ -2,26 +2,35 @@ import React, { useContext } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 function Table() {
-  const { filteredPlanets } = useContext(StarWarsContext);
+  const { filteredPlanets, sortOrder, sortColumn } = useContext(StarWarsContext);
 
-  // const zero = 0;
-  // const minusOne = -1;
+  const zero = 0;
+  const minusOne = -1;
+  const toSortArr = [...filteredPlanets];
+  let orderingPlanets = [];
 
-  // if (sort === 'ASC') {
-  //   return setSortedPlanets(filteredPlanets.sort((a, b) => a[column] - b[column]));
-  // } if (sort === 'DESC') {
-  //   setSortedPlanets(filteredPlanets.sort((a, b) => b[column] - a[column]));
-  // } else {
-  //   setSortedPlanets(filteredPlanets.sort((a, b) => {
-  //     if (a.name > b.name) {
-  //       return 1;
-  //     }
-  //     if (a.name < b.name) {
-  //       return minusOne;
-  //     }
-  //     return zero;
-  //   }));
-  // }
+  switch (sortOrder) {
+  case 'ASC':
+    orderingPlanets = toSortArr.sort(
+      (a, b) => Number(a[sortColumn]) - Number(b[sortColumn]),
+    );
+    break;
+  case 'DESC':
+    orderingPlanets = toSortArr.sort(
+      (a, b) => Number(b[sortColumn]) - Number(a[sortColumn]),
+    );
+    break;
+  default:
+    orderingPlanets = toSortArr.sort((a, b) => {
+      if (a.name > b.name) {
+        return 1;
+      }
+      if (a.name < b.name) {
+        return minusOne;
+      }
+      return zero;
+    });
+  }
 
   return (
     <div>
@@ -42,7 +51,7 @@ function Table() {
           <th>url</th>
         </tr>
 
-        {filteredPlanets.map((planet) => (
+        {orderingPlanets.map((planet) => (
           <tr key={ planet.name }>
             <td data-testid="planet-name">{planet.name}</td>
             <td>{planet.rotation_period}</td>

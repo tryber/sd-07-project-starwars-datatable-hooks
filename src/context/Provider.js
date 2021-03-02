@@ -12,17 +12,15 @@ function Provider({ children }) {
     comparison: 'maior que',
     value: '100000',
   }]);
-  const [sortPlanets, setSortPlanets] = useState({
-    column: 'Name',
-    sort: 'ASC',
-  });
-  const [sortedPlanets, setSortedPlanets] = useState([]);
+  const [sortColumn, setSortColumn] = useState('name');
+  const [sortOrder, setSortOrder] = useState('');
 
   useEffect(() => {
     const fetchPlanets = async () => {
       const planetsList = await getPlanetsFetch();
       planetsList.map((planet) => delete planet.residents);
       setPlanets(planetsList);
+      // console.log(planetsList);
       setFilteredPlanets(planetsList);
     };
     fetchPlanets();
@@ -35,15 +33,15 @@ function Provider({ children }) {
         name: filterByName,
       },
       filterByNumericValues: numericFilter,
-      order: sortPlanets,
     },
     setFilterByName,
     setNumericFilter,
     filteredPlanets,
     setFilteredPlanets,
-    setSortPlanets,
-    sortedPlanets,
-    setSortedPlanets,
+    sortColumn,
+    setSortColumn,
+    sortOrder,
+    setSortOrder,
   };
 
   return (
