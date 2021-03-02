@@ -9,19 +9,15 @@ function StarWarsProvider({ children }) {
     filterByName: {
       name: '',
     },
-    filterByNumericValues: [{
-      column: 'population',
-      comparison: '>',
-      value: 0,
-    }],
+    filterByNumericValues: [],
   });
 
   useEffect(() => {
     fetchAPI().then((r) => setData(r));
-  }, [filters]);
+  }, []);
 
   return (
-    <StarWarsContext.Provider value={ { data, filters, setFilters } }>
+    <StarWarsContext.Provider value={ { data, setData, filters, setFilters } }>
       {children}
     </StarWarsContext.Provider>
   );
