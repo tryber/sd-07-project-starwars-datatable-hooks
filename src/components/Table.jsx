@@ -19,16 +19,18 @@ function Table() {
           {pageLoading
             ? null
             : headers
-            .map((tHead) => <th key= { tHead } > { tHead } </th>)}
+              .map((tHead) => <th key=
+              { tHead }>{ tHead }</th>
+              )}
         </tr>
-          <tbody>
-            { pageLoading
+        <tbody>
+          { pageLoading
             ? 'Loading'
             : data
               .filter((planet) => planet.name.toLowerCase()
               .includes(name.toLowerCase()))
               .map((planet) => (
-                <tr key= { planet.name } >
+                <tr key={ planet.name }>
                   <td data-testid="planet-name">{ planet.name}</td>
                   <td>{ planet.rotation_period }</td>
                   <td>{ planet.orbital_period }</td>
@@ -44,8 +46,8 @@ function Table() {
                   <td>{ planet.url }</td>
                 </tr>
               ))}
-        </tbody>
-      </table>
+          </tbody>
+        </table>
     </div>
   );
 }
