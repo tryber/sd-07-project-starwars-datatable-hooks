@@ -4,68 +4,41 @@ import StarWarsContext from '../context/StarWarsContext';
 function Table() {
   const { data, name, setFilters, filters } = useContext(StarWarsContext);
 
+  const [orderRadio, setOrderRadio] = useState({
+    order: 'name',
+    sort: 'ASC',
+  });
+
   const [aux, setAux] = useState({
     column: 'population',
     comparison: 'maior que',
     value: '',
   });
 
-  // const handleFilter = () => {
-  //   const { filterByNumericValues } = filters;
-  //   let auxData = data2;
-
-  //   for (let index = 0; index < filterByNumericValues.length; index++) {
-  //     const { column, comparison, value } = filters.filterByNumericValues[index];
-
-  //     switch (comparison) {
-  //     case 'maior que':
-  //       auxData = auxData.filter((e) => Number(e[column] > Number(e[value])));
-  //       break;
-  //     case 'menor que':
-  //       auxData = auxData.filter((e) => Number(e[column] < Number(e[value])));
-  //       break;
-  //     case 'igual a':
-  //       auxData = auxData.filter((e) => Number(e[column] === Number(e[value])));
-  //       break;
-  //     default:
-  //       break;
-  //     }
-  //     setData(auxData);
-  //   }
-  //   console.log(auxData);
-  // };
-
   const handleClick = () => {
     const { column, value } = aux;
     if (column && value) {
       setFilters({ ...filters,
         filterByNumericValues: [...filters.filterByNumericValues, aux] });
-      // handleFilter();
     }
-    // for (let index = 0; index < filterByNumericValues.length; index++) {
-    //   const { column, comparison, value } = filters.filterByNumericValues[index];
+  };
 
-    //   switch (comparison) {
-    //   case 'maior que':
-    //     auxData = auxData.filter((e) => Number(e[column] > Number(e[value])));
-    //     break;
-    //   case 'menor que':
-    //     auxData = auxData.filter((e) => Number(e[column] < Number(e[value])));
-    //     break;
-    //   case 'igual a':
-    //     auxData = auxData.filter((e) => Number(e[column] === Number(e[value])));
-    //     break;
-    //   default:
-    //     break;
-    //   }
-    //   setData(auxData);
-    // }
-    // console.log(auxData);
+  const handleOrder = () => {
+    setFilters({ ...filters,
+      order: orderRadio });
+  };
+
+  const reset = (index) => {
+    // remove do index um valor
+    filters.filterByNumericValues.splice(index, 1);
+    // mantem o estado atual e atualiza com o novo valor (removendo)
+    setFilters({ ...filters,
+      filterByNumericValues: [...filters.filterByNumericValues] });
   };
 
   return (
     <table>
-      {console.log(aux)}
+      {/* {console.log(aux)} */}
       <select
         data-testid="column-filter"
         onChange={ (e) => setAux({ ...aux, column: (e.target.value) }) }
@@ -100,6 +73,57 @@ function Table() {
         Filtro
       </button>
 
+      <select
+        data-testid="column-sort"
+        onChange={ (e) => setOrderRadio({ order: (e.target.value) }) }
+      >
+        <option>Name</option>
+        <option>Rotation Period</option>
+        <option>Orbital Period</option>
+        <option>Diameter</option>
+        <option>Climate</option>
+        <option>Gravity</option>
+        <option>Terrain</option>
+        <option>Surface Water</option>
+        <option>Population</option>
+        <option>Films</option>
+        <option>Created</option>
+        <option>Edited</option>
+        <option>URL</option>
+      </select>
+
+      <label htmlFor="ASC">
+        <input
+          type="radio"
+          data-testid="column-sort-input-asc"
+          name="order"
+          value="ASC"
+          onClick={ (event) => setOrderRadio({
+            ...orderRadio, sort: (event.target.value) }) }
+        />
+        ASC
+      </label>
+
+      <label htmlFor="DESC">
+        <input
+          type="radio"
+          data-testid="column-sort-input-desc"
+          name="order"
+          value="DESC"
+          onClick={ (event) => setOrderRadio({
+            ...orderRadio, sort: (event.target.value) }) }
+        />
+        DESC
+      </label>
+
+      <button
+        type="button"
+        data-testid="column-sort-button"
+        onClick={ () => handleOrder() }
+      >
+        Ordenar
+      </button>
+
       <thead>
         <tr>
           <th>Name</th>
@@ -122,7 +146,7 @@ function Table() {
           data ? data.filter((element) => element.name.toLowerCase().includes(name))
             .map((planet) => (
               <tr key={ planet.name }>
-                <td>{planet.name}</td>
+                <td data-testid="planet-name">{planet.name}</td>
                 <td>{planet.rotation_period}</td>
                 <td>{planet.orbital_period}</td>
                 <td>{planet.diameter}</td>
@@ -137,8 +161,31 @@ function Table() {
                 <td>{planet.url}</td>
               </tr>
             )) : <span>Loading...</span>
+
         }
       </tbody>
+      <div>
+        { filters.filterByNumericValues
+          .map((element, index) => (
+            <p key={ index } data-testid="filter">
+              <span><b>Filtro aplicado: </b></span>
+              <span>{ element.column }</span>
+              <span> - </span>
+              <span>{ element.comparison }</span>
+              <span> - </span>
+              <span>{ element.value }</span>
+              <span> </span>
+              <button
+                type="button"
+                name="button"
+                onClick={ () => reset(index) }
+              >
+                X
+              </button>
+            </p>
+          )) }
+        <br />
+      </div>
     </table>
   );
 }

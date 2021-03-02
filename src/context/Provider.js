@@ -14,8 +14,8 @@ function Provider({ children }) {
       },
       filterByNumericValues: [],
       order: {
-        column: '',
-        sort: '',
+        column: 'name',
+        sort: 'ASC',
       },
     },
   );
@@ -52,9 +52,9 @@ function Provider({ children }) {
         auxData = (auxData.filter((e) => Number(e[column]) === Number(value)));
         break;
       }
-      setData(auxData);
     }
-    console.log(auxData);
+    setData(auxData);
+    // console.log(auxData);
   }, [filters.filterByNumericValues]);
 
   const context = {
