@@ -11,7 +11,7 @@ function Filter() {
   return (
     <div>
       <input
-        onChange={handleChange}
+        onChange={ handleChange }
         type="text"
         data-testid="name-filter"
       />

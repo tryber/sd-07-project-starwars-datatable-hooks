@@ -25,7 +25,7 @@ function Table() {
             ? 'Loading'
             : data
                 .filter((planet) =>
-                  planet.name.toLowerCase().includes(name.toLowerCase()),
+                  planet.name.toLowerCase().includes(name.toLowerCase())
                 )
                 .map((planet) => (
                   <tr key={ planet.name}>
