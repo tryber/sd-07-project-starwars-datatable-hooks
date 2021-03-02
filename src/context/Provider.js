@@ -6,13 +6,13 @@ const StarWarsProvider = ({ children }) => {
   const [apiData, setApiData] = useState(undefined);
   const [resquestData, setRequestData] = useState([]);
   const [nameFilter, setNameFilter] = useState('');
-
+  const empty = 0;
   function searchByName({ target }) {
     const name = target.value;
     setNameFilter(name);
     const filterByName = [...apiData].filter((item) => item.name.includes(name));
     console.log(filterByName);
-    if (name.length !== 0) {
+    if (name.length !== empty) {
       setApiData(filterByName);
     } else {
       setApiData(resquestData);
