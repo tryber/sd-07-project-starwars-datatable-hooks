@@ -62,7 +62,9 @@ export default function Header() {
           Pesquisar
 
         </button>
-        <button type="button" data-testid="filter" onClick={ clearFilters }>x</button>
+        <div data-testid="filter">
+          <button type="button" onClick={ clearFilters }>x</button>
+        </div>
       </div>
       <div>
         <label htmlFor="ASC">
