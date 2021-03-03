@@ -11,23 +11,22 @@ function Main() {
     setPlanetsData(data);
   }, [data]);
 
-  const handleDataFilters = () => {
-    const { filterByName: { name } } = filters;
-
-    if (name) {
-      const newData = data.filter((planet) => (
-        planet.name.toLowerCase().includes(name.toLowerCase())
-      ));
-      setplanetsData(newData);
-    }
-
-    if (!name) {
-      setplanetsData(data);
-    }
-  };
-
   useEffect(() => {
-    handleDataFilters(filters);
+    const handleDataFilters = () => {
+      const { filterByName: { name } } = filters;
+
+      if (name) {
+        const newData = data.filter((planet) => (
+          planet.name.toLowerCase().includes(name.toLowerCase())
+        ));
+        setplanetsData(newData);
+      }
+
+      if (!name) {
+        setplanetsData(data);
+      }
+    };
+      handleDataFilters();
   }, [filters]);
 
   return (
