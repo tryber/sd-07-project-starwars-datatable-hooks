@@ -1,12 +1,12 @@
 import React from 'react';
 import Provider from './context/Provider';
 import Table from './components/Table';
-import Search from './components/Search';
+import Header from './components/Header';
 
 function App() {
   return (
     <Provider>
-      <Search />
+      <Header />
       <Table />
     </Provider>
   );

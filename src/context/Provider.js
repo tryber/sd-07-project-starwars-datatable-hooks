@@ -6,6 +6,9 @@ const StarWarsProvider = ({ children }) => {
   const [apiData, setApiData] = useState(undefined);
   const [resquestData, setRequestData] = useState([]);
   const [nameFilter, setNameFilter] = useState('');
+  const [selectedColumn, setSelectedColumn] = useState('population');
+  const [comparasionFilter, setComparasionFilter] = useState('maiorQue');
+  const [valueFilter, setValueFilter] = useState('');
   const empty = 0;
   function searchByName({ target }) {
     const name = target.value;
@@ -17,6 +20,37 @@ const StarWarsProvider = ({ children }) => {
     } else {
       setApiData(resquestData);
     }
+  }
+
+  function handleSelectedColumn({ target }) {
+    const { value } = target;
+    setSelectedColumn(value);
+  }
+
+  function handleComparisonFilter({ target }) {
+    const { value } = target;
+    setComparasionFilter(value);
+  }
+
+  function handleValueFilter({ target }) {
+    const { value } = target;
+    setValueFilter(value);
+  }
+
+  function filterByNumericValues() {
+    const number = Number(valueFilter);
+    const filterData = [...resquestData].filter((planet) => {
+      if (comparasionFilter === 'maiorQue') {
+        // eslint-disable-next-line dot-notation
+        return Number(planet[selectedColumn]) > number;
+      } if (comparasionFilter === 'menorQue') {
+        return Number(planet[selectedColumn]) < number;
+      } if (comparasionFilter === 'igualA') {
+        return Number(planet[selectedColumn]) === number;
+      }
+      return true;
+    });
+    setApiData(filterData);
   }
 
   useEffect(() => {
@@ -34,6 +68,13 @@ const StarWarsProvider = ({ children }) => {
     apiData,
     searchByName,
     nameFilter,
+    selectedColumn,
+    handleSelectedColumn,
+    comparasionFilter,
+    handleComparisonFilter,
+    valueFilter,
+    handleValueFilter,
+    filterByNumericValues,
   };
 
   return (
