@@ -43,9 +43,9 @@ export default function Header() {
           name="comparison"
           onChange={ handleComparisonFilter }
         >
-          <option value="maiorQue">maior que</option>
-          <option value="menorQue">menor que</option>
-          <option value="igualA">igual a</option>
+          <option value="maior que">maior que</option>
+          <option value="menor que">menor que</option>
+          <option value="igual a">igual a</option>
         </select>
         <input
           type="number"

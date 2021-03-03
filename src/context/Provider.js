@@ -7,7 +7,7 @@ const StarWarsProvider = ({ children }) => {
   const [resquestData, setRequestData] = useState([]);
   const [nameFilter, setNameFilter] = useState('');
   const [selectedColumn, setSelectedColumn] = useState('population');
-  const [comparasionFilter, setComparasionFilter] = useState('maiorQue');
+  const [comparasionFilter, setComparasionFilter] = useState('maior que');
   const [valueFilter, setValueFilter] = useState('');
   const empty = 0;
   function searchByName({ target }) {
@@ -40,12 +40,12 @@ const StarWarsProvider = ({ children }) => {
   function filterByNumericValues() {
     const number = Number(valueFilter);
     const filterData = [...resquestData].filter((planet) => {
-      if (comparasionFilter === 'maiorQue') {
+      if (comparasionFilter === 'maior que') {
         // eslint-disable-next-line dot-notation
         return Number(planet[selectedColumn]) > number;
-      } if (comparasionFilter === 'menorQue') {
+      } if (comparasionFilter === 'menor que') {
         return Number(planet[selectedColumn]) < number;
-      } if (comparasionFilter === 'igualA') {
+      } if (comparasionFilter === 'igual a') {
         return Number(planet[selectedColumn]) === number;
       }
       return true;
