@@ -50,7 +50,7 @@ function Table() {
             : data
               .filter((planets) => filterOptions(planets))
               .filter((planet) => planet.name
-              .toLowerCase().includes(name.toLowerCase()))
+                .toLowerCase().includes(name.toLowerCase()))
               .map((planet) => (
                 <tr key={ planet.name }>
                   <td data-testid="planet-name">
