@@ -12,6 +12,10 @@ export default function Provider({ children }) {
       name: '',
     },
     filterByNumericValues: [],
+    order: {
+      column: 'Name',
+      sort: 'ASC',
+    },
   });
 
   const [options, setOptions] = useState([
@@ -21,11 +25,25 @@ export default function Provider({ children }) {
     'rotation_period',
     'surface_water',
   ]);
+  const [orderOpt, setOrderOpt] = useState([
+    'name',
+    'rotation_period',
+    'orbital_period',
+    'diameter',
+    'climate',
+    'gravity',
+    'terrain',
+    'surface_water',
+    'population',
+    'films',
+  ]);
 
   let aux = [];
 
   const getPlanets = (async () => {
+    const menosum = -1;
     aux = await API();
+    aux = aux.sort((a, b) => ((a.name > b.name) ? 1 : menosum));
     setDataOrigin(aux);
     setData(aux);
   });
@@ -72,6 +90,8 @@ export default function Provider({ children }) {
         options,
         dataOrigin,
         click,
+        orderOpt,
+        setOrderOpt,
         setClick,
         setFilters,
         setData,

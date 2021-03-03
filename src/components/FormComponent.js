@@ -5,6 +5,7 @@ function Form() {
   const {
     options,
     filters,
+    orderOpt,
     setClick,
     setFilters,
   } = useContext(StarWarsContext);
@@ -15,7 +16,12 @@ function Form() {
     value: '',
   });
 
-  const handleClick = () => {
+  const [orderRadio, setOrderRadio] = useState({
+    order: 'name',
+    sort: 'ASC',
+  });
+
+  const handleClickSearch = () => {
     const { column, value } = aux;
     if (column && value) {
       setFilters({ ...filters,
@@ -23,6 +29,12 @@ function Form() {
       const newOptions = options.filter((option) => option !== column)[0];
       setAux({ column: newOptions, comparison: aux.comparison, value: '' });
     }
+    setClick(true);
+  };
+
+  const handleClickOrder = () => {
+    // const { order } = order;
+    setFilters({ ...filters, order: orderRadio });
     setClick(true);
   };
 
@@ -50,9 +62,28 @@ function Form() {
     </select>
   );
 
+  const selectOrderOptions = () => (
+    <select
+      id="column"
+      data-testid="column-sort"
+      name="column-sort"
+      onChange={ (event) => {
+        setOrderRadio({ ...orderRadio, order: event.target.value });
+      } }
+    >
+      { orderOpt
+        .map((column) => (
+          <option key={ column } value={ `${column}` }>
+            { column }
+          </option>
+        ))}
+    </select>
+  );
+
   return (
     <div>
       <form>
+        <span>Filtrar por planeta: </span>
         <input
           type="text"
           data-testid="name-filter"
@@ -62,7 +93,9 @@ function Form() {
             { ...filters, filterByName: { name: event.target.value } },
           ) }
         />
+        <span> Opções: </span>
         { selectOptions() }
+        <span>  </span>
         <select
           data-testid="comparison-filter"
           name="comparison"
@@ -72,6 +105,7 @@ function Form() {
           <option value="menor que">menor que</option>
           <option value="igual a">igual a</option>
         </select>
+        <span>  </span>
         <input
           type="number"
           data-testid="value-filter"
@@ -80,12 +114,46 @@ function Form() {
           value={ filters.filterValue }
           onChange={ (event) => setAux({ ...aux, value: (event.target.value) }) }
         />
+        <span>  </span>
         <button
           type="button"
           data-testid="button-filter"
-          onClick={ () => handleClick() }
+          onClick={ () => handleClickSearch() }
         >
           Search by value
+        </button>
+        <br />
+        <span>  Ordenar: </span>
+        { selectOrderOptions() }
+        <label htmlFor="ASC">
+          <input
+            type="radio"
+            data-testid="column-sort-input-asc"
+            name="order"
+            value="ASC"
+            onClick={ (event) => setOrderRadio({
+              ...orderRadio, sort: (event.target.value) }) }
+          />
+          ASC
+        </label>
+        <label htmlFor="DESC">
+          <input
+            type="radio"
+            data-testid="column-sort-input-desc"
+            name="order"
+            value="DESC"
+            onClick={ (event) => setOrderRadio({
+              ...orderRadio, sort: (event.target.value) }) }
+          />
+          DESC
+        </label>
+        <span> </span>
+        <button
+          type="button"
+          data-testid="column-sort-button"
+          onClick={ () => handleClickOrder() }
+        >
+          Ordenar
         </button>
       </form>
       <br />
