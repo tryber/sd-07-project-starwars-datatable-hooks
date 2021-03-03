@@ -11,7 +11,7 @@ function Search() {
       filterByName: { name: value },
     });
   };
-  
+
   const handleSearchByNumber = () => {
     const { filterByNumericValues } = filters;
 
@@ -34,7 +34,7 @@ function Search() {
   };
 
   return (
-<form>
+    <form>
       <input
         type="text"
         onChange={ (e) => handleSearchByName(e) }
