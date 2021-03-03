@@ -47,11 +47,10 @@ function Table() {
         <tbody>
           {pageLoading
             ? 'Loading'
-          : data
+            : data
               .filter((planets) => filterOptions(planets))
               .filter((planet) =>
-                planet.name.toLowerCase().includes(name.toLowerCase()),
-              )
+                planet.name.toLowerCase().includes(name.toLowerCase()))
               .map((planet) => (
                 <tr key={planet.name}>
                   <td data-testid="planet-name">{ planet.name }</td>
