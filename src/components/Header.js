@@ -12,6 +12,7 @@ export default function Header() {
     valueFilter,
     handleValueFilter,
     filterByNumericValues,
+    clearFilters,
   } = useContext(StarWarsContext);
   const columns = ['population',
     'orbital_period', 'diameter', 'rotation_period', 'surface_water'];
@@ -61,7 +62,7 @@ export default function Header() {
           Pesquisar
 
         </button>
-        <button type="button">x</button>
+        <button type="button" data-testid="filter" onClick={ clearFilters }>x</button>
       </div>
       <div>
         <label htmlFor="ASC">

@@ -37,6 +37,13 @@ const StarWarsProvider = ({ children }) => {
     setValueFilter(value);
   }
 
+  function clearFilters() {
+    setComparasionFilter('maior que');
+    setValueFilter('');
+    setSelectedColumn('population');
+    setApiData(resquestData);
+  }
+
   function filterByNumericValues() {
     const number = Number(valueFilter);
     const filterData = [...resquestData].filter((planet) => {
@@ -75,6 +82,7 @@ const StarWarsProvider = ({ children }) => {
     valueFilter,
     handleValueFilter,
     filterByNumericValues,
+    clearFilters,
   };
 
   return (
