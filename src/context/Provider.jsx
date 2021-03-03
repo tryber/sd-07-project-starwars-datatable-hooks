@@ -7,6 +7,11 @@ function Provider({ children }) {
   const [pageLoading, setpageLoading] = useState(true);
   const [headers, setHeaders] = useState([]);
   const [filterName, setFilterName] = useState('');
+  const [filterNumber, setFilterNumber] = useState({
+    column: '',
+    comparison: '',
+    value: '',
+  })
 
   const requestPlanetsAPI = async () => {
     const endPoint = await fetch(
@@ -31,10 +36,12 @@ function Provider({ children }) {
     setpageLoading,
     headers,
     setFilterName,
+    setFilterNumber,
     filters: {
       filterByName: {
         name: filterName,
       },
+      numericValuesFiltered: [filterNumber]
     },
   };
 
