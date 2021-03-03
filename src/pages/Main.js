@@ -12,7 +12,6 @@ function Main() {
   }, [data]);
 
   const handleDataFilters = () => {
-    const { filterByName: { name } } = filters;
     const { filterByName: { name }, filterByNumericValues } = filters;
     const ZERO = 0;
 
