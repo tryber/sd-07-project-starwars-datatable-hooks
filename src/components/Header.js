@@ -67,15 +67,29 @@ export default function Header() {
         </div>
       </div>
       <div>
+        <select name="column-sort" data-testid="column-sort">
+          <option value="column">population</option>
+        </select>
         <label htmlFor="ASC">
           ASC
-          <input type="radio" id="ASC" name="sort" />
+          <input
+            type="radio"
+            data-testid="column-sort-input-asc"
+            defaultChecked
+            id="ASC"
+            name="sort"
+          />
         </label>
         <label htmlFor="DSC">
-          DSC
-          <input type="radio" id="DSC" name="sort" />
+          DESC
+          <input
+            type="radio"
+            data-testid="column-sort-input-desc"
+            id="DESC"
+            name="sort"
+          />
         </label>
-        <button type="button">Ordenar</button>
+        <button type="button" data-testid="column-sort-button">Ordenar</button>
       </div>
     </header>
   );
