@@ -9,6 +9,7 @@ const StarWarsProvider = ({ children }) => {
   const [selectedColumn, setSelectedColumn] = useState('population');
   const [comparasionFilter, setComparasionFilter] = useState('maior que');
   const [valueFilter, setValueFilter] = useState('');
+  const [selectedSortColumn, setSelectedSortColumn] = useState('name');
   const empty = 0;
   function searchByName({ target }) {
     const name = target.value;
@@ -35,6 +36,11 @@ const StarWarsProvider = ({ children }) => {
   function handleValueFilter({ target }) {
     const { value } = target;
     setValueFilter(value);
+  }
+
+  function handleSelectedSortColumn({ target }) {
+    const { value } = target;
+    setSelectedSortColumn(value);
   }
 
   function clearFilters() {
@@ -83,6 +89,8 @@ const StarWarsProvider = ({ children }) => {
     handleValueFilter,
     filterByNumericValues,
     clearFilters,
+    handleSelectedSortColumn,
+    selectedSortColumn,
   };
 
   return (

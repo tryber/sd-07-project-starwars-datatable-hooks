@@ -13,6 +13,8 @@ export default function Header() {
     handleValueFilter,
     filterByNumericValues,
     clearFilters,
+    handleSelectedSortColumn,
+    selectedSortColumn,
   } = useContext(StarWarsContext);
   const columns = ['population',
     'orbital_period', 'diameter', 'rotation_period', 'surface_water'];
@@ -67,8 +69,19 @@ export default function Header() {
         </div>
       </div>
       <div>
-        <select name="column-sort" data-testid="column-sort">
-          <option value="column">population</option>
+        <select
+          name="column-sort"
+          value={ selectedSortColumn }
+          onChange={ handleSelectedSortColumn }
+          data-testid="column-sort"
+        >
+          {columns.map((column) => (
+            <option
+              value={ column }
+              key={ column }
+            >
+              {column}
+            </option>))}
         </select>
         <label htmlFor="ASC">
           ASC
