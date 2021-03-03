@@ -15,9 +15,12 @@ export default function Header() {
     clearFilters,
     handleSelectedSortColumn,
     selectedSortColumn,
+    sortColumns,
+    handleChangeSort,
   } = useContext(StarWarsContext);
   const columns = ['population',
     'orbital_period', 'diameter', 'rotation_period', 'surface_water'];
+
   return (
     <header>
       <div>
@@ -89,7 +92,8 @@ export default function Header() {
             type="radio"
             data-testid="column-sort-input-asc"
             defaultChecked
-            id="ASC"
+            onChange={ handleChangeSort }
+            value="ASC"
             name="sort"
           />
         </label>
@@ -98,11 +102,19 @@ export default function Header() {
           <input
             type="radio"
             data-testid="column-sort-input-desc"
-            id="DESC"
+            onChange={ handleChangeSort }
+            value="DESC"
             name="sort"
           />
         </label>
-        <button type="button" data-testid="column-sort-button">Ordenar</button>
+        <button
+          type="button"
+          data-testid="column-sort-button"
+          onClick={ sortColumns }
+        >
+          Ordenar
+
+        </button>
       </div>
     </header>
   );

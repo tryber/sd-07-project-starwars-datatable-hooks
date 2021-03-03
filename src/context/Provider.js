@@ -10,7 +10,9 @@ const StarWarsProvider = ({ children }) => {
   const [comparasionFilter, setComparasionFilter] = useState('maior que');
   const [valueFilter, setValueFilter] = useState('');
   const [selectedSortColumn, setSelectedSortColumn] = useState('name');
+  const [selectedSort, setSelectedSort] = useState('ASC');
   const empty = 0;
+  const one = 1;
   function searchByName({ target }) {
     const name = target.value;
     setNameFilter(name);
@@ -43,11 +45,30 @@ const StarWarsProvider = ({ children }) => {
     setSelectedSortColumn(value);
   }
 
+  function handleChangeSort({ target }) {
+    const { value } = target;
+    setSelectedSort(value);
+  }
+
   function clearFilters() {
     setComparasionFilter('maior que');
     setValueFilter('');
     setSelectedColumn('population');
     setApiData(resquestData);
+  }
+
+  function sortColumns() {
+    const order = selectedSort === 'ASC' ? one : -one;
+    const sortData = [...resquestData].sort((a, b) => {
+      const columnA = a[selectedSortColumn]
+        .match(/^[0-9]+$/) ? Number(a[selectedSortColumn]) : a[selectedSortColumn];
+      const columnB = b[selectedSortColumn]
+        .match(/^[0-9]+$/) ? Number(b[selectedSortColumn]) : b[selectedSortColumn];
+      if (columnA > columnB) return order * one;
+      if (columnA < columnB) return order * -one;
+      return empty;
+    });
+    setApiData(sortData);
   }
 
   function filterByNumericValues() {
@@ -70,6 +91,11 @@ const StarWarsProvider = ({ children }) => {
     async function FetchApi() {
       const response = await fetch('https://swapi-trybe.herokuapp.com/api/planets/');
       const data = await response.json();
+      data.results.sort((a, b) => {
+        if (a.name > b.name) return one;
+        if (a.name < b.name) return -one;
+        return empty;
+      });
       setApiData(data.results);
       setRequestData([...data.results]);
     }
@@ -91,6 +117,8 @@ const StarWarsProvider = ({ children }) => {
     clearFilters,
     handleSelectedSortColumn,
     selectedSortColumn,
+    sortColumns,
+    handleChangeSort,
   };
 
   return (
