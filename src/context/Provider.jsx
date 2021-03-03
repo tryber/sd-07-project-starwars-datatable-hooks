@@ -47,7 +47,7 @@ function Provider({ children }) {
 
   return (
     <StarWarsContext.Provider value={ info }>
-       { children } 
+      { children }
     </StarWarsContext.Provider>
   );
 }

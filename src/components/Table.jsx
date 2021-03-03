@@ -50,10 +50,9 @@ function Table() {
             : data
               .filter((planets) => filterOptions(planets))
               .filter((planet) =>
-                planet.name.toLowerCase().includes(name.toLowerCase()))
-              .map((planet) => (
-                <tr key={planet.name}>
-                  <td data-testid="planet-name">{ planet.name }</td>
+                planet.name.toLowerCase().includes(name.toLowerCase())).map((planet) => (
+                <tr key={ planet.name }>
+                  <td data-testid="planet-name"> { planet.name } </td>
                   <td>{ planet.rotation_period }</td>
                   <td>{ planet.orbital_period }</td>
                   <td>{ planet.diameter }</td>
