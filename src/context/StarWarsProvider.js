@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import fetchAPI from '../services';
 import StarWarsContext from './StarWarsContext';
 
-const default_Filter = {
+const DEFAULT_FILTER = {
   filterByName: { name: '' },
 };
 
@@ -12,7 +12,7 @@ function StarWarsProvider({ children }) {
   const [isLoading, setLoading] = useState(false);
   const [data, setData] = useState([]);
   const [dataIsEmpty, setDataIsEmpty] = useState(true);
-  const [filters, setFilters] = useState(default_Filter);
+  const [filters, setFilters] = useState(DEFAULT_FILTER);
 
   const fetchPlanets = async () => {
     setLoading(true);
@@ -23,7 +23,6 @@ function StarWarsProvider({ children }) {
   };
 
   useEffect(() => {
-    console.log('Request API')
     fetchPlanets();
   }, []);
 

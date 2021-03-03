@@ -1,6 +1,7 @@
 import React, { useEffect, useContext, useState } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 import Table from '../components/Table';
+import Search from '../components/Search';
 
 function Main() {
   const { filters, data, dataIsEmpty } = useContext(StarWarsContext);
@@ -26,7 +27,7 @@ function Main() {
   };
 
   useEffect(() => {
-    handleDataFilters();
+    handleDataFilters(filters);
   }, [filters]);
 
   return (

@@ -2,10 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const Table = ({ data: planets }) => {
-  const columns = [
+  const headers = [
     'Name', 'Rotation_Period', 'Orbital_Period', 'Diameter', 'Climate', 'Gravity',
-    'Terrain', 'Surface_Water', 'Population', 'Films', 'Created', 'Edited', 'URL'
-    ];
+    'Terrain', 'Surface_Water', 'Population', 'Films', 'Created', 'Edited', 'URL',
+  ];
 
   return (
     <table>
@@ -31,7 +31,7 @@ const Table = ({ data: planets }) => {
   );
 };
 
-Table.PropTypes = {
+Table.propTypes = {
   data: PropTypes.arrayOf(Object).isRequired,
 };
 
