@@ -11,7 +11,7 @@ function Provider({ children }) {
     column: '',
     comparison: '',
     value: '',
-  })
+  });
 
   const requestPlanetsAPI = async () => {
     const endPoint = await fetch(
@@ -41,12 +41,12 @@ function Provider({ children }) {
       filterByName: {
         name: filterName,
       },
-      numericValuesFiltered: [filterNumber]
+      numericValuesFiltered: [filterNumber],
     },
   };
 
   return (
-    <StarWarsContext.Provider value={info}> { children } </StarWarsContext.Provider>
+    <StarWarsContext.Provider value={ info }> { children } </StarWarsContext.Provider>
   );
 }
 

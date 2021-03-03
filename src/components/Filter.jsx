@@ -22,7 +22,7 @@ function Filter() {
 
   return (
     <div>
-      <input onChange={handleChange} type="text" data-testid="name-filter" />
+      <input onChange={ handleChange } type="text" data-testid="name-filter" />
       <select data-testid="column-filter" id="column-filter">
         <option value="population" key="population">
           population
@@ -49,7 +49,7 @@ function Filter() {
         <option value="igual a">igual a</option>
       </select>
       <input data-testid="value-filter" type="number" id="number-filter" />
-      <button data-testid="button-filter" type="button" onClick={handleClick}>
+      <button data-testid="button-filter" type="button" onClick={ handleClick }>
         Filtrar
       </button>
     </div>
