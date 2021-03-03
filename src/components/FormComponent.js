@@ -17,7 +17,7 @@ function Form() {
   });
 
   const [orderRadio, setOrderRadio] = useState({
-    order: 'name',
+    column: 'name',
     sort: 'ASC',
   });
 
@@ -33,9 +33,7 @@ function Form() {
   };
 
   const handleClickOrder = () => {
-    // const { order } = order;
     setFilters({ ...filters, order: orderRadio });
-    setClick(true);
   };
 
   const reset = (index) => {
@@ -68,7 +66,7 @@ function Form() {
       data-testid="column-sort"
       name="column-sort"
       onChange={ (event) => {
-        setOrderRadio({ ...orderRadio, order: event.target.value });
+        setOrderRadio({ ...orderRadio, column: event.target.value });
       } }
     >
       { orderOpt

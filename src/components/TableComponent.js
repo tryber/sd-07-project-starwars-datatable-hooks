@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import React, { useContext } from 'react';
 import StarWarsContext from '../context/StartWarsContext';
 
@@ -21,7 +20,6 @@ function Table() {
         <tr key={ index }>
           { Object.values(planet)
             .map((value, i) => (
-              // <td key={ i }>{ value }</td>
               i === zero
                 ? <td key={ i } data-testid="planet-name">{ value }</td>
                 : <td key={ i }>{ value }</td>
@@ -39,9 +37,6 @@ function Table() {
           {tbodyTable()}
         </tbody>
       </table>
-      {/* {console.log(_.sortBy(data, 'orbital_period').reverse()) } */}
-      {/* {console.log(data.sort((a, b) => ((Number(a.orbital_period) > Number(b.orbital_period)) ? 1 : -1)).reverse()) } */}
-      {/* {console.log(data.sort((a, b) => ((a.name > b.name) ? 1 : -1))) } */}
     </div>
   );
 }

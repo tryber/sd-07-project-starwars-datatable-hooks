@@ -54,6 +54,7 @@ export default function Provider({ children }) {
   }, []);
 
   useEffect(() => {
+    const menosum = -1;
     let temp = dataOrigin;
     const zero = 0;
     for (let i = zero; i < filters.filterByNumericValues.length; i += 1) {
@@ -70,6 +71,7 @@ export default function Provider({ children }) {
         break;
       default:
         temp = (temp.filter((item) => Number(item[column]) === Number(value)));
+        temp = temp.sort((a, b) => ((a.name > b.name) ? 1 : menosum));
         break;
       }
       if (!options[column]) {
@@ -77,10 +79,37 @@ export default function Provider({ children }) {
         setClick(false);
       }
     }
-    // console.log(temp);
-    setData(temp);
+
+    const { column: oldColumn, sort } = filters.order;
+    const column = oldColumn.toLowerCase();
+    switch (sort) {
+    case 'ASC':
+      if (column === 'name') {
+        temp = temp.sort((a, b) => (
+          (a[column] > b[column]) ? 1 : menosum));
+      } else {
+        temp = temp.sort((a, b) => (
+          (Number(a[column]) > Number(b[column])) ? 1 : menosum));
+      }
+      break;
+    case 'DESC':
+      if (column === 'name') {
+        temp = temp.sort((a, b) => (
+          (a[column] > b[column]) ? 1 : menosum)).reverse();
+      } else {
+        temp = temp.sort((a, b) => (
+          (Number(a[column]) > Number(b[column])) ? 1 : menosum)).reverse();
+      }
+      break;
+
+    default:
+      temp = temp.sort((a, b) => ((a.name > b.name) ? 1 : menosum));
+      break;
+    }
+
+    setData([...temp]);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [click, setClick, setOptions, filters.filterByNumericValues]);
+  }, [click, setClick, setOptions, filters.filterByNumericValues, filters.order]);
 
   return (
     <StarWarsContext.Provider
