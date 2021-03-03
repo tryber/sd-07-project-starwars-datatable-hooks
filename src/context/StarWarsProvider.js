@@ -6,6 +6,7 @@ import StarWarsContext from './StarWarsContext';
 
 const DEFAULT_FILTER = {
   filterByName: { name: '' },
+  filterByNumericValues: [],
 };
 
 function StarWarsProvider({ children }) {
