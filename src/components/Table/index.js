@@ -1,9 +1,9 @@
 import React, { useContext } from 'react';
-import StarWarsContext from '../context/StarWarsContext';
+import StarWarsContext from '../../context/StarWarsContext';
 import './Table.css';
 
 const Table = () => {
-  const { data } = useContext(StarWarsContext);
+  const { currentPlanets } = useContext(StarWarsContext);
   return (
     <div className="table-container">
       <table>
@@ -23,7 +23,7 @@ const Table = () => {
           <th>Url</th>
         </tr>
         <tbody>
-          {data.map((planet) => (
+          {currentPlanets.map((planet) => (
             <tr key={ planet.name }>
               <td>{ planet.name }</td>
               <td>{ planet.rotation_period }</td>

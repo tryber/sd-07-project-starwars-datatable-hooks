@@ -4,12 +4,14 @@ import StarWarsContext from './StarWarsContext';
 
 const Provider = (props) => {
   const { children } = props;
-  const [data, setData] = useState([]);
+  const [currentPlanets, setCurrentPlanets] = useState([]);
+  const [dataByFilter, setDataByFilter] = useState([]);
   const endpoint = 'https://swapi-trybe.herokuapp.com/api/planets/';
 
   const fetchPlanets = async () => {
     const { results } = await fetch(endpoint).then((response) => response.json());
-    setData(results);
+    setCurrentPlanets(results);
+    setDataByFilter(results);
   };
 
   useEffect(() => {
@@ -17,7 +19,10 @@ const Provider = (props) => {
   }, []);
 
   const context = {
-    data,
+    currentPlanets,
+    setCurrentPlanets,
+    dataByFilter,
+    setDataByFilter,
   };
 
   return (
