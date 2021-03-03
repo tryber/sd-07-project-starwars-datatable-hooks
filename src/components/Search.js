@@ -8,16 +8,15 @@ function Search() {
   const handleSearchByName = ({ target: { value } }) => {
     setFilters({
       ...filters,
-      filterByName: { name: value }
+      filterByName: { name: value },
     });
-
-  }
+  };
 
   return (
     <input
       type="text"
       onChange={ (e) => handleSearchByName(e) }
-      data-testid='name-filter'
+      data-testid="name-filter"
     />
   );
 }

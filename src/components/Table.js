@@ -2,13 +2,16 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const Table = ({ data: planets }) => {
-  const columns = Object.keys(planets[0]).filter((key) => key !== 'residents');
+  const columns = [
+    'Name', 'Rotation_Period', 'Orbital_Period', 'Diameter', 'Climate', 'Gravity',
+    'Terrain', 'Surface_Water', 'Population', 'Films', 'Created', 'Edited', 'URL'
+    ];
 
   return (
     <table>
       <thead>
         <tr>
-          { columns.map((col, index) => (<th key={ index }>{ col }</th>)) }
+          { headers.map((col, index) => (<th key={ index }>{ col }</th>)) }
         </tr>
       </thead>
       <tbody>
@@ -16,7 +19,9 @@ const Table = ({ data: planets }) => {
           planets.map((planet, index) => (
             <tr key={ index }>
               {
-                columns.map((key, i) => (<td key={ i }>{ planet[key] }</td>))
+                headers.map((cat, i) => (
+                  <td key={ i }>{ planet[cat.toLocaleLowerCase] }</td>
+                ))
               }
             </tr>
           ))
@@ -26,8 +31,8 @@ const Table = ({ data: planets }) => {
   );
 };
 
-Table.propTypes = {
-  data: PropTypes.instanceOf(Array).isRequired,
+Table.PropTypes = {
+  data: PropTypes.arrayOf(Object).isRequired,
 };
 
 export default Table;
