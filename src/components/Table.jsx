@@ -1,13 +1,33 @@
 import React from 'react';
-import StarWarsProvider from './context/StarWarsProvider';
-import Main from './pages/Main';
+import PropTypes from 'prop-types';
 
-function App() {
+const Table = ({ data: planets }) => {
+  const columns = Object.keys(planets[0]).filter((key) => key !== 'residents');
+
   return (
-    <StarWarsProvider>
-      <Main />
-    </StarWarsProvider>
+    <table>
+      <thead>
+        <tr>
+          { columns.map((col, index) => (<th key={ index }>{ col }</th>)) }
+        </tr>
+      </thead>
+      <tbody>
+        {
+          planets.map((planet, index) => (
+            <tr key={ index }>
+              {
+                columns.map((key, i) => (<td key={ i }>{ planet[key] }</td>))
+              }
+            </tr>
+          ))
+        }
+      </tbody>
+    </table>
   );
-}
+};
 
-export default App;
+Table.propTypes = {
+  data: PropTypes.instanceOf(Array).isRequired,
+};
+
+export default Table;
