@@ -46,10 +46,6 @@ function Main() {
     }
   };
 
-  useEffect(() => {
-    handleDataFilters(filters);
-  }, [filters]);
-
   return (
     <div>
       <h1>Star Wars Planets Database</h1>
