@@ -39,7 +39,7 @@
 
 //   function filteredNumbers(filtradosPorNomes) {
 //     if (!filters.filterByNumericValues.length) {
-//       return setListePlanetsFilters(filtradosPorNomes);
+//       return setPlanetsFilters(filtradosPorNomes);
 //     }
 //     let resultadoFiltrado = filtradosPorNomes;
 //     filters.filterByNumericValues.forEach((filteredNumeric) => {
@@ -69,7 +69,7 @@
 //         return false;
 //       });
 //     });
-//     setListePlanetsFilters(resultadoFiltrado);
+//     setPlanetsFilters(resultadoFiltrado);
 //   }
 
 //   useEffect(() => {

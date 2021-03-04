@@ -20,24 +20,71 @@ function Provider({ children }) {
     setPlanets(expected);
     setPlanetsFilters(expected);
   };
-  const zero = 0;
-  const filterPlanetByName = () => {
-    if (filters.filterByName.name.length === zero) return undefined;
-    const filterToLowerCase = filters.filterByName.name.toLowerCase();
-    const test = planetsFilters.filter((planet) => planet.name
-      .toLowerCase().includes(filterToLowerCase));
-    setPlanetsFilters(test);
-    console.log('chamou');
-  };
+
+  // const zero = 0;
+  // const filterPlanetByName = () => {
+  //   if (filters.filterByName.name.length === zero) return undefined;
+  //   const filterToLowerCase = filters.filterByName.name.toLowerCase();
+  //   const test = planetsFilters.filter((planet) => planet.name
+  //     .toLowerCase().includes(filterToLowerCase));
+  //   setPlanetsFilters(test);
+  // };
+
+  // useEffect(() => {
+  //   if (filters.filterByName.name.length === zero) setPlanetsFilters(planets);
+  //   filterPlanetByName();
+  // }, [filters]);
+
+  function filteredName() {
+    if (!filters.filterByName) return undefined;
+    return (planets
+      .filter((planet) => planet.name.toLowerCase()
+        .includes(filters.filterByName.name.toLowerCase())));
+  }
+
+  function filteredNumbers(filtradosPorNomes) {
+    if (!filters.filterByNumericValues.length) {
+      return setPlanetsFilters(filtradosPorNomes);
+    }
+    let resultadoFiltrado = filtradosPorNomes;
+    filters.filterByNumericValues.forEach((filteredNumeric) => {
+      resultadoFiltrado = resultadoFiltrado.filter((filtrado) => {
+        switch (filteredNumeric.comparison) {
+        case 'maior que':
+          if (
+            parseInt(filtrado[filteredNumeric.column], 10)
+            > parseInt(filteredNumeric.value, 10)
+          ) return true;
+          break;
+        case 'menor que':
+          if (
+            parseInt(filtrado[filteredNumeric.column], 10)
+            < parseInt(filteredNumeric.value, 10)
+          ) return true;
+          break;
+        case 'igual a':
+          if (
+            parseInt(filtrado[filteredNumeric.column], 10)
+            === parseInt(filteredNumeric.value, 10)
+          ) return true;
+          break;
+        default:
+          return false;
+        }
+        return false;
+      });
+    });
+    setPlanetsFilters(resultadoFiltrado);
+  }
+
+  useEffect(() => {
+    const filtradosPorNomes = filteredName();
+    filteredNumbers(filtradosPorNomes);
+  }, [filters]);
 
   useEffect(() => {
     (fetchPlanets());
   }, []);
-
-  useEffect(() => {
-    if (filters.filterByName.name.length === zero) setPlanetsFilters(planets);
-    filterPlanetByName();
-  }, [filters]);
 
   const states = {
     planets,

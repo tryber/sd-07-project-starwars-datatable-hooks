@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 function Table() {
@@ -9,8 +9,11 @@ function Table() {
     setFilters,
   } = useContext(StarWarsContext);
 
+  const [column, setColumn] = useState();
+  const [range, setRange] = useState();
+  const [values, setValue] = useState();
+
   useEffect(() => {
-    console.log('mudei');
   }, [filters]);
 
   const filterNamePlanets = ({ target }) => {
@@ -20,6 +23,49 @@ function Table() {
         filterByName: {
           name: value,
         },
+      },
+    );
+  };
+
+  const options = () => {
+    const { filterByNumericValues } = filters;
+    const newFilters = [];
+    filterByNumericValues.map((filter) => newFilters.push(filter.column));
+    const columnsAll = [
+      'diameter',
+      'orbital_period',
+      'population',
+      'rotation_period',
+      'surface_water',
+    ];
+    const columnsForRender = columnsAll.filter((compar) => (
+      newFilters.every((item) => item !== compar)
+    ));
+    return (
+      <select
+        data-testid="column-filter"
+        onChange={ ({ target }) => setColumn(target.value) }
+        name="column"
+      >
+        {columnsForRender.map((columns, index) => (
+          <option key={ index } value={ columns }>
+            { columns }
+          </option>
+        ))}
+      </select>
+    );
+  };
+
+  const filterNumeric = () => {
+    setFilters(
+      { ...filters,
+        filterByNumericValues: [
+          {
+            column,
+            comparison: range,
+            value: values,
+          },
+        ],
       },
     );
   };
@@ -35,20 +81,11 @@ function Table() {
         placeholder="Digite o nome do Planeta"
         onChange={ filterNamePlanets }
       />
-      <select
-        data-testid="column-filter"
-        name="column"
-      >
-        <option>Escolha uma coluna</option>
-        <option>population</option>
-        <option>orbital_period</option>
-        <option>diameter</option>
-        <option>rotation_period</option>
-        <option>surface_water</option>
-      </select>
+      { options() }
       <select
         data-testid="comparison-filter"
         name="range"
+        onChange={ ({ target }) => setRange(target.value) }
       >
         <option>Escolha uma medida</option>
         <option>maior que</option>
@@ -59,10 +96,12 @@ function Table() {
         type="number"
         data-testid="value-filter"
         placeholder="Digite o valor"
+        onChange={ ({ target }) => setValue(target.value) }
       />
       <button
         type="button"
         data-testid="button-filter"
+        onClick={ filterNumeric }
       >
         Filtrar
       </button>
