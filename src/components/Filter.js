@@ -104,7 +104,8 @@ function FilterPlanets() {
           data-testid="column-sort"
           name="comparison"
           id="comparison"
-          onChange={ (event) => setOrderRadio({ ...orderRadio, column: (event.target.value) }) }
+          onChange={ (event) => setOrderRadio({
+            ...orderRadio, column: (event.target.value) }) }
         >
           <option>Name</option>
           <option>Rotation Period</option>
