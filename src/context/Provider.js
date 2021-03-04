@@ -6,19 +6,44 @@ import starWarsAPI from '../services/Services';
 function Provider({ children }) {
   const [planets, setPlanets] = useState([]);
 
+  const [filters, setFilters] = useState({
+    filterByName: {
+      name: '',
+    },
+  });
+  const [planetsFilters, setPlanetsFilters] = useState([]);
+
   const fetchPlanets = async () => {
     const { results } = await starWarsAPI();
     const expected = results.filter((result) => delete result.residents);
     setPlanets(expected);
+    setPlanetsFilters(expected);
+  };
+  const zero = 0;
+  const filterPlanetByName = () => {
+    if (filters.filterByName.name.length === zero) return undefined;
+    const filterToLowerCase = filters.filterByName.name.toLowerCase();
+    const test = planetsFilters.filter((planet) => planet.name
+      .toLowerCase().includes(filterToLowerCase));
+    setPlanetsFilters(test);
+    console.log('chamou');
   };
 
   useEffect(() => {
     (fetchPlanets());
   }, []);
 
+  useEffect(() => {
+    if (filters.filterByName.name.length === zero) setPlanetsFilters(planets);
+    filterPlanetByName();
+  }, [filterPlanetByName, filters, planets]);
+
   const states = {
     planets,
+    planetsFilters,
+    filters,
     setPlanets,
+    setFilters,
   };
 
   return (
