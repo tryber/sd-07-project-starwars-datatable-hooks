@@ -107,19 +107,19 @@ function FilterPlanets() {
           onChange={ (event) => setOrderRadio({
             ...orderRadio, column: (event.target.value) }) }
         >
-          <option>Name</option>
-          <option>Rotation Period</option>
-          <option>Orbital Period</option>
-          <option>Diameter</option>
-          <option>Climate</option>
-          <option>Gravity</option>
-          <option>Terrain</option>
-          <option>Surface Water</option>
-          <option>Population</option>
-          <option>Films</option>
-          <option>Created</option>
-          <option>Edited</option>
-          <option>URL</option>
+          <option value="name">Name</option>
+          <option value="rotation_period">Rotation Period</option>
+          <option value="orbital_period">Orbital Period</option>
+          <option value="diameter">Diameter</option>
+          <option value="climate">Climate</option>
+          <option value="gravity">Gravity</option>
+          <option value="terrain">Terrain</option>
+          <option value="surface_water">Surface Water</option>
+          <option value="population">Population</option>
+          <option value="films">Films</option>
+          <option value="created">Created</option>
+          <option value="edited">Edited</option>
+          <option value="url">URL</option>
         </select>
 
         <label htmlFor="sort">

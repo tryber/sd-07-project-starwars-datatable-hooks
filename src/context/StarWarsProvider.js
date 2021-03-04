@@ -23,8 +23,11 @@ function StarWarsProvider({ children }) {
   useEffect(() => {
     /* fazendo a requisição na API, setData recebe o objeto results e o colocar no "setState" setData do meu novo estado */
     const StarWarsAPI = async () => {
+      let address = [];
+      //const menosum = -1;
       const url = await fetch('https://swapi-trybe.herokuapp.com/api/planets/');
-      const address = await url.json();
+      address = await url.json();
+      //address.results.sort((a, b) => ((a.name > b.name) ? 1 : menosum));
       /* setData recebe a chamada assincrona da url.json */
       setData(address.results);
       setResponse(address.results);
@@ -34,6 +37,7 @@ function StarWarsProvider({ children }) {
 
   useEffect(() => {
     let auxData = data;
+    const menosum = -1;
     const magicNumber = 0;
     for (let i = magicNumber; i < filters.filterByNumericValues.length; i += 1) {
       const { column, comparison, value } = filters.filterByNumericValues[i];
@@ -52,8 +56,71 @@ function StarWarsProvider({ children }) {
         break;
       }
     }
-    setResponse(auxData);
-  }, [filters.filterByNumericValues]);
+
+    const { column: oldColumn, sort } = filters.order;
+    const column = oldColumn.toLowerCase();
+    let temp = data;
+    switch (sort) {
+    case 'ASC':
+      if (column === 'name') {
+        temp = temp.sort((a, b) => (
+          (a[column] > b[column]) ? 1 : menosum));
+      } else {
+        temp = temp.sort((a, b) => (
+          (Number(a[column]) > Number(b[column])) ? 1 : menosum));
+      }
+      break;
+    case 'DESC':
+      if (column === 'name') {
+        temp = temp.sort((a, b) => (
+          (a[column] > b[column]) ? 1 : menosum)).reverse();
+      } else {
+        temp = temp.sort((a, b) => (
+          (Number(a[column]) > Number(b[column])) ? 1 : menosum)).reverse();
+      }
+      break;
+    default:
+      temp = temp.sort((a, b) => ((a.name > b.name) ? 1 : menosum));
+      break;
+    }
+    console.log(temp);
+
+    /* const { column: column2, sort } = filters.order;
+    const column = column2.toLocaleLowerCase();
+    console.log('esse mardito', column);
+    console.log('esse mardito', sort);
+    switch (sort) {
+    case 'ASC':
+      if (column === 'name') {
+        console.log('entrouEmASC');
+        auxData = auxData.sort((a, b) => ((a[column] > b[column]) ? 1 : menosum));
+      } else {
+        console.log('!entrouEmASC');
+        auxData = auxData.sort((a, b) => (
+          (Number(a[column]) > Number(b[column])) ? 1 : menosum));
+      }
+
+      break;
+    case 'DESC':
+      if (column === 'name') {
+        console.log('entrouEmDESC');
+        auxData = auxData.sort((a, b) => (
+          (a[column] > b[column]) ? 1 : menosum)).reverse();
+      } else {
+        console.log('!entrouEmDESC');
+        auxData = auxData.sort((a, b) => (
+          (Number(a[column]) > Number(b[column])) ? 1 : menosum)).reverse();
+      }
+
+      break;
+
+    default:
+      console.log('entrouEmDefault');
+      auxData = auxData.sort((a, b) => ((a.name > b.name) ? 1 : menosum));
+      break;
+    } */
+    setResponse([...auxData]);
+  }, [filters.filterByNumericValues, filters.order]);
 
   return (
     /* utilizando o o context para encapsular tudo no provider */
