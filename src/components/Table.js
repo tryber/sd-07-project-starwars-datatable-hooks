@@ -1,13 +1,13 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 function Table() {
   const {
     planets,
   } = useContext(StarWarsContext);
-  
+
   const zero = 0;
-  if (planets.length === zero) return (<h1>Carregando...</h1>)
+  if (planets.length === zero) return (<h1>Carregando...</h1>);
 
   return (
     <div>
@@ -32,7 +32,7 @@ function Table() {
         </tbody>
       </table>
     </div>
-  )
+  );
 }
 
 export default Table;
