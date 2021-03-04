@@ -1,12 +1,17 @@
 import React from 'react';
-import PlanetsTable from './components/PlanetTable';
 import PlanetContextProvider from './contexts/PlanetContext';
+import FilterContextProvider from './contexts/FilterContext';
+import PlanetsTable from './components/PlanetsTable';
+import Filters from './components/Filters';
 
 function App() {
   return (
     <div>
       <PlanetContextProvider>
-        <PlanetsTable />
+        <FilterContextProvider>
+          <Filters />
+          <PlanetsTable />
+        </FilterContextProvider>
       </PlanetContextProvider>
     </div>
   );
