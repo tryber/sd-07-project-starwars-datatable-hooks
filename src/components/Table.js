@@ -2,8 +2,8 @@ import React, { useContext } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 // Utilização do Context - modelo de estudo e crédito total { Bruno Sordi }
-// Foram feitas observações também  nos códigos do { Pedro Marques }
-
+// Foram feitas observações também nos códigos do { Pedro Marques }
+//
 // Dados da API passado pelo Context
 function Table() {
   const {
@@ -72,7 +72,7 @@ function Table() {
       </label>
     );
   }
-  // deletando a coluna de filtro // refatorar para ser esxluido somente 1 valor
+  // deletando a coluna de filtro // refatorar para ser excluido somente 1 valor
   function deleteFilter(column) {
     const { filterByNumericValues } = filters;
     const delFilters = filterByNumericValues.filter((filter) => (
@@ -115,7 +115,7 @@ function Table() {
             data-testid="comparison-filter"
             value={ filters.filterByNumericValues.comparison }
             onChange={ handleChangeSelected }
-          > 
+          >
             <option value="maior que">maior que</option>
             <option value="igual a">igual a</option>
             <option value="menor que">menor que</option>
