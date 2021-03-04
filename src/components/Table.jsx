@@ -84,9 +84,25 @@ const Table = () => {
         </tr>)) : null;
     } if (filteredByNum) {
       const planets = parseToFloat();
-      return planets
-        .filter((planet) => planet.diameter > 10000)
-        .map(tableStructure);
+      const f = filters.filterByNumericValues[filters.filterByNumericValues.length - 1];
+      const { column, value } = f;
+      switch (f.comparison) {
+      case 'maior que':
+        return planets
+          .filter((planet) => planet[column] > value)
+          .map(tableStructure);
+      case 'menor que':
+        return planets
+          .filter((planet) => planet[column] < value)
+          .map(tableStructure);
+      case 'igual a':
+        return planets
+          .filter((planet) => planet[column] == value)
+          .map(tableStructure);
+      default:
+        return null;
+      }
+
       // const f = filters.filterByNumericValues[filters.filterByNumericValues.length - 1];
       // const { value } = filters.filterByNumericValues;
       // let filteredPlanets = [];
