@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
-// Utilização do Context - modelo de estudo { Bruno Sordi }
+// Utilização do Context - modelo de estudo e crédito total { Bruno Sordi }
 // Foram feitas observações também  nos códigos do { Pedro Marques }
 
 // Dados da API passado pelo Context
@@ -10,6 +10,8 @@ function Table() {
     data,
     filters,
     setFilters,
+    filterHandler,
+    setFilterHandler,
   } = useContext(StarWarsContext);
 
   // Filtro por nome, a cada novo filter, pega o array original e filtra por nome
@@ -20,6 +22,79 @@ function Table() {
       filterByName: { name: target.value },
     });
   }
+
+  function handleChangeSelected({ target }) {
+    const prevFilters = filterHandler;
+    const { name, value } = target;
+    setFilterHandler({
+      ...prevFilters,
+      [name]: value,
+    });
+  }
+  // Adicionar filtro numerico
+  function addFilter() {
+    const prevFilters = filters;
+    setFilters({
+      ...prevFilters,
+      filterByNumericValues: [...prevFilters.filterByNumericValues, filterHandler],
+    });
+  }
+
+  function renderOptions() {
+    const { filterByNumericValues } = filters;
+    const createdFilters = [];
+    filterByNumericValues.map((filter) => createdFilters.push(filter.column));
+    const arrayComparison = [
+      'population',
+      'orbital_period',
+      'diameter',
+      'rotation_period',
+      'surface_water',
+    ];
+    const arrayRendered = arrayComparison.filter((comparison) => (
+      createdFilters.every((filter) => filter !== comparison)
+    ));
+
+    return (
+      <label htmlFor="column">
+        <select
+          name="column"
+          data-testid="column-filter"
+          value={ filters.filterByNumericValues.column }
+          onChange={ handleChangeSelected }
+        >
+          {arrayRendered.map((comparison, index) => (
+            <option key={ index } value={ comparison }>
+              { comparison }
+            </option>
+          ))}
+        </select>
+      </label>
+    );
+  }
+  // deletando a coluna de filtro // refatorar para ser esxluido somente 1 valor
+  function deleteFilter(column) {
+    const { filterByNumericValues } = filters;
+    const delFilters = filterByNumericValues.filter((filter) => (
+      filter.column !== column
+    ));
+    setFilters({
+      ...filters,
+      filterByNumericValues: delFilters,
+    });
+  }
+  // novo render apartir do filte populacional
+  function renderFilters() {
+    const { filterByNumericValues } = filters;
+    const renderedFilters = filterByNumericValues.map((filter, index) => (
+      <div data-testid="filter" key={ index }>
+        { `${filter.column} ${filter.comparison} ${filter.value}  `}
+        <button type="button" onClick={ () => deleteFilter(filter.column) }>x</button>
+      </div>
+    ));
+    return renderedFilters;
+  }
+
   return (
     <div>
       <div>
@@ -33,6 +108,33 @@ function Table() {
             onChange={ handleChangeName }
           />
         </label>
+        {renderOptions()}
+        <label htmlFor="comparison">
+          <select
+            name="comparison"
+            data-testid="comparison-filter"
+            value={ filters.filterByNumericValues.comparison }
+            onChange={ handleChangeSelected }
+          > 
+            <option value="maior que">maior que</option>
+            <option value="igual a">igual a</option>
+            <option value="menor que">menor que</option>
+          </select>
+        </label>
+        <label htmlFor="value">
+          <input
+            data-testid="value-filter"
+            name="value"
+            value={ filters.filterByNumericValues.value }
+            onChange={ handleChangeSelected }
+          />
+        </label>
+        <button type="button" data-testid="button-filter" onClick={ addFilter }>
+          Add Filters
+        </button>
+        <div>
+          { renderFilters() }
+        </div>
       </div>
       {!data.length ? (
         <div>Loading...</div>
