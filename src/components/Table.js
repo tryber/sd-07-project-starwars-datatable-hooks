@@ -36,9 +36,10 @@ function Table() {
         onChange={ filterNamePlanets }
       />
       <select
-        data-testid='column-filter'
+        data-testid="column-filter"
         name="column"
       >
+        <option>Escolha uma coluna</option>
         <option>population</option>
         <option>orbital_period</option>
         <option>diameter</option>
@@ -46,21 +47,23 @@ function Table() {
         <option>surface_water</option>
       </select>
       <select
-        data-testid='comparison-filter'
+        data-testid="comparison-filter"
         name="range"
       >
+        <option>Escolha uma medida</option>
         <option>maior que</option>
         <option>menor que</option>
         <option>igual a</option>
       </select>
-      <input 
+      <input
         type="number"
-        data-testid='value-filter'
+        data-testid="value-filter"
+        placeholder="Digite o valor"
       />
-      <button 
+      <button
         type="button"
-        data-testid='button-filter'
-      > 
+        data-testid="button-filter"
+      >
         Filtrar
       </button>
       <table>

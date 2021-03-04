@@ -36,7 +36,7 @@ function Provider({ children }) {
   useEffect(() => {
     if (filters.filterByName.name.length === zero) setPlanetsFilters(planets);
     filterPlanetByName();
-  }, [filters]);
+  }, [filterPlanetByName, filters, planets]);
 
   const states = {
     planets,
