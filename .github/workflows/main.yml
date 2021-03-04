@@ -20,7 +20,7 @@ jobs:
         uses: betrybe/react-scripts-evaluator-action@v4
         with:
           repository-test-name: 'betrybe/sd-0x-project-starwars-datatable-hooks-tests'
-          repository-test-branch: 'master'
+          repository-test-branch: 'T7-tests'
       - name: Store evaluation step
         uses: betrybe/store-evaluation-action@v2
         with:
