@@ -51,8 +51,8 @@ function StarWarsProvider({ children }) {
       default:
         break;
       }
-      setResponse(auxData);
     }
+    setResponse(auxData);
   }, [filters.filterByNumericValues]);
 
   return (

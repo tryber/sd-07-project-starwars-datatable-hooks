@@ -3,6 +3,10 @@ import MyContext from '../context/MyContext';
 
 function FilterPlanets() {
   const { filters, setFilters } = useContext(MyContext);
+  const [orderRadio, setOrderRadio] = useState({
+    column: 'name',
+    sort: 'ASC',
+  });
   const [aux, setAux] = useState({
     column: 'population',
     comparison: 'maior que',
@@ -12,6 +16,16 @@ function FilterPlanets() {
   const handleClick = () => {
     setFilters({
       ...filters, filterByNumericValues: [...filters.filterByNumericValues, aux] });
+  };
+
+  const handleClickOrder = () => {
+    setFilters({
+      ...filters, order: orderRadio });
+  };
+
+  const resetTable = (index) => {
+    filters.filterByNumericValues.splice(index, 1);
+    setFilters({ ...filters, filterByNumericValues: [...filters.filterByNumericValues] });
   };
 
   return (
@@ -36,11 +50,11 @@ function FilterPlanets() {
           id="valor-numerico"
           onChange={ (event) => setAux({ ...aux, column: (event.target.value) }) }
         >
-          <option value="population">Population</option>
-          <option value="orbital_period">Orbital Period</option>
-          <option value="diameter">Diameter</option>
-          <option value="rotation_period">Rotation Period</option>
-          <option value="surface_water">Surface Water</option>
+          <option value="population">population</option>
+          <option value="orbital_period">orbital_period</option>
+          <option value="diameter">diameter</option>
+          <option value="rotation_period">rotation_period</option>
+          <option value="surface_water">surface_water</option>
         </select>
       </label>
 
@@ -54,8 +68,8 @@ function FilterPlanets() {
           id="comparison"
           onChange={ (event) => setAux({ ...aux, comparison: (event.target.value) }) }
         >
-          <option value="maior_que">maior que</option>
-          <option value="menor_que">menor que</option>
+          <option value="maior que">maior que</option>
+          <option value="menor que">menor que</option>
           <option value="igual a">igual a</option>
         </select>
       </label>
@@ -90,7 +104,7 @@ function FilterPlanets() {
           data-testid="column-sort"
           name="comparison"
           id="comparison"
-          // onChange={ (event) => handleChangeComparison(event) }
+          onChange={ (event) => setOrderRadio({ ...orderRadio, column: (event.target.value) }) }
         >
           <option>Name</option>
           <option>Rotation Period</option>
@@ -114,6 +128,8 @@ function FilterPlanets() {
             data-testid="column-sort-input-asc"
             value="ASC"
             name="sort"
+            onClick={ (event) => setOrderRadio({
+              ...orderRadio, sort: (event.target.value) }) }
           />
         </label>
 
@@ -124,6 +140,8 @@ function FilterPlanets() {
             data-testid="column-sort-input-desc"
             value="DESC"
             name="sort"
+            onClick={ (event) => setOrderRadio({
+              ...orderRadio, sort: (event.target.value) }) }
           />
         </label>
 
@@ -131,11 +149,33 @@ function FilterPlanets() {
       <button
         data-testid="column-sort-button"
         type="button"
-        /* onClick={ (event) => handleClickNumericValues(event) } */
+        onClick={ () => handleClickOrder() }
       >
         Ordenar
       </button>
 
+      <div />
+      <div>
+        { filters.filterByNumericValues
+          .map((element, index) => (
+            <p key={ index } data-testid="filter">
+              <span><b>Filtro aplicado: </b></span>
+              <span>{ element.column }</span>
+              <span> - </span>
+              <span>{ element.comparison }</span>
+              <span> - </span>
+              <span>{ element.value }</span>
+              <span> </span>
+              <button
+                type="button"
+                name="button"
+                onClick={ () => resetTable(index) }
+              >
+                X
+              </button>
+            </p>
+          )) }
+      </div>
     </div>
   );
 }
