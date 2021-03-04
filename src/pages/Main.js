@@ -15,10 +15,6 @@ function Main() {
     const { filterByName: { name }, filterByNumericValues } = filters;
     const ZERO = 0;
 
-    useEffect(() => {
-      handleDataFilters();
-    }, [filters]);  
-
     if (name) {
       const newData = data.filter((planet) => (
         planet.name.toLowerCase().includes(name.toLowerCase())
@@ -49,6 +45,10 @@ function Main() {
       setplanetsData(data);
     }
   };
+
+  useEffect(() => {
+    handleDataFilters();
+  }, []);
 
   return (
     <div>
