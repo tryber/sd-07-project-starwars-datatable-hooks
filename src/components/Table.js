@@ -35,6 +35,34 @@ function Table() {
         placeholder="Digite o nome do Planeta"
         onChange={ filterNamePlanets }
       />
+      <select
+        data-testid='column-filter'
+        name="column"
+      >
+        <option>population</option>
+        <option>orbital_period</option>
+        <option>diameter</option>
+        <option>rotation_period</option>
+        <option>surface_water</option>
+      </select>
+      <select
+        data-testid='comparison-filter'
+        name="range"
+      >
+        <option>maior que</option>
+        <option>menor que</option>
+        <option>igual a</option>
+      </select>
+      <input 
+        type="number"
+        data-testid='value-filter'
+      />
+      <button 
+        type="button"
+        data-testid='button-filter'
+      > 
+        Filtrar
+      </button>
       <table>
         <thead>
           <tr>
