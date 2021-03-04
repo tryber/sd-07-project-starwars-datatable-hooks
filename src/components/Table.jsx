@@ -5,23 +5,30 @@ import planetsAPI from '../services/planetsAPI';
 const Table = () => {
   const { data, setData } = useContext(StarWarsContext);
   const { filters, setFilters } = useContext(StarWarsContext);
-  const [filtered, setFiltered] = useState(false);
+  const [filteredByName, setFilteredByName] = useState(false);
+  const [filteredByNum, setFilteredByNum] = useState(false);
 
   useEffect(() => {
     planetsAPI().then((r) => setData(r));
   }, [setData]);
 
   useEffect(() => {
+    console.log(filters);
     if (filters.filterByName.name !== '') {
-      setFiltered(true);
+      setFilteredByName(true);
     } else {
-      setFiltered(false);
+      setFilteredByName(false);
     }
-    console.log(filtered);
-  }, [filtered, filters.filterByName.name]);
+    if (filters.filterByNumericValues.length) {
+      setFilteredByNum(true);
+    } else {
+      setFilteredByNum(false);
+    }
+    console.log(filteredByName, filteredByNum);
+  }, [filteredByName, filteredByNum, filters, filters.filterByName.name]);
 
   const setTable = () => {
-    if (filtered) {
+    if (filteredByName) {
       const filteredPlanets = data.filter((planet) => (
         planet.name.includes(filters.filterByName.name)
       ));
@@ -42,6 +49,70 @@ const Table = () => {
           {/* format dates */}
           <td>{filPlanet.edited}</td>
         </tr>)) : null;
+    }
+    if (filteredByNum) {
+      const f = filters.filterByNumericValues[filters.filterByNumericValues.length - 1];
+      const filteredPlanets = [];
+      switch (f.column) {
+      case 'population':
+        switch (f.comparison) {
+        case 'maior que':
+          return console.log('pop maior que');
+          // filteredPlanets = data.filter((planet) => planet.)
+        case 'menor que':
+          return console.log('pop menor que');
+        case 'igual a':
+          return console.log('pop maior que');
+        default:
+          return null;
+        }
+      case 'orbital_period':
+        switch (f.comparison) {
+        case 'maior que':
+          return console.log('op maior que');
+        case 'menor que':
+          return console.log('op menor que');
+        case 'igual a':
+          return console.log('op maior que');
+        default:
+          return null;
+        }
+      case 'diameter':
+        switch (f.comparison) {
+        case 'maior que':
+          return console.log('dia maior que');
+        case 'menor que':
+          return console.log('dia menor que');
+        case 'igual a':
+          return console.log('dia maior que');
+        default:
+          return null;
+        }
+      case 'rotation_period':
+        switch (f.comparison) {
+        case 'maior que':
+          return console.log('rp maior que');
+        case 'menor que':
+          return console.log('rp menor que');
+        case 'igual a':
+          return console.log('rp maior que');
+        default:
+          return null;
+        }
+      case 'surface_water':
+        switch (f.comparison) {
+        case 'maior que':
+          return console.log('sw maior que');
+        case 'menor que':
+          return console.log('sw menor que');
+        case 'igual a':
+          return console.log('sw igual a');
+        default:
+          return null;
+        }
+      default:
+        return null;
+      }
     }
     return (
       data.map((planet, i) => (

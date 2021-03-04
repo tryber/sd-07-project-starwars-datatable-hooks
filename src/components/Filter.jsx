@@ -12,11 +12,9 @@ const Filter = () => {
   const sendCurrentSearch = (e) => {
     const text = e.target.value;
     setFilters({ ...filters, filterByName: { name: text } });
-    console.log(filters);
   };
 
   useEffect(() => {
-    console.log(filters);
   });
 
   const sendNumericFilter = (e) => {
@@ -28,14 +26,6 @@ const Filter = () => {
         currNumFilter,
       ],
     });
-
-    // console.log(currNumFilter);
-    // e.preventDefault();
-    // setFilters({
-    //   ...filters,
-    //   filterByNumericValues: filters.filterByNumericValues.push(currNumFilter),
-    // });
-    // // const data = e.target;
   };
 
   const handleNumericFilterChange = (e) => {
@@ -44,7 +34,6 @@ const Filter = () => {
       ...currNumFilter,
       [e.target.name]: value,
     });
-    console.log(currNumFilter);
   };
 
   return (
