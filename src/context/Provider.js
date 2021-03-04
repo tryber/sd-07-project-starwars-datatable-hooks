@@ -10,6 +10,7 @@ function Provider({ children }) {
     filterByName: {
       name: '',
     },
+    filterByNumericValues: [],
   });
   const [planetsFilters, setPlanetsFilters] = useState([]);
 
@@ -36,7 +37,7 @@ function Provider({ children }) {
   useEffect(() => {
     if (filters.filterByName.name.length === zero) setPlanetsFilters(planets);
     filterPlanetByName();
-  }, [filterPlanetByName, filters, planets]);
+  }, [filters]);
 
   const states = {
     planets,
