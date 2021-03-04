@@ -12,7 +12,9 @@ function Provider({ children }) {
 
   // Filtros Salvos
   const [filters, setFilters] = useState({
-    filterByName: {name: '',},
+    filterByName: {
+      name: '',
+    },
     filterByNumericValues: [],
   });
 
@@ -82,7 +84,6 @@ function Provider({ children }) {
     }
     fetchData();
   }, []);
-  // useEffect para manipualação do estados sem sobreescrever
   useEffect(() => {
     const results = dataApi;
     const filteredName = filterName(results);
