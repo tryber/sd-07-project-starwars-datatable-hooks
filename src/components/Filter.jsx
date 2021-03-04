@@ -31,7 +31,7 @@ function Filter() {
 
   return (
     <div>
-      <input onChange={handleChange} type="text" data-testid="name-filter" />
+      <input onChange={ handleChange } type="text" data-testid="name-filter" />
       <div data-testid="filter">
         <select data-testid="column-filter" id="column-filter">
           <option value="population" key="population">
@@ -59,14 +59,14 @@ function Filter() {
           <option value="igual a">igual a</option>
         </select>
         <input data-testid="value-filter" type="number" id="number-filter" />
-        <button data-testid="filter" type="button" onClick={resetFilter}>
+        <button data-testid="filter" type="button" onClick={ resetFilter }>
           X
         </button>
       </div>
-      <button data-testid="filter" type="button" onClick={resetFilter}>
+      <button data-testid="filter" type="button" onClick={ resetFilter }>
         X
       </button>
-      <button data-testid="button-filter" type="button" onClick={handleClick}>
+      <button data-testid="button-filter" type="button" onClick={ handleClick }>
         Filtrar
       </button>
     </div>
