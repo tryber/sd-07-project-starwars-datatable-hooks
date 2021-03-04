@@ -3,7 +3,6 @@ import StarWarsContext from '../context/StarWarsContext';
 
 function InputTxt() {
   const { filters, setFilters } = useContext(StarWarsContext);
-
   return (
     <input
       type="text"

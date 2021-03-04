@@ -14,7 +14,7 @@ function StarWarsProvider({ children }) {
 
   useEffect(() => {
     fetchAPI().then((r) => setData(r));
-  }, []);
+  }, [filters.filterByNumericValues.length]);
 
   return (
     <StarWarsContext.Provider value={ { data, setData, filters, setFilters } }>
