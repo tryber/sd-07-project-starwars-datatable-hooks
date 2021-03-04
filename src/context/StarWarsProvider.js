@@ -5,8 +5,20 @@ import MyContext from './MyContext';
 function StarWarsProvider({ children }) {
   /* montando um estado usando data como pede o requisito */
   const [data, setData] = useState([]);
-  const [filterName, setName] = useState('');
+  /* const [filterName, setName] = useState(''); */
   const [response, setResponse] = useState([]);
+  const [filters, setFilters] = useState(
+    {
+      filterByName: {
+        name: '',
+      },
+      filterByNumericValues: [],
+      order: {
+        column: 'Name',
+        sort: 'ASC',
+      },
+    },
+  );
 
   useEffect(() => {
     /* fazendo a requisição na API, setData recebe o objeto results e o colocar no "setState" setData do meu novo estado */
@@ -20,21 +32,14 @@ function StarWarsProvider({ children }) {
     StarWarsAPI();
   }, []);
 
-  useEffect(() => {
-    /* Aplicando um filtro nos nomes dos planetas com toLowerCase */
-    const input = data.filter(({ name }) => name.toLowerCase().includes(filterName));
-    setResponse(input);
-  }, [data, filterName]);
-
   return (
     /* utilizando o o context para encapsular tudo no provider */
     <MyContext.Provider
       value={ {
         data,
-        filterName,
-        setName,
+        filters,
+        setFilters,
         response,
-        setResponse,
       } }
     >
       { children }
