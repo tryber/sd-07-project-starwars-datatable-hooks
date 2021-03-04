@@ -7,11 +7,12 @@ function Provider({ children }) {
   const [dataApi, setDataApi] = useState([]);
 
   const [filterHandler, setFilterHandler] = useState({
-    column: 'population', comparison: 'maior que',  value: '',
+    column: 'population', comparison: 'maior que', value: '',
   });
 
+  // Filtros Salvos
   const [filters, setFilters] = useState({
-    filterByName: { name: '', },
+    filterByName: {name: '',},
     filterByNumericValues: [],
   });
 
@@ -69,7 +70,7 @@ function Provider({ children }) {
       || name === '',
     );
   }
-  // Chamada API
+  // Chama da API
   useEffect(() => {
     async function fetchData() {
       const { results } = await fetch(
