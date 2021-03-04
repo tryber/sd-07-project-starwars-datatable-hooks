@@ -20,4 +20,3 @@ function App() {
 }
 
 export default App;
-//desito desse projeto sem cabeca, so quero fazer meu backend
