@@ -27,8 +27,7 @@ function Filter() {
       value: '',
     };
     setFilterNumber(filterBy);
-  }
-
+  };
 
   return (
     <div>
@@ -57,13 +56,13 @@ function Filter() {
         </button>
       </div>
       <button
-          data-testid="filter"
-          type="button"
-          onClick={ resetFilter }
-        >
-          X
-        </button>
-      <button data-testid="button-filter" type="button" onClick={ handleClick }>
+        data-testid="filter"
+        type="button"
+        onClick={ resetFilter }
+      >
+        X
+      </button>
+    <button data-testid="button-filter" type="button" onClick={ handleClick }>
         Filtrar
       </button>
     </div>
