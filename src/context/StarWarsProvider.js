@@ -24,10 +24,8 @@ function StarWarsProvider({ children }) {
     /* fazendo a requisição na API, setData recebe o objeto results e o colocar no "setState" setData do meu novo estado */
     const StarWarsAPI = async () => {
       let address = [];
-      //const menosum = -1;
       const url = await fetch('https://swapi-trybe.herokuapp.com/api/planets/');
       address = await url.json();
-      //address.results.sort((a, b) => ((a.name > b.name) ? 1 : menosum));
       /* setData recebe a chamada assincrona da url.json */
       setData(address.results);
       setResponse(address.results);
@@ -85,40 +83,6 @@ function StarWarsProvider({ children }) {
     }
     console.log(temp);
 
-    /* const { column: column2, sort } = filters.order;
-    const column = column2.toLocaleLowerCase();
-    console.log('esse mardito', column);
-    console.log('esse mardito', sort);
-    switch (sort) {
-    case 'ASC':
-      if (column === 'name') {
-        console.log('entrouEmASC');
-        auxData = auxData.sort((a, b) => ((a[column] > b[column]) ? 1 : menosum));
-      } else {
-        console.log('!entrouEmASC');
-        auxData = auxData.sort((a, b) => (
-          (Number(a[column]) > Number(b[column])) ? 1 : menosum));
-      }
-
-      break;
-    case 'DESC':
-      if (column === 'name') {
-        console.log('entrouEmDESC');
-        auxData = auxData.sort((a, b) => (
-          (a[column] > b[column]) ? 1 : menosum)).reverse();
-      } else {
-        console.log('!entrouEmDESC');
-        auxData = auxData.sort((a, b) => (
-          (Number(a[column]) > Number(b[column])) ? 1 : menosum)).reverse();
-      }
-
-      break;
-
-    default:
-      console.log('entrouEmDefault');
-      auxData = auxData.sort((a, b) => ((a.name > b.name) ? 1 : menosum));
-      break;
-    } */
     setResponse([...auxData]);
   }, [filters.filterByNumericValues, filters.order]);
 
