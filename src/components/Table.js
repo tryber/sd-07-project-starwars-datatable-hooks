@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import StarWarsContext from '../context/StarWarsContext.js';
+import StarWarsContext from '../context/StarWarsContext';
 
 // Utilização do Context - modelo de estudo { Bruno Sordi }
 // Foram feitas observações também  nos códigos do { Pedro Marques }
@@ -10,25 +10,14 @@ function Table() {
     data,
     filters,
     setFilters,
-    filterHandler,
-    setFilterHandler,
   } = useContext(StarWarsContext);
 
-// Filtro por nome, a cada novo filter, pega o array original e filtra por nome
+  // Filtro por nome, a cada novo filter, pega o array original e filtra por nome
   function handleChangeName({ target }) {
     const prevFilters = filters;
     setFilters({
       ...prevFilters,
       filterByName: { name: target.value },
-    });
-  }
-
-  function handleChangeSelected({ target }) {
-    const prevFilters = filterHandler;
-    const { name, value } = target;
-    setFilterHandler({
-      ...prevFilters,
-      [name]: value,
     });
   }
   return (
