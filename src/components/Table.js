@@ -60,6 +60,7 @@ function Table() {
     setFilters(
       { ...filters,
         filterByNumericValues: [
+          ...filters.filterByNumericValues,
           {
             column,
             comparison: range,
