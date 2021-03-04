@@ -11,7 +11,7 @@ function Main() {
     setPlanetsData(data);
   }, [data]);
 
-  const handleDataFilters = () => {
+  const handleDataFilters = async () => {
     const { filterByName: { name }, filterByNumericValues } = filters;
     const ZERO = 0;
 
@@ -45,6 +45,10 @@ function Main() {
       setplanetsData(data);
     }
   };
+
+  useEffect(() => {
+    handleDataFilters(filters);
+  }, [filters]);
 
   return (
     <div>
