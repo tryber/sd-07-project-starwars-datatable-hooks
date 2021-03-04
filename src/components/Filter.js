@@ -14,29 +14,6 @@ function FilterPlanets() {
       ...filters, filterByNumericValues: [...filters.filterByNumericValues, aux] });
   };
 
-  /* useEffect(() => {
-    let auxData = data;
-    const magicNumber = 0;
-    for (let i = magicNumber; i < filters.filterByNumericValues.length; i += 1) {
-      const { column, comparison, value } = filters.filterByNumericValues[i];
-
-      switch (comparison) {
-      case 'maior que':
-        auxData = (auxData.filter((e) => Number(e[column]) > Number(value)));
-        break;
-      case 'menor que':
-        auxData = (auxData.filter((e) => Number(e[column]) < Number(value)));
-        break;
-      case 'igual a':
-        auxData = (auxData.filter((e) => Number(e[column]) === Number(value)));
-        break;
-      default:
-        break;
-      }
-      setData(auxData);
-    }
-  }, [filters.filterByNumericValues]); */
-
   return (
     <div>
       <label htmlFor="name-filter">

@@ -32,6 +32,29 @@ function StarWarsProvider({ children }) {
     StarWarsAPI();
   }, []);
 
+  useEffect(() => {
+    let auxData = data;
+    const magicNumber = 0;
+    for (let i = magicNumber; i < filters.filterByNumericValues.length; i += 1) {
+      const { column, comparison, value } = filters.filterByNumericValues[i];
+
+      switch (comparison) {
+      case 'maior que':
+        auxData = (auxData.filter((e) => Number(e[column]) > Number(value)));
+        break;
+      case 'menor que':
+        auxData = (auxData.filter((e) => Number(e[column]) < Number(value)));
+        break;
+      case 'igual a':
+        auxData = (auxData.filter((e) => Number(e[column]) === Number(value)));
+        break;
+      default:
+        break;
+      }
+      setResponse(auxData);
+    }
+  }, [filters.filterByNumericValues]);
+
   return (
     /* utilizando o o context para encapsular tudo no provider */
     <MyContext.Provider
