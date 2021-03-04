@@ -1,13 +1,23 @@
 import React from 'react';
-import StarWarsProvider from './context/StarWarsProvider';
-import Main from './pages/Main';
+import PlanetContextProvider from './contexts/PlanetContext';
+import FilterContextProvider from './contexts/FilterContext';
+import Navbar from './components/Navbar';
+import PlanetsTable from './components/PlanetsTable';
+import Filters from './components/Filters';
 
 function App() {
   return (
-    <StarWarsProvider>
-      <Main />
-    </StarWarsProvider>
+    <div>
+      <Navbar />
+      <PlanetContextProvider>
+        <FilterContextProvider>
+          <Filters />
+          <PlanetsTable />
+        </FilterContextProvider>
+      </PlanetContextProvider>
+    </div>
   );
 }
 
 export default App;
+//desito desse projeto sem cabeca, so quero fazer meu backend
