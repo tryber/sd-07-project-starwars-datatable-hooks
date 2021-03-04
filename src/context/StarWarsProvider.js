@@ -5,23 +5,36 @@ import Tablet from '../component/Tablet';
 
 function StarWarsProvider() {
   const [data, setData] = React.useState([]);
-  const [filters, setFilters] = React.useState({
-    filterByName: {
-      name: '',
-    },
-  });
+  const [origin, setOrigin] = React.useState([]);
+  const [name, setName] = React.useState('');
+  const [filters, setFilters] = React.useState({});
 
   React.useEffect(() => {
     fetch('https://swapi-trybe.herokuapp.com/api/planets/')
       .then((response) => response.json())
-      .then((json) => setData(json.results));
+      .then((json) => setOrigin(json.results));
   }, []);
+
+  React.useEffect(() => {
+    setData(origin);
+  }, [origin]);
+
+  const onNameChange = (value) => {
+    setData(origin.filter((planetName) => planetName
+      .name.toLowerCase().includes(value)));
+    setName(value);
+  };
 
   const context = {
     data,
     setData,
     filters,
     setFilters,
+    origin,
+    setOrigin,
+    name,
+    setName,
+    onNameChange,
   };
 
   return (

@@ -1,10 +1,11 @@
 import React from 'react';
-// import StarWarsContext from '../context/StarWarsContext';
+import StarWarsContext from '../context/StarWarsContext';
 
 function FilterBar() {
-  // const { filters, setFilters } = React.useContext(StarWarsContext);
+  const { onNameChange } = React.useContext(StarWarsContext);
 
   React.useEffect(() => {
+
   });
 
   return (
@@ -13,8 +14,11 @@ function FilterBar() {
         <label htmlFor="Name">
           Name:
           <input
+            id="name"
+            name="name"
             type="text"
             data-testid="name-filter"
+            onChange={ (event) => onNameChange(event.target.value) }
           />
         </label>
       </form>
