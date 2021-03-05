@@ -56,6 +56,40 @@ function Table() {
     );
   };
 
+  const columnsForOrder = () => {
+    const allColumns = [
+      'name',
+      'rotation_period',
+      'orbital_period',
+      'diameter',
+      'climate',
+      'gravity',
+      'terrain',
+      'surface_water',
+      'population',
+      'films',
+      'created',
+      'edited',
+      'url',
+    ];
+    return (
+      <select
+        data-testid="column-sort"
+        name="columnOrder"
+        onChange={ ({ target }) => setFilters({
+          ...filters,
+          order: { ...filters.order, column: target.value },
+        }) }
+      >
+        {allColumns.map((columns, index) => (
+          <option key={ index } value={ columns }>
+            { columns }
+          </option>
+        ))}
+      </select>
+    );
+  };
+
   const filterNumeric = () => {
     setFilters(
       { ...filters,
@@ -72,8 +106,8 @@ function Table() {
   };
 
   const zero = 0;
-  if (planets.length === zero) return (<h1>Carregando...</h1>);
 
+  if (planets.length === zero) return (<h1>Carregando...</h1>);
   return (
     <div>
       <input
@@ -106,7 +140,43 @@ function Table() {
       >
         Filtrar
       </button>
-      <table>
+      <label htmlFor="columnOrder">
+        Ordenar
+        { columnsForOrder() }
+      </label>
+      <label htmlFor="asc">
+        ascendente:
+        <input
+          type="radio"
+          name="sort"
+          value="ASC"
+          data-testid="column-sort-input-asc"
+          onChange={ ({ target }) => setFilters({
+            ...filters,
+            order: { ...filters.order, sort: target.value },
+          }) }
+        />
+      </label>
+      <label htmlFor="desc">
+        descendente:
+        <input
+          name="sort"
+          type="radio"
+          value="DESC"
+          data-testid="column-sort-input-desc"
+          onChange={ ({ target }) => setFilters({
+            ...filters,
+            order: { ...filters.order, sort: target.value },
+          }) }
+        />
+      </label>
+      <button
+        type="button"
+        data-testid="column-sort-button"
+      >
+        Ordenar
+      </button>
+      <table border="1">
         <thead>
           <tr>
             {Object.keys(planets[0]).map((item) => (
@@ -115,13 +185,35 @@ function Table() {
           </tr>
         </thead>
         <tbody>
-          {planetsFilters.map((planet) => (
-            <tr key={ planet }>
-              { Object.values(planet).map((data) => (
-                <td key={ data }>
-                  { data }
-                </td>
-              )) }
+          {planetsFilters.map(({
+            name,
+            rotation_period: rotationPeriod,
+            orbital_period: orbitalPeriod,
+            diameter,
+            climate,
+            gravity,
+            terrain,
+            surface_water: surfaceWater,
+            population,
+            films,
+            created,
+            edited,
+            url,
+          }, index) => (
+            <tr key={ index }>
+              <td data-testid="planet-name">{name}</td>
+              <td>{rotationPeriod}</td>
+              <td>{orbitalPeriod}</td>
+              <td>{diameter}</td>
+              <td>{climate}</td>
+              <td>{gravity}</td>
+              <td>{terrain}</td>
+              <td>{surfaceWater}</td>
+              <td>{population}</td>
+              <td>{films}</td>
+              <td>{created}</td>
+              <td>{edited}</td>
+              <td>{url}</td>
             </tr>
           ))}
         </tbody>

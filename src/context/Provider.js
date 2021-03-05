@@ -11,29 +11,33 @@ function Provider({ children }) {
       name: '',
     },
     filterByNumericValues: [],
+    order: {
+      column: 'name',
+      sort: 'ASC',
+    },
+    reRender: false,
   });
   const [planetsFilters, setPlanetsFilters] = useState([]);
+
+  const one = 1;
+  const zero = 0;
+  const minusOne = -1;
 
   const fetchPlanets = async () => {
     const { results } = await starWarsAPI();
     const expected = results.filter((result) => delete result.residents);
+    expected.sort((a, b) => {
+      if (a.name > b.name) {
+        return one;
+      }
+      if (a.name < b.name) {
+        return minusOne;
+      }
+      return zero;
+    });
     setPlanets(expected);
     setPlanetsFilters(expected);
   };
-
-  // const zero = 0;
-  // const filterPlanetByName = () => {
-  //   if (filters.filterByName.name.length === zero) return undefined;
-  //   const filterToLowerCase = filters.filterByName.name.toLowerCase();
-  //   const test = planetsFilters.filter((planet) => planet.name
-  //     .toLowerCase().includes(filterToLowerCase));
-  //   setPlanetsFilters(test);
-  // };
-
-  // useEffect(() => {
-  //   if (filters.filterByName.name.length === zero) setPlanetsFilters(planets);
-  //   filterPlanetByName();
-  // }, [filters]);
 
   function filteredName() {
     if (!filters.filterByName) return undefined;
@@ -43,10 +47,34 @@ function Provider({ children }) {
   }
 
   function filteredNumbers(filtradosPorNomes) {
+    let resultadoFiltrado = filtradosPorNomes;
+    resultadoFiltrado.sort((a, b) => {
+      const columnByOrder = filters.order.column;
+      switch (filters.order.sort) {
+      case 'ASC':
+        if (parseFloat(a[columnByOrder]) > parseFloat(b[columnByOrder])) {
+          return one;
+        }
+        if (parseFloat(a[columnByOrder]) < parseFloat(b[columnByOrder])) {
+          return minusOne;
+        }
+        break;
+      case 'DESC':
+        if (parseFloat(a[columnByOrder]) > parseFloat(b[columnByOrder])) {
+          return minusOne;
+        }
+        if (parseFloat(a[columnByOrder]) < parseFloat(b[columnByOrder])) {
+          return one;
+        }
+        break;
+      default:
+        return zero;
+      }
+      return zero;
+    });
     if (!filters.filterByNumericValues.length) {
       return setPlanetsFilters(filtradosPorNomes);
     }
-    let resultadoFiltrado = filtradosPorNomes;
     filters.filterByNumericValues.forEach((filteredNumeric) => {
       resultadoFiltrado = resultadoFiltrado.filter((filtrado) => {
         switch (filteredNumeric.comparison) {
@@ -74,6 +102,7 @@ function Provider({ children }) {
         return false;
       });
     });
+
     setPlanetsFilters(resultadoFiltrado);
   }
 
@@ -83,14 +112,13 @@ function Provider({ children }) {
   }, [filters]);
 
   useEffect(() => {
-    (fetchPlanets());
+    fetchPlanets();
   }, []);
 
   const states = {
     planets,
     planetsFilters,
     filters,
-    setPlanets,
     setFilters,
   };
 
