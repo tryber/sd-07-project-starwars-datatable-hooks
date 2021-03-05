@@ -7,10 +7,25 @@ const Table = () => {
   const { filters } = useContext(StarWarsContext);
   const { filteredByName, setFilteredByName } = useContext(StarWarsContext);
   const { filteredByNum, setFilteredByNum } = useContext(StarWarsContext);
+  const { sorted, setSorted } = useContext(StarWarsContext);
+
+  const sortArray = (a, b) => {
+    const minusOne = -1;
+    const zero = 0;
+    if (a.name < b.name) {
+      return minusOne;
+    }
+    if (a.name > b.name) {
+      return 1;
+    }
+    return zero;
+  };
 
   useEffect(() => {
-    planetsAPI().then((r) => setData(r));
-    // mudança para push
+    planetsAPI().then((r) => {
+      r.sort(sortArray);
+      setData(r);
+    });
   }, [setData]);
 
   useEffect(() => {
@@ -34,7 +49,7 @@ const Table = () => {
 
   const tableStructure = (planet, i) => (
     <tr key={ i }>
-      <td>{planet.name}</td>
+      <td data-testid="planet-name">{planet.name}</td>
       <td>{planet.rotation_period}</td>
       <td>{planet.orbital_period}</td>
       <td>{planet.diameter}</td>
@@ -73,23 +88,7 @@ const Table = () => {
       const filteredPlanets = data.filter((planet) => (
         planet.name.includes(filters.filterByName.name)
       ));
-      return filteredPlanets.length ? filteredPlanets.map((filPlanet, i) => (
-        <tr key={ i }>
-          <td>{filPlanet.name}</td>
-          <td>{filPlanet.rotation_period}</td>
-          <td>{filPlanet.orbital_period}</td>
-          <td>{filPlanet.diameter}</td>
-          <td>{filPlanet.climate}</td>
-          <td>{filPlanet.gravity}</td>
-          <td>{filPlanet.terrain}</td>
-          <td>{filPlanet.surface_water}</td>
-          <td>{filPlanet.population}</td>
-          <td>residents</td>
-          <td>films</td>
-          <td>{filPlanet.created}</td>
-          {/* format dates */}
-          <td>{filPlanet.edited}</td>
-        </tr>)) : null;
+      return filteredPlanets.length ? filteredPlanets.map(tableStructure) : null;
     } if (filteredByNum && filters.filterByNumericValues.length) {
       const planets = parseToFloat();
       console.log('filtering by num');
@@ -112,7 +111,35 @@ const Table = () => {
       default:
         return null;
       }
+    } if (sorted) {
+      const { column, sort } = filters.order;
+
+      const sortedPlanets = sort === 'ASC'
+        ? data.sort((planetA, planetB) => {
+          const minusOne = -1;
+          const zero = 0;
+          if (planetA[column] < planetB[column]) {
+            return minusOne;
+          }
+          if (planetA[column] > planetB[column]) {
+            return 1;
+          }
+          return zero;
+        })
+        : data.sort((planetA, planetB) => {
+          const minusOne = -1;
+          const zero = 0;
+          if (planetA[column] > planetB[column]) {
+            return minusOne;
+          }
+          if (planetA[column] < planetB[column]) {
+            return 1;
+          }
+          return zero;
+        });
+      return sortedPlanets.map(tableStructure);
     }
+
     return data.map(tableStructure);
   };
 

@@ -10,9 +10,14 @@ const StarWarsProvider = ({ children }) => {
       name: '',
     },
     filterByNumericValues: [],
+    order: {
+      column: '',
+      sort: '',
+    },
   });
   const [filteredByName, setFilteredByName] = useState(false);
   const [filteredByNum, setFilteredByNum] = useState(false);
+  const [sorted, setSorted] = useState(false);
 
   const context = {
     data,
@@ -25,6 +30,8 @@ const StarWarsProvider = ({ children }) => {
     setFilteredByName,
     filteredByNum,
     setFilteredByNum,
+    sorted,
+    setSorted,
   };
 
   return (

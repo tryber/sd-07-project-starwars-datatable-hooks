@@ -8,7 +8,15 @@ const Filter = () => {
     comparison: '',
     value: '',
   });
+  const [currSortFilter, setCurrSortFilter] = useState({
+    column: '',
+    sort: '',
+  });
+  const { sorted, setSorted } = useContext(StarWarsContext);
   const { setFilteredByNum } = useContext(StarWarsContext);
+  const columns = ['name', 'rotation_period', 'orbital_period',
+    'diameter', 'climate', 'gravity', 'terrain', 'surface_water',
+    'population', 'residents', 'films', 'created', 'edited'];
 
   const sendCurrentSearch = (e) => {
     const text = e.target.value;
@@ -53,10 +61,29 @@ const Filter = () => {
     filterList.append(newFilterItem);
   };
 
+  const sendSortFilter = () => {
+    setSorted(true);
+    setFilters({
+      ...filters,
+      order: {
+        ...currSortFilter,
+      },
+    });
+  };
+
   const handleNumericFilterChange = (e) => {
     const { value } = e.target;
     setCurrNumFilter({
       ...currNumFilter,
+      [e.target.name]: value,
+    });
+    console.log('handleNumericFilterChange');
+  };
+
+  const handleSortFilterChange = (e) => {
+    const { value } = e.target;
+    setCurrSortFilter({
+      ...currSortFilter,
       [e.target.name]: value,
     });
   };
@@ -104,6 +131,51 @@ const Filter = () => {
           onClick={ sendNumericFilter }
         >
           Filtrar
+        </button>
+      </form>
+      <form>
+        <select
+          data-testid="column-sort"
+          id="order-select"
+          onChange={ (e) => handleSortFilterChange(e) }
+          name="column"
+        >
+          {columns.map((column, i) => (
+            <option
+              key={ i }
+              value={ column }
+            >
+              {column}
+            </option>))}
+        </select>
+        <label htmlFor="column-sort-input-asc">
+          <input
+            type="radio"
+            id="column-sort-input-asc"
+            data-testid="column-sort-input-asc"
+            value="ASC"
+            name="sort"
+            onChange={ (e) => handleSortFilterChange(e) }
+          />
+          ASC
+        </label>
+        <label htmlFor="column-sort-input-desc">
+          <input
+            type="radio"
+            id="column-sort-input-desc"
+            data-testid="column-sort-input-desc"
+            value="DESC"
+            name="sort"
+            onChange={ (e) => handleSortFilterChange(e) }
+          />
+          DESC
+        </label>
+        <button
+          type="button"
+          data-testid="column-sort-button"
+          onClick={ () => sendSortFilter() }
+        >
+          SORT
         </button>
       </form>
       <ul id="filter-list" />
