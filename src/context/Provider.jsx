@@ -14,7 +14,7 @@ function Provider({ children }) {
   });
   const [filterResults, setFilterResults] = useState([]);
   const [order, setOrder] = useState({ column: 'name',
-  sort: 'asc' });
+    sort: 'asc' });
 
   const requestPlanetsAPI = async () => {
     const endPoint = await fetch(
@@ -79,7 +79,7 @@ function Provider({ children }) {
 
   return (
     <StarWarsContext.Provider value={ info }>
-      { children } 
+      { children }
     </StarWarsContext.Provider>
   );
 }
