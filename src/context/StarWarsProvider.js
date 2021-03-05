@@ -8,12 +8,14 @@ function StarWarsProvider({ children }) {
   const [name, setName] = React.useState('');
   const [filters, setFilters] = React.useState({
     filterByName: {},
-    filterByNumericValues: [
-    ],
+    filterByNumericValues: [],
+    order: [],
   });
   const [column1, setColumn1] = React.useState('population');
   const [comparison1, setComparison1] = React.useState('maior que');
   const [value1, setValue1] = React.useState(null);
+  const [ordColumn, setOrdColumn] = React.useState('population');
+  const [ord, setOrd] = React.useState('');
 
   const [options, setOptions] = React.useState([
     'population',
@@ -30,8 +32,10 @@ function StarWarsProvider({ children }) {
   }, []);
 
   React.useEffect(() => {
-    setData(origin);
+    setData(origin.sort((a, b) => a.name.localeCompare(b.name)));
   }, [origin]);
+
+  // https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/String/localeCompare
 
   const atualizaFiltro = () => {
     filters.filterByNumericValues.forEach((item) => {
@@ -50,7 +54,7 @@ function StarWarsProvider({ children }) {
           .filter((planet) => Number(planet[column]) === Number(value)));
         break;
       default:
-        setData(origin);
+        setData(origin.sort((a, b) => a.name.localeCompare(b.name)));
       }
     });
   };
@@ -64,6 +68,7 @@ function StarWarsProvider({ children }) {
     });
     atualizaFiltro();
   };
+
   const removeFilter = (item) => {
     const zero = 0;
     filters.filterByNumericValues
@@ -73,6 +78,53 @@ function StarWarsProvider({ children }) {
     } else {
       setData(origin);
     }
+  };
+
+  const ordemASC = (a, b) => {
+    switch (ordColumn) {
+    case ('population'):
+      return a.population - b.population;
+    case ('orbital_period'):
+      return a.orbital_period - b.orbital_period;
+    case ('diameter'):
+      return a.diameter - b.diameter;
+    case ('rotation_period'):
+      return a.rotation_period - b.rotation_period;
+    case ('surface_water'):
+      return a.surface_water - b.surface_water;
+    default:
+      console.log('erro');
+    }
+  };
+
+  const ordemDESC = (a, b) => {
+    switch (ordColumn) {
+    case ('population'):
+      return b.population - a.population;
+    case ('orbital_period'):
+      return b.orbital_period - a.orbital_period;
+    case ('diameter'):
+      return b.diameter - a.diameter;
+    case ('rotation_period'):
+      return b.rotation_period - a.rotation_period;
+    case ('surface_water'):
+      return b.surface_water - a.surface_water;
+    default:
+      console.log('erro');
+    }
+  };
+
+  const onClickOrder = () => {
+    filters.order.push({
+      column: ordColumn,
+      sort: ord,
+    });
+    if (ord === 'ASC') {
+      setData(origin.sort(ordemASC));
+    } else {
+      setData(origin.sort(ordemDESC));
+    }
+    atualizaFiltro();
   };
 
   const onNameChange = (itemname) => {
@@ -98,6 +150,9 @@ function StarWarsProvider({ children }) {
     setComparison1,
     setValue1,
     removeFilter,
+    setOrdColumn,
+    setOrd,
+    onClickOrder,
   };
 
   return (

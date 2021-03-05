@@ -34,7 +34,7 @@ const Tablet = () => {
               <td>{ item.edited }</td>
               <td>{ item.films }</td>
               <td>{ item.gravity }</td>
-              <td>{ item.name }</td>
+              <td data-testid="planet-name">{ item.name }</td>
               <td>{ item.orbital_period }</td>
               <td>{ item.population }</td>
               <td>{ item.rotation_period }</td>
