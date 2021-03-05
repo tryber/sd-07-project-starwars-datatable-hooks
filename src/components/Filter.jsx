@@ -12,7 +12,7 @@ const Filter = () => {
     column: '',
     sort: '',
   });
-  const { sorted, setSorted } = useContext(StarWarsContext);
+  const { setSorted } = useContext(StarWarsContext);
   const { setFilteredByNum } = useContext(StarWarsContext);
   const columns = ['name', 'rotation_period', 'orbital_period',
     'diameter', 'climate', 'gravity', 'terrain', 'surface_water',

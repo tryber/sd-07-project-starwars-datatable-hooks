@@ -7,7 +7,7 @@ const Table = () => {
   const { filters } = useContext(StarWarsContext);
   const { filteredByName, setFilteredByName } = useContext(StarWarsContext);
   const { filteredByNum, setFilteredByNum } = useContext(StarWarsContext);
-  const { sorted, setSorted } = useContext(StarWarsContext);
+  const { sorted } = useContext(StarWarsContext);
 
   const sortArray = (a, b) => {
     const minusOne = -1;
