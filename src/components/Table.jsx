@@ -1,10 +1,10 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 import planetsAPI from '../services/planetsAPI';
 
 const Table = () => {
   const { data, setData } = useContext(StarWarsContext);
-  const { filters, setFilters } = useContext(StarWarsContext);
+  const { filters } = useContext(StarWarsContext);
   const { filteredByName, setFilteredByName } = useContext(StarWarsContext);
   const { filteredByNum, setFilteredByNum } = useContext(StarWarsContext);
 
@@ -24,7 +24,12 @@ const Table = () => {
       setFilteredByNum(false);
     }
     console.log(filteredByName, filteredByNum);
-  }, [filteredByName, filteredByNum, filters, filters.filterByName.name]);
+  }, [
+    filteredByName,
+    filteredByNum,
+    filters,
+    filters.filterByName.name,
+    setFilteredByName, setFilteredByNum]);
 
   const tableStructure = (planet, i) => (
     <tr key={ i }>

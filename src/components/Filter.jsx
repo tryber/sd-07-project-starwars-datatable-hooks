@@ -8,8 +8,7 @@ const Filter = () => {
     comparison: '',
     value: '',
   });
-  const { filteredByName, setFilteredByName } = useContext(StarWarsContext);
-  const { filteredByNum, setFilteredByNum } = useContext(StarWarsContext);
+  const { setFilteredByNum } = useContext(StarWarsContext);
 
   const sendCurrentSearch = (e) => {
     const text = e.target.value;
