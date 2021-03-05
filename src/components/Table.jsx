@@ -10,6 +10,7 @@ const Table = () => {
 
   useEffect(() => {
     planetsAPI().then((r) => setData(r));
+    // mudança para push
   }, [setData]);
 
   useEffect(() => {
