@@ -12,6 +12,9 @@ function Provider({ children }) {
     comparison: '',
     value: '',
   });
+  const [filterResults, setFilterResults] = useState([]);
+  const [order, setOrder] = useState({ column: 'name',
+  sort: 'asc' });
 
   const requestPlanetsAPI = async () => {
     const endPoint = await fetch(
@@ -32,11 +35,16 @@ function Provider({ children }) {
 
   const info = {
     data,
+    setData,
     pageLoading,
     setpageLoading,
+    filterResults,
+    setFilterResults,
+    order,
     headers,
     setFilterName,
     setFilterNumber,
+    setOrder,
     filters: {
       filterByName: {
         name: filterName,
@@ -45,9 +53,33 @@ function Provider({ children }) {
     },
   };
 
+  useEffect(() => {
+    const negativo = -1;
+    const zero = 0;
+    const positivo = 1;
+    const api = async () => {
+      const endPoint = await fetch('https://swapi-trybe.herokuapp.com/api/planets/');
+      const response = await endPoint.json();
+      setFilterResults(response.results);
+      const arrayOrder = [...response.results];
+      arrayOrder.sort((a, b) => {
+        if (a.name > b.name) return positivo;
+        if (a.name < b.name) return negativo;
+        return zero;
+      });
+      setData(arrayOrder);
+    };
+    api();
+  }, []);
+
+  useEffect(() => {
+    const filterInput = data.filter(({ name }) => name.includes(filterName));
+    setFilterResults(filterInput);
+  }, [data, filterName]);
+
   return (
     <StarWarsContext.Provider value={ info }>
-      { children }
+      { children } 
     </StarWarsContext.Provider>
   );
 }
