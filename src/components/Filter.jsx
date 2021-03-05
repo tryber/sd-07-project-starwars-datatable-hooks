@@ -21,11 +21,11 @@ const Filter = () => {
 
   const removeFilter = (ev) => {
     ev.target.parentNode.remove();
+    setFilteredByNum(false);
     setFilters({
       ...filters,
       filterByNumericValues: [],
     });
-    setFilteredByNum(false);
   };
 
   const sendNumericFilter = (e) => {

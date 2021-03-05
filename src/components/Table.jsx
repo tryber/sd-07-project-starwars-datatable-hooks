@@ -24,7 +24,7 @@ const Table = () => {
       setFilteredByNum(false);
     }
     console.log(filteredByName, filteredByNum);
-  }, [filteredByName, filteredByNum, filters, filters.filterByName.name, setFilteredByName, setFilteredByNum]);
+  }, [filteredByName, filteredByNum, filters, filters.filterByName.name]);
 
   const tableStructure = (planet, i) => (
     <tr key={ i }>
@@ -59,7 +59,6 @@ const Table = () => {
         : parseFloat(planet.surface_water);
       return processedPl;
     });
-    console.log(newPl);
     return newPl;
   };
 
@@ -85,8 +84,9 @@ const Table = () => {
           {/* format dates */}
           <td>{filPlanet.edited}</td>
         </tr>)) : null;
-    } if (filteredByNum) {
+    } if (filteredByNum && filters.filterByNumericValues.length) {
       const planets = parseToFloat();
+      console.log('filtering by num');
       const f = filters.filterByNumericValues[filters.filterByNumericValues.length - 1];
       const { column, value } = f;
       const valueInt = parseInt(value, 10);
