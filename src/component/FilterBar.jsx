@@ -5,15 +5,17 @@ function FilterBar() {
   const {
     onNameChange,
     options,
-    setColumn,
-    setComparison,
-    setValue,
+    setColumn1,
+    setComparison1,
+    setValue1,
     onClickFilter,
+    filters,
+    removeFilter,
   } = React.useContext(StarWarsContext);
 
   React.useEffect(() => {
 
-  });
+  }, [filters]);
 
   return (
     <div>
@@ -31,7 +33,7 @@ function FilterBar() {
         <select
           name="column-filter"
           data-testid="column-filter"
-          onChange={ (event) => setColumn(event.target.value) }
+          onChange={ (event) => setColumn1(event.target.value) }
         >
           {options.map((item) => (
             <option key={ item } value={ item }>{item}</option>
@@ -40,7 +42,7 @@ function FilterBar() {
         <select
           name="comparison-filter"
           data-testid="comparison-filter"
-          onChange={ (event) => setComparison(event.target.value) }
+          onChange={ (event) => setComparison1(event.target.value) }
         >
           <option value="maior que">
             maior que
@@ -55,7 +57,7 @@ function FilterBar() {
         <input
           type="number"
           data-testid="value-filter"
-          onChange={ (event) => setValue(event.target.value) }
+          onChange={ (event) => setValue1(event.target.value) }
         />
         <button
           type="button"
@@ -64,6 +66,21 @@ function FilterBar() {
         >
           Filtrar
         </button>
+        {
+          filters.filterByNumericValues.map((item, index) => (
+            <div div key={ index } data-testid="filter">
+              <span>
+                {`Filtrado: ${item.column} ${item.comparison} ${item.value}`}
+              </span>
+              <button
+                type="button"
+                onClick={ () => removeFilter(index) }
+              >
+                X
+              </button>
+            </div>
+          ))
+        }
       </form>
     </div>
   );

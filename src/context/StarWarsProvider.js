@@ -11,9 +11,9 @@ function StarWarsProvider({ children }) {
     filterByNumericValues: [
     ],
   });
-  const [column, setColumn] = React.useState('population');
-  const [comparison, setComparison] = React.useState('maior que');
-  const [value, setValue] = React.useState(null);
+  const [column1, setColumn1] = React.useState('population');
+  const [comparison1, setComparison1] = React.useState('maior que');
+  const [value1, setValue1] = React.useState(null);
 
   const [options, setOptions] = React.useState([
     'population',
@@ -33,22 +33,44 @@ function StarWarsProvider({ children }) {
     setData(origin);
   }, [origin]);
 
+  const atualizaFiltro = () => {
+    filters.filterByNumericValues.forEach((item) => {
+      const { column, comparison, value } = item;
+      switch (comparison) {
+      case ('maior que'):
+        setData(data
+          .filter((planet) => Number(planet[column]) > Number(value)));
+        break;
+      case ('menor que'):
+        setData(data
+          .filter((planet) => Number(planet[column]) < Number(value)));
+        break;
+      case ('igual a'):
+        setData(data
+          .filter((planet) => Number(planet[column]) === Number(value)));
+        break;
+      default:
+        setData(origin);
+      }
+    });
+  };
+
   const onClickFilter = () => {
-    console.log(column, comparison, value);
-    switch (comparison) {
-    case ('maior que'):
-      setData(origin
-        .filter((planet) => Number(planet[column]) > Number(value)));
-      break;
-    case ('menor que'):
-      setData(origin
-        .filter((planet) => Number(planet[column]) < Number(value)));
-      break;
-    case ('igual a'):
-      setData(origin
-        .filter((planet) => Number(planet[column]) === Number(value)));
-      break;
-    default:
+    console.log(column1, comparison1, value1);
+    filters.filterByNumericValues.push({
+      column: column1,
+      comparison: comparison1,
+      value: value1,
+    });
+    atualizaFiltro();
+  };
+  const removeFilter = (item) => {
+    const zero = 0;
+    filters.filterByNumericValues
+      .splice(item, 1);
+    if (filters.filterByNumericValues.length !== zero) {
+      atualizaFiltro();
+    } else {
       setData(origin);
     }
   };
@@ -72,9 +94,10 @@ function StarWarsProvider({ children }) {
     options,
     setOptions,
     onClickFilter,
-    setColumn,
-    setComparison,
-    setValue,
+    setColumn1,
+    setComparison1,
+    setValue1,
+    removeFilter,
   };
 
   return (
