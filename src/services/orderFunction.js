@@ -52,4 +52,4 @@ export default function orderFunction(data, setData, order) {
 
     setData({ ...data, results: arrPlanets });
   }
-};
+}

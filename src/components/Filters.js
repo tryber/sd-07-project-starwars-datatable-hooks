@@ -162,7 +162,7 @@ function Filters() {
           <button
             type="button"
             data-testid="column-sort-button"
-            onClick={() => orderFunction(data, setData, order) }
+            onClick={ () => orderFunction(data, setData, order) }
           >
             Ok
           </button>
