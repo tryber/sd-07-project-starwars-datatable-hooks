@@ -35,9 +35,14 @@ function FilterBar() {
             data-testid="column-filter"
             onChange={ (event) => setColumn1(event.target.value) }
           >
-            {options.map((item) => (
-              <option key={ item } value={ item }>{item}</option>
-            ))}
+            {options.filter(
+              (coluna) => !filters.filterByNumericValues.some(
+                (filterusado) => coluna === filterusado.column,
+              ),
+            )
+              .map((item) => (
+                <option key={ item } value={ item }>{item}</option>
+              ))}
           </select>
           <select
             name="comparison-filter"
