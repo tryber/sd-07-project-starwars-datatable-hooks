@@ -5,15 +5,14 @@ import planetsAPI from '../services/planetsAPI';
 const Table = () => {
   const { data, setData } = useContext(StarWarsContext);
   const { filters, setFilters } = useContext(StarWarsContext);
-  const [filteredByName, setFilteredByName] = useState(false);
-  const [filteredByNum, setFilteredByNum] = useState(false);
+  const { filteredByName, setFilteredByName } = useContext(StarWarsContext);
+  const { filteredByNum, setFilteredByNum } = useContext(StarWarsContext);
 
   useEffect(() => {
     planetsAPI().then((r) => setData(r));
   }, [setData]);
 
   useEffect(() => {
-    console.log(filters);
     if (filters.filterByName.name !== '') {
       setFilteredByName(true);
     } else {
@@ -25,7 +24,7 @@ const Table = () => {
       setFilteredByNum(false);
     }
     console.log(filteredByName, filteredByNum);
-  }, [filteredByName, filteredByNum, filters, filters.filterByName.name]);
+  }, [filteredByName, filteredByNum, filters, filters.filterByName.name, setFilteredByName, setFilteredByNum]);
 
   const tableStructure = (planet, i) => (
     <tr key={ i }>
@@ -50,10 +49,14 @@ const Table = () => {
     const newPl = data.map((planet) => {
       const processedPl = planet;
       processedPl.diameter = parseFloat(planet.diameter);
-      processedPl.population = parseFloat(planet.population);
+      processedPl.population = planet.population === 'unknown'
+        ? 'unknown'
+        : parseFloat(planet.population);
       processedPl.rotation_period = parseFloat(planet.rotation_period);
       processedPl.orbital_period = parseFloat(planet.orbital_period);
-      processedPl.surface_water = parseFloat(planet.surface_water);
+      processedPl.surface_water = planet.surface_water === 'unknown'
+        ? 'unknown'
+        : parseFloat(planet.surface_water);
       return processedPl;
     });
     console.log(newPl);
@@ -86,104 +89,23 @@ const Table = () => {
       const planets = parseToFloat();
       const f = filters.filterByNumericValues[filters.filterByNumericValues.length - 1];
       const { column, value } = f;
+      const valueInt = parseInt(value, 10);
       switch (f.comparison) {
       case 'maior que':
         return planets
-          .filter((planet) => planet[column] > value)
+          .filter((planet) => planet[column] > valueInt)
           .map(tableStructure);
       case 'menor que':
         return planets
-          .filter((planet) => planet[column] < value)
+          .filter((planet) => planet[column] < valueInt)
           .map(tableStructure);
       case 'igual a':
         return planets
-          .filter((planet) => planet[column] == value)
+          .filter((planet) => planet[column] === valueInt)
           .map(tableStructure);
       default:
         return null;
       }
-
-      // const f = filters.filterByNumericValues[filters.filterByNumericValues.length - 1];
-      // const { value } = filters.filterByNumericValues;
-      // let filteredPlanets = [];
-      // switch (f.column) {
-      // case 'population':
-      //   switch (f.comparison) {
-      //   case 'maior que':
-      //     filteredPlanets = data.filter((planet) => planet.population > value);
-      //     return filteredPlanets;
-      //   case 'menor que':
-      //     return console.log('pop menor que');
-      //   case 'igual a':
-      //     return console.log('pop maior que');
-      //   default:
-      //     return console.log('default');
-      //   }
-      // case 'orbital_period':
-      //   switch (f.comparison) {
-      //   case 'maior que':
-      //     return console.log('op maior que');
-      //   case 'menor que':
-      //     return console.log('op menor que');
-      //   case 'igual a':
-      //     return console.log('op maior que');
-      //   default:
-      //     return console.log('default');
-      //   }
-      // case 'diameter':
-      //   switch (f.comparison) {
-      //   case 'maior que':
-      //     return console.log('dia maior que');
-      //   case 'menor que':
-      //     return console.log('dia menor que');
-      //   case 'igual a':
-      //     return console.log('dia maior que');
-      //   default:
-      //     return console.log('default');
-      //   }
-      // case 'rotation_period':
-      //   switch (f.comparison) {
-      //   case 'maior que':
-      //     return console.log('rp maior que');
-      //   case 'menor que':
-      //     return console.log('rp menor que');
-      //   case 'igual a':
-      //     return console.log('rp maior que');
-      //   default:
-      //     return console.log('default');
-      //   }
-      // case 'surface_water':
-      //   switch (f.comparison) {
-      //   case 'maior que':
-      //     return console.log('sw maior que');
-      //   case 'menor que':
-      //     return console.log('sw menor que');
-      //   case 'igual a':
-      //     return console.log('sw igual a');
-      //   default:
-      //     return console.log('default');
-      //   }
-      // default:
-      //   console.log('default');
-      // }
-      // if (filteredPlanets.length) {
-      //   return filteredPlanets.map((filPlanet, i) => (
-      //     <tr key={ i }>
-      //       <td>{filPlanet.name}</td>
-      //       <td>{filPlanet.rotation_period}</td>
-      //       <td>{filPlanet.orbital_period}</td>
-      //       <td>{filPlanet.diameter}</td>
-      //       <td>{filPlanet.climate}</td>
-      //       <td>{filPlanet.gravity}</td>
-      //       <td>{filPlanet.terrain}</td>
-      //       <td>{filPlanet.surface_water}</td>
-      //       <td>{filPlanet.population}</td>
-      //       <td>residents</td>
-      //       <td>films</td>
-      //       <td>{filPlanet.created}</td>
-      //       {/* format dates */}
-      //       <td>{filPlanet.edited}</td>
-      //     </tr>));
     }
     return data.map(tableStructure);
   };

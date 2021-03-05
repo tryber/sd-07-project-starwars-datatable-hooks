@@ -8,6 +8,8 @@ const Filter = () => {
     comparison: '',
     value: '',
   });
+  const { filteredByName, setFilteredByName } = useContext(StarWarsContext);
+  const { filteredByNum, setFilteredByNum } = useContext(StarWarsContext);
 
   const sendCurrentSearch = (e) => {
     const text = e.target.value;
@@ -16,6 +18,15 @@ const Filter = () => {
 
   useEffect(() => {
   });
+
+  const removeFilter = (ev) => {
+    ev.target.parentNode.remove();
+    setFilters({
+      ...filters,
+      filterByNumericValues: [],
+    });
+    setFilteredByNum(false);
+  };
 
   const sendNumericFilter = (e) => {
     e.preventDefault();
@@ -26,6 +37,21 @@ const Filter = () => {
         currNumFilter,
       ],
     });
+    // meu deus prq que tô usando js vanilla nessa altura do campeonato...não sei
+    const filterList = document.getElementById('filter-list');
+    const newFilterItem = document.createElement('li');
+    const btn = document.createElement('button');
+    btn.innerText = 'X';
+    btn.addEventListener('click', (ev) => removeFilter(ev));
+    const filtersText = document.createElement('p');
+    filtersText.innerHTML = `
+    ${currNumFilter.column} 
+    ${currNumFilter.comparison} 
+    ${currNumFilter.value}`;
+    newFilterItem.setAttribute('data-testid', 'filter');
+    newFilterItem.appendChild(filtersText);
+    newFilterItem.appendChild(btn);
+    filterList.append(newFilterItem);
   };
 
   const handleNumericFilterChange = (e) => {
@@ -81,7 +107,7 @@ const Filter = () => {
           Filtrar
         </button>
       </form>
-
+      <ul id="filter-list" />
     </div>
   );
 };

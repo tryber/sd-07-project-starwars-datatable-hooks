@@ -11,6 +11,8 @@ const StarWarsProvider = ({ children }) => {
     },
     filterByNumericValues: [],
   });
+  const [filteredByName, setFilteredByName] = useState(false);
+  const [filteredByNum, setFilteredByNum] = useState(false);
 
   const context = {
     data,
@@ -19,6 +21,10 @@ const StarWarsProvider = ({ children }) => {
     setSearchText,
     filters,
     setFilters,
+    filteredByName,
+    setFilteredByName,
+    filteredByNum,
+    setFilteredByNum,
   };
 
   return (
