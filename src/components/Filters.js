@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
+import orderFunction from '../services/orderFunction';
 
 function Filters() {
   const {
@@ -8,7 +9,7 @@ function Filters() {
     setData,
     data,
   } = useContext(StarWarsContext);
-  const { filterByNumericValues } = filters;
+  const { filterByNumericValues, order } = filters;
   const [column, setColumn] = useState('population');
   const [comparison, setComparison] = useState('maior que');
   const number = 0;
@@ -21,11 +22,33 @@ function Filters() {
     });
   };
 
+  const handleColumn = ({ target }) => {
+    setFilters(
+      { ...filters,
+        order: {
+          ...order,
+          column: target.value,
+        },
+      },
+    );
+  };
+
+  const handleSort = ({ target }) => {
+    setFilters(
+      { ...filters,
+        order: {
+          ...order,
+          sort: target.value,
+        },
+      },
+    );
+  };
+
   const numericFilter = () => {
     setFilters(
       { ...filters,
         filterByNumericValues: [
-          ...filters.filterByNumericValues,
+          ...filterByNumericValues,
           { column, comparison, value: Number(value) },
         ],
       },
@@ -89,16 +112,62 @@ function Filters() {
             data-testid="value-filter"
             type="number"
           />
+          <button
+            onClick={ numericFilter }
+            type="button"
+            data-testid="button-filter"
+          >
+            Filtrar
+          </button>
         </div>
-        <button
-          onClick={ numericFilter }
-          type="button"
-          data-testid="button-filter"
-        >
-          Filtrar
-        </button>
+        <div>
+          <select onChange={ handleColumn } data-testid="column-sort">
+            <option value="name">name</option>
+            <option value="climate">climate</option>
+            <option value="created">created</option>
+            <option value="diameter">diameter</option>
+            <option value="edited">edited</option>
+            <option value="films">films</option>
+            <option value="gravity">gravity</option>
+            <option value="orbital_period">orbital_period</option>
+            <option value="population">population</option>
+            <option value="rotation_period">rotation_period</option>
+            <option value="surface_water">surface_water</option>
+            <option value="terraim">terrain</option>
+            <option value="population">url</option>
+          </select>
+          <div>
+            { /* https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/issues/302#issuecomment-360873597 */}
+            <label htmlFor="ASC">
+              ASC
+              <input
+                onClick={ handleSort }
+                type="radio"
+                data-testid="column-sort-input-asc"
+                value="ASC"
+                id="ASC"
+              />
+            </label>
+            <label htmlFor="DESC">
+              DESC
+              <input
+                onClick={ handleSort }
+                type="radio"
+                data-testid="column-sort-input-desc"
+                value="DESC"
+                id="DESC"
+              />
+            </label>
+          </div>
+          <button
+            type="button"
+            data-testid="column-sort-button"
+            onClick={() => orderFunction(data, setData, order) }
+          >
+            Ok
+          </button>
+        </div>
       </div>
-
       <div>
         {
           filterByNumericValues.map((filter, index) => {
