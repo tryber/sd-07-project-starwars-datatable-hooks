@@ -4,6 +4,7 @@ import StarWarsContext from './StarWarsContext';
 
 function StarWarsProvider({ children }) {
   const [data, setData] = React.useState([]);
+  const [newData, setNewData] = React.useState([]);
   const [origin, setOrigin] = React.useState([]);
   const [name, setName] = React.useState('');
   const [filters, setFilters] = React.useState({
@@ -125,6 +126,9 @@ function StarWarsProvider({ children }) {
       setData(origin.sort(ordemDESC));
     }
     atualizaFiltro();
+    console.log(data);
+    setNewData(data);
+    console.log(newData);
   };
 
   const onNameChange = (itemname) => {
