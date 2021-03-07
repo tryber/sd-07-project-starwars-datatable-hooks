@@ -5,7 +5,7 @@ function Table() {
   const { data, name, setFilters, filters } = useContext(StarWarsContext);
 
   const [orderRadio, setOrderRadio] = useState({
-    order: 'name',
+    column: 'name',
     sort: 'ASC',
   });
 
@@ -43,20 +43,20 @@ function Table() {
         data-testid="column-filter"
         onChange={ (e) => setAux({ ...aux, column: (e.target.value) }) }
       >
-        <option>population</option>
-        <option>orbital_period</option>
-        <option>diameter</option>
-        <option>rotation_period</option>
-        <option>surface_water</option>
+        <option value="population">population</option>
+        <option value="orbital_period">orbital_period</option>
+        <option value="diameter">diameter</option>
+        <option value="rotation_period">rotation_period</option>
+        <option value="surface_water">surface_water</option>
       </select>
 
       <select
         data-testid="comparison-filter"
         onChange={ (e) => setAux({ ...aux, comparison: (e.target.value) }) }
       >
-        <option>maior que</option>
-        <option>menor que</option>
-        <option>igual a</option>
+        <option value="maior que">maior que</option>
+        <option value="menor que">menor que</option>
+        <option value="igual a">igual a</option>
       </select>
 
       <input
@@ -75,21 +75,21 @@ function Table() {
 
       <select
         data-testid="column-sort"
-        onChange={ (e) => setOrderRadio({ order: (e.target.value) }) }
+        onChange={ (e) => setOrderRadio({ ...orderRadio, column: (e.target.value) }) }
       >
-        <option>Name</option>
-        <option>Rotation Period</option>
-        <option>Orbital Period</option>
-        <option>Diameter</option>
-        <option>Climate</option>
-        <option>Gravity</option>
-        <option>Terrain</option>
-        <option>Surface Water</option>
-        <option>Population</option>
-        <option>Films</option>
-        <option>Created</option>
-        <option>Edited</option>
-        <option>URL</option>
+        <option value="name">Name</option>
+        <option value="rotation_period">Rotation Period</option>
+        <option value="orbital_period">Orbital Period</option>
+        <option value="diameter">Diameter</option>
+        <option value="climate">Climate</option>
+        <option value="gravity">Gravity</option>
+        <option value="terrain">Terrain</option>
+        <option value="surface_water">Surface Water</option>
+        <option value="population">Population</option>
+        <option value="films">Films</option>
+        <option value="created">Created</option>
+        <option value="edited">Edited</option>
+        <option value="url">URL</option>
       </select>
 
       <label htmlFor="ASC">

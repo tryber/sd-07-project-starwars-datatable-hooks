@@ -4,8 +4,8 @@ import StarWarsContext from './StarWarsContext';
 import planetsAPI from '../services/StarWarsAPI';
 
 function Provider({ children }) {
-  const [data, setData] = useState();
-  const [data2, setData2] = useState();
+  const [data, setData] = useState([]);
+  const [data2, setData2] = useState([]);
   const [name, setName] = useState('');
   const [filters, setFilters] = useState(
     {
@@ -21,11 +21,12 @@ function Provider({ children }) {
   );
 
   let aux = [];
-
   const fetchData = async () => {
+    const menosum = -1;
     aux = await planetsAPI();
-    setData(aux);
+    aux.sort((a, b) => ((a.name > b.name) ? 1 : menosum));
     setData2(aux);
+    setData(aux);
   };
 
   useEffect(() => {
@@ -33,6 +34,7 @@ function Provider({ children }) {
   }, []);
 
   useEffect(() => {
+    const menosum = -1;
     let auxData = data2;
     const zero = 0;
     for (let index = zero; index < filters.filterByNumericValues.length; index += 1) {
@@ -53,9 +55,36 @@ function Provider({ children }) {
         break;
       }
     }
-    setData(auxData);
+
+    const { column: column2, sort } = filters.order;
+    const column = column2.toLowerCase();
+
+    switch (sort) {
+    case 'ASC':
+      if (column === 'name') {
+        auxData = auxData.sort((a, b) => ((a[column] > b[column]) ? 1 : menosum));
+      } else {
+        auxData = auxData.sort((a, b) => (
+          (Number(a[column]) > Number(b[column])) ? 1 : menosum));
+      }
+      break;
+    case 'DESC':
+      if (column === 'name') {
+        auxData = auxData.sort((a, b) => (
+          (a[column] > b[column]) ? 1 : menosum)).reverse();
+      } else {
+        auxData = auxData.sort((a, b) => (
+          (Number(a[column]) > Number(b[column])) ? 1 : menosum)).reverse();
+      }
+      break;
+    default:
+      auxData = auxData.sort((a, b) => ((a.name > b.name) ? 1 : menosum));
+      break;
+    }
+
+    setData([...auxData]);
     // console.log(auxData);
-  }, [filters.filterByNumericValues]);
+  }, [filters.filterByNumericValues, filters.order]);
 
   const context = {
     data,
