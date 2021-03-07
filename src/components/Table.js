@@ -115,7 +115,7 @@ function Table() {
             data-testid="comparison-filter"
             value={ filters.filterByNumericValues.comparison }
             onChange={ handleChangeSelected }
-          > 
+          >
             <option value="maior que">maior que</option>
             <option value="igual a">igual a</option>
             <option value="menor que">menor que</option>
