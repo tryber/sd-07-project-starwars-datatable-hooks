@@ -1,67 +1,26 @@
 import React, { useEffect, useState } from 'react';
-import propTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import StarWarsContext from './StarWarsContext';
 
 function Provider({ children }) {
   const [data, setData] = useState([]);
-  const [pageLoading, setpageLoading] = useState(true);
-  const [headers, setHeaders] = useState([]);
   const [filterName, setFilterName] = useState('');
-  const [filterNumber, setFilterNumber] = useState({
-    column: '',
-    comparison: '',
-    value: '',
-  });
   const [filterResults, setFilterResults] = useState([]);
+  const [numericValuesFiltered, setnumericValuesFiltered] = useState([]);
+  const [resultsPlanets, setResultsPlanets] = useState([]);
+
   const [order, setOrder] = useState({ column: 'name',
     sort: 'asc' });
-
-  const requestPlanetsAPI = async () => {
-    const endPoint = await fetch(
-      'https://swapi-trybe.herokuapp.com/api/planets/',
-    );
-    const response = await endPoint.json();
-    const planets = await response.results.map((planet) => {
-      delete planet.residents;
-      return planet;
-    });
-    setData(planets);
-    setHeaders(Object.keys(planets[0]));
-  };
-
-  useEffect(() => {
-    requestPlanetsAPI();
-  }, []);
-
-  const info = {
-    data,
-    setData,
-    pageLoading,
-    setpageLoading,
-    filterResults,
-    setFilterResults,
-    order,
-    headers,
-    setFilterName,
-    setFilterNumber,
-    setOrder,
-    filters: {
-      filterByName: {
-        name: filterName,
-      },
-      numericValuesFiltered: [filterNumber],
-    },
-  };
 
   useEffect(() => {
     const negativo = -1;
     const zero = 0;
     const positivo = 1;
     const api = async () => {
-      const endPoint = await fetch('https://swapi-trybe.herokuapp.com/api/planets/');
-      const response = await endPoint.json();
-      setFilterResults(response.results);
-      const arrayOrder = [...response.results];
+      const apiUrl = await fetch('https://swapi-trybe.herokuapp.com/api/planets/');
+      const url = await apiUrl.json();
+      setFilterResults(url.results);
+      const arrayOrder = [...url.results];
       arrayOrder.sort((a, b) => {
         if (a.name > b.name) return positivo;
         if (a.name < b.name) return negativo;
@@ -77,15 +36,51 @@ function Provider({ children }) {
     setFilterResults(filterInput);
   }, [data, filterName]);
 
+  useEffect(() => {
+    let filterInput = [...data];
+    numericValuesFiltered.forEach(({ column, comparison, value }) => {
+      if (column !== '') {
+        switch (comparison) {
+        case 'maior que':
+          filterInput = filterInput
+            .filter((planet) => parseFloat(planet[column]) > parseFloat(value));
+          break;
+        case 'menor que':
+          filterInput = filterInput
+            .filter((planet) => parseFloat(planet[column]) < parseFloat(value));
+          break;
+        default:
+          filterInput = filterInput
+            .filter((planet) => parseFloat(planet[column]) === parseFloat(value));
+        }
+      }
+    });
+    setFilterResults(filterInput);
+  }, [data, numericValuesFiltered]);
+
   return (
-    <StarWarsContext.Provider value={ info }>
+    <StarWarsContext.Provider
+      value={ {
+        data,
+        setData,
+        filterName,
+        setFilterName,
+        filterResults,
+        setFilterResults,
+        numericValuesFiltered,
+        setnumericValuesFiltered,
+        resultsPlanets,
+        setResultsPlanets,
+        order,
+        setOrder,
+      } }
+    >
       { children }
     </StarWarsContext.Provider>
   );
 }
-
 Provider.propTypes = {
-  children: propTypes.node.isRequired,
+  children: PropTypes.node.isRequired,
 };
 
 export default Provider;

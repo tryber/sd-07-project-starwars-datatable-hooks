@@ -4,19 +4,19 @@ import StarWarsContext from '../context/StarWarsContext';
 function FilterOrder() {
   const { data, setData, order, setOrder } = useContext(StarWarsContext);
 
-  function orderDesc() {
+  function orderingDesc() {
     const dataOrder = [...data];
     dataOrder.sort((a, b) => (b[order.column] - a[order.column]));
     setData(dataOrder);
   }
-  function orderAsc() {
+  function orderingAsc() {
     const dataOrder = [...data];
     dataOrder.sort((a, b) => (a[order.column] - b[order.column]));
     setData(dataOrder);
   }
   function ordered() {
-    if (order.sort === 'asc') return orderAsc();
-    return orderDesc();
+    if (order.sort === 'asc') return orderingAsc();
+    return orderingDesc();
   }
 
   function handleChangeInput({ value }) {

@@ -2,75 +2,49 @@ import React, { useContext } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 function Table() {
-  const { data, pageLoading, setpageLoading, headers, filters } = useContext(
-    StarWarsContext,
-  );
-  const { filterByName, numericValuesFiltered } = filters;
-  const { name } = filterByName;
-  const { column, comparison, value } = numericValuesFiltered[0];
-  const zero = 0;
-  if (data.length && headers.length > zero) {
-    setpageLoading(false);
-  }
-
-  const filterOptions = (planets) => {
-    if (comparison === '') {
-      return true;
-    }
-    if (comparison === 'maior que') {
-      if (Number(planets[column]) > Number(value)) {
-        return true;
-      }
-    }
-    if (comparison === 'menor que') {
-      if (Number(planets[column]) < Number(value)) {
-        return true;
-      }
-    }
-    if (comparison === 'igual a') {
-      if (Number(planets[column]) === Number(value)) {
-        return true;
-      }
-    }
-    return false;
-  };
+  const { filterResults } = useContext(StarWarsContext);
 
   return (
     <div>
-      <h1>Tabela</h1>
       <table>
-        <tr>
-          {pageLoading
-            ? null
-            : headers.map((tHead) => <th key={ tHead }>{ tHead }</th>)}
-        </tr>
-        <tbody>
-          {pageLoading
-            ? 'Loading'
-            : data
-              .filter((planets) => filterOptions(planets))
-              .filter((planet) => planet.name
-                .toLowerCase().includes(name.toLowerCase()))
-              .map((planet) => (
-                <tr key={ planet.name }>
-                  <td data-testid="planet-name">
-                    { planet.name }
-                  </td>
-                  <td>{ planet.rotation_period }</td>
-                  <td>{ planet.orbital_period }</td>
-                  <td>{ planet.diameter }</td>
-                  <td>{ planet.climate }</td>
-                  <td>{ planet.gravity }</td>
-                  <td>{ planet.terrain }</td>
-                  <td>{ planet.surface_water }</td>
-                  <td>{ planet.population }</td>
-                  <td>{ planet.films }</td>
-                  <td>{ planet.created }</td>
-                  <td>{ planet.edited }</td>
-                  <td>{ planet.url }</td>
-                </tr>
-              ))}
-        </tbody>
+        <thead>
+          <tr>
+            <th>name</th>
+            <th>rotation_period</th>
+            <th>orbital_period</th>
+            <th>diameter</th>
+            <th>climate</th>
+            <th>gravity</th>
+            <th>terrain</th>
+            <th>surface_water</th>
+            <th>population</th>
+            <th>films</th>
+            <th>created</th>
+            <th>edited</th>
+            <th>url</th>
+          </tr>
+        </thead>
+        {
+          filterResults.map((element) => (
+            <tbody key={ element.name }>
+              <tr>
+                <td data-testid="planet-name">{element.name}</td>
+                <td>{element.rotation_period}</td>
+                <td>{element.orbital_period}</td>
+                <td>{element.diameter}</td>
+                <td>{element.climate}</td>
+                <td>{element.gravity}</td>
+                <td>{element.terrain}</td>
+                <td>{element.surface_water}</td>
+                <td>{element.population}</td>
+                <td>{element.films}</td>
+                <td>{element.created }</td>
+                <td>{element.edited}</td>
+                <td>{element.url}</td>
+              </tr>
+            </tbody>
+          ))
+        }
       </table>
     </div>
   );
