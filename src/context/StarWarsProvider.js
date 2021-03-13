@@ -9,9 +9,8 @@ const StarWarsProvider = ({ children }) => {
   const [filterColumn, setColumn] = useState('');
   const [filterComparison, setComparison] = useState('');
   const [filterValue, setValue] = useState('');
-  const [filteredData, setFilteredData] = useState([]);
+  const [filteredData, setFilteredData] = useState(data);
   const [filtersArray, setFiltersArray] = useState([]);
-  const [dataFilteredByName, setDataFilteredByName] = useState([]);
 
   useEffect(() => {
     async function fetchPlanets() {
@@ -19,7 +18,6 @@ const StarWarsProvider = ({ children }) => {
       const dataPlanets = results;
       setDataPlanets(dataPlanets);
       setFilteredData(dataPlanets);
-      setDataFilteredByName(dataPlanets);
     }
     fetchPlanets();
   }, []);
@@ -44,11 +42,37 @@ const StarWarsProvider = ({ children }) => {
     setValue(value);
   };
 
-  useEffect(() => {
-    setDataFilteredByName(data.filter((planet) => (
-      planet.name.toLowerCase().includes(filterName.toLowerCase()))))
-  }, [filterName, data]);
+  const filterPlanets = (column, comparison, value) => {
+    switch (comparison) {
+    case 'maior que':
+      setFilteredData(filteredData
+        .filter((planet) => (
+          parseFloat(planet[column]) > parseFloat(value))));
+      break;
+    case 'menor que':
+      setFilteredData(filteredData
+        .filter((planet) => (
+          parseFloat(planet[column]) < parseFloat(value))));
+      break;
+    case 'igual a':
+      setFilteredData(filteredData
+        .filter((planet) => (
+          parseFloat(planet[column]) === parseFloat(value))));
+      break;
+    default:
+      setFilteredData(filteredData);
+    }
+  };
 
+  const options = [
+    'population',
+    'orbital_period',
+    'diameter',
+    'rotation_period',
+    'surface_water',
+  ];
+
+  const [optionsFiltered, setOptionsColumn] = useState(options);
   const filterDataButton = () => {
     if (filterColumn !== '' && filterComparison !== '' && filterValue !== '') {
       setFiltersArray([...filtersArray, {
@@ -56,34 +80,22 @@ const StarWarsProvider = ({ children }) => {
         comparison: filterComparison,
         value: filterValue,
       }]);
-      switch (filterComparison) {
-      case 'maior que':
-        setFilteredData(dataFilteredByName
-          .filter((planet) => (
-            parseFloat(planet[filterColumn]) > parseFloat(filterValue))));
-        break;
-      case 'menor que':
-        setFilteredData(dataFilteredByName
-          .filter((planet) => (
-            parseFloat(planet[filterColumn]) < parseFloat(filterValue))));
-        break;
-      case 'igual a':
-        setFilteredData(dataFilteredByName
-          .filter((planet) => (
-            parseFloat(planet[filterColumn]) === parseFloat(filterValue))));
-        break;
-      default:
-        setFilteredData(dataFilteredByName);
-      }
-    } else setFilteredData(dataFilteredByName);
+      setOptionsColumn(optionsFiltered.filter((option) => option !== filterColumn));
+    } else setFilteredData(filteredData);
   };
+
+  useEffect(() => {
+    console.log(filtersArray);
+    filtersArray
+      .forEach((filter) => filterPlanets(filter.column, filter.comparison, filter.value));
+  }, [filtersArray]);
 
   const deleteFilter = (event) => {
     const { value } = event.target;
     const removedFilter = filtersArray.filter((filter) => (filter.column !== value));
     setFiltersArray(removedFilter);
-    // voltar o estado anterior
     setFilteredData(data);
+    setOptionsColumn([...optionsFiltered, value]);
   };
 
   const context = {
@@ -93,15 +105,7 @@ const StarWarsProvider = ({ children }) => {
       filterByName: {
         name: filterName,
       },
-      // filterByNumericValues: [
-      //   {
-      //     column: filterColumn,
-      //     comparison: filterComparison,
-      //     value: filterValue,
-      //   },
-      // ],
       filterByNumericValues: filtersArray,
-      dataFilteredByName,
     },
     handleFilterByName,
     handleInputColumn,
@@ -110,6 +114,7 @@ const StarWarsProvider = ({ children }) => {
     setFilteredData,
     filterDataButton,
     deleteFilter,
+    optionsFiltered,
   };
 
   return (

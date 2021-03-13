@@ -5,14 +5,14 @@ function PlanetsTable() {
   const {
     data,
     filteredData,
-    dataFilteredByName,
-  } = useContext(StarWarsContext);
+    filters: {
+      filterByName: { name },
+    } } = useContext(StarWarsContext);
 
-  // const dataFilteredByName = data.filter((planet) => (
-  //   planet.name.toLowerCase().includes(name.toLowerCase())));
+  const dataFilteredByName = filteredData
+    .filter((planet) => planet.name.includes(name));
 
   const ZERO = 0;
-  const filteredDataCondiion = filteredData;
 
   return data.length > ZERO ? (
     <div>
@@ -38,24 +38,39 @@ function PlanetsTable() {
           </tr>
         </thead>
         <tbody>
-          {(filteredData.length ? filteredDataCondiion : dataFilteredByName)
-            .map((planet) => (
-              <tr key={ planet.name }>
-                <td>{planet.name}</td>
-                <td>{planet.rotation_period}</td>
-                <td>{planet.orbital_period}</td>
-                <td>{planet.diameter}</td>
-                <td>{planet.climate}</td>
-                <td>{planet.gravity}</td>
-                <td>{planet.terrain}</td>
-                <td>{planet.surface_water}</td>
-                <td>{planet.population}</td>
-                <td>{planet.films[0]}</td>
-                <td>{planet.created}</td>
-                <td>{planet.edited}</td>
-                <td>{planet.url}</td>
-              </tr>
-            ))}
+          {name !== '' ? dataFilteredByName.map((planet) => (
+            <tr key={ planet.name }>
+              <td>{planet.name}</td>
+              <td>{planet.rotation_period}</td>
+              <td>{planet.orbital_period}</td>
+              <td>{planet.diameter}</td>
+              <td>{planet.climate}</td>
+              <td>{planet.gravity}</td>
+              <td>{planet.terrain}</td>
+              <td>{planet.surface_water}</td>
+              <td>{planet.population}</td>
+              <td>{planet.films[0]}</td>
+              <td>{planet.created}</td>
+              <td>{planet.edited}</td>
+              <td>{planet.url}</td>
+            </tr>
+          )) : filteredData.map((planet) => (
+            <tr key={ planet.name }>
+              <td>{planet.name}</td>
+              <td>{planet.rotation_period}</td>
+              <td>{planet.orbital_period}</td>
+              <td>{planet.diameter}</td>
+              <td>{planet.climate}</td>
+              <td>{planet.gravity}</td>
+              <td>{planet.terrain}</td>
+              <td>{planet.surface_water}</td>
+              <td>{planet.population}</td>
+              <td>{planet.films[0]}</td>
+              <td>{planet.created}</td>
+              <td>{planet.edited}</td>
+              <td>{planet.url}</td>
+            </tr>
+          ))}
         </tbody>
       </table>
     </div>

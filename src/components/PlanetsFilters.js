@@ -9,20 +9,11 @@ function PlanetsFilters() {
     handleInputValue,
     filterDataButton,
     deleteFilter,
+    optionsFiltered,
     filters: { filterByNumericValues },
   } = useContext(StarWarsContext);
 
-  const optionsColumn = [
-    'population',
-    'orbital_period',
-    'diameter',
-    'rotation_period',
-    'surface_water',
-  ];
   const ONE = 1;
-  const optionsDropdownToSort = [
-    'name', 'rotation_period', 'orbital_period', 'diameter', 'climate', 'gravity',
-    'terrain', 'surface_water', 'population', 'created', 'edited', 'films', 'url'];
 
   return (
     <div>
@@ -36,13 +27,8 @@ function PlanetsFilters() {
         data-testid="column-filter"
         onChange={ handleInputColumn }
       >
-        { filterByNumericValues.length >= ONE
-          ? optionsColumn
-            .filter((option) => (option !== filterByNumericValues[0].column))
-            .map((option) => (
-              <option key={ option } value={ option }>{ option }</option>))
-          : optionsColumn.map((option) => (
-            <option key={ option } value={ option }>{ option }</option>))}
+        { optionsFiltered.map((option) => (
+          <option key={ option } value={ option }>{ option }</option>)) }
       </select>
       <select
         data-testid="comparison-filter"
@@ -64,38 +50,6 @@ function PlanetsFilters() {
         onClick={ filterDataButton }
       >
         Filter
-      </button>
-      <select>
-        {optionsDropdownToSort.map((option) => (
-          <option key={ option } value={ option }>{option}</option>
-        ))}
-      </select>
-      <label htmlFor="ASC">
-        ASC
-        <input
-          type="radio"
-          data-testid="column-sort-input-asc"
-          id="ASC"
-          value="ASC"
-          // onClick={ () => sortBy('ASC') }
-        />
-      </label>
-      <label htmlFor="DESC">
-        DESC
-        <input
-          type="radio"
-          data-testid="column-sort-input-desc"
-          id="DESC"
-          value="DESC"
-          // onClick={ () => sortBy('DESC') }
-        />
-      </label>
-      <button
-        data-testid="column-sort-button"
-        type="button"
-        // onClick={ () => sortPlanets() }
-      >
-        Order
       </button>
       { filterByNumericValues.length >= ONE
         ? filterByNumericValues.map((filter, index) => (
