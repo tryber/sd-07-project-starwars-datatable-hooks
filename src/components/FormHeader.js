@@ -1,49 +1,54 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
-import SecondFilter from './SecondFilter';
+import SecondoFilter from './SecondFilter';
 
 function FormHeader() {
   const { setFilterByName,
-    dataHeader,
-    setTagCompare,
-    setTag,
-    setValueCompare,
-    setFilter,
+    setDataFilter,
+    data,
+    filterName,
+    setBackFilterName,
+    sortTag,
+    sortOption,
+    setSortTag,
+    setSortOption,
+    sorted,
+    dataFilter,
+    sortStatus,
+    setSortStatus,
+    setfilters,
     filters,
   } = useContext(StarWarsContext);
 
-  const { filterByNumericValues } = filters;
-  const { column, comparison, value } = filterByNumericValues[0];
-  const dataFilter = dataHeader.filter((item) => item === 'population'
-    || item === 'orbital_period'
-    || item === 'diameter'
-    || item === 'rotation_period'
-    || item === 'surface_water');
   const handlerChangeName = ({ target }) => {
     setFilterByName(target.value);
   };
 
-  const handlerChangeTagCompare = ({ target }) => {
-    setTagCompare(target.value);
+  const changeTagSort = ({ target }) => {
+    setSortTag(target.value);
   };
 
-  const handlerChangeTag = ({ target }) => {
-    setTag(target.value);
+  const confirmSort = () => {
+    setSortStatus(!sortStatus);
+    setDataFilter(sorted(sortOption, sortTag, dataFilter));
+    setfilters({ ...filters, order: { sort: sortOption, column: sortTag } });
   };
 
-  const handlerChangeValue = ({ target }) => {
-    setValueCompare(target.value);
+  const typeSort = ({ target }) => {
+    setSortOption(target.value);
   };
 
-  const filtered = () => {
-    setFilter(true);
-  };
+  useEffect(() => {
+    setDataFilter(data.filter(
+      (planet) => planet.name.toLowerCase().includes(filterName.toLowerCase()),
+    ) || []);
+  }, [filterName, setDataFilter, data, setBackFilterName]);
 
-  const noFiltered = () => {
-    setFilter(false);
-  };
-
-  const checkPrimaryFilter = column !== '' && value !== '' && comparison !== '';
+  const opttionsSort = ['orbital_period',
+    'diameter',
+    'rotation_period',
+    'surface_water',
+    'population'];
 
   return (
     <div>
@@ -57,54 +62,45 @@ function FormHeader() {
             onChange={ handlerChangeName }
           />
         </label>
-      </form>
-      <form data-testid="filter">
-        <label htmlFor="select">
-          Selecione:
-          <select onChange={ handlerChangeTag } id="select" data-testid="column-filter">
-            {dataFilter.map((item) => (
-              <option
-                key={ item }
-                value={ item }
-              >
-                {item}
-              </option>))}
-          </select>
-        </label>
-        <label htmlFor="compare">
-          Compare:
-          <select
-            onChange={ handlerChangeTagCompare }
-            data-testid="comparison-filter"
-            id="compare"
-          >
-            <option value="igual a">igual a</option>
-            <option value="menor que">menor que</option>
-            <option value="maior que">maior que</option>
-          </select>
-        </label>
-        <label htmlFor="value-compare">
-          Valor:
+        <select onChange={ changeTagSort } data-testid="column-sort">
+          <option value="selecione">Selecione a ordenação</option>
+          {opttionsSort.map((item) => (
+            <option key={ item } value={ item }>{item}</option>
+          ))}
+        </select>
+        <label htmlFor="asc">
+          ASC
           <input
-            onChange={ handlerChangeValue }
-            data-testid="value-filter"
-            id="value-compare"
-            type="number"
+            onChange={ typeSort }
+            name="sort"
+            value="ASC"
+            data-testid="column-sort-input-asc"
+            id="asc"
+            type="radio"
           />
         </label>
-        {checkPrimaryFilter ? <SecondFilter /> : ''}
-        <button onClick={ noFiltered } type="button">X</button>
+        <label htmlFor="desc">
+          DESC
+          <input
+            onChange={ typeSort }
+            name="sort"
+            value="DESC"
+            data-testid="column-sort-input-desc"
+            id="desc"
+            type="radio"
+          />
+        </label>
+        <button
+          onClick={ confirmSort }
+          data-testid="column-sort-button"
+          type="button"
+        >
+          Ordernar
+        </button>
       </form>
 
-      <button
-        onClick={ filtered }
-        data-testid="button-filter"
-        type="button"
-      >
-        Filtrar
-      </button>
+      <SecondoFilter />
     </div>
-
   );
 }
 
